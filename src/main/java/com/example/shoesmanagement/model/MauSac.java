@@ -1,8 +1,7 @@
-package com.example.demo.model;
+package com.example.shoesmanagement.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,17 +11,15 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name= "MauSac")
+@Table(name = "mau_sac")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class MauSac {
-
-    //Nhan Pham Ngu
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO )
-    @Column(name ="id_Mau")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_Mau")
     private UUID idMau;
 
     @NotBlank
@@ -30,11 +27,11 @@ public class MauSac {
     private String ma;
 
     @NotBlank
-    @Column(name="ma_Mau")
+    @Column(name = "ma_Mau")
     private String maMau;
 
     @NotBlank
-    @Column(name="ten_Mau")
+    @Column(name = "ten_Mau")
     private String tenMau;
 
     @Column(name = "trang_Thai")
@@ -45,4 +42,5 @@ public class MauSac {
 
     @Column(name = "tg_Sua")
     private Date tgSua;
+
 }

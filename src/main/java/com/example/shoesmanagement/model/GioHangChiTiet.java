@@ -1,6 +1,8 @@
-package com.example.demo.model;
+package com.example.shoesmanagement.model;
 
 
+import com.example.shoesmanagement.model.ChiTietGiay;
+import com.example.shoesmanagement.model.GioHang;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

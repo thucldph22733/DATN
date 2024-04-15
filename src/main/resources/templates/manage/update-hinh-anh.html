@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="description" content="POS - Bootstrap Admin Template">
+    <meta name="keywords"
+          content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
+    <meta name="author" content="Dreamguys - Bootstrap Admin Template">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Sneaker Shop - Admin</title>
+
+    <link rel="shortcut icon" type="image/x-icon"  href="/images/img/icon.png">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/plugins/icons/flags/flags.css">
+    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+
+    <link rel="stylesheet" href="/css/dataTables.bootstrap4.min.css">
+
+    <link rel="stylesheet" href="/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/plugins/fontawesome/css/all.min.css">
+
+    <link rel="stylesheet" href="/plugins/toastr/toatr.css"/>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Thêm link thư viện Alertify -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/themes/default.min.css"/>
+    <style>
+        .alertify .ajs-message {
+            background-color: black;
+            color: #ffffff;
+        }
+
+        /* Thay đổi màu nền của tiêu đề */
+        .alertify .ajs-header {
+            background-color: coral;
+            color: #ffffff;
+        }
+
+        /* Thay đổi màu nền của các nút */
+        .alertify .ajs-buttons .ajs-ok {
+            background-color: #2ecc71;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="mini-sidebar">
+<div id="global-loader">
+    <div class="whirly-loader"></div>
+</div>
+<div class="main-wrapper">
+    <div class="header">
+
+        <div class="header-left active">
+            <a href="/manage" class="logo">
+                <img src="/images/img/logo.png" alt="">
+            </a>
+            <a href="/manage" class="logo-small">
+                <img src="/images/img/logo-small.png" alt="">
+            </a>
+            <a id="toggle_btn" href="javascript:void(0);">
+            </a>
+        </div>
+
+        <a id="mobile_btn" class="mobile_btn" href="#sidebar">
+            <span class="bar-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+            </span>
+        </a>
+
+        <div class="dropdown mobile-user-menu">
+            <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+               aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="profile.html">Thông tin cá nhân</a>
+                <a class="dropdown-item" href="generalsettings.html">Cài đặt</a>
+                <a class="dropdown-item" href="signin.html">Đăng xuất</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-inner slimscroll">
+            <div id="sidebar-menu" class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="/manage/"><img src="/images/iconlogo.png" alt="img"><span>Trang chủ nè</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/manage/thongke"><img src="/images/img/icons/dashboard.svg" alt="img"><span> Thống Kê</span>
+                        </a>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/product.svg" alt="img"><span> Quản lý Giày</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/chat-lieu">Chất Liệu</a></li>
+                            <li><a href="/manage/giay">Giày</a></li>
+                            <li><a href="/manage/hang">Hãng</a></li>
+                            <li><a href="/manage/hinh-anh" class="active">Hình Ảnh</a></li>
+                            <li><a href="/manage/mau-sac">Màu Sắc</a></li>
+                            <li><a href="/manage/size">Size</a></li>
+                            <li><a href="/manage/giay/old">Giày lỗi</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/expense1.svg" alt="img"><span> Quản Lý Hóa Đơn</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/bill/offline">Hóa đơn tại quầy</a></li>
+                            <li><a href="/manage/bill/online">Quản lý hóa đơn online</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/users1.svg" alt="img"><span> Quản Lý Khách Hàng</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/khach-hang">Khách Hàng</a></li>
+                            <li><a href="/manage/dia-chi">Địa Chỉ </a></li>
+                            <li><a href="/manage/loai-khach-hang">Loại Khách Hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/purchase1.svg" alt="img"><span> Lịch sử thanh toán</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/history/delivery">Thanh toán tiền mặt</a></li>
+                            <li><a href="/manage/history/pay">Thanh toán chuyển khoản </a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/users1.svg" alt="img"><span> Quản Lý Nhân Viên</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/chuc-vu">Chức Vụ</a></li>
+                            <li><a href="/manage/nhan-vien">Nhân Viên</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);">
+                            <img src="/images/img/icons/transfer1.svg" alt="img"/>
+                            <span>Quản lý Khuyến Mãi</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul>
+                            <li><a href="/manage/voucher">Khuyến Mãi Chung</a></li>
+                            <li><a href="/manage/voucher-product">Khuyến Mãi Sản Phẩm</a></li>
+                            <li><a href="/manage/voucher-bill">Khuyến Mãi Hóa Đơn</a></li>
+                            <li><a href="/manage/voucher-ship">Khuyến Mãi Giao Hàng</a></li>
+                            <li><a href="/manage/voucher-ship">Khuyến Mãi Khách Hàng</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/manage/giao-hang"><i data-feather="layers"></i><span> Quản lý giao hàng</span> </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<form th:object="${hinhAnh}" method="post" th:action="@{'/manage/hinh-anh/viewUpdate/' + ${hinhAnh.idHinhAnh}}" enctype="multipart/form-data" onsubmit="return validateHinhAnhForm()" name="hinhAnhForm">
+    <div class="page-wrapper">
+        <div class="content">
+            <div class="page-header">
+                <div class="page-title">
+                    <h4>Update Hình Ảnh </h4>
+                    <h6>Quản Lý Hình Ảnh</h6>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Mã</label>
+                                <input type="text" th:field="*{maAnh}" >
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Trạng Thái</label>
+                                <select class="select" th:field="*{trangThai}">
+                                    <option th:each="loc : ${dsTrangThai.entrySet()}" th:value="${loc.key}"
+                                            th:text="${loc.value}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Ảnh 1</label>
+                                <img th:src="@{'/images/imgsProducts/'+ ${hinhAnh.url1}}"
+                                     style="max-width: 150px; max-height: 150px;"><br>
+                                <input name="anh1" type="file" id="imageInput" accept="image/*"
+                                       onchange="previewImage(event)">
+                                <br><br><img id="imagePreview" src="#" alt="Ảnh mô tả"
+                                             style="display: none; max-width: 150px; max-height: 150px;">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Ảnh 2</label>
+                                <img th:src="@{'/images/imgsProducts/'+ ${hinhAnh.url2}}"
+                                     style="max-width: 150px; max-height: 150px;"><br>
+                                <input name="anh2" type="file" id="anh2" accept="image/*"
+                                       onchange="previewImage(event)">
+                                <br><br><img id="anh22" src="#" alt="Ảnh mô tả"
+                                             style="display: none; max-width: 150px; max-height: 150px;">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Ảnh 3</label>
+                                <img th:src="@{'/images/imgsProducts/'+ ${hinhAnh.url3}}"
+                                     style="max-width: 150px; max-height: 150px;"><br>
+                                <input name="anh3" type="file" id="anh3" accept="image/*"
+                                       onchange="previewImage(event)">
+                                <br><br><img id="anh33" src="#" alt="Ảnh mô tả"
+                                             style="display: none; max-width: 150px; max-height: 150px;">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Ảnh 4</label>
+                                <img th:src="@{'/images/imgsProducts/'+ ${hinhAnh.url4}}"
+                                     style="max-width: 150px; max-height: 150px;"><br>
+                                <input name="anh4" type="file" id="anh4" accept="image/*"
+                                       onchange="previewImage(event)">
+                                <br><br><img id="anh44" src="#" alt="Ảnh mô tả"
+                                             style="display: none; max-width: 150px; max-height: 150px;">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <button type="submit" class="btn btn-submit me-2">Submit</button>
+                            <a href="/manage/hinh-anh" class="btn btn-cancel">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div th:if="${message}" id="toast-container" class="toast-container toast-top-right">
+    <div class="toast toast-success" aria-live="polite" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Thành Công</div>
+        <div class="toast-message">Dữ liệu của bạn đã được Thêm</div>
+    </div>
+</div>
+<div th:if="${maHinhAnhError}" id="warning1" class="toast-container toast-top-right">
+    <div class="toast toast-error" aria-live="assertive" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">Mã không được trống.</div>
+    </div>
+</div>
+<div th:if="${Errormessage}" id="checkMa" class="toast-container toast-top-right">
+    <div class="toast toast-error" aria-live="assertive" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">Mã Ảnh đã tồn tại.</div>
+    </div>
+</div>
+<script src="/js/jquery-3.6.0.min.js"></script>
+
+<script src="/js/feather.min.js"></script>
+
+<script src="/js/jquery.slimscroll.min.js"></script>
+
+<script src="/js/jquery.dataTables.min.js"></script>
+<script src="/js/dataTables.bootstrap4.min.js"></script>
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+
+<script src="/plugins/select2/js/select2.min.js"></script>
+
+<script src="/plugins/sweetalert/sweetalert2.all.min.js"></script>
+<script src="/plugins/sweetalert/sweetalerts.min.js"></script>
+
+<script src="/js/script.js"></script>
+<script src="/plugins/alertify/custom-alertify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
+<script>
+    function previewImage(event) {
+        const imageInput = document.getElementById('imageInput');
+        const anh2 = document.getElementById('anh2');
+        const anh3 = document.getElementById('anh3');
+        const anh4 = document.getElementById('anh4');
+        const imagePreview = document.getElementById('imagePreview');
+        const anh22 = document.getElementById('anh22');
+        const anh33 = document.getElementById('anh33');
+        const anh44 = document.getElementById('anh44');
+
+        if (imageInput.files && imageInput.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            };
+
+            reader.readAsDataURL(imageInput.files[0]);
+        }
+        //
+        if (anh2.files && anh2.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                anh22.src = e.target.result;
+                anh22.style.display = 'block';
+            };
+
+            reader.readAsDataURL(anh2.files[0]);
+        }
+        //
+        if (anh3.files && anh3.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                anh33.src = e.target.result;
+                anh33.style.display = 'block';
+            };
+
+            reader.readAsDataURL(anh3.files[0]);
+        }
+        //
+        if (anh4.files && anh4.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                anh44.src = e.target.result;
+                anh44.style.display = 'block';
+            };
+
+            reader.readAsDataURL(anh4.files[0]);
+        }
+    }
+</script>
+<script>
+    setTimeout(function () {
+        var successToast = document.getElementById('toast-container');
+        if (successToast) {
+            successToast.style.display = 'none';
+        }
+    }, 5000);
+    //
+    setTimeout(function () {
+        var warning1 = document.getElementById('warning1');
+        if (warning1) {
+            warning1.style.display = 'none';
+        }
+    }, 5000);
+    //
+    setTimeout(function () {
+        var checkMa = document.getElementById('checkMa');
+        if (checkMa) {
+            checkMa.style.display = 'none';
+        }
+    }, 5000);
+</script>
+<script>
+    function validateHinhAnhForm() {
+        var maAnh = document.forms["hinhAnhForm"]["maAnh"].value;
+
+        if (maAnh === "") {
+            showAlert("Vui lòng nhập Mã Ảnh");
+            return false;
+        }
+
+        if (!maAnh.match(/^[a-zA-Z0-9]+$/)) {
+            showAlert("Mã Ảnh chỉ được chứa chữ cái và số");
+            return false;
+        }
+
+        for (var i = 1; i <= 4; i++) {
+            var inputId = "anh" + i;
+            var previewId = "anh" + i + i;
+
+            var fileInput = document.forms["hinhAnhForm"][inputId];
+            var imagePreview = document.getElementById(previewId);
+
+            if (fileInput.files.length === 0) {
+                showAlert("Vui lòng chọn ảnh " + i);
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    function showAlert(message) {
+        alertify.alert(message).setting({
+            'title': 'Thông báo',
+            'label': 'Đồng ý',
+        }).show();
+    }
+</script>
+</body>
+</html>
