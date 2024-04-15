@@ -111,9 +111,9 @@
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li class="active"><a th:href="@{'/buyer/'}">Home</a></li>
+                        <li><a th:href="@{'/buyer/'}">Home</a></li>
                         <li><a th:href="@{'/buyer/shop'}">Shop</a></li>
-                        <li><a th:href="@{'/buyer/about'}">About Us</a></li>
+                        <li class="active"><a th:href="@{'/buyer/about'}">About Us</a></li>
                         <li><a th:href="@{'/buyer/blog'}">Blog</a>
                             <ul class="dropdown">
                                 <li><a th:href="@{'/buyer/blog/blog-details'}">Blog Details</a></li>
@@ -179,7 +179,8 @@
                         <img src="/images/img/icon/cart.png" alt="">
                         <span class="cart-count"
                               style="position: absolute; height:20px; width: 25px; top: -13px; left: 3px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;"
-                              th:text="${sumProductInCart}"></span>
+                              th:text="${sumProductInCart}">
+                        </span>
                     </a>
                 </div>
             </div>
@@ -194,239 +195,172 @@
 
 
 <!-- Hero Section Begin -->
-<section class="hero">
-    <div class="hero__slider owl-carousel">
-        <div class="hero__items set-bg" data-setbg="/images/img/hero/hero-1.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-5 col-lg-7 col-md-8">
-                        <div class="hero__text">
-                            <a th:href="@{'/buyer/shop'}" class="primary-btn">Shop now <span class="arrow_right"></span></a>
-
-                        </div>
-                    </div>
-                </div>
+<div class="bg-light">
+    <div class="container py-5">
+        <div class="row h-100 align-items-center py-5">
+            <div class="col-lg-6">
+                <h1 class="display-4">About Teezy Shop</h1>
+                <p class="lead text-muted mb-0">Thành lập vào ngày 01/04/2024</p>
+                <p class="lead text-muted">Đồng sáng lập bởi 4 thành viên <a href="#" class="text-muted">
+                    <u>Thùy, Quân, Thực, Ngọc</u></a>
+                </p>
             </div>
-        </div>
-        <div class="hero__items set-bg" data-setbg="/images/img/hero/hero-2.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-5 col-lg-7 col-md-8">
-                        <div class="hero__text">
-
-                            <a th:href="@{'/shop'}" class="primary-btn">Shop now <span class="arrow_right"></span></a>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!--            Thay ảnh-->
+            <div class="col-lg-6 d-none d-lg-block"><img src="https://bootstrapious.com/i/snippets/sn-about/illus.png"
+                                                         alt="" class="img-fluid"></div>
         </div>
     </div>
-</section>
+</div>
 <!-- Hero Section End -->
 
 
+<div class="bg-white py-5">
+
+    <div class="container py-5">
+        <!--Sứ mệnh của chúng tôi-->
+        <div class="row align-items-center mb-5">
+            <div class="col-lg-6 order-2 order-lg-1"><i class="fa fa-bar-chart fa-2x mb-3 text-primary"></i>
+                <h2 class="font-weight-light">Sứ mệnh của chúng tôi</h2>
+                <p class="font-italic text-muted mb-4">Chúng tôi muốn mang đến cho khách hàng trải nghiệm mua sắm trực
+                    tuyến tiện lợi và an toàn. Khách hàng có thể dễ dàng tìm kiếm và lựa chọn những đôi giày phù hợp với
+                    nhu cầu của mình, đồng thời được hưởng các dịch vụ khách hàng chu đáo như đổi trả hàng miễn phí,
+                    giao hàng tận nơi,...</p>
+                <a href="/buyer/shop"
+                   class="btn btn-light px-5 rounded-pill shadow-sm">Khám phá những đôi giày tuyệt vời nhất và chỉ dành
+                    riêng cho bạn!</a>
+            </div>
+            <div class="col-lg-5 px-5 mx-auto order-1 order-lg-2"><img
+                    src="https://bootstrapious.com/i/snippets/sn-about/img-1.jpg" alt="" class="img-fluid mb-4 mb-lg-0">
+            </div>
+        </div>
+
+        <!--Câu chuyện của chúng tôi-->
+        <div class="row align-items-center">
+            <div class="col-lg-5 px-5 mx-auto"><img src="https://bootstrapious.com/i/snippets/sn-about/img-2.jpg" alt=""
+                                                    class="img-fluid mb-4 mb-lg-0"></div>
+            <div class="col-lg-6"><i class="fa fa-leaf fa-2x mb-3 text-primary"></i>
+                <h2 class="font-weight-light">Our Story</h2>
+                <p class="font-italic text-muted mb-4">Câu chuyện của Teezy Shop bắt đầu từ niềm đam mê mãnh liệt
+                    với những đôi giày mà bọn mình đã thấy qua trên các trang xã hôi, các tờ tạp chí .... Nhìn người mẫu
+                    mang những đôi giày đa dạng về kiểu dáng và màu sắc khiến bộ đồ họ mặc trông thật đẹp và khiến đôi
+                    chân của họ trông thật sự nổi bật...
+
+                    Sau nhiều tháng ấp ủ, Nhóm mình đã quyết định biến đam mê bất chợt đó thành hiện thực bằng
+                    cách thành lập Teezy Shop</p>
+                <!--                <a href="#" class="btn btn-light px-5 rounded-pill shadow-sm">Learn-->
+                <!--                    More</a>-->
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Banner Section Begin -->
-<section class="banner spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-7 offset-lg-4">
-                <div class="banner__item">
-                    <div class="banner__item__pic">
-                        <img src="/images/img/banner/banner-1.jpg" alt="">
-                    </div>
-                    <div class="banner__item__text">
-                        <h2>Clothing Collections 2030</h2>
-                        <a href="/buyer/shop">Shop now</a>
-                    </div>
-                </div>
-            </div>
+
+<div class="bg-light py-5">
+    <div class="container py-5">
+        <div class="row mb-4">
             <div class="col-lg-5">
-                <div class="banner__item banner__item--middle">
-                    <div class="banner__item__pic">
-                        <img src="/images/img/banner/banner-2.jpg" alt="">
-                    </div>
-                    <div class="banner__item__text">
-                        <h2>Accessories</h2>
-                        <a href="/buyer/shop">Shop now</a>
-                    </div>
+                <h2 class="display-4 font-weight-light">Các thành viên</h2>
+                <p class="font-italic text-muted">Trẻ tuổi, hết mình vì đam mê, không say không về :)))</p>
+            </div>
+        </div>
+
+        <div class="row text-center">
+            <!-- Team item-->
+            <div class="col-xl-3 col-sm-6 mb-5">
+                <div class="bg-white rounded shadow-sm py-5 px-4"><img
+                        src="https://bootstrapious.com/i/snippets/sn-about/avatar-4.png" alt="" width="100"
+                        class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                    <h5 class="mb-0">Thùy</h5><span
+                            class="small text-uppercase text-muted">Trưởng nhóm - DEV, Test</span>
+                    <ul class="social mb-0 list-inline mt-3">
+                        <li class="list-inline-item"><a href="#" class="social-link"><i
+                                class="fa fa-facebook-f"></i></a></li>
+                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-instagram"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <div class="col-lg-7">
-                <div class="banner__item banner__item--last">
-                    <div class="banner__item__pic">
-                        <img src="/images/img/banner/banner-3.jpg" alt="">
-                    </div>
-                    <div class="banner__item__text">
-                        <h2>Shoes Spring 2030</h2>
-                        <a href="/buyer/shop">Shop now</a>
-                    </div>
+            <!-- End-->
+
+            <!-- Team item-->
+            <div class="col-xl-3 col-sm-6 mb-5">
+                <div class="bg-white rounded shadow-sm py-5 px-4"><img
+                        src="https://bootstrapious.com/i/snippets/sn-about/avatar-3.png" alt="" width="100"
+                        class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                    <h5 class="mb-0">Quân</h5><span
+                            class="small text-uppercase text-muted">Thành viên - DEV, Test</span>
+                    <ul class="social mb-0 list-inline mt-3">
+                        <li class="list-inline-item"><a href="#" class="social-link"><i
+                                class="fa fa-facebook-f"></i></a></li>
+                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-instagram"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                    </ul>
                 </div>
             </div>
+            <!-- End-->
+
+            <!-- Team item-->
+            <div class="col-xl-3 col-sm-6 mb-5">
+                <div class="bg-white rounded shadow-sm py-5 px-4"><img
+                        src="https://bootstrapious.com/i/snippets/sn-about/avatar-2.png" alt="" width="100"
+                        class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                    <h5 class="mb-0">Thực</h5><span
+                            class="small text-uppercase text-muted">Thành viên - DEV, Test</span>
+                    <ul class="social mb-0 list-inline mt-3">
+                        <li class="list-inline-item"><a href="#" class="social-link"><i
+                                class="fa fa-facebook-f"></i></a></li>
+                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-instagram"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- End-->
+
+            <!-- Team item-->
+            <div class="col-xl-3 col-sm-6 mb-5">
+                <div class="bg-white rounded shadow-sm py-5 px-4"><img
+                        src="https://bootstrapious.com/i/snippets/sn-about/avatar-1.png" alt="" width="100"
+                        class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                    <h5 class="mb-0">Nguyễn Minh Ngọc</h5><span class="small text-uppercase text-muted">Thành viên - DEV, Test</span>
+                    <ul class="social mb-0 list-inline mt-3">
+                        <li class="list-inline-item"><a href="https://www.facebook.com/ngoc209203"
+                                                        class="social-link"><i
+                                class="fa fa-facebook-f"></i></a></li>
+                        <li class="list-inline-item"><a href="https://twitter.com/Minhngoc209" class="social-link"><i
+                                class="fa fa-twitter"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a href="https://www.instagram.com/nguyen_minh_ngoc_209/"
+                                                        class="social-link"><i class="fa fa-instagram"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a
+                                href="https://www.linkedin.com/in/nguy%E1%BB%85n-ng%E1%BB%8Dc-03430529b/"
+                                class="social-link"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- End-->
+            <!-- Banner Section End -->
+
+            <!-- Product Section Begin -->
+
+
+            <!-- Product Section End -->
         </div>
     </div>
-</section>
-<!-- Banner Section End -->
-
-<!-- Product Section Begin -->
-
-<section class="product spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <ul class="filter__controls">
-                    <li class="active" data-filter=".new-arrivals">Hàng mới về</li>
-                    <li data-filter=".best-seller">Hàng bán chạy</li>
-
-                </ul>
-            </div>
-        </div>
-        <div class="row product__filter">
-
-            <th:block th:each="product : ${listCTGModelNew}">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" style="border-radius:20px;"
-                             th:attr="data-setbg=@{'/images/imgsProducts/' + ${product.hinhAnh}}">
-                            <span class="label">New</span>
-                            <ul class="product__hover">
-                                <li th:if="${heartLogged}">
-                                    <a th:href="@{'/buyer/heart/' + ${product.idGiay} +'/' + ${product.idMau}}">
-                                        <img src="/images/img/icon/heart.png" alt="">
-                                        <span>Yêu thích</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="/images/img/icon/compare.png" alt="">
-                                        <span>So sánh</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a th:href="@{'/buyer/shop-details/' + ${product.idGiay} +'/' + ${product.idMau}}">
-                                        <img src="/images/img/icon/view.png" alt="">
-                                        <span>Xem chi tiết</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h6 style="margin-top:  10px; margin-bottom: 10px " th:text="${product.tenGiay}"></h6>
-                            <h5 th:if="${product.minPrice != product.minPriceTruocGiam}"
-                                style="font-weight: bold; margin-bottom: 10px; "
-                                th:text="'₫' + ${#numbers.formatDecimal(product.minPriceTruocGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
-                            <h5 style="font-weight: bold; margin-bottom: 10px; "
-                                th:text="'₫' + ${#numbers.formatDecimal(product.minPrice, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
-                            <div class="product__color__select" style="display: flex">
-                                <h6 style="font-size: 12px ;" th:text="${product.slTon}+ ' ' + 'có sẵn'"></h6>
-                                <h6 style="font-style: italic; font-size: 12px ;margin-left: 100px;"
-                                    th:text="${product.soLuongDaBan} + ' ' + 'đã bán'"></h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </th:block>
-
-            <th:block th:each="product : ${listCTGModelBestSeller}">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix best-seller">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" style="border-radius:20px;"
-                             th:attr="data-setbg=@{'/images/imgsProducts/' + ${product.hinhAnh}}">
-                            <span class="label">Bán chạy</span>
-                            <ul class="product__hover">
-                                <li th:if="${heartLogged}">
-                                    <a th:href="@{'/buyer/heart/' + ${product.idGiay} +'/' + ${product.idMau}}">
-                                        <img src="/images/img/icon/heart.png" alt="">
-                                        <span>Yêu thích</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="/images/img/icon/compare.png" alt="">
-                                        <span>So sánh</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a th:href="@{'/buyer/shop-details/' + ${product.idGiay} +'/' + ${product.idMau}}">
-                                        <img src="/images/img/icon/view.png" alt="">
-                                        <span>Xem chi tiết</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-
-                            <h6 style="margin-top:  10px; margin-bottom: 10px " th:text="${product.tenGiay}"></h6>
-                            <h5 th:if="${product.minPrice != product.minPriceTruocGiam}"
-                                style="font-weight: bold; margin-bottom: 10px; "
-                                th:text="'₫' + ${#numbers.formatDecimal(product.minPriceTruocGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
-                            <h5 style="font-weight: bold; margin-bottom: 10px; "
-                                th:text="'₫' + ${#numbers.formatDecimal(product.minPrice, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
-                            <div class="product__color__select" style="display: flex">
-                                <h6 style="font-size: 12px ;" th:text="${product.slTon}+ ' ' + 'có sẵn'"></h6>
-                                <h6 style="font-style: italic; font-size: 12px ;margin-left: 100px;"
-                                    th:text="${product.soLuongDaBan} + ' ' + 'đã bán'"></h6>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-            </th:block>
-
-            <th:block th:each="product : ${listCTGModelSaleOff}">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix sale-off">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" style="border-radius:20px;"
-                             th:attr="data-setbg=@{'/images/imgsProducts/' + ${product.hinhAnh}}">
-                            <span class="label">Khuyến mãi</span>
-                            <ul class="product__hover">
-                                <li th:if="${heartLogged}">
-                                    <a th:href="@{'/buyer/heart/' + ${product.idGiay} +'/' + ${product.idMau}}">
-                                        <img src="/images/img/icon/heart.png" alt="">
-                                        <span>Yêu thích</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="/images/img/icon/compare.png" alt="">
-                                        <span>So sánh</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a th:href="@{'/buyer/shop-details/' + ${product.idGiay} +'/' + ${product.idMau}}">
-                                        <img src="/images/img/icon/view.png" alt="">
-                                        <span>Xem chi tiết</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-
-                            <h6 style="margin-top:  10px; margin-bottom: 10px " th:text="${product.tenGiay}"></h6>
-                            <h5 th:if="${product.minPrice != product.minPriceTruocGiam}"
-                                style="font-weight: bold; margin-bottom: 10px; "
-                                th:text="'₫' + ${#numbers.formatDecimal(product.minPriceTruocGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
-                            <h5 style="font-weight: bold; margin-bottom: 10px;"
-                                th:text="'₫' + ${#numbers.formatDecimal(product.minPrice, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
-                            <div class="product__color__select" style="display: flex">
-                                <h6 style="font-size: 12px ;" th:text="${product.slTon}+ ' ' + 'có sẵn'"></h6>
-                                <h6 style="font-style: italic; font-size: 12px ;margin-left: 100px;"
-                                    th:text="${product.soLuongDaBan} + ' ' + 'đã bán'"></h6>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-            </th:block>
-
-        </div>
-    </div>
-</section>
-
-<!-- Product Section End -->
-
+</div>
 
 <!-- Footer Section Begin -->
 <footer class="footer">
@@ -437,7 +371,8 @@
                     <div class="footer__logo">
                         <a href="#"><img src="/Logo.png" alt=""></a>
                     </div>
-                    <p> Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế.</p>
+                    <p> Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả
+                        thiết kế.</p>
                     <a href="#"><img src="img/payment.png" alt=""></a>
                 </div>
             </div>
@@ -467,7 +402,8 @@
                 <div class="footer__widget">
                     <h6>NewLetter</h6>
                     <div class="footer__newslatter">
-                        <p>Hãy là người đầu tiên biết về hàng mới, sách tra cứu, khuyến mại và khuyến mãi!</p>
+                        <p>Hãy là người đầu tiên biết về hàng mới, sách tra cứu, khuyến mại và khuyến
+                            mãi!</p>
                         <form action="#">
                             <input type="text" placeholder="Your email">
                             <button type="submit"><span class="icon_mail_alt"></span></button>
