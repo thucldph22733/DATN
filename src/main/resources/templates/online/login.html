@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Control Shop</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
+</head>
+<style>
+    body {
+        background-image: url('/images/wall2.png');
+        background-size: 100% auto;
+        background-position: center center;
+        background-attachment: fixed;
+    }
+    .form {
+        background-color: whitesmoke;
+        display: block;
+        margin-left: 40% ;
+        margin-top: 13.5%;
+        padding: 1rem;
+        width: 70%;
+        max-width: 350px;
+        border-radius: 0.5rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-title {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+        text-align: center;
+        color: #dd182c;
+    }
+
+    .input-container {
+        position: relative;
+        display: flex;
+        margin-bottom: 8px;
+    }
+
+    .input-container input,
+    .form button {
+        outline: none;
+        border: 1px solid #dd182c;
+    }
+
+    .input-container input {
+        background-color: #fff;
+        padding: 1rem;
+        padding-right: 3rem;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        width: 100%;
+        height: 10px;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .input-container span {
+        display: grid;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        place-content: center;
+    }
+
+    .input-container span svg {
+        color: #9CA3AF;
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .submit {
+        display: block;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        background-color: #dd182c;
+        cursor: pointer;
+        color: #ffffff;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        font-weight: 500;
+        width: 100%;
+        border-radius: 0.5rem;
+        text-transform: uppercase;
+    }
+
+    .signup-link {
+        color: #dd182c;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        text-align: center;
+        margin-top: 11%;
+    }
+
+    .signup-link a,
+    .link_design a,
+    .forgotPassword {
+        text-decoration: underline;
+    }
+
+    .forgotPassword {
+        text-align: center;
+        position: relative;
+        margin-left: 33%;
+        width: 100%;
+        bottom: -15px;
+        font-size: 0.9rem;
+        align-self: center;
+        font-weight: bold;
+        color: #2c1001;
+    }
+
+    .forgotPassword::after {
+        position: absolute;
+        content: '';
+        width: 200%;
+        height: 1px;
+        bottom: -13px;
+        margin-left: -150%;
+        background: #040404;
+    }
+
+    .forgotPassword:hover {
+        text-decoration: underline;
+    }
+
+
+</style>
+<body>
+
+<form  class="form" method="post">
+    <p class="form-title">Sign in to your account</p>
+    <span th:text="${messageLogin}" style="color: red;"></span>
+    <div class="input-container">
+        <input placeholder="User name" name="username" type="text" id="username">
+    </div>
+    <div class="input-container">
+        <input placeholder="Password" name="password" type="password" class="form-control" id="password">
+    </div>
+    <button  class="submit" onclick="login()" type="button" id="loginButton">
+        Login
+    </button>
+    <a class="forgotPassword" th:href="@{'/buyer/reset'}">Forggot Password ?</a>
+
+    <p class="signup-link">
+        No Accounts ?
+        <a th:href="@{'/buyer/register'}">Sign Up</a>
+    </p>
+</form>
+<div id="loginSuccessModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p th:text="${loginSuccessMessage}" style="color: green;"></p>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script >
+    function login(){
+        var formData = new FormData();
+        let username = document.getElementById("username").value;
+        let password = document.getElementById("password").value;
+        formData.append("username",username);
+        formData.append("password",password);
+        $.ajax({
+            type: "POST",
+            url: "/buyer/login",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                console.log("succes " + response);
+                if (response === 'Login thanh cong' ){
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Login successful",
+                        showConfirmButton: true,
+                        confirmButtonText: "OK",
+
+                    });
+                    setTimeout(() => {
+                        console.log('Hàm đã được gọi sau 2 giây.');
+                        window.location.href = "http://localhost:8080/buyer/home";
+                    }, 3000);
+
+
+                }else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Username and Password incorrect!",
+
+                    });
+
+                }
+
+
+            },
+            error: function (error) {
+                console.log("error " + error)
+            }
+        })
+
+    }
+
+</script>
+
+
+</body>
+</html>

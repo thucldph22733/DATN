@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="description" content="POS - Bootstrap Admin Template">
+    <meta name="keywords"
+          content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
+    <meta name="author" content="Dreamguys - Bootstrap Admin Template">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Sneaker Shop - Admin</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/plugins/icons/flags/flags.css">
+
+    <link rel="stylesheet" href="/css/animate.css">
+
+    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+
+    <link rel="stylesheet" href="/css/dataTables.bootstrap4.min.css">
+
+    <link rel="stylesheet" href="/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/plugins/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/plugins/alertify/alertify.min.css"/>
+    <link rel="stylesheet" href="/plugins/toastr/toatr.css"/>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Thêm link thư viện Alertify -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/themes/default.min.css"/>
+    <style>
+        .alertify .ajs-message {
+            background-color: black;
+            color: #ffffff;
+        }
+
+        /* Thay đổi màu nền của tiêu đề */
+        .alertify .ajs-header {
+            background-color: coral;
+            color: #ffffff;
+        }
+
+        /* Thay đổi màu nền của các nút */
+        .alertify .ajs-buttons .ajs-ok {
+            background-color: #2ecc71;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="mini-sidebar">
+<div id="global-loader">
+    <div class="whirly-loader"></div>
+</div>
+<div class="main-wrapper">
+    <div class="header">
+
+        <div class="header-left active">
+            <a href="/manage" class="logo">
+                <img src="/images/img/logo.png" alt="">
+            </a>
+            <a href="/manage" class="logo-small">
+                <img src="/images/img/logo-small.png" alt="">
+            </a>
+            <a id="toggle_btn" href="javascript:void(0);">
+            </a>
+        </div>
+
+        <a id="mobile_btn" class="mobile_btn" href="#sidebar">
+            <span class="bar-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+            </span>
+        </a>
+
+        <ul class="nav user-menu">
+
+            <li class="nav-item dropdown has-arrow flag-nav">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
+                    <i class="flag flag-vn"></i>
+                </a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                    <img src="/images/img/icons/notification-bing.svg" alt="img">
+<!--                    <span-->
+
+<!--                        class="badge rounded-pill" th:text="${soThongBao}"></span>-->
+
+                </a>
+                <div class="dropdown-menu notifications">
+                    <div class="topnav-dropdown-header">
+                        <span class="notification-title">Notifications</span>
+                        <a href="javascript:void(0)" class="clear-noti"> Clear All </a>
+                    </div>
+
+                    <div class="noti-content">
+                        <ul class="notification-list">
+
+<!--                            <th:block  th:each="x : ${listThongBao}">-->
+<!--                                <li th:if="${x.trangThai == 3}"class="notification-message">-->
+<!--                                    <a href="/manage/bill/online">-->
+<!--                                        <div class="media d-flex">-->
+<!--                                        <span class="avatar flex-shrink-0">-->
+<!--                                        <img alt="" src="/images/img/profiles/avatar-02.jpg">-->
+<!--                                        </span>-->
+<!--                                            <div class="media-body flex-grow-1">-->
+<!--                                                <p class="noti-details" >-->
+<!--                                                    <span class="noti-title" th:text="${x.khachHang.hoTenKH}"></span>-->
+<!--                                                    <span th:text="${x.noiDungTB}"></span>-->
+<!--                                                    <span class="noti-title" th:text="${x.hoaDon.maHD}"></span>-->
+<!--                                                </p>-->
+<!--                                                <p class="noti-time">-->
+<!--                                                    <span class="notification-time"th:text="${#dates.format(x.tgTB, 'HH:mm yyyy-MM-dd')}"></span>-->
+<!--                                                </p>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                </li>-->
+<!--                            </th:block>-->
+
+                        </ul>
+                    </div>
+
+                    <div class="topnav-dropdown-footer">
+                        <a href="activities.html">View all Notifications</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown has-arrow main-drop">
+                <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
+<!--                    <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">-->
+                    <span class="status online"></span></span>
+                </a>
+                <div class="dropdown-menu menu-drop-user">
+                    <div class="profilename">
+
+                        <div class="profileset">
+
+<!--                            <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">-->
+<!--                            <span class="status online"></span></span>-->
+<!--                            <div class="profilesets">-->
+<!--                                <h6 th:text="${session.managerLogged.hoTenNV}"></h6>-->
+<!--                                <h5 th:text="${session.managerLogged.chucVu.tenCV}"></h5>-->
+<!--                            </div>-->
+
+                        </div>
+
+                        <hr class="m-0">
+                        <a class="dropdown-item" href="profile.html"> <i class="me-2" data-feather="user"></i> My
+                            Profile</a>
+                        <a class="dropdown-item" href="generalsettings.html"><i class="me-2"
+                                                                                data-feather="settings"></i>Settings</a>
+                        <hr class="m-0">
+                        <a class="dropdown-item logout pb-0" href="/logout"><img src="/images/img/icons/log-out.svg"
+                                                                                 class="me-2" alt="img">Logout</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <div class="dropdown mobile-user-menu">
+            <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+               aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="profile.html">Thông tin cá nhân</a>
+                <a class="dropdown-item" href="generalsettings.html">Cài đặt</a>
+                <a class="dropdown-item" href="signin.html">Đăng xuất</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-inner slimscroll">
+            <div id="sidebar-menu" class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="/manage/"><img src="/images/iconlogo.png" alt="img"><span>Trang chủ nè</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/manage/thongke"><img src="/images/img/icons/dashboard.svg" alt="img"><span> Thống Kê</span>
+                        </a>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/product.svg" alt="img"><span> Quản lý Giày</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/chat-lieu">Chất Liệu</a></li>
+                            <li><a href="/manage/giay" class="active">Giày</a></li>
+                            <li><a href="/manage/hang">Hãng</a></li>
+                            <li><a href="/manage/hinh-anh">Hình Ảnh</a></li>
+                            <li><a href="/manage/mau-sac">Màu Sắc</a></li>
+                            <li><a href="/manage/size">Size</a></li>
+                            <li><a href="/manage/giay/old">Giày lỗi</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/expense1.svg" alt="img"><span> Quản Lý Hóa Đơn</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/bill/offline">Hóa đơn tại quầy</a></li>
+                            <li><a href="/manage/bill/online">Quản lý hóa đơn online</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/users1.svg" alt="img"><span> Quản Lý Khách Hàng</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/khach-hang">Khách Hàng</a></li>
+                            <li><a href="/manage/dia-chi">Địa Chỉ </a></li>
+                            <li><a href="/manage/loai-khach-hang">Loại Khách Hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/purchase1.svg" alt="img"><span> Lịch sử thanh toán</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/history/delivery">Thanh toán tiền mặt</a></li>
+                            <li><a href="/manage/history/pay">Thanh toán chuyển khoản </a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/users1.svg" alt="img"><span> Quản Lý Nhân Viên</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/chuc-vu">Chức Vụ</a></li>
+                            <li><a href="/manage/nhan-vien">Nhân Viên</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);">
+                            <img src="/images/img/icons/transfer1.svg" alt="img"/>
+                            <span>Quản lý Khuyến Mãi</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul>
+                            <li><a href="/manage/voucher">Khuyến Mãi Chung</a></li>
+                            <li><a href="/manage/voucher-product">Khuyến Mãi Sản Phẩm</a></li>
+                            <li><a href="/manage/voucher-bill">Khuyến Mãi Hóa Đơn</a></li>
+                            <li><a href="/manage/voucher-ship">Khuyến Mãi Giao Hàng</a></li>
+                            <li><a href="/manage/voucher-ship">Khuyến Mãi Khách Hàng</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/manage/giao-hang"><i data-feather="layers"></i><span> Quản lý giao hàng</span> </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <form th:object="${giay}" method="post" th:action="@{/manage/giay/viewAdd/add}" onsubmit="return validateGiayForm()" name="giayForm">
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h4>Thêm Giày</h4>
+                        <h6>Quản Lý Giày</h6>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>Mã Giày</label>
+                                    <input type="text" th:field="*{maGiay}" >
+                                    <br><br>
+                                    <strong th:if="${#fields.hasErrors('maGiay')}"
+                                            class="alert alert-danger alert-dismissible fade"
+                                            role="alert" th:errors="*{maGiay}"></strong>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Mô tả</label>
+                                    <textarea class="form-control" th:field="*{moTa}" ></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="row">
+                                    <div class="col-lg-9 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label>Tên Giày</label>
+                                            <input type="text" th:field="*{tenGiay}" >
+                                            <br><br>
+                                            <strong th:if="${#fields.hasErrors('tenGiay')}"
+                                                    class="alert alert-danger alert-dismissible fade"
+                                                    role="alert" th:errors="*{tenGiay}"></strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label>Hãng</label>
+                                            <select class="select" th:field="*{hang}" id="loc" name="loc">
+                                                <option th:each="loc : ${hang}" th:value="${loc.idHang}"
+                                                        th:text="${loc.tenHang}"></option>
+                                            </select>
+                                            <br><br>
+                                            <strong th:if="${#fields.hasErrors('hang')}"
+                                                    class="alert alert-danger alert-dismissible fade show"
+                                                    role="alert" th:errors="*{hang}"></strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-2 col-2 ps-0">
+                                        <div class="add-icon">
+                                            <a href="javascript:void(0);" id="modal-hang" data-toggle="modal"
+                                               data-target="#myModal"><img
+                                                    src="/images/img/icons/plus1.svg"
+                                                    alt="img"></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label>Chất Liệu</label>
+                                            <select class="select" th:field="*{chatLieu}" id="chatLieu" name="chatLieu">
+                                                <option th:each="loc : ${chatLieu}" th:value="${loc.idChatLieu}"
+                                                        th:text="${loc.tenChatLieu}"></option>
+                                            </select>
+                                            <br><br>
+                                            <strong th:if="${#fields.hasErrors('chatLieu')}"
+                                                    class="alert alert-danger alert-dismissible fade show"
+                                                    role="alert" th:errors="*{chatLieu}"></strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-2 col-2 ps-0">
+                                        <div class="add-icon">
+                                            <a href="javascript:void(0);" id="modal-chatLieu" data-toggle="modal"
+                                               data-target="#myModal"><img
+                                                    src="/images/img/icons/plus1.svg"
+                                                    alt="img"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--                            <div class="col-lg-6 col-sm-6 col-12">-->
+                            <!--                                <div class="form-group">-->
+                            <!--                                    <label>Trạng Thái</label>-->
+                            <!--                                    <select class="select" th:field="*{trangThai}" id="trangthai" name="trangThai">-->
+                            <!--                                        <option th:each="loc : ${dsTrangThai.entrySet()}" th:value="${loc.key}"-->
+                            <!--                                                th:text="${loc.value}"></option>-->
+                            <!--                                    </select>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <div class="col-lg-12">
+                                <button type="submit" class="btn btn-submit me-2">Submit</button>
+                                <a href="/manage/giay" class="btn btn-cancel">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Hãng-->
+
+<div class="modal fade" id="myModal-hang" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel-hang"></h5>
+                <button type="button" class="close btn-secondary hang" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:object="${hangAdd}" method="post" th:action="@{/manage/giay/hang/viewAdd/add}"
+                      enctype="multipart/form-data" onsubmit="return validateHangForm()" name="hangForm"
+                      style="width: auto;height: auto">
+                    <div class="page-header">
+                        <div class="page-title">
+                            <h4>Thêm Hãng </h4>
+                            <h6>Quản Lý Hãng</h6>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label>Logo</label>
+                                        <input name="logoHang" type="file" id="imageInput"
+                                               accept="image/*"
+                                               onchange="previewImage(event)">
+                                        <br><br><img id="imagePreview" src="#" alt="Ảnh mô tả"
+                                                     style="display: none; max-width: 150px; max-height: 150px;">
+                                    </div>
+                                </div>
+                                <div th:utext="'&nbsp;'"></div>
+                                <div class="col-lg-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label>Mã Hãng</label>
+                                        <input type="text" name="maHang" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label>Tên Hãng</label>
+                                        <input type="text" name="tenHang" >
+                                    </div>
+                                </div>
+                                <!--                                <div class="col-lg-6 col-sm-6 col-12">-->
+                                <!--                                    <div class="form-group">-->
+                                <!--                                        <label>Trạng Thái</label>-->
+                                <!--                                        <select class="select" th:field="*{trangThai}" id="trangThaiHang" name="trangThaiHang">-->
+                                <!--                                            <option th:each="loc : ${dsTrangThai.entrySet()}" th:value="${loc.key}"-->
+                                <!--                                                    th:text="${loc.value}"></option>-->
+                                <!--                                        </select>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                                <div class="col-lg-12">
+                                    <button type="submit" class="btn btn-submit me-2">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal ChatLieu-->
+<div class="modal fade" id="myModal-chatLieu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel-chatLieu"></h5>
+                <button type="button" class="close btn-secondary chatLieu" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:object="${chatLieuAdd}" method="post" th:action="@{/manage/giay/chat-lieu/viewAdd/add}" onsubmit="return validateChatLieuForm()" name="chatLieuForm"
+                      style="width: auto;height: auto">
+                    <div class="page-header">
+                        <div class="page-title">
+                            <h4>Thêm Chất Liệu </h4>
+                            <h6>Quản Lý Chất Liệu</h6>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label>Mã Chất Liệu</label>
+                                        <input type="text" th:field="*{maChatLieu}" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label>Tên Chất Liệu</label>
+                                        <input type="text" th:field="*{tenChatLieu}" >
+                                    </div>
+                                </div>
+                                <!--                                <div class="col-lg-6 col-sm-6 col-12">-->
+                                <!--                                    <div class="form-group">-->
+                                <!--                                        <label>Trạng Thái</label>-->
+                                <!--                                        <select class="select" th:field="*{trangThai}" id="trangThaiChatLieu" name="trangThaiChatLieu">-->
+                                <!--                                            <option th:each="loc : ${dsTrangThai.entrySet()}"-->
+                                <!--                                                    th:value="${loc.key}"-->
+                                <!--                                                    th:text="${loc.value}"-->
+                                <!--                                                    th:selected="${loc.key == 1}"></option>-->
+                                <!--                                        </select>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                                <div class="col-lg-12">
+                                    <button type="submit" class="btn btn-submit me-2">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+//
+<div th:if="${maGiayError}" id="warning1" class="toast-container toast-top-right">
+    <div class="toast toast-error" aria-live="assertive" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">Mã không được bỏ trống.</div>
+    </div>
+</div>
+<div th:if="${tenGiayError}" id="warning2" class="toast-container toast-top-right">
+    <div class="toast toast-error" aria-live="assertive" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">Tên Giày không được bỏ trống.</div>
+    </div>
+</div>
+<div th:if="${hangError}" id="warning3" class="toast-container toast-top-right">
+    <div class="toast toast-error" aria-live="assertive" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">Hãng không được bỏ trống.</div>
+    </div>
+</div>
+<div th:if="${chatLieuError}" id="warning4" class="toast-container toast-top-right">
+    <div class="toast toast-error" aria-live="assertive" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">Chất Liệu không được bỏ trống.</div>
+    </div>
+</div>
+//Hãng
+<div th:if="${messageHang}" id="successHang" class="toast-container toast-top-right">
+    <div class="toast toast-success" aria-live="polite" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Thành Công</div>
+        <div class="toast-message">Hãng của bạn đã được Thêm</div>
+    </div>
+</div>
+<div th:if="${maHangError}" id="warning5" class="toast-container toast-top-right">
+    <div class="toast toast-error" aria-live="assertive" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">Mã Hãng không được bỏ trống.</div>
+    </div>
+</div>
+<div th:if="${tenHangError}" id="warning6" class="toast-container toast-top-right">
+    <div class="toast toast-error" aria-live="assertive" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">Tên Hãng không được bỏ trống.</div>
+    </div>
+</div>
+//Chất liệu
+<div th:if="${messageChatLieu}" id="successChatLieu" class="toast-container toast-top-right">
+    <div class="toast toast-success" aria-live="polite" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Thành Công</div>
+        <div class="toast-message">Chất Liệu của bạn đã được Thêm</div>
+    </div>
+</div>
+<div th:if="${maChatLieuError}" id="warning7" class="toast-container toast-top-right">
+    <div class="toast toast-error" aria-live="assertive" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">Mã Chất Liệu không được bỏ trống trống.</div>
+    </div>
+</div>
+<div th:if="${tenChatLieuError}" id="warning8" class="toast-container toast-top-right">
+    <div class="toast toast-error" aria-live="assertive" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">Tên Chất Liệu không được bỏ trống.</div>
+    </div>
+</div>
+<div th:if="${ErrormessageHang}" id="checkMaHang" class="toast-container toast-top-right">
+    <div class="toast toast-error" aria-live="assertive" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">Mã Hãng đã tồn tại.</div>
+    </div>
+</div>
+<div th:if="${ErrormessageChatLieu}" id="checkMaChatLieu" class="toast-container toast-top-right">
+    <div class="toast toast-error" aria-live="assertive" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">Mã Chất Liệu đã tồn tại.</div>
+    </div>
+</div>
+<div th:if="${Errormessage}" id="checkMaGiay" class="toast-container toast-top-right">
+    <div class="toast toast-error" aria-live="assertive" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">Mã Giày đã tồn tại.</div>
+    </div>
+</div>
+<script src="/js/jquery-3.6.0.min.js"></script>
+
+<script src="/js/feather.min.js"></script>
+
+<script src="/js/jquery.slimscroll.min.js"></script>
+
+<script src="/js/jquery.dataTables.min.js"></script>
+
+<script src="/js/dataTables.bootstrap4.min.js"></script>
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+
+<script src="/plugins/select2/js/select2.min.js"></script>
+
+<script src="/plugins/sweetalert/sweetalert2.all.min.js"></script>
+
+<script src="/plugins/sweetalert/sweetalerts.min.js"></script>
+
+<script src="/plugins/alertify/alertify.min.js"></script>
+
+<script src="/plugins/alertify/custom-alertify.min.js"></script>
+
+<script src="/plugins/toastr/toastr.min.js"></script>
+
+<script src="/plugins/toastr/toastr.js"></script>
+
+<script src="/js/script.js"></script>
+<script src="/plugins/alertify/custom-alertify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Lấy phần tử có id="modal"
+        var modalElement = document.getElementById("modal-hang");
+        // Lắng nghe sự kiện click trên phần tử có id="modal"
+        modalElement.addEventListener("click", function () {
+            // Khi người dùng nhấn vào phần tử có id="modal", kích hoạt modal
+            $('#myModal-hang').modal('show');
+        });
+        var modalElement = document.getElementById("modal-chatLieu");
+        // Lắng nghe sự kiện click trên phần tử có id="modal"
+        modalElement.addEventListener("click", function () {
+            // Khi người dùng nhấn vào phần tử có id="modal", kích hoạt modal
+            $('#myModal-chatLieu').modal('show');
+        });
+
+        var closeButton = document.querySelector(".hang");
+        closeButton.addEventListener("click", function () {
+            // Tắt modal có id="myModal"
+            $('#myModal-hang').modal('hide');
+        });
+        var closeButton = document.querySelector(".chatLieu");
+        closeButton.addEventListener("click", function () {
+            // Tắt modal có id="myModal"
+            $('#myModal-chatLieu').modal('hide');
+        });
+    });
+</script>
+<script>
+    function previewImage(event) {
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+
+        if (imageInput.files && imageInput.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            };
+
+            reader.readAsDataURL(imageInput.files[0]);
+        }
+    }
+</script>
+<script>
+    //
+    setTimeout(function () {
+        var warning1 = document.getElementById('warning1');
+        if (warning1) {
+            warning1.style.display = 'none';
+        }
+    }, 5000);
+    //
+    setTimeout(function () {
+        var warning2 = document.getElementById('warning2');
+        if (warning2) {
+            warning2.style.display = 'none';
+        }
+    }, 5000);
+    //
+    setTimeout(function () {
+        var warning3 = document.getElementById('warning3');
+        if (warning3) {
+            warning3.style.display = 'none';
+        }
+    }, 5000);
+    //
+    setTimeout(function () {
+        var warning4 = document.getElementById('warning4');
+        if (warning4) {
+            warning4.style.display = 'none';
+        }
+    }, 5000);
+    //
+    setTimeout(function () {
+        var warning5 = document.getElementById('warning5');
+        if (warning5) {
+            warning5.style.display = 'none';
+        }
+    }, 5000);
+    //
+    setTimeout(function () {
+        var warning6 = document.getElementById('warning6');
+        if (warning6) {
+            warning6.style.display = 'none';
+        }
+    }, 5000);
+    //
+    setTimeout(function () {
+        var successHang = document.getElementById('successHang');
+        if (successHang) {
+            successHang.style.display = 'none';
+        }
+    }, 5000);
+    //
+    setTimeout(function () {
+        var warning7 = document.getElementById('warning7');
+        if (warning7) {
+            warning7.style.display = 'none';
+        }
+    }, 5000);
+    //
+    setTimeout(function () {
+        var warning8 = document.getElementById('warning8');
+        if (warning8) {
+            warning8.style.display = 'none';
+        }
+    }, 5000);
+    //
+    setTimeout(function () {
+        var successChatLieu = document.getElementById('successChatLieu');
+        if (successChatLieu) {
+            successChatLieu.style.display = 'none';
+        }
+    }, 5000);
+    //
+    setTimeout(function () {
+        var checkMaHang = document.getElementById('checkMaHang');
+        if (checkMaHang) {
+            checkMaHang.style.display = 'none';
+        }
+    }, 5000);
+    //
+    setTimeout(function () {
+        var checkMaChatLieu = document.getElementById('checkMaChatLieu');
+        if (checkMaChatLieu) {
+            checkMaChatLieu.style.display = 'none';
+        }
+    }, 5000);
+    //
+    setTimeout(function () {
+        var checkMaGiay = document.getElementById('checkMaGiay');
+        if (checkMaGiay) {
+            checkMaGiay.style.display = 'none';
+        }
+    }, 5000);
+</script>
+<script>
+    // In your Javascript (external .js resource or <script> tag)
+    $(document).ready(function () {
+        $('.select').select2();
+    });
+</script>
+<script>
+    function validateGiayForm() {
+        var maGiay = document.forms["giayForm"]["maGiay"].value;
+        var moTa = document.forms["giayForm"]["moTa"].value;
+        var tenGiay = document.forms["giayForm"]["tenGiay"].value;
+        var hang = document.forms["giayForm"]["hang"].value;
+        var chatLieu = document.forms["giayForm"]["chatLieu"].value;
+
+        // Kiểm tra cho từng trường
+        if (maGiay === "") {
+            showAlert("Vui lòng nhập Mã Giày");
+            return false;
+        }
+
+        if (!maGiay.match(/^[a-zA-Z0-9]+$/)) {
+            showAlert("Mã Giày chỉ được chứa chữ cái và số");
+            return false;
+        }
+
+        if (moTa === "") {
+            showAlert("Vui lòng nhập Mô tả");
+            return false;
+        }
+
+        if (tenGiay === "") {
+            showAlert("Vui lòng nhập Tên Giày");
+            return false;
+        }
+
+        if (!tenGiay.match(/^[a-zA-Z0-9\s]+$/)) {
+            showAlert("Tên Giày chỉ được chứa chữ cái, số và khoảng trắng");
+            return false;
+        }
+
+        if (hang === "") {
+            showAlert("Vui lòng chọn Hãng");
+            return false;
+        }
+
+        if (chatLieu === "") {
+            showAlert("Vui lòng chọn Chất Liệu");
+            return false;
+        }
+
+        return true;
+    }
+
+    function showAlert(message) {
+        alertify.alert(message).setting({
+            'title': 'Thông báo',
+            'label': 'Đồng ý',
+        }).show();
+    }
+</script>
+<script>
+    function validateHangForm() {
+        var maHang = document.forms["hangForm"]["maHang"].value;
+        var tenHang = document.forms["hangForm"]["tenHang"].value;
+        var logoHang = document.forms["hangForm"]["logoHang"].value;
+
+
+        if (maHang === "") {
+            showAlert("Vui lòng nhập Mã Hãng");
+            return false;
+        }
+
+        if (!maHang.match(/^[a-zA-Z0-9]+$/)) {
+            showAlert("Mã Hãng chỉ được chứa chữ cái và số");
+            return false;
+        }
+
+        if (tenHang === "") {
+            showAlert("Vui lòng nhập Tên Hãng");
+            return false;
+        }
+
+        if (!tenHang.match(/^[a-zA-Z0-9]+$/)) {
+            showAlert("Tên Hãng chỉ được chứa chữ cái và số");
+            return false;
+        }
+
+        if (logoHang === "") {
+            showAlert("Vui lòng chọn Logo Hãng");
+            return false;
+        }
+        return true;
+    }
+    function showAlert(message) {
+        alertify.alert(message).setting({
+            'title': 'Thông báo',
+            'label': 'Đồng ý',
+        }).show();
+    }
+</script>
+<script>
+    function validateChatLieuForm() {
+        var maChatLieu = document.forms["chatLieuForm"]["maChatLieu"].value;
+        var tenChatLieu = document.forms["chatLieuForm"]["tenChatLieu"].value;
+
+        if (maChatLieu === "") {
+            showAlert("Vui lòng nhập Mã Chất Liệu");
+            return false;
+        }
+
+        if (!maChatLieu.match(/^[a-zA-Z0-9]+$/)) {
+            showAlert("Mã Chất Liệu chỉ được chứa chữ cái và số");
+            return false;
+        }
+
+        if (tenChatLieu === "") {
+            showAlert("Vui lòng nhập Tên Chất Liệu");
+            return false;
+        }
+
+        if (!tenChatLieu.match(/^[a-zA-Z0-9\s]+$/)) {
+            showAlert("Tên Chất Liệu chỉ được chứa chữ cái, số và khoảng trắng");
+            return false;
+        }
+
+
+        return true;
+    }
+
+    function showAlert(message) {
+        alertify.alert(message).setting({
+            'title': 'Thông báo',
+            'label': 'Đồng ý',
+        }).show();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Control Shop</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Male_Fashion Template">
+        <meta name="keywords" content="Male_Fashion, unica, creative, html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Control Shop</title>
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+              rel="stylesheet">
+        <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
+        <!-- Css Styles -->
+        <link rel="stylesheet" href="/cssx/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/elegant-icons.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/magnific-popup.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/nice-select.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/owl.carousel.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/slicknav.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/style.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/scroll.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/styleNhan.css" type="text/css">
+
+        <style>
+            header {
+                position: fixed;
+                width: 100%;
+                z-index: 100;
+            }
+            .radio-input input {
+                display: none;
+            }
+            .radio-input {
+                padding: 30px 0 30px 0;
+                position: relative;
+                display: flex;
+                background-color: #fff;
+                justify-content: center;
+                color: #000000;
+                width: 700px;
+                flex-wrap: wrap;
+                margin: auto;
+            }
+            .radio-input label {
+                width: 100px;
+                padding: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-weight: 600;
+                font-size: 14px;
+                border: 1px solid #e5e5e5;
+                margin-right: 50px;
+                margin-top: 20px;
+            }
+            .radio-input label:has(input:checked) {
+                color: #fff;
+                background-color: #000000;
+            }
+            .link{
+                text-decoration:none;
+                height: 100%;
+                width: 100px;
+                z-index: 1;
+                color: inherit;
+                background-color: inherit;
+                align-items: center;
+                flex-direction: column;
+                text-align: center;
+            }
+            .product__details__pic{
+                width: 50%;
+                float: left;
+                background-color:revert;
+            }
+            .product__details__text{
+                width: 171%;
+                margin-top: 40px;
+            }
+
+        </style>
+
+    </head>
+
+<body>
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Header Section Begin -->
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-3  d-flex align-items-center" >
+                    <div class="header__top__left">
+                        <p>Chào mừng đến với trải nghiệm mua sắm</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 d-flex align-items-center" >
+                    <form action="/buyer/search" method="post">
+                        <div style="width: 100%; display: flex; background-color: white; border: 10px;">
+                            <input th:value="${keyword}" name="keyWord" class="form-control" style="border: none; width: 500px;"  placeholder="Nhập văn bản..." type="text">
+                            <div style="width: 60px; background-color: #f3f2ee; height: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <button type="submit" href=""><img src="/images/img/icon/search.png" alt=""></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-lg-3 d-flex align-items-center">
+                    <div>
+
+                        <div th:if="${heartLogged}" class="header__top__links"  >
+                            <a th:href="@{'/buyer/purchase'}">Đơn mua</a>
+                        </div>
+
+                        <!--        Buyer FullName Begin    -->
+                        <div class="header__top__hover">
+                            <span th:text="${fullNameLogin}"><i class="arrow_carrot-down" ></i></span>
+                            <ul>
+                                <li><a th:href="@{'/buyer/setting'}" >Cài đặt</a></li>
+                                <li><a th:href="@{'/buyer/logout'}">Đăng xuất</a></li>
+
+                            </ul>
+                            <a th:if="${messageLoginOrSignin}" th:href="@{'/buyer/login'}" style="color: #ffffff;font-size: 13px;text-transform: uppercase;letter-spacing: 2px;display: inline-block;cursor: pointer;">Đăng nhập</a>
+                            <a><span> | | </span></a>
+                            <a th:if="${messageLoginOrSignin}" th:href="@{'/buyer/register'}" style="color: #ffffff;font-size: 13px;text-transform: uppercase;letter-spacing: 2px;display: inline-block;cursor: pointer;">Đăng ký </a>
+                        </div>
+                        <!--            Buyer FullName End -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container" style=" height: 100px">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="header__logo">
+                    <a th:href="@{'/buyer/home'}" ><img src="/images/img/logo.png" style="width: 50px; height: 50px" alt=""></a>
+
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <nav class="header__menu mobile-menu">
+                    <ul>
+                        <li><a th:href="@{'/buyer/'}" >Trang Chủ</a></li>
+                        <li class="active"><a th:href="@{'/buyer/shop'}" >Cửa Hàng</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <div class="header__nav__option" style="display: flex;justify-content: end;">
+
+
+                    <div class="nav user-menu" style="height: 30px;">
+                        <li class="nav-item dropdown" style="height: 30px;">
+                            <a data-bs-toggle="dropdown" href="#" >
+                                <img style="margin-bottom: 42px; width: 18px; height: 18px;"   src="/images/img/icon/notification.png" >
+                            </a>
+                            <span style="position: absolute; height:20px; width: 25px; top: -13px; left: 7px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;" th:text="${soThongBao}"></span>
+                            <div class="dropdown-menu notifications" style="width:300px; top: -80px; position: absolute;">
+                                <div class="topnav-dropdown-header">
+                                    <span class="notification-title">Thông báo</span>
+                                    <a class="clear-noti"> Xóa sạch </a>
+                                </div>
+                                <div class="vertical-scroll scroll-demo" >
+                                    <th:block th:if="${x.trangThai != 3}" th:each="x : ${listThongBao}">
+                                        <a href="#" class="items-noticafitions">
+                                            <div class="items-notica">
+                                        <span class="avatar">
+                                            <img alt="" src="/images/img/blog/blog-1.jpg">
+                                        </span>
+                                                <div class="text-notica">
+                                                    <span class="notica-title" th:text="${fullNameLogin}"></span>
+                                                    <p class="notica-times">1 phút trước</p>
+                                                    <input th:if="x.trangThai == 1" checked class="notica-read" type="radio" name="" id="">
+                                                    <input th:if="x.trangThai == 0">
+                                                </div>
+                                                <p class="notica-status">---------</p>
+                                                <div class="text-contents">
+                                                    <p class="notica-contents" th:text="${x.noiDungTB}"></p>
+                                                </div>
+
+
+                                            </div>
+                                        </a>
+                                    </th:block>
+                                </div>
+                                <div class="topnav-dropdown-footer">
+                                    <a href="activities.html">Xem tất cả thông báo</a>
+                                </div>
+                            </div>
+
+                        </li>
+                    </div>
+                    <!--                    <a th:href="@{'/buyer/fa&recently'}"><img src="/images/img/icon/heart2.png" alt=""></a>-->
+
+                    <a th:href="@{'/buyer/cart'}" style="position: relative; display: inline-block; ">
+                        <img src="/images/img/icon/cart.png" alt="">
+                        <span class="cart-count" style="position: absolute; height:20px; width: 25px; top: -13px; left: 3px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;" th:text="${sumProductInCart}"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open"><i class="fa fa-bars"></i></div>
+    </div>
+</header>
+<!-- Header Section End -->
+
+<section>
+    <div style="height: 150px; width: 100%;"></div>
+</section>
+
+<!-- Shop Details Section Begin -->
+<section class="shop-details">
+    <form th:object="${product}"   method="" >
+        <div class="product__details__pic">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="product__details__breadcrumb">
+                            <a th:href="@{'/buyer/homeBuyer'}" >Home</a>
+                            <a th:href="@{'/buyer/shop'}" >Shop</a>
+                            <span>Chi tiết sản phẩm</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-right: -150px">
+                    <div class="col-lg-3 col-md-3" >
+
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
+                                    <div style="border-radius:10px; " class="product__thumb__pic set-bg" th:attr="data-setbg=@{'/images/imgsProducts/' + ${hinhAnh.url1}}"></div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
+                                    <div style="border-radius:10px;" class="product__thumb__pic set-bg" th:attr="data-setbg=@{'/images/imgsProducts/' + ${hinhAnh.url2}}"></div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">
+                                    <div style="border-radius:10px;" class="product__thumb__pic set-bg" th:attr="data-setbg=@{'/images/imgsProducts/' + ${hinhAnh.url3}}"></div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">
+                                    <div style="border-radius:10px;" class="product__thumb__pic set-bg" th:attr="data-setbg=@{'/images/imgsProducts/' + ${hinhAnh.url4}}"></div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--          Show Image Product Begin-->
+                    <div class="col-lg-6 col-md-9">
+                        <div class="tab-content">
+
+                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                <div class="product__details__pic__item">
+                                    <img th:src="@{'/images/imgsProducts/' + ${hinhAnh.url1}}"/>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tabs-2" role="tabpanel">
+                                <div class="product__details__pic__item">
+                                    <img th:src="@{'/images/imgsProducts//' + ${hinhAnh.url2}}"/>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tabs-3" role="tabpanel">
+                                <div class="product__details__pic__item">
+                                    <img th:src="@{'/images/imgsProducts/' + ${hinhAnh.url3}}"/>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tabs-4" role="tabpanel">
+                                <div class="product__details__pic__item">
+                                    <img th:src="@{'/images/imgsProducts/' + ${hinhAnh.url4}}"/>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!--          Show Image Product End-->
+                </div>
+            </div>
+        </div>
+        <div class="product__details__content">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="product__details__text">
+                            <h4 th:text="${product.tenGiay}"></h4>
+                            <h3 id="price-range" class="price-range" th:text="'₫' + ${#numbers.formatDecimal(minPrice, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' ' + '-' + ' ₫' + ${#numbers.formatDecimal(maxPrice, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" ></h3>
+                            <h3 id="price_product"></h3>
+                            <p th:text="${product.moTa}"></p>
+
+                            <div class="product__details__option 2">
+                                <div class="product__details__option__size 2" style="margin-left: 50px">
+
+                                </div>
+                            </div>
+
+                            <div class="product__details__option">
+                                <div class="product__details__option__size" style="margin-left: 50px">
+                                    <div class="label-container" style="display: flex; flex-wrap: wrap; justify-content: center;width: 127%;margin-top: 12px;margin-left: -68px">
+                                        <th:block th:each="x : ${listSizeCTG}">
+                                            <label th:unless="${x[2]}" th:name="${x[1]}" class="label" style="width: 200px; margin: 5px; font-weight: unset; font-size: small; height: 40px   ;"
+                                                   onclick="capNhatGia(event)" th:text="${x[0]}"></label>
+                                        </th:block>
+
+                                    </div>
+
+                                </div>
+                                <br>
+                                <br>
+                            </div>
+
+                            <div class="product__details__cart__option">
+                                <div class="quantity">
+                                    <p style="display: inline-block; margin: 0;">Số lượng :</p>
+                                    <div  style="display: inline-block; ">
+                                        <input oninput="validateInput()" id="quantityInput" style="width: 80px;" type="number" class="form-control" aria-label="Quantity" min="1" max="10" value="1">
+                                    </div>
+                                    <p class="sum-remind" id="quantityProductMax" style="display: inline-block; margin: 0;" th:text="${sunProductAvaible}"></p>
+                                    <p style="display: inline-block; margin: 0;"><span id="quantity_remind"></span></p>
+                                    <p style="display: inline-block; margin: 0;">Sản phẩm có sẵn</p>
+                                </div>
+                            </div>
+
+                            <div th:if="${buyNowAddCartLogged}" class="product__details__cart__option">
+                                <a  style="color: white; cursor: pointer;" class="primary-btn" id="buyNowButton" >Mua ngay</a>
+                                <a  style="color: white; cursor: pointer;" id="addToCartButton" class="primary-btn" >Thêm vào giỏ hàng</a>
+                            </div>
+
+                            <div th:if="${buyReceiveMail}" class="product__details__cart__option">
+                                <a  style="color: white" id="addToCartButtons" class="primary-btn" >Nhận thông báo khi có hàng</a>
+                            </div>
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="product__details__tab">
+                            <ul class="nav nav-tabs" role="tablist">
+
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane" id="tabs-6" role="tabpanel">
+                                    <div class="product__details__tab__content">
+
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="product__details__tab__content">
+                                        <th:block th:each="x : ${listDanhGiaKhachHang}">
+                                            <div style="display: flex;">
+                                                <img src="/images/img/blog/blog-1.jpg" alt=""
+                                                     style="height: 70px; width: 70px; border-radius: 50%; margin-right: 30px">
+                                                <div class="product__details__tab__content__item">
+
+                                                    <h5 th:text="${x.hoaDon.khachHang.hoTenKH}"></h5>
+
+                                                    <div th:if="${x.soSao == 1}" class="rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                    </div>
+
+                                                    <div th:if="${x.soSao == 2}" class="rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                    </div>
+
+                                                    <div th:if="${x.soSao == 3}" class="rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                    </div>
+
+                                                    <div th:if="${x.soSao == 4}" class="rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                    </div>
+
+                                                    <div th:if="${x.soSao == 5}" class="rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+
+                                                    <p th:text="${x.noiDungDG}"></p>
+                                                    <br>
+
+                                                    <img th:src="@{'/images/imagesRate/' + ${x.anhDG}}" style="height: 150px;" alt="">
+                                                    <img th:if="x.anhDG2 != null" th:src="@{'/images/imagesRate/' + ${x.anhDG2}}" style="height: 150px;" alt="">
+                                                    <img th:if="x.anhDG3 != null" th:src="@{'/images/imagesRate/' + ${x.anhDG3}}" style="height: 150px;" alt="">
+
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </th:block>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </form>
+</section>
+<!-- Shop Details Section End -->
+
+<!-- Footer Section Begin -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    <div class="footer__logo">
+                        <a href="#"><img src="/Logo.png" alt=""></a>
+                    </div>
+                    <p> Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế.</p>
+                    <a href="#"><img src="img/payment.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Cửa hàng</h6>
+                    <ul>
+                        <li><a href="/buyer/shop">Gian hàng</a></li>
+                        <li><a href="/buyer/shop">Xu Hướng</a></li>
+                        <li><a href="/buyer/shop">Đề Xuất</a></li>
+                        <li><a href="/buyer/shop/sale">Giảm giá</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Mua sắm</h6>
+                    <ul>
+                        <li><a href="#">Liên Hệ</a></li>
+                        <li><a href="#">Thanh Toán</a></li>
+                        <li><a href="#">Giao Hàng</a></li>
+                        <li><a href="#">Hoàn Hàng/Tiền</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                <div class="footer__widget">
+                    <h6>NewLetter</h6>
+                    <div class="footer__newslatter">
+                        <p>Hãy là người đầu tiên biết về hàng mới, sách tra cứu, khuyến mại và khuyến mãi!</p>
+                        <form action="#">
+                            <input type="text" placeholder="Your email">
+                            <button type="submit"><span class="icon_mail_alt"></span></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="footer__copyright__text">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer Section End -->
+
+<!--Section giá và size begin-->
+
+<section>
+    <th:block th:each="x : ${listGiavaSize}">
+        <div th:value="${x.size.soSize}" hidden>
+            <input th:value="${x.giaBan}">
+            <input th:value="${x.size.soSize}">
+        </div>
+    </th:block>
+</section>
+<!--Section giá và size end-->
+
+<!--Modal Begin-->
+<div class="modal fade" id="noticaAddVoucher" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="messAddThanhCongTitle" >Thông báo !</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">
+                    <p style="font-size: 13pt; font-weight: 600;">Vui lòng chọn một sản phẩm trước khi thêm vào giỏ hàng.</p>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal End-->
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script>
+    function validateInput() {
+        var input = document.getElementById('quantityInput');
+        var inputValue = input.value;
+
+        // Remove non-numeric characters using a regular expression
+        inputValue = inputValue.replace(/[^0-9]/g, '');
+
+        // Ensure the value is not empty
+        if (inputValue === '') {
+            inputValue = '1'; // Set a default value if empty
+        }
+
+        // Check if the value is within the range 1 to 10
+        inputValue = parseInt(inputValue, 10);
+        if (inputValue < 1 || isNaN(inputValue)) {
+            // If outside the range or not a number, set the value to 1
+            input.value = '1';
+        } else if (inputValue > 10) {
+            // If greater than 10, set the value to 10
+            input.value = '10';
+        } else {
+            // Update the input value
+            input.value = inputValue;
+        }
+    }
+</script>
+<script>
+    function capNhatGia(event) {
+        // Lấy giá trị của label
+        var giaTriLabel = event.target.textContent || event.target.innerText;
+
+        // Tìm phần ẩn tương ứng cho kích thước đã chọn
+        var phanAn = document.querySelector('section div[value="' + giaTriLabel + '"]');
+
+        // Lấy giá trị giá từ phần ẩn
+        var gia = phanAn.querySelector('input:first-child').value;
+
+        var giaDinhDang = gia.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+
+        // Cập nhật giá hiển thị
+        var hienThiGia = document.getElementById('price-range');
+        hienThiGia.textContent = giaDinhDang;
+        // Cập nhật giá hiển thị
+        var hienThiGia = document.getElementById('price-range');
+        hienThiGia.textContent = '₫' + gia ;
+    }
+</script>
+
+<script>
+    document.getElementById("addToCartButton").addEventListener("click", function () {
+        var quantity = document.getElementById("quantityInput").value;
+
+        var selectedLabel = document.querySelector(".label.active");
+
+        if (selectedLabel) {
+            var labelName = selectedLabel.getAttribute("name");
+
+            window.location.href = '/buyer/shop/addProductCart?idDetailProduct=' + labelName + '&quantity=' + quantity;
+
+        } else {
+            $('#noticaAddVoucher').modal('show');
+            event.preventDefault();
+        }
+    });
+</script>
+
+
+<script>
+    document.getElementById("buyNowButton").addEventListener("click", function () {
+        var quantity = document.getElementById("quantityInput").value;
+
+        var selectedLabel = document.querySelector(".label.active");
+
+        if (selectedLabel) {
+            var labelName = selectedLabel.getAttribute("name");
+
+            window.location.href = '/buyer/shop/buyNowButton?idDetailProduct=' + labelName + '&quantity=' + quantity;
+
+        } else {
+            $('#noticaAddVoucher').modal('show');
+            event.preventDefault();
+        }
+    });
+</script>
+
+
+<script src="/js/feather.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/script.js"></script><script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery.nicescroll.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/jquery.countdown.min.js"></script>
+<script src="/js/jquery.slicknav.js"></script>
+<script src="/js/mixitup.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/jquery.slimscroll.min.js"></script>
+<script src="/js/scrollbar.min.js"></script>
+<script src="/js/custom-scroll.js"></script>
+
+</body>
+
+</html>

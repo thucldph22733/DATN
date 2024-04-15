@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.shoesmanagement.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
