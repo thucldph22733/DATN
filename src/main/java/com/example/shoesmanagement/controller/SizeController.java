@@ -35,6 +35,8 @@ public class SizeController {
     @Autowired
     private SizeRepository repository;
 
+
+    // Cúc cuuuuu
     @ModelAttribute("dsTrangThai")
     public Map<Integer, String> getDsTrangThai() {
         Map<Integer, String> dsTrangThai = new HashMap<>();
