@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
 
@@ -113,6 +114,67 @@ public class DetailProductController {
 
         model.addAttribute(maMau, "true");
         return "online/detail-product";
+    }
+
+    @GetMapping("/shop/addProductCart")
+    public String handleAddToCart(@RequestParam("idDetailProduct") UUID idDProduct, @RequestParam("quantity") int quantity, Model model) {
+
+        ChiTietGiay ctg = giayChiTietService.getByIdChiTietGiay(idDProduct);
+
+        GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
+
+        GioHangChiTiet gioHangChiTiet = ghctService.findByCTSPActive(ctg);
+
+        if (gioHangChiTiet != null){
+            gioHangChiTiet.setSoLuong(gioHangChiTiet.getSoLuong() + quantity);
+            gioHangChiTiet.setTgThem(new Date());
+            gioHangChiTiet.setDonGia(quantity*ctg.getGiaBan());
+            gioHangChiTiet.setDonGiaTruocKhiGiam(quantity*ctg.getSoTienTruocKhiGiam());
+            ghctService.addNewGHCT(gioHangChiTiet);
+        }else {
+            GioHangChiTiet gioHangChiTietNew = new GioHangChiTiet();
+
+            gioHangChiTietNew.setChiTietGiay(ctg);
+            gioHangChiTietNew.setGioHang(gioHang);
+            gioHangChiTietNew.setSoLuong(quantity);
+            gioHangChiTietNew.setTgThem(new Date());
+            gioHangChiTietNew.setDonGia(quantity * ctg.getGiaBan());
+            System.out.println(quantity*ctg.getSoTienTruocKhiGiam());
+//            gioHangChiTiet.setDonGiaTruocKhiGiam(quantity*ctg.getSoTienTruocKhiGiam());
+            gioHangChiTietNew.setTrangThai(1);
+
+            ghctService.addNewGHCT(gioHangChiTietNew);
+        }
+
+        String idGiay = String.valueOf(ctg.getGiay().getIdGiay());
+
+        String idMau = String.valueOf(ctg.getMauSac().getIdMau());
+
+        String link = idGiay +"/" +idMau;
+        return "redirect:/buyer/shop-details/" + link;
+    }
+
+    @GetMapping("/detail/heart/{idGiay}/{idMau}")
+    private String addToHeart(@PathVariable UUID idGiay,@PathVariable UUID idMau){
+        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+
+        Giay giay = giayService.getByIdGiay(idGiay);
+        MauSac mau = mauSacService.getByIdMauSac(idMau);
+
+        List<ChiTietGiay> listCTGByGiay = giayChiTietService.findByMauSacAndGiay(mau, giay,1);
+
+        int sumCTGByGiay = listCTGByGiay.stream()
+                .mapToInt(ChiTietGiay::getSoLuong)
+                .sum();
+
+        Optional<Double> minPriceByGiay = listCTGByGiay.stream()
+                .map(ChiTietGiay :: getGiaBan)
+                .min(Double :: compare);
+
+        Double minPrice = minPriceByGiay.get();
+
+
+        return "redirect:/buyer/shop-details/" + idGiay +"/" +idMau;
     }
     private void checkKHLogged(Model model, KhachHang khachHang, Giay giay, MauSac mauSac){
         if (khachHang != null){
