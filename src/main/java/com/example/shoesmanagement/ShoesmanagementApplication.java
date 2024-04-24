@@ -8,6 +8,7 @@ public class ShoesmanagementApplication {
 
 	public static void main(String[] args) {
 		System.out.println("T");
+		System.out.println("A");
 		SpringApplication.run(ShoesmanagementApplication.class, args);
 	}
 
