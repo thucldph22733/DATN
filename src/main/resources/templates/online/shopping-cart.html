@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sneaker Shop</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Male_Fashion Template">
+        <meta name="keywords" content="Male_Fashion, unica, creative, html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Sneaker Shop</title>
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+              rel="stylesheet">
+        <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
+        <!-- Css Styles -->
+        <link rel="stylesheet" href="/cssx/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/elegant-icons.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/magnific-popup.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/nice-select.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/owl.carousel.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/slicknav.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/style.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/scroll.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/styleNhan.css" type="text/css">
+
+        <style>
+            header {
+                position: fixed;
+                width: 100%;
+                z-index: 100;
+            }
+        </style>
+    </head>
+
+<body>
+<!-- Page Preloder -->
+<!--<div th:if="${reLoadPageCart}" id="preloder">-->
+<!--    <div class="loader"></div>-->
+<!--</div>-->
+
+<!-- Header Section Begin -->
+<header class="header">
+
+    <th:block th:if="${message != null}">
+        <span class="text-danger"></span>
+    </th:block>
+
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            // Kiểm tra xem có thông báo cần hiển thị hay không
+            var errorMessage = /*[[${message}]]*/ null;
+
+            if (errorMessage) {
+                // Hiển thị SweetAlert2 với hẹn giờ
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    html: errorMessage,
+                    showConfirmButton: false,
+                    timer: 5000
+                });
+            }
+        });
+    </script>
+
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-3  d-flex align-items-center" >
+                    <div class="header__top__left">
+                        <p>Chào mừng đến với trải nghiệm mua sắm</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 d-flex align-items-center" >
+                    <form action="/buyer/search" method="post">
+                        <div style="width: 100%; display: flex; background-color: white; border: 10px;">
+                            <input th:value="${keyword}" name="keyWord" class="form-control" style="border: none; width: 500px;"  placeholder="Nhập văn bản..." type="text">
+                            <div style="width: 60px; background-color: #f3f2ee; height: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <a type="submit" href=""><img src="/images/img/icon/search.png" alt=""></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-lg-3 d-flex align-items-center">
+                    <div>
+                        <div class="header__top__links"  >
+                            <a th:href="@{'/buyer/purchase'}">Đơn mua</a>
+                        </div>
+                        <!--        Buyer FullName Begin    -->
+                        <div class="header__top__hover">
+                            <span th:text="${fullNameLogin}"><i class="arrow_carrot-down" ></i></span>
+                            <ul>
+                                <li><a th:href="@{'/buyer/setting'}" >Cài đặt</a></li>
+                                <li><a th:href="@{'/buyer/logout'}">Đăng xuất</a></li>
+                            </ul>
+                        </div>
+                        <!--            Buyer FullName End -->
+                        <div class="header__top__hover">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container" style=" height: 100px">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="header__logo">
+
+                    <a th:href="@{'/buyer/home'}" ><img src="/images/img/logo.png" style="width: 240px; height: 240px; margin-top: -84px" alt=""></a>
+
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <nav class="header__menu mobile-menu">
+                    <ul>
+
+
+                        <div th:if="${successMessage}" th:attr="data-message=${successMessage}" id="success-toast" style="position: fixed; top: 1rem; right: 1rem; z-index: 1050;">
+                            <!-- Toast container, ẩn mặc định và sẽ được hiển thị bằng JavaScript -->
+                            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="7000">
+                                <div class="toast-header">
+                                    <strong class="mr-auto">Thông báo</strong>
+                                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="toast-body" th:text="${successMessage}">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        <li><a th:href="@{'/buyer/'}" >Home</a></li>
+                        <li class="active"><a th:href="@{'/buyer/shop'}" >Shop</a></li>
+                        <li><a th:href="@{'/buyer/about'}">About Us</a></li>
+                        <li><a th:href="@{'/buyer/blog'}">Blog</a>
+                            <ul class="dropdown">
+                                <li><a th:href="@{'/buyer/blog/blog-details'}">Blog Details</a></li>
+                            </ul>
+                        </li>
+                        <li><a th:href="@{'/buyer/contact'}">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <div class="header__nav__option" style="display: flex;justify-content: end;">
+
+
+                    <div class="nav user-menu" style="height: 30px;">
+                        <li class="nav-item dropdown" style="height: 30px;">
+                            <a data-bs-toggle="dropdown" href="#" >
+                                <img style="margin-bottom: 42px; width: 18px; height: 18px;"   src="/images/img/icon/notification.png" >
+                            </a>
+                            <span style="position: absolute; height:20px; width: 25px; top: -13px; left: 7px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;" th:text="${soThongBao}"></span>
+                            <div class="dropdown-menu notifications" style="width:300px; top: -80px; position: absolute;">
+                                <div class="topnav-dropdown-header">
+                                    <span class="notification-title">Thông báo</span>
+                                    <a class="clear-noti"> Xóa sạch </a>
+                                </div>
+                                <div class="vertical-scroll scroll-demo" >
+                                    <th:block th:if="${x.trangThai != 3}" th:each="x : ${listThongBao}">
+                                        <a href="#" class="items-noticafitions">
+                                            <div class="items-notica">
+                                        <span class="avatar">
+                                            <img alt="" src="/images/img/blog/blog-1.jpg">
+                                        </span>
+                                                <div class="text-notica">
+                                                    <span class="notica-title" th:text="${fullNameLogin}"></span>
+                                                    <p class="notica-times">1 phút trước</p>
+                                                    <input th:if="x.trangThai == 1" checked class="notica-read" type="radio" name="" id="">
+                                                    <input th:if="x.trangThai == 0">
+                                                </div>
+                                                <p class="notica-status">---------</p>
+                                                <div class="text-contents">
+                                                    <p class="notica-contents" th:text="${x.noiDungTB}"></p>
+                                                </div>
+
+
+                                            </div>
+                                        </a>
+                                    </th:block>
+                                </div>
+                                <div class="topnav-dropdown-footer">
+                                    <a href="activities.html">Xem tất cả thông báo</a>
+                                </div>
+                            </div>
+
+                        </li>
+                    </div>
+                    <a th:href="@{'/buyer/fa&recently'}"><img src="/images/img/icon/heart2.png" alt=""></a>
+
+                    <a th:href="@{'/buyer/cart'}" style="position: relative; display: inline-block; ">
+                        <img src="/images/img/icon/cart.png" alt="">
+                        <span class="cart-count" style="position: absolute; height:20px; width: 25px; top: -13px; left: 3px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;" th:text="${sumProductInCart}"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open"><i class="fa fa-bars"></i></div>
+    </div>
+</header>
+<!-- Header Section End -->
+
+<section>
+    <div style="height: 150px; width: 100%;"></div>
+</section>
+
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad" style="margin-top: -80px">
+    <div class="container">
+
+        <form action="/buyer/checkout" method="post" id="purchaseForm">
+            <div style="z-index: 100; width: 1170px;  position: fixed;margin-bottom: 50px">
+                <div class="row" style="background-color: #f3f2ee; height: 80px; width: 1170px;  ">
+                    <div class="col-lg-8">
+                        <p style="margin: 20px 0 5px 50px;">
+                            <input onclick="selectAllItems(this)" style="height: 20px; width: 20px; margin-right: 10px;" type="checkbox" name="" id="checkAll" th:text="'Chọn tất cả ( ' +${sumProductInCart} +' sản phẩm )'"></p>
+                        <a style="margin: 10px 0 0 50px; color: red;" href="">Xóa</a>
+
+                    </div>
+                    <div class="col-lg-2">
+                        <h5 style=" margin: 20px 0 5px 0;">Tổng : </h5>
+                    </div>
+                    <div class="col-lg-2">
+                        <h5 style=" margin: 20px 0 5px 0;" id="grandTotal"></h5>
+                    </div>
+                </div>
+
+                <div class="row" style="background-color: #f3f2ee; height: 50px;width: 1170px; ">
+                    <div class="col-lg-8">
+                        <a style="margin:10px 0 0 50px;" href="">Xóa khỏi giỏ hàng</a>
+                    </div>
+                    <div class="col-lg-4">
+                        <button style="width: 300px; height: 35px; border: 0.5px solid rgb(61, 61, 61);" type="submit" onclick="return validatePurchase()">Mua hàng</button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 160px; width: 100%;"></div>
+
+            <div class="row">
+
+                <div class="col-lg-12">
+
+                    <div class="shopping__cart__table">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>x</th>
+                                <th style="width: 400px;">Sản phẩm</th>
+                                <th style="width: 175px;">Phân loại hàng</th>
+                                <th style="width: 175px;">Số lượng</th>
+                                <th style="width: 140px;">Tổng</th>
+                                <th class="cart__close">Thao tác</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <div class="shopping__cart__table">
+
+                        <table style="height:250px;">
+                            <tbody>
+
+                            <th:block th:each="x : ${listCartDetail}">
+
+                                <tr th:if="${x.chiTietGiay.trangThai == 1}" id="productId" th:value="${x.chiTietGiay.idCTG}">
+
+                                    <td>
+                                        <input style="height: 20px; width: 20px;" class="itemsCart" onclick="updateTotalAmount(this)" name="selectedProducts" type="checkbox" th:value="${x.chiTietGiay.idCTG}">
+                                    </td>
+                                    <td style="width: 400px;" class="product__cart__item" >
+                                        <div class="product__cart__item__pic">
+                                            <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' +  ${x.chiTietGiay.mauSac.idMau}}"> <img style="width:90px; height:90px;" th:src="@{'/images/imgsProducts/' + ${x.chiTietGiay.hinhAnh.url1}}"></a>
+                                        </div>
+                                        <div class="product__cart__item__text">
+                                            <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' +  ${x.chiTietGiay.mauSac.idMau}}">
+                                                <h6 style="margin-top: -22px;" th:text="${x.chiTietGiay.giay.tenGiay}"></h6>
+                                            </a>
+                                            <h5 class="cart__price" th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
+                                            <h5 th:if="${x.chiTietGiay.giaBan} != ${x.chiTietGiay.soTienTruocKhiGiam}" style="color: #b7b7b7; font-size: 15px; font-weight: 400; text-decoration: line-through;" th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.soTienTruocKhiGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
+                                        </div>
+
+                                    </td>
+                                    <td style="width: 175px;"  class="quantity__item">
+                                        <div  style="margin-top: -20px; display: block;">
+                                            <span id="showButton" style="font-weight: normal; font-size: medium;">Phân loại :</span>
+                                            <a th:href="@{'/buyer/cart/option/' + ${x.chiTietGiay.giay.idGiay} + '/' + ${x.chiTietGiay.mauSac.idMau}+ '/' + ${x.chiTietGiay.idCTG}}">
+                                                <img style="height: 10px; width: 10px;" src="/images/img/icon/dropdown.png" alt="">
+                                            </a>
+                                        </div>
+                                        <div style="padding-right: 20px;">
+                                            <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);" th:text="'Colors : ' + ${x.chiTietGiay.mauSac.tenMau}"></span>
+                                            <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);" th:text="'Size : ' + ${x.chiTietGiay.size.soSize}" ></span>
+                                        </div>
+                                    </td>
+                                    <td style="width: 175px;"  class="quantity__item">
+                                        <div class="quantity">
+
+                                            <input style=" margin-top: 3px;border: none; font-weight: 700; font-size: 18pt; background-color: white;" type="button" value="-" class="button-minus dec button" onclick="decrementQuantity(this)">
+
+                                            <input  class="quantityInput" oninput="validateQuantity(this)" th:value="${x.soLuong}" style="width: 30px; text-align: center; border: none;" type="number" th:name="${x.chiTietGiay.idCTG}">
+
+                                            <input style="border: none; font-weight: 700; font-size: 14pt; background-color: white;" type="button" value="+" class="button-plus inc button a3 a5 a1 a-1" onclick="incrementQuantity(this)">
+
+                                        </div>
+                                    </td>
+                                    <td style="width: 140px;" class="cart__price totalAmount" th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+                                    <td class="cart__close"><a th:href="@{'/buyer/cart/delete/' + ${x.chiTietGiay.idCTG}}" id="deleteToCartButton" style="border-radius: 20% ; " ><i class="fa fa-close"></i></a></td>
+
+                                </tr>
+
+                            </th:block>
+
+                            <th:block th:each="x : ${listCartDetail}">
+
+                                <tr th:if="${x.chiTietGiay.trangThai == 0 or x.soLuong > x.chiTietGiay.soLuong }" id="productId" th:value="${x.chiTietGiay.idCTG}">
+
+                                    <td>
+                                        <p>Hết hàng</p>
+                                    </td>
+                                    <td style="width: 400px;" class="product__cart__item" >
+                                        <div class="product__cart__item__pic">
+                                            <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' +  ${x.chiTietGiay.mauSac.idMau}}"> <img style="width:90px; height:90px;" th:src="@{'/images/imgsProducts/' + ${x.chiTietGiay.hinhAnh.url1}}"></a>
+                                        </div>
+                                        <div class="product__cart__item__text">
+                                            <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' +  ${x.chiTietGiay.mauSac.idMau}}">
+                                                <h6 style="margin-top: -22px;" th:text="${x.chiTietGiay.giay.tenGiay}"></h6>
+                                            </a>
+                                            <h5 class="cart__price" th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
+                                            <h5 th:if="${x.chiTietGiay.giaBan} != ${x.chiTietGiay.soTienTruocKhiGiam}" style="color: #b7b7b7; font-size: 15px; font-weight: 400; text-decoration: line-through;" th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.soTienTruocKhiGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
+                                        </div>
+
+                                    </td>
+                                    <td style="width: 175px;"  class="quantity__item">
+                                        <div  style="margin-top: -20px; display: block;">
+                                            <span id="showButton" style="font-weight: normal; font-size: medium;">Phân loại :</span>
+                                            <a th:href="@{'/buyer/cart/option/' + ${x.chiTietGiay.giay.idGiay} + '/' + ${x.chiTietGiay.mauSac.idMau}+ '/' + ${x.chiTietGiay.idCTG}}">
+                                                <img style="height: 10px; width: 10px;" src="/images/img/icon/dropdown.png" alt="">
+                                            </a>
+                                        </div>
+                                        <div style="padding-right: 20px;">
+                                            <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);" th:text="'Colors : ' + ${x.chiTietGiay.mauSac.tenMau}"></span>
+                                            <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);" th:text="'Size : ' + ${x.chiTietGiay.size.soSize}" ></span>
+                                        </div>
+                                    </td>
+                                    <td style="width: 175px;"  class="quantity__item">
+                                        <div class="quantity">
+
+
+
+                                        </div>
+                                    </td>
+                                    <td style="width: 140px;" class="cart__price totalAmount" th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+                                    <td class="cart__close"><a th:href="@{'/buyer/cart/delete/' + ${x.chiTietGiay.idCTG}}" id="deleteToCartButton" style="border-radius: 20% ; " ><i class="fa fa-close"></i></a></td>
+                                    <!--                                    <button onclick="confirmDelete('{{idCTG}}')">Xóa sản phẩm</button>-->
+
+
+                                </tr>
+
+                            </th:block>
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+
+    <div class="row" style="align-items: center; margin-top: 30px;">
+        <div style="height: 0.7px; width: 90%; background-color: #707070; margin-left: 5%;"></div>
+    </div>
+
+</section>
+<!-- Shopping Cart Section End -->
+
+<!-- Related Section Begin -->
+<section style="margin-top: -140px;" class="related spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="related-title">Sản phẩm liên quan</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg" data-setbg="/images/imgsProducts/product-1.1.png">
+                        <span class="label">New</span>
+                        <ul class="product__hover">
+                            <li><a href="#"><img src="/images/img/icon/heart.png" alt=""></a></li>
+                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                            <li><a href="#"><img src="/images/img/icon/search.png" alt=""></a></li>
+                        </ul>
+                    </div>
+                    <div class="product__item__text">
+                        <h6>Piqué Biker Jacket</h6>
+                        <a href="#" class="add-cart">+ Add To Cart</a>
+                        <div class="rating">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <h5>$67.24</h5>
+                        <div class="product__color__select">
+                            <label for="pc-1">
+                                <input type="radio" id="pc-1">
+                            </label>
+                            <label class="active black" for="pc-2">
+                                <input type="radio" id="pc-2">
+                            </label>
+                            <label class="grey" for="pc-3">
+                                <input type="radio" id="pc-3">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg" data-setbg="/images/imgsProducts/product-1.1.png">
+                        <span class="label">New</span>
+                        <ul class="product__hover">
+                            <li><a href="#"><img src="/images/img/icon/heart.png" alt=""></a></li>
+                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                            <li><a href="#"><img src="/images/img/icon/search.png" alt=""></a></li>
+                        </ul>
+                    </div>
+                    <div class="product__item__text">
+                        <h6>Piqué Biker Jacket</h6>
+                        <a href="#" class="add-cart">+ Add To Cart</a>
+                        <div class="rating">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <h5>$67.24</h5>
+                        <div class="product__color__select">
+                            <label for="pc-1">
+                                <input type="radio" id="pc-1">
+                            </label>
+                            <label class="active black" for="pc-2">
+                                <input type="radio" id="pc-2">
+                            </label>
+                            <label class="grey" for="pc-3">
+                                <input type="radio" id="pc-3">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg" data-setbg="/images/imgsProducts/product-1.1.png">
+                        <span class="label">New</span>
+                        <ul class="product__hover">
+                            <li><a href="#"><img src="/images/img/icon/heart.png" alt=""></a></li>
+                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                            <li><a href="#"><img src="/images/img/icon/search.png" alt=""></a></li>
+                        </ul>
+                    </div>
+                    <div class="product__item__text">
+                        <h6>Piqué Biker Jacket</h6>
+                        <a href="#" class="add-cart">+ Add To Cart</a>
+                        <div class="rating">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <h5>$67.24</h5>
+                        <div class="product__color__select">
+                            <label for="pc-1">
+                                <input type="radio" id="pc-1">
+                            </label>
+                            <label class="active black" for="pc-2">
+                                <input type="radio" id="pc-2">
+                            </label>
+                            <label class="grey" for="pc-3">
+                                <input type="radio" id="pc-3">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg" data-setbg="/images/imgsProducts/product-1.1.png">
+                        <span class="label">New</span>
+                        <ul class="product__hover">
+                            <li><a href="#"><img src="/images/img/icon/heart.png" alt=""></a></li>
+                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                            <li><a href="#"><img src="/images/img/icon/search.png" alt=""></a></li>
+                        </ul>
+                    </div>
+                    <div class="product__item__text">
+                        <h6>Piqué Biker Jacket</h6>
+                        <a href="#" class="add-cart">+ Add To Cart</a>
+                        <div class="rating">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <h5>$67.24</h5>
+                        <div class="product__color__select">
+                            <label for="pc-1">
+                                <input type="radio" id="pc-1">
+                            </label>
+                            <label class="active black" for="pc-2">
+                                <input type="radio" id="pc-2">
+                            </label>
+                            <label class="grey" for="pc-3">
+                                <input type="radio" id="pc-3">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg" data-setbg="/images/imgsProducts/product-1.1.png">
+                        <span class="label">New</span>
+                        <ul class="product__hover">
+                            <li><a href="#"><img src="/images/img/icon/heart.png" alt=""></a></li>
+                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                            <li><a href="#"><img src="/images/img/icon/search.png" alt=""></a></li>
+                        </ul>
+                    </div>
+                    <div class="product__item__text">
+                        <h6>Piqué Biker Jacket</h6>
+                        <a href="#" class="add-cart">+ Add To Cart</a>
+                        <div class="rating">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <h5>$67.24</h5>
+                        <div class="product__color__select">
+                            <label for="pc-1">
+                                <input type="radio" id="pc-1">
+                            </label>
+                            <label class="active black" for="pc-2">
+                                <input type="radio" id="pc-2">
+                            </label>
+                            <label class="grey" for="pc-3">
+                                <input type="radio" id="pc-3">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg" data-setbg="/images/imgsProducts/product-1.1.png">
+                        <span class="label">New</span>
+                        <ul class="product__hover">
+                            <li><a href="#"><img src="/images/img/icon/heart.png" alt=""></a></li>
+                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                            <li><a href="#"><img src="/images/img/icon/search.png" alt=""></a></li>
+                        </ul>
+                    </div>
+                    <div class="product__item__text">
+                        <h6>Piqué Biker Jacket</h6>
+                        <a href="#" class="add-cart">+ Add To Cart</a>
+                        <div class="rating">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <h5>$67.24</h5>
+                        <div class="product__color__select">
+                            <label for="pc-1">
+                                <input type="radio" id="pc-1">
+                            </label>
+                            <label class="active black" for="pc-2">
+                                <input type="radio" id="pc-2">
+                            </label>
+                            <label class="grey" for="pc-3">
+                                <input type="radio" id="pc-3">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg" data-setbg="/images/imgsProducts/product-1.1.png">
+                        <span class="label">New</span>
+                        <ul class="product__hover">
+                            <li><a href="#"><img src="/images/img/icon/heart.png" alt=""></a></li>
+                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                            <li><a href="#"><img src="/images/img/icon/search.png" alt=""></a></li>
+                        </ul>
+                    </div>
+                    <div class="product__item__text">
+                        <h6>Piqué Biker Jacket</h6>
+                        <a href="#" class="add-cart">+ Add To Cart</a>
+                        <div class="rating">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <h5>$67.24</h5>
+                        <div class="product__color__select">
+                            <label for="pc-1">
+                                <input type="radio" id="pc-1">
+                            </label>
+                            <label class="active black" for="pc-2">
+                                <input type="radio" id="pc-2">
+                            </label>
+                            <label class="grey" for="pc-3">
+                                <input type="radio" id="pc-3">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg" data-setbg="/images/imgsProducts/product-1.1.png">
+                        <span class="label">New</span>
+                        <ul class="product__hover">
+                            <li><a href="#"><img src="/images/img/icon/heart.png" alt=""></a></li>
+                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                            <li><a href="#"><img src="/images/img/icon/search.png" alt=""></a></li>
+                        </ul>
+                    </div>
+                    <div class="product__item__text">
+                        <h6>Piqué Biker Jacket</h6>
+                        <a href="#" class="add-cart">+ Add To Cart</a>
+                        <div class="rating">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <h5>$67.24</h5>
+                        <div class="product__color__select">
+                            <label for="pc-1">
+                                <input type="radio" id="pc-1">
+                            </label>
+                            <label class="active black" for="pc-2">
+                                <input type="radio" id="pc-2">
+                            </label>
+                            <label class="grey" for="pc-3">
+                                <input type="radio" id="pc-3">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Related Section End -->
+
+<!-- Footer Section Begin -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    <div class="footer__logo">
+                        <a href="#"><img src="/Logo.png" alt=""></a>
+                    </div>
+                    <p> Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế.</p>
+                    <a href="#"><img src="img/payment.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Cửa hàng</h6>
+                    <ul>
+                        <li><a href="/buyer/shop">Gian hàng</a></li>
+                        <li><a href="/buyer/shop">Xu Hướng</a></li>
+                        <li><a href="/buyer/shop">Đề Xuất</a></li>
+                        <li><a href="/buyer/shop/sale">Giảm giá</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Mua sắm</h6>
+                    <ul>
+                        <li><a href="#">Liên Hệ</a></li>
+                        <li><a href="#">Thanh Toán</a></li>
+                        <li><a href="#">Giao Hàng</a></li>
+                        <li><a href="#">Hoàn Hàng/Tiền</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                <div class="footer__widget">
+                    <h6>NewLetter</h6>
+                    <div class="footer__newslatter">
+                        <p>Hãy là người đầu tiên biết về hàng mới, sách tra cứu, khuyến mại và khuyến mãi!</p>
+                        <form action="#">
+                            <input type="text" placeholder="Your email">
+                            <button type="submit"><span class="icon_mail_alt"></span></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="footer__copyright__text">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    <p>Copyright ©
+                        2023
+                        All rights reserved | This template is edit with <i class="fa fa-heart-o"
+                                                                            aria-hidden="true"></i> by <a
+                                href="https://www.instagram.com/nhanngu_03/" target="_blank">Nhan Pham</a>
+                    </p>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer Section End -->
+
+<section>
+
+    <!--Modal show option product begin-->
+    <div th:if="${showModalChooseSize}" class="modal fade" id="showOptionProductInCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;">
+            <form action="/buyer/cart/change/size" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle" th:text="${nameProduct}"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="radio-input">
+                            <div style="margin: 5px 0 5px 0;"></div>
+                        </div>
+                        <div>
+                            <div style="margin-bottom: 10px;">
+                                <span style="margin-left: 85px; "> Nhấn <img src="/images/img/icon/mail.png" style="height: 15px; width: 20px; margin:0 10px 2px 10px;" alt=""> để nhận thông báo khi có hàng </span>
+                            </div>
+                            <div  class="radio-input">
+
+                                <!--              List Size Start-->
+                                <th:block th:each="x : ${listCTGByGiay}">
+
+                                    <label style=" margin: 5px; font-weight: unset; font-size: small; height: 40px;" >
+                                        <a th:if="${x.trangThai == 1}" class="link" >
+                                            <input th:value="${x.idCTG}" type="radio" name="selectedValues" >
+                                            <span th:text="${x.size.soSize}"></span>
+                                        </a>
+
+                                        <a th:if="${x.trangThai == 0}" class="link" >
+                                            <input type="">
+                                            <span th:text="${x.size.soSize}"></span>
+                                        </a>
+
+                                        <a th:if="${x.trangThai == 0}" th:attr="onclick='receiveMail(event, \'' + ${x.idCTG} + '\')'" class="receiveMail">
+                                            <img src="/images/img/icon/mail.png" style="height: 15px; width: 20px; margin-bottom: 2px; cursor: pointer;" alt="">
+                                        </a>
+                                    </label>
+
+                                </th:block>
+
+                                <!--            List Size End-->
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--Modal show option product end-->
+
+    <div class="modal fade" id="messAddThanhCong" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messAddThanhCongTitle" >FBI Waring !</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">
+                        <p style="font-size: 13pt; font-weight: 600;">Chọn ít nhất 1 sản phẩm để mua hàng !!</p>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/js/feather.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/script.js"></script>
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery.nicescroll.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/jquery.countdown.min.js"></script>
+<script src="/js/jquery.slicknav.js"></script>
+<script src="/js/mixitup.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/jquery.slimscroll.min.js"></script>
+<script src="/js/scrollbar.min.js"></script>
+<script src="/js/custom-scroll.js"></script>
+
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function validateQuantity(inputElement) {
+        var quantity = parseInt(inputElement.value);
+
+        // Kiểm tra xem giá trị có phải là số không
+        if (isNaN(quantity) || quantity < 1 || quantity > 10) {
+            alert('Vui lòng nhập số trong khoảng từ 1 đến 10.');
+            // Đặt giá trị mặc định là 1 nếu giá trị không hợp lệ hoặc là chữ
+            inputElement.value = 1;
+        }
+
+        // Gọi hàm updateTotalAmount để cập nhật tổng tiền
+        updateTotalAmount(inputElement);
+    }
+    /*]]>*/
+</script>
+<!--Update quantity product in cart BEGIN -->
+<script>
+    function incrementQuantity(input) {
+        var quantityInput = input.parentNode.querySelector('.quantityInput');
+        var currentQuantity = parseInt(quantityInput.value);
+        quantityInput.value = currentQuantity + 1;
+        updateTotalAmount(quantityInput);
+    }
+
+    function decrementQuantity(input) {
+        var quantityInput = input.parentNode.querySelector('.quantityInput');
+        var currentQuantity = parseInt(quantityInput.value);
+        if (currentQuantity > 0) {
+            quantityInput.value = currentQuantity - 1;
+            updateTotalAmount(quantityInput);
+        }
+    }
+
+    function updateTotalAmount(input) {
+        var quantity = input.value;
+        var idCTG = input.getAttribute('name');
+        var totalAmount = 0;
+
+        fetch('/buyer/cart/updateQuantity', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'idCTG=' + encodeURIComponent(idCTG) + '&quantity=' + encodeURIComponent(quantity),
+        })
+            .then(response => response.text())
+            .then(data => {
+            })
+            .catch(error => {
+            });
+
+        $(".itemsCart:checked").each(function () {
+            var priceProduct = parseFloat($(this).closest("tr").find(".cart__price").text().replace('₫', '').replace(/,/g, '').trim());
+            var quantity = parseInt($(this).closest("tr").find(".quantityInput").val());
+            totalAmount += priceProduct * quantity;
+        });
+
+        $("#grandTotal").text("₫" + totalAmount.toLocaleString());
+
+        var priceProduct = parseFloat($(input).closest("tr").find(".cart__price").text().replace('₫', '').replace(/,/g, '').trim());
+        var quantity = parseInt($(input).closest("tr").find(".quantityInput").val());
+        var totalAmountElement = $(input).closest("tr").find(".totalAmount");
+        var totalAmount = quantity * priceProduct;
+        totalAmountElement.text("₫" + totalAmount.toLocaleString());
+
+    }
+
+    function selectAllItems(checkbox) {
+        $(".itemsCart").prop("checked", $(checkbox).prop("checked"));
+        updateTotalAmount();
+    }
+    function formatCurrency(amount) {
+        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+</script>
+<!--Update quantity product in cart END -->
+
+<!-- Check choose product Begin -->
+<script>
+    function validatePurchase() {
+        var form = document.getElementById('purchaseForm');
+        var checkboxes = form.querySelectorAll('input[type="checkbox"]');
+        var atLeastOneChecked = false;
+
+        checkboxes.forEach(function (checkbox) {
+            if (checkbox.checked) {
+                atLeastOneChecked = true;
+                return;
+            }
+        });
+
+        if (!atLeastOneChecked) {
+            $('#messAddThanhCong').modal('show');
+            event.preventDefault();
+        }
+
+        return true;
+    }
+</script>
+<!-- Check choose product End -->
+
+<script>
+    $(document).ready(function () {
+        $('#showOptionProductInCart').modal('show');
+    });
+</script>
+
+<!--Receive mail begin-->
+<script>
+    function receiveMail(event, idCTG) {
+
+        console.log('idCTG:', idCTG);
+
+        // Ngăn chặn hành vi mặc định của liên kết (chuyển hướng trang)
+        event.preventDefault();
+
+        // Gửi yêu cầu Fetch
+        fetch(`/buyer/cart/receive/mail/${idCTG}`, {
+            method: 'POST', // hoặc 'GET', 'PUT', 'DELETE', v.v.
+            headers: {
+                'Content-Type': 'application/json', // Đặt kiểu dữ liệu gửi đi (nếu có)
+                // Các headers khác nếu cần
+            },
+            body: JSON.stringify({
+                // Dữ liệu gửi đi (nếu có)
+                // ...
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Xử lý dữ liệu nhận được từ API
+                console.log(data);
+            })
+            .catch(error => {
+                // Xử lý lỗi nếu có
+                console.error('Error:', error);
+            });
+
+        return false; // Ngăn chặn sự kiện onclick tiếp theo (nếu có)
+    }
+</script>
+<script th:if="${successMessage}">
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var toastElement = document.getElementById('success-toast').querySelector('.toast');
+        var toast = new bootstrap.Toast(toastElement);
+        toast.show();
+    });
+</script>
+
+
+<script>
+    function confirmDelete(id) {
+        if(confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+            // redirect sang URL DELETE nếu người dùng xác nhận
+            window.location.href = '/cart/delete/' + id;
+        }
+    }
+
+</script>
+
+<!--Receive mail end-->
+
+</body>
+
+</html>

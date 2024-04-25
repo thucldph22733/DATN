@@ -90,11 +90,12 @@
 
 <body>
 <!-- Page Preloder -->
-<div id="preloder">
-    <div class="loader"></div>
-</div>
+<!--<div id="preloder">-->
+<!--    <div class="loader"></div>-->
+<!--</div>-->
 
 <!-- Header Section Begin -->
+
 <header class="header">
     <div class="header__top">
         <div class="container">
@@ -118,6 +119,24 @@
                 </div>
 
                 <div class="col-lg-3 d-flex align-items-center">
+
+
+                    <div th:if="${successMessage}" th:attr="data-message=${successMessage}" id="success-toast" style="position: fixed; top: 1rem; right: 1rem; z-index: 1050;">
+                        <!-- Toast container, ẩn mặc định và sẽ được hiển thị bằng JavaScript -->
+                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="7000">
+                            <div class="toast-header">
+                                <strong class="mr-auto">Thông báo</strong>
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="toast-body" th:text="${successMessage}">
+                            </div>
+                        </div>
+                    </div>
+
+
+
                     <div>
 
                         <div th:if="${heartLogged}" class="header__top__links"  >
@@ -607,6 +626,14 @@
             $('#noticaAddVoucher').modal('show');
             event.preventDefault();
         }
+    });
+</script>
+
+<script th:if="${successMessage}">
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var toastElement = document.getElementById('success-toast').querySelector('.toast');
+        var toast = new bootstrap.Toast(toastElement);
+        toast.show();
     });
 </script>
 
