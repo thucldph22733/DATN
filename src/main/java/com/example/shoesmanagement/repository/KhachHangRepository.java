@@ -14,7 +14,10 @@ public interface KhachHangRepository extends JpaRepository< KhachHang,UUID> {
     KhachHang findByEmailKH(String email);
     List<KhachHang> findByTrangThai(int trangThai);
     List<KhachHang> findByMaKHOrHoTenKH(String maKH, String tenKH);
+
     KhachHang findByHoTenKH(String name);
+    KhachHang findByMaKH(String maKH);
+    KhachHang findByCCCDKH(String CCCDKH);
     KhachHang findBySdtKH(String sdtKH);
     @Query(value = "select * from khach_hang where trang_thai =1",nativeQuery = true)
     List<KhachHang> getKhachHangByTrangThai();
