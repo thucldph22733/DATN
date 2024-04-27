@@ -265,6 +265,8 @@
     </div>
 
 </section>
+<!-- Breadcrumb Section End -->
+
 <!-- Shop Section Begin -->
 <section class="shop spad" style="margin-top: -70px;">
     <div class="container">
@@ -319,18 +321,17 @@
             </div>
 
             <div class="col-lg-9">
-<!-- Breadcrumb Section End -->
 
                 <!--                Setting Account Begin-->
                 <div th:if="${pagesettingAccount}" class="card">
                     <div class="card-body" >
 
                         <div class="row" style="background-color: #f3f2ee; height: 100px; width: 803px; margin-left: 2px;  border-radius: 5px;">
-                            <img src="/images/imgRanks/Gold.png" alt="" style="margin-left: 700px; width: 50px; height: 50px;">
-                            <img src="/images/imgsKhachHang/Avatar/" alt="" style="height: 110px; width: 110px; border-radius: 50% ; margin-left: 10px; margin-top: 0px;">
+                            <img src="/images/imgRanks/Gold.png" alt="" style="margin-left: 700px; width: 50px; height: 50xp;">
+                            <img src="/images/imgsKhachHang/Avatar/CEO.jpg" alt="" style="height: 110px; width: 110px; border-radius: 50% ; margin-left: 10px; margin-top: 0px;">
 
-                            <h4 style="margin-top: 60px; margin-left: 70px;">User</h4>
-                            <p style=" margin-left: 230px; margin-top: 20px;"></p>
+                            <h4 style="margin-top: 60px; margin-left: 70px;">Pham Huu Nhan</h4>
+                            <p style=" margin-left: 230px; margin-top: 20px;">Thanh vien tu 19/09/2003</p>
 
                         </div>
 
@@ -339,7 +340,7 @@
                             <div class="form-group" style="margin-left: 50px; margin-top: 50px; width: 300px;">
                                 <label>Họ tên</label>
                                 <br>
-                                <input class="form-control" type="text" placeholder="">
+                                <input class="form-control" type="text" placeholder="Nhan Pham">
                             </div>
                             <div class="form-group" style="margin-left: 50px; margin-top: 50px; width: 300px;">
                                 <label>Giới tính</label>
@@ -355,18 +356,18 @@
                             <div class="form-group" style="margin-left: 50px; margin-top: 10px; width: 300px;">
                                 <label>ID CCCD :</label>
                                 <br>
-                                <input type="text" placeholder="xxxxxxxxxxxxx" class="form-control">
+                                <input type="text" placeholder="038203023900" class="form-control">
                             </div>
                             <br>
                             <div class="form-group" style="margin-left: 50px; margin-top: 10px;  width: 300px;">
                                 <label>Email :</label>
                                 <br>
-                                <input placeholder="xxxxx@gmail.com" type="text" class="form-control">
+                                <input placeholder="nhan@gmail.com" type="text" class="form-control">
                             </div>
                             <div class="form-group" style="margin-left: 50px; margin-top: 10px;  width: 300px;">
                                 <label>SDT :</label>
                                 <br>
-                                <input type="text" class="form-control" placeholder="+84xxxxxxxxx">
+                                <input type="text" class="form-control" placeholder="+8438 432 9003">
                             </div>
                             <br>
 
@@ -464,26 +465,6 @@
                     </div>
                 </div>
                 <!--                Address End-->
-
-                <!--                Purchase Begin-->
-                <div th:if="${pagePurchaseUser}" class="card">
-                    <div class="card-body" >
-
-                        <div class="row" style="background-color: #f3f2ee; height: 81px; width: 836px; border-radius: 5px; margin-top: -10px;">
-                            <nav class="header__menu mobile-menu" >
-                                <ul>
-                                    <li th:class="${type1}" style="margin-left: 30px; margin-right: 27px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase'}" >Tất cả</a></li>
-                                    <li th:class="${type2}" style="margin-right: 27px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/pay'}" >Chờ thanh toán</a></li>
-                                    <li th:class="${type3}" style="margin-right: 27px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/ship'}" >Chờ giao hàng</a></li>
-                                    <li th:class="${type4}" style="margin-right: 27px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/receive'}">Giao hàng</a></li>
-                                    <li th:class="${type5}" style="margin-right: 27px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/completed'}">Thành công</a></li>
-                                    <li th:class="${type6}" style="margin-right: 27px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/cancel'}">Đã hủy</a></li>
-                                    <li th:class="${type7}" style="margin-right: 27px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/refund'}">Trả hàng/Hoàn tiền</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                <!--                Coins End-->
-
             </div>
         </div>
     </div>
@@ -546,7 +527,7 @@
                         2023
                         All rights reserved | This template is edit with <i class="fa fa-heart-o"
                                                                             aria-hidden="true"></i> by <a
-                                href="https://www.instagram.com/nhanngu_03/" target="_blank"></a>
+                                href="https://www.instagram.com/nhanngu_03/" target="_blank">Nhan Pham</a>
                     </p>
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                 </div>
@@ -629,6 +610,7 @@
             </div>
         </div>
     </div>
+    <!--    Thêm địa chỉ end-->
 </section>
 <!--Modal end-->
 
@@ -651,43 +633,52 @@
 <script src="/js/scrollbar.min.js"></script>
 <script src="/js/custom-scroll.js"></script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
 <script>
-    const host = "https://provinces.open-api.vn/api/";
+    const host = "https://esgoo.net/";
     var callAPI = (api) => {
         return axios.get(api)
             .then((response) => {
-                renderData(response.data, "city");
+                renderData(response.data.data, "city");
             });
     }
-    callAPI('https://provinces.open-api.vn/api/?depth=1');
+    callAPI(host + "api-tinhthanh/1/0.htm");
+
     var callApiDistrict = (api) => {
         return axios.get(api)
             .then((response) => {
-                renderData(response.data.districts, "district");
+                renderData(response.data.data, "district");
             });
     }
     var callApiWard = (api) => {
         return axios.get(api)
             .then((response) => {
-                renderData(response.data.wards, "ward");
+                renderData(response.data.data, "ward");
             });
     }
 
     var renderData = (array, select) => {
         let row = ' <option disable value="">Chọn</option>';
         array.forEach(element => {
-            row += `<option data-id="${element.code}" value="${element.name}">${element.name}</option>`
+            row += `<option data-id="${element.id}" value="${element.full_name}">${element.full_name}</option>`
         });
         document.querySelector("#" + select).innerHTML = row
     }
 
     $("#city").change(() => {
-        callApiDistrict(host + "p/" + $("#city").find(':selected').data('id') + "?depth=2");
+        if ($("#city").val() === "") {
+            $("#district").html('<option value="" selected>Chọn quận huyện</option>');
+            $("#ward").html('<option value="" selected>Chọn phường/xã</option>');
+        } else {
+            callApiDistrict(host + "api-tinhthanh/2/" + $("#city").find(':selected').data('id') + ".htm");
+        }
         printResult();
     });
     $("#district").change(() => {
-        callApiWard(host + "d/" + $("#district").find(':selected').data('id') + "?depth=2");
+        callApiWard(host + "api-tinhthanh/3/" + $("#district").find(':selected').data('id') + ".htm");
         printResult();
     });
     $("#ward").change(() => {
@@ -698,25 +689,6 @@
         if ($("#district").find(':selected').data('id') != "" && $("#ward").find(':selected').data('id') != "" &&
             $("#city").find(':selected').data('id') != "") {
         }
-    }
-</script>
-
-<script>
-    function validateForm() {
-        // Lấy giá trị của select box
-        var donViNhanHang = document.getElementById("donViNhanHang").value;
-
-        // Nếu đơn vị nhận hàng không phải là "Human Express", kiểm tra input
-        if (donViNhanHang !== "human_express") {
-            var maVanDon = document.getElementById("maVanDon").value;
-
-            // Kiểm tra nếu input không được nhập
-            if (maVanDon.trim() === "") {
-                $('#thongBaoNhapMa').modal('show');
-                event.preventDefault();
-            }
-        }
-        document.forms[0].submit();
     }
 </script>
 
