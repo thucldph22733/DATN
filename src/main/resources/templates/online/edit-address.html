@@ -26,7 +26,6 @@
         <link rel="stylesheet" href="/cssx/style.css" type="text/css">
         <link rel="stylesheet" href="/cssx/scroll.min.css" type="text/css">
         <link rel="stylesheet" href="/cssx/styleNhan.css" type="text/css">
-
         <style>
             header {
                 position: fixed;
@@ -38,25 +37,84 @@
 
 
     <style>
-        .imagePreview {
-            width: 200px;
-            height: 200px;
-            background-position: center center;
-            background: url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg);
-            background-color: #fff;
-            background-size: cover;
-            background-repeat: no-repeat;
-            display: inline-block;
-            box-shadow: 0px -3px 6px 2px rgba(0, 0, 0, 0.2);
+
+        .form-group {
+            margin-bottom: 25px
         }
 
-        .btn-primary {
-            display: block;
-            width: 200px;
+        .form-group label {
+            margin-bottom: 8px;
+            color: #212b36;
+            font-weight: 500;
+            font-size: 14px;
+            display: block
+        }
+
+        .form-group label .manitory {
+            color: red
+        }
+
+        .form-group .input-groupicon {
+            position: relative
+        }
+
+        .form-group .input-groupicon .addonset {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            line-height: 0;
+            transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%)
+        }
+
+        @media (max-width: 991px) {
+            .form-group .input-groupicon .addonset {
+                display: none
+            }
+        }
+
+        .form-group input[type=text], .form-group input[type=password] {
+            border: 1px solid rgba(145, 158, 171, .32);
+            height: 40px;
+            width: 100%;
+            font-size: 14px;
+            font-weight: 500;
+            color: #637381;
+            padding: 10px 15px;
+            border-radius: 5px
+        }
+
+        .btn-submit {
+            color: #fff;
+            background-color: #0b5ed7 !important;
+            border-color: #1da1f2 !important;
+            display: inline-block;
+            width: 100px;
             border-radius: 0px;
             box-shadow: 0px 4px 6px 2px rgba(0, 0, 0, 0.2);
-            margin-top: -5px;
+            cursor: pointer;
+            text-decoration: none;
         }
+
+        .btn-submit:hover {
+            background: #0dcaf0;
+            color: #fff
+        }
+
+        @media (max-width: 991px) {
+            .btn-submit {
+                min-width: auto;
+                padding: 5px 7px
+            }
+        }
+
+        .btn-secondary{
+            display: inline-block;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
 
         .imgUp {
             margin-bottom: 15px;
@@ -76,10 +134,14 @@
             background-color: rgba(255, 255, 255, 0.6);
             cursor: pointer;
         }
-
-
     </style>
 <body>
+<!-- Page Preloder -->
+<!--<div id="preloder">-->
+<!--    <div class="loader"></div>-->
+<!--</div>-->
+
+<!-- Header Section BegiAccount  -->
 <header class="header">
     <div class="header__top">
         <div class="container">
@@ -258,7 +320,9 @@
                                 <div class="card-body">
                                     <div class="shop__sidebar__categories">
                                         <ul class="nice-scroll" style="height: 20%">
+                                            <li><a href="/buyer/setting">Thông tin</a></li>
                                             <li><a href="/buyer/addresses">Địa chỉ</a></li>
+                                            <li><a href="/buyer/setting">Ngân hàng</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -269,168 +333,114 @@
                                 <a href="/buyer/purchase">Đơn mua</a>
                             </div>
                         </div>
+                        <div class="card">
+                            <div class="card-heading">
+                                <a href="/buyer/notification">Thông báo</a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-heading">
+                                <a href="/buyer/voucher">Khuyến mãi</a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-heading">
+                                <a href="/buyer/coins">Xu</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-9">
-
-                <!--                Address Begin-->
-                <div th:if="${pageAddressesUser}" class="card">
-                    <div th:if="${diaChiShow}" class="card-body">
-
-                        <div class="row"
-                             style="background-color: #f3f2ee; height: 80px; width: 836px; border-radius: 5px; margin-top: -10px;">
-                            <p style="font-size: 14pt; margin-top: 26px; margin-left: 30px;">Địa chỉ của tôi</p>
-                            <a style="height: 40px; width: 200px; margin-left: 450px; margin-top: 20px;" type="button"
-                               data-toggle="modal" data-target="#modalThemDiaChi"> + Thêm địa chỉ mới</a>
-                        </div>
-
-                        <div th:object="${addressKHDefault}" class="row"
-                             style="margin-top: 5px; background-color: #f3f2ee; width: 836px ;  border-radius: 5px; height: 175px;">
-                            <div>
-                                <div style="display: flex;">
-                                    <h3 style="margin-top: 20px; margin-left: 30px; color:black; font-weight: 600 ; font-size: 1.2rem; line-height: 1.5rem;"
-                                        th:text="${addressKHDefault.tenNguoiNhan}"></h3>
-                                    <span style="font-size: 1.8rem; margin-top: 10px; margin-left: 10px; font-weight: 100;"> | </span>
-
-                                    <h3 style="margin-top: 23px; font-size: 1.1rem; margin-left: 10px;"
-                                        th:text="${addressKHDefault.sdtNguoiNhan}"></h3>
-                                    <!--                                    <a href="" style="color: black; margin-top: 30px; margin-left: 440px;">Sửa</a>-->
-                                </div>
-                                <h3 style="margin-top: 5px; font-size: 1.0rem; margin-left: 30px; font-weight: 600"
-                                    th:text="${addressKHDefault.tenDC}"></h3>
-                                <p style="margin: 10px 0 20px 30px; font-size: 1rem;"
-                                   th:text="${addressKHDefault.diaChiChiTiet}"></p>
-                                <button style="margin-left: 30px; margin-bottom: 10px; position: relative;top : -15px; border: 0.5px solid #4e4d4d">
-                                    Mặc định
-                                </button>
-                            </div>
-                        </div>
-
-                        <th:block th:each="x : ${listCartDetail}">
-
-                            <div class="row"
-                                 style="margin-top: 5px; background-color: #f3f2ee; width: 836px ;  border-radius: 5px; height: 130px;">
-                                <div>
-                                    <div style="display: flex;">
-                                        <h3 style="margin-top: 20px; margin-left: 30px; color:black; font-weight: 600 ; font-size: 1.2rem; line-height: 1.5rem;"
-                                            th:text="${x.tenNguoiNhan}"></h3>
-                                        <span style="font-size: 1.8rem; margin-top: 10px; margin-left: 10px; font-weight: 100;"> | </span>
-
-                                        <h3 style="margin-top: 23px; font-size: 1.1rem; margin-left: 10px;"
-                                            th:text="${x.sdtNguoiNhan}"></h3>
-                                        <a th:href="@{'/buyer/addresses/viewEdit/' + ${x.idDC}}"
-                                           style="color: black; margin-top: 30px; margin-left: 398px;">Edit</a>
-                                        <a th:href="@{'/buyer/addresses/delete/' +${x.idDC}}" class="delete"
-                                           style=" margin-top: 30px; margin-left: 10px; ">Delete</a>
+                <form th:object="${diaChi}" method="post" th:action="@{'/buyer/addresses/viewEdit/' + ${diaChi.idDC}}">
+                    <div class="page-wrapper">
+                        <div class="content">
+                            <div class="page-header">
+                                <div class="page-title">
+                                    <div class="row"
+                                         style="background-color: #f3f2ee; height: 80px; width: 836px; border-radius: 5px; margin-top: -10px;margin-left: 3px">
+                                        <p style="font-size: 14pt; margin-top: 26px; margin-left: 30px;">Edit
+                                            Address</p>
                                     </div>
 
-                                    <h3 style="margin-top: 5px; font-size: 1.0rem; margin-left: 30px; font-weight: 600"
-                                        th:text="${x.tenDC}"></h3>
-                                    <p style="margin: 10px 0 20px 30px; font-size: 1rem;"
-                                       th:text="${x.diaChiChiTiet}"></p>
-                                    <a th:href="@{'/buyer/addresses/setDefault/' +${x.idDC}}"
-                                       style="margin-left: 700px; position: relative; top: -40px;"> Set as default</a>
                                 </div>
                             </div>
 
-                        </th:block>
+                            <div class="card"
+                                 style="margin-top: 5px; background-color: #f3f2ee; width: 836px ;  border-radius: 5px; height: 460px;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label>Tên
+                                                    Địa Chỉ <span style="color: red;">*</span></label>
+                                                <input type="text" th:field="*{tenDC}">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label>Tên Người Nhận <span style="color: red;">*</span></label>
+                                                <input type="text" th:field="*{tenNguoiNhan}">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label>Số ĐT Địa Chỉ <span style="color: red;">*</span></label>
+                                                <input type="text" th:field="*{sdtNguoiNhan}">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label>Tỉnh Thành Phố <span style="color: red;">*</span></label>
+                                                <select class="select" id="tinhthanhpho">
+                                                    <option value="" selected>Chọn thành phố</option>
+                                                </select>
+                                                <input type="text" hidden th:field="*{tinhTP}" id="tinh-tp-hidden"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label>Quận Huyện <span style="color: red;">*</span></label>
+                                                <select class="select" id="quanhuyen">
+                                                    <option value="" selected>Chọn quận huyện</option>
+                                                </select>
+                                                <input type="text" hidden th:field="*{quanHuyen}"
+                                                       id="quan-huyen-hidden"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label>Xã Phường <span style="color: red;">*</span></label>
+                                                <select class="select" id="xaphuong">
+                                                    <option value="" selected>Chọn xã phường</option>
+                                                </select>
+                                                <input type="text" hidden th:field="*{xaPhuong}" id="phuong-xa-hidden"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label>Mô Tả <span style="color: red;">*</span></label>
+                                                <input type="text" th:field="*{moTa}">
+                                            </div>
+                                        </div>
 
+                                        <div class="col-lg-12">
+                                            <button type="submit" value="submit" class="btn btn-submit me-2">Submit
+                                            </button>
+                                            <a href="/buyer/addresses" id="cancelButton"
+                                               class="btn btn-secondary">Cancel</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div th:if="${diaChiShowNull}" class="card-body">
-
-                        <p>Bạn chưa có địa chỉ nào</p>
-                        <a style="height: 40px; width: 200px; margin-left: 450px; margin-top: 20px;" type="button"
-                           data-toggle="modal" data-target="#modalThemDiaChi"> + thêm địa chỉ </a>
-
-                    </div>
-                </div>
-
-<!--                <div th:if="${editAddresses}" class="card">-->
-<!--                    <div class="card-body">-->
-<!--                        <div th:object="${diaChi}" method="post" th:action="@{'/buyer/addresses/viewEdit' + ${x.idDC}}">-->
-<!--                            <div class="page-wrapper">-->
-<!--                                <div class="content">-->
-<!--                                    <div class="page-header">-->
-<!--                                        <div class="page-title">-->
-<!--                                            <h4>Edit Địa Chỉ</h4>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-
-<!--                                    <div class="card">-->
-<!--                                        <div class="card-body">-->
-<!--                                            <div class="row">-->
-<!--                                                <div class="col-lg-6 col-sm-6 col-12">-->
-<!--                                                    <div class="form-group">-->
-<!--                                                        <label>Tên Địa Chỉ <span style="color: red;">*</span></label>-->
-<!--                                                        <input type="text" th:field="*{tenDC}">-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                                <div class="col-lg-6 col-sm-6 col-12">-->
-<!--                                                    <div class="form-group">-->
-<!--                                                        <label>Tên Người Nhận <span style="color: red;">*</span></label>-->
-<!--                                                        <input type="text" th:field="*{tenNguoiNhan}">-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                                <div class="col-lg-6 col-sm-6 col-12">-->
-<!--                                                    <div class="form-group">-->
-<!--                                                        <label>Số ĐT Địa Chỉ <span style="color: red;">*</span></label>-->
-<!--                                                        <input type="text" th:field="*{sdtNguoiNhan}">-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                                <div class="col-lg-6 col-sm-6 col-12">-->
-<!--                                                    <div class="form-group">-->
-<!--                                                        <label>Tỉnh Thành Phố <span style="color: red;">*</span></label>-->
-<!--                                                        <select class="select" id="*{diachi.city}" name="city">-->
-<!--                                                            <option value="" selected>Chọn thành phố</option>-->
-<!--                                                        </select>-->
-<!--                                                        <input type="text" hidden th:field="*{tinhTP}"-->
-<!--                                                               id="tinh-tp-hidden"/>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                                <div class="col-lg-6 col-sm-6 col-12">-->
-<!--                                                    <div class="form-group">-->
-<!--                                                        <label>Quận Huyện <span style="color: red;">*</span></label>-->
-<!--                                                        <select class="select" id="quanhuyen">-->
-<!--                                                            <option value="" selected>Chọn quận huyện</option>-->
-<!--                                                        </select>-->
-<!--                                                        <input type="text" hidden th:field="*{quanHuyen}"-->
-<!--                                                               id="quan-huyen-hidden"/>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                                <div class="col-lg-6 col-sm-6 col-12">-->
-<!--                                                    <div class="form-group">-->
-<!--                                                        <label>Xã Phường <span style="color: red;">*</span></label>-->
-<!--                                                        <select class="select" id="xaphuong">-->
-<!--                                                            <option value="" selected>Chọn xã phường</option>-->
-<!--                                                        </select>-->
-<!--                                                        <input type="text" hidden th:field="*{xaPhuong}"-->
-<!--                                                               id="phuong-xa-hidden"/>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                                <div class="col-lg-6 col-sm-6 col-12">-->
-<!--                                                    <div class="form-group">-->
-<!--                                                        <label>Mô Tả <span style="color: red;">*</span></label>-->
-<!--                                                        <input type="text" th:field="*{moTa}">-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                                <div class="col-lg-12">-->
-<!--                                                    <button type="submit" value="submit" class="btn btn-submit me-2">-->
-<!--                                                        Submit-->
-<!--                                                    </button>-->
-<!--                                                    <a href="/buyer/addresses" id="cancelButton" class="btn btn-cancel">Cancel</a>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-                    <!--                Address End-->
-                </div>
+                </form>
+                <!--                Address End-->
             </div>
         </div>
+    </div>
 </section>
 <!-- Shop Section End -->
 <!-- Footer Section Begin -->
@@ -499,89 +509,6 @@
 </footer>
 <!-- Footer Section End -->
 
-<!--Modal begin-->
-<section>
-
-    <!--    Thêm địa chỉ  begin-->
-    <div th:if="${addNewAddressSetting}" class="modal fade" id="modalThemDiaChi" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 500px">
-            <div class="modal-content">
-                <form action="/buyer/addresses/add" method="post">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Thêm địa chỉ mới</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div>
-                            <div class="row" style="margin-bottom: 20px;">
-                                <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text"
-                                       placeholder="Tên địa chỉ" name="nameAddress">
-
-                                <input style="height: 40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text"
-                                       placeholder="Tên người nhận" name="fullName">
-                            </div>
-                            <div class="row" style="margin-bottom: 20px;">
-                                <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text"
-                                       placeholder="SDT người nhận" name="phoneAddress">
-
-                                <select class="select" id="city" name="city"
-                                        style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                                       font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
-                                    <option value="" selected>Chọn thành phố</option>
-                                </select>
-                            </div>
-
-                            <div class="row" style="margin-bottom: 20px;">
-
-                                <select class="select" id="district" name="district" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; margin-left: 38px; margin-right: 30px; ">
-                                    <option value="" selected>Chọn quận huyện</option>
-                                </select>
-
-                                <select class="select" id="ward" name="ward" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; ">
-                                    <option value="" selected>Chọn phường/xã</option>
-                                </select>
-
-                            </div>
-
-                            <div class="row" style="margin-bottom: 20px;">
-
-                                <input name="description" style="height: 40px;width: 410px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381;  padding: 10px 15px; margin-left: 38px;"
-                                       type="text" placeholder="Mô tả" ;>
-
-                            </div>
-
-                            <div style="width: 100%; height:15px;"></div>
-                            <div style="width: 100%; height: 0.5px; background-color: rgb(64, 64, 64) ;"></div>
-                            <div style="width: 100%; height:15px;"></div>
-
-                            <div class="row">
-                                <input style="margin: 0 10px 0 38px;" type="checkbox" name="defaultSelected"> Đặt làm
-                                mặc định
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!--    Thêm địa chỉ end-->
-</section>
-<!--Modal end-->
-
 <!-- Js Plugins -->
 <script src="/js/jquery-3.6.0.min.js"></script>
 <script src="/js/feather.min.js"></script>
@@ -589,7 +516,6 @@
 <script src="/js/script.js"></script>
 <script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-<!--<script src="/js/jquery.nice-select.min.js"></script>-->
 <script src="/js/jquery.nicescroll.min.js"></script>
 <script src="/js/jquery.magnific-popup.min.js"></script>
 <script src="/js/jquery.countdown.min.js"></script>
@@ -600,63 +526,79 @@
 <script src="/js/jquery.slimscroll.min.js"></script>
 <script src="/js/scrollbar.min.js"></script>
 <script src="/js/custom-scroll.js"></script>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-
 <script>
-    const host = "https://esgoo.net/";
-    var callAPI = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data.data, "city");
-            });
-    }
-    callAPI(host + "api-tinhthanh/1/0.htm");
-
-    var callApiDistrict = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data.data, "district");
-            });
-    }
-    var callApiWard = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data.data, "ward");
-            });
+    // Hàm để tải dữ liệu tỉnh thành từ API
+    const loadTinhThanhData = () => {
+        const host = "https://esgoo.net/"; // URL cơ sở của API
+        callAPI(host + "api-tinhthanh/1/0.htm").then(res => {
+            // Sau khi dữ liệu được tải, hiển thị trong dropdown
+            renderData(res.data, "tinhthanhpho");
+        });
     }
 
+    // Hàm để gọi API và render dữ liệu
+    var callAPI = async (api) => {
+        return await axios.get(api);
+    }
+
+    // Hàm render dữ liệu vào dropdown
     var renderData = (array, select) => {
         let row = ' <option disable value="">Chọn</option>';
         array.forEach(element => {
             row += `<option data-id="${element.id}" value="${element.full_name}">${element.full_name}</option>`
         });
-        document.querySelector("#" + select).innerHTML = row
+        document.querySelector("#" + select).innerHTML = row;
     }
 
-    $("#city").change(() => {
-        if ($("#city").val() === "") {
-            $("#district").html('<option value="" selected>Chọn quận huyện</option>');
-            $("#ward").html('<option value="" selected>Chọn phường/xã</option>');
-        } else {
-            callApiDistrict(host + "api-tinhthanh/2/" + $("#city").find(':selected').data('id') + ".htm");
-        }
+    // Gọi hàm tải dữ liệu tỉnh thành khi trang được tải
+    loadTinhThanhData();
+
+    // Các sự kiện khi dropdown thay đổi
+    $("#tinhthanhpho").change(() => {
+        const tinhtp = $("#tinhthanhpho").find(':selected')
+        callApiDistrict(host + "api-tinhthanh/2/" + tinhtp.data('id') + ".htm");
+        document.getElementById("tinh-tp-hidden").value = tinhtp.text();
         printResult();
     });
-    $("#district").change(() => {
-        callApiWard(host + "api-tinhthanh/3/" + $("#district").find(':selected').data('id') + ".htm");
+    $("#quanhuyen").change(() => {
+        const quanhuyen =  $("#quanhuyen").find(':selected')
+        callApiWard(host + "api-tinhthanh/3/" + quanhuyen.data('id') + ".htm");
+        document.getElementById("quan-huyen-hidden").value = quanhuyen.text();
         printResult();
     });
-    $("#ward").change(() => {
+    $("#xaphuong").change(() => {
+        const phuongxa =  $("#xaphuong").find(':selected')
+        document.getElementById("phuong-xa-hidden").value = phuongxa.text();
         printResult();
     })
 
-    var printResult = () => {
-        if ($("#district").find(':selected').data('id') != "" && $("#ward").find(':selected').data('id') != "" &&
-            $("#city").find(':selected').data('id') != "") {
+    // Các hàm khác có thể bạn cần
+    var callApiDistrict = async (api) => {
+        return await axios.get(api)
+            .then((response) => {
+                renderData(response.data.data, "quanhuyen");
+                return response;
+            });
+    }
+    var callApiWard = async (api) => {
+        return await axios.get(api)
+            .then((response) => {
+                renderData(response.data.data, "xaphuong");
+                return response;
+            });
+    }
+    const printResult = () => {
+        const quanHuyen = $("#quanhuyen").find(':selected').data('name');
+        const xaPhuong = $("#xaphuong").find(':selected').data('name');
+        const tinhTP = $("#tinhthanhpho").find(':selected').data('name');
+
+        if (quanHuyen != "" && xaPhuong != "" &&
+            tinhTP != "") {
+            let idDiaChi = $("#diachict");
+            idDiaChi[0].value = xaPhuong + " , " + quanHuyen + " , " + tinhTP;
         }
+        console.log(tinhTP);
     }
 </script>
 
