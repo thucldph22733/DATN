@@ -538,21 +538,24 @@
 <!--Section giá và size end-->
 
 <!--Modal Begin-->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#noticaAddVoucher" id="openModalBtn">
+    Mở thông báo
+</button>
+
+<!-- Modal -->
 <div class="modal fade" id="noticaAddVoucher" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="messAddThanhCongTitle" >Thông báo !</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" id="messAddThanhCongTitle">Thông báo !</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-
                 <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">
                     <p style="font-size: 13pt; font-weight: 600;">Vui lòng chọn một sản phẩm trước khi thêm vào giỏ hàng.</p>
                 </div>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -560,6 +563,13 @@
         </div>
     </div>
 </div>
+
+
+
+
+<!-- Modal HTML -->
+
+
 <!--Modal End-->
 <script src="/js/jquery-3.6.0.min.js"></script>
 <script>
@@ -636,6 +646,17 @@
         toast.show();
     });
 </script>
+
+<script>
+    $(document).ready(function(){
+        $('#yourTriggerButton').click(function(){
+            $('#simpleModal').modal('show');
+        });
+    });
+
+</script>
+
+
 
 
 <script>

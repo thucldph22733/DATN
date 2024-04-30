@@ -54,9 +54,22 @@ public class CartController {
         return "/online/shopping-cart";
     }
 
-    @GetMapping("/cart/delete/{idCTG}")
-    private String deleteInCard(Model model, @PathVariable UUID idCTG, RedirectAttributes redirectAttribute){
+//    @GetMapping("/cart/delete/{idCTG}")
+//    private String deleteInCard(Model model, @PathVariable UUID idCTG, RedirectAttributes redirectAttribute){
+//
+//        ChiTietGiay chiTietGiay = gctService.getByIdChiTietGiay(idCTG);
+//        GioHangChiTiet gioHangChiTiet = ghctService.findByCTSPActive(chiTietGiay);
+//        gioHangChiTiet.setTrangThai(0);
+//        ghctService.addNewGHCT(gioHangChiTiet);
+//
+//        showDataBuyer(model);
+//        redirectAttribute.addFlashAttribute("successMessage", "Sản phẩm đã được xoá khỏi giỏ hàng thành công!");
+//
+//        return "redirect:/buyer/cart";
+//    }
 
+    @GetMapping("/cart/delete/{idCTG}")
+    private String deleteInCard(Model model, @PathVariable UUID idCTG, RedirectAttributes redirectAttribute) {
         ChiTietGiay chiTietGiay = gctService.getByIdChiTietGiay(idCTG);
         GioHangChiTiet gioHangChiTiet = ghctService.findByCTSPActive(chiTietGiay);
         gioHangChiTiet.setTrangThai(0);
@@ -67,12 +80,17 @@ public class CartController {
 
         return "redirect:/buyer/cart";
     }
+
+
+
     private void showDataBuyer(Model model){
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
 
         List<GioHangChiTiet> listGHCTActive = ghctService.findByGHActive(gioHang);
         Integer sumProductInCart = listGHCTActive.size();
+
+        Double sumAllProduct = listGHCTActive.stream().mapToDouble(GioHangChiTiet::getDonGia).sum();
 
         if (listGHCTActive != null){
             for (GioHangChiTiet gioHangChiTiet: listGHCTActive) {
@@ -84,6 +102,7 @@ public class CartController {
         model.addAttribute("fullNameLogin", khachHang.getHoTenKH());
         model.addAttribute("sumProductInCart", sumProductInCart);
         model.addAttribute("listCartDetail", listGHCTActive);
+        model.addAttribute("totalPrice", sumAllProduct);
     }
     public String generateRandomNumbers() {
         Random random = new Random();
