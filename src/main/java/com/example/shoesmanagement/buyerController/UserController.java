@@ -1,20 +1,14 @@
 package com.example.shoesmanagement.buyerController;
 
 import com.example.shoesmanagement.model.*;
-import com.example.shoesmanagement.service.DiaChiKHService;
-import com.example.shoesmanagement.service.GHCTService;
-import com.example.shoesmanagement.service.ThongBaoServices;
+import com.example.shoesmanagement.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
@@ -26,23 +20,40 @@ public class UserController {
     @Autowired
     private HttpSession session;
 
-
     @Autowired
     private GHCTService ghctService;
-
 
     @Autowired
     private HttpServletRequest request;
 
     @Autowired
-    private DiaChiKHService diaChiKHService;
+    private KhachHangService khachHangService;
 
+    @Autowired
+    private DiaChiKHService diaChiKHService;
 
     @Autowired
     private ThongBaoServices thongBaoServices;
 
 
-    @GetMapping("/setting")
+    @ModelAttribute("dsTrangThai")
+    public Map<Integer, String> getDsTrangThai() {
+        Map<Integer, String> dsTrangThai = new HashMap<>();
+        dsTrangThai.put(1, "Hoạt động");
+        dsTrangThai.put(0, "Không hoạt động");
+        return dsTrangThai;
+    }
+
+    @ModelAttribute("dsLoaiDC")
+    public Map<Boolean, String> getDsLoaiDC() {
+        Map<Boolean, String> dsLoaiDC = new HashMap<>();
+        dsLoaiDC.put(true, "Mặc định");
+        dsLoaiDC.put(false, "Không mặc định");
+
+        return dsLoaiDC;
+    }
+
+        @GetMapping("/setting")
     private String getSettingAccount(Model model) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
@@ -73,6 +84,7 @@ public class UserController {
 
         }
         model.addAttribute("pageAddressesUser", true);
+        model.addAttribute("editAddresses", true);
         model.addAttribute("addNewAddressSetting", true);
         showThongBao(model, khachHang);
         return "online/user";
@@ -111,6 +123,39 @@ public class UserController {
 
         return "redirect:/buyer/addresses";
     }
+
+    @GetMapping("/addresses/viewEdit/{id}")
+    public String viewEditAddresses(@PathVariable UUID id, Model model, @ModelAttribute("userInput") DiaChiKH userInputDC) {
+        DiaChiKH diaChiKH = diaChiKHService.getByIdDiaChikh(id);
+        model.addAttribute("diaChi", diaChiKH);
+        List<KhachHang> khachHangs = khachHangService.getAllKhachHang();
+        Collections.sort(khachHangs, (a, b) -> b.getTgThem().compareTo(a.getTgThem()));
+        model.addAttribute("khachHang", khachHangs);
+        model.addAttribute("diaChiUpdate", userInputDC);
+        return "online/edit-address";
+    }
+
+    @PostMapping("/addresses/viewEdit/{id}")
+    public String editAddresses(@PathVariable UUID id, @Valid @ModelAttribute("diaChi") DiaChiKH diaChiKH
+            , RedirectAttributes redirectAttributes) {
+
+        DiaChiKH diaChiKHdb = diaChiKHService.getByIdDiaChikh(id);
+
+        if (diaChiKHdb != null) {
+            diaChiKHdb.setTenDC(diaChiKH.getTenDC());
+            diaChiKHdb.setTenNguoiNhan(diaChiKH.getTenNguoiNhan());
+            diaChiKHdb.setSdtNguoiNhan(diaChiKH.getSdtNguoiNhan());
+            diaChiKHdb.setXaPhuong(diaChiKH.getXaPhuong());
+            diaChiKHdb.setQuanHuyen(diaChiKH.getQuanHuyen());
+            diaChiKHdb.setTinhTP(diaChiKH.getTinhTP());
+            diaChiKHdb.setMoTa(diaChiKH.getMoTa());
+            diaChiKHdb.setTgSua(new Date());
+            diaChiKHService.save(diaChiKHdb);
+            redirectAttributes.addFlashAttribute("message", true);
+        }
+        return "redirect:/buyer/addresses";
+    }
+
 
     @GetMapping("/addresses/delete/{idDC}")
     private String deleteAddress(Model model, @PathVariable UUID idDC) {
@@ -166,13 +211,6 @@ public class UserController {
             sb.append(randomNumber);
         }
         return sb.toString();
-    }
-
-    private String generateNewFileName(String originalFileName) {
-        long timestamp = System.currentTimeMillis();
-        String[] parts = originalFileName.split("\\.");
-        String extension = parts[parts.length - 1];
-        return "yeu_cau_hoan_hang_" + timestamp + "." + extension;
     }
 
     private void showThongBao(Model model, KhachHang khachHang) {
