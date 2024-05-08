@@ -73,12 +73,12 @@
         <div class="content">
             <div class="page-header">
                 <div class="page-title">
-                    <h4>List Màu Sắc</h4>
-                    <h6>Quản Lý Màu Sắc</h6>
+                    <h4>List Khuyến Mãi</h4>
+                    <h6>Quản Lý Khuyến Mãi</h6>
                 </div>
                 <div class="page-btn">
                     <button class="btn btn-added" id="show-form-button">
-                        <img src="/images/img/icons/plus.svg" class="me-1" alt="img">Thêm Màu
+                        <img src="/images/img/icons/plus.svg" class="me-1" alt="img">Thêm Khuyến Mãi
                     </button>
                 </div>
             </div>
@@ -94,33 +94,38 @@
                                         <input type="text" id="ma" name="ma" th:field="*{ma}" class="form-control"/>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-2 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="maMau">Mã Màu (RGB)</label>
-                                        <input type="text" id="rgbValue" name="maMau" th:field="*{maMau}" readonly
-                                               class="form-control" style="margin-top: 5px;"/>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label for="chonMau">Chọn Màu:</label>
-                                        <input type="color" id="chonMau" name="chonMau"
-                                               onchange="updateRGBValue(this.value)" required class="large-input"/>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label for="tenMau">Tên Màu</label>
+                                        <label for="tenMau">Tên Khuyến Mãi</label>
                                         <input type="text" id="tenMau" name="tenMau" th:field="*{tenMau}"
                                                class="form-control"/>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-2 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="tenMau">Ngày Bắt Đầu</label>
+                                        <input type="date" id="tenMau" name="tenMau" th:field="*{tenMau}"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-2 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="tenMau">Số Lượng</label>
+                                        <input type="text" id="tenMau" name="tenMau" th:field="*{tenMau}"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+
                                 <div class="col-lg-12">
-                                    <button type="submit" class="btn btn-submit me-2">Submit</button>
+                                    <button type="submit" class="btn btn-submit me-2">Add</button>
                                 </div>
                             </div>
                         </form>
                     </div>
+
                     <div class="table-top">
                         <div class="search-set">
                             <div class="search-path">
@@ -130,40 +135,43 @@
                                 </a>
                             </div>
                             <div class="search-input">
-                                <a class="btn btn-searchset"><img src="/images/img/icons/search-white.svg"
-                                                                  alt="img"></a>
+                                <a class="btn btn-searchset">
+                                    <img src="/images/img/icons/search-white.svg" alt="img">
+                                </a>
                             </div>
                         </div>
+
                         <div class="wordset">
                             <ul>
                                 <li>
                                     <a class="btn btn-filter" id="import-excel" data-bs-toggle="tooltip"
                                        data-bs-placement="top" title="Import Excel">
                                         <img src="/images/img/icons/upload.svg" alt="img">
-                                        <span><img src="/images/img/icons/closes.svg" alt="img"></span>
+                                        <span>
+                                            <img src="/images/img/icons/closes.svg" alt="img">
+                                        </span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a th:href="@{/manage/mauSac/export/pdf}" data-bs-toggle="tooltip"
-                                       data-bs-placement="top" title="pdf"><img
-                                            src="/images/img/icons/pdf.svg" alt="img"></a>
+                                    <a th:href="@{/manage/mauSac/export/pdf}" data-bs-toggle="tooltip" data-bs-placement="top" title="pdf">
+                                        <img src="/images/img/icons/pdf.svg" alt="img">
+                                    </a>
                                 </li>
                                 <li>
-                                    <a th:href="@{/manage/mauSac/export/excel}" data-bs-toggle="tooltip"
-                                       data-bs-placement="top" title="excel"><img
-                                            src="/images/img/icons/excel.svg" alt="img"></a>
+                                    <a th:href="@{/manage/mauSac/export/excel}" data-bs-toggle="tooltip" data-bs-placement="top" title="excel">
+                                        <img src="/images/img/icons/excel.svg" alt="img">
+                                    </a>
                                 </li>
                                 <li>
-                                    <a id="printButton" data-bs-toggle="tooltip" data-bs-placement="top"
-                                       title="print"><img
-                                            src="/images/img/icons/printer.svg" alt="img"></a>
+                                    <a id="printButton" data-bs-toggle="tooltip" data-bs-placement="top" title="print">
+                                        <img src="/images/img/icons/printer.svg" alt="img">
+                                    </a>
                                 </li>
                             </ul>
                         </div>
                     </div>
+
                     <form method="get" th:action="@{/manage/mauSac/filter}">
-
-
                         <div class="card" id="filter_inputs">
                             <div class="card-body pb-0">
                                 <div class="row">
@@ -171,23 +179,23 @@
                                         <div class="form-group">
                                             <select class="select" name="trangThai">
                                                 <option value="">Trạng thái</option>
-                                                <option value="1">Hoạt động</option>
-                                                <option value="0">Không hoạt động</option>
+                                                <option value="0">Chưa diễn ra</option>
+                                                <option value="1">Đang diễn ra</option>
+                                                <option value="2">Đã kết thúc</option>
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="col-lg-1 col-sm-6 col-12 ms-auto">
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-filters ms-auto"><img
-                                                    src="/images/img/icons/search-whites.svg"
-                                                    alt="img"></button>
+                                            <button type="submit" class="btn btn-filters ms-auto">
+                                                <img src="/images/img/icons/search-whites.svg" alt="img">
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
                         <!--                        <div class="card" id="filter_inputs">-->
                         <!--                            <div class="card-body pb-0">-->
                         <!--                                <div class="row">-->
@@ -234,27 +242,34 @@
                             <thead>
                             <tr>
                                 <th>Mã</th>
-                                <th>Mã Màu</th>
-                                <th>Tên Màu</th>
+                                <th>Tên Khuyến Mãi</th>
+                                <th>Thời Gian Bắt Đầu</th>
+                                <th>Thời Gian Kết Thúc</th>
+                                <th>Số lượng</th>
                                 <th>Trạng Thái</th>
                                 <th>Action</th>
-                                <th>Thời Gian Thêm</th>
-                                <th>Thời Gian Sửa</th>
+                                <th>Số tiền giảm</th>
+                                <th>Điều kiện giảm</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="items : ${mauSac}">
                                 <td th:text="${items.ma}"></td>
-                                <td>
-                                    <span class="color-box" th:style="'background-color: ' + ${items.maMau}"></span>
-                                </td>
                                 <td th:text="${items.tenMau}"></td>
                                 <td>
                                     <span th:id="'trangThaiUpdate_' + ${items.idMau}" th:if="${items.trangThai == 1}"
-                                          class="badges bg-lightgreen">Hoạt Động</span>
+                                          class="badges bg-lightgreen">Đang Diễn Ra
+                                    </span>
+
                                     <span th:id="'trangThaiUpdate_' + ${items.idMau}" th:if="${items.trangThai == 0}"
-                                          class="badges bg-lightred">Không Hoạt Động</span>
+                                          class="badges bg-lightred">Chưa Diễn Ra
+                                    </span>
+
+                                    <span th:id="'trangThaiUpdate_' + ${items.idMau}" th:if="${items.trangThai == 2}"
+                                          class="badges bg-lightred">Đã Kết Thúc
+                                    </span>
                                 </td>
+
                                 <td>
                                     <a class="me-3" th:href="@{'/manage/mau-sac/viewUpdate/' + ${items.idMau}}">
                                         <img src="/images/img/icons/edit.svg" alt="img">
@@ -276,12 +291,12 @@
                         </table>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
     <input id="mauSac" th:value="${active}" style="display: none">
 </div>
+
 <div th:if="${message}" id="toast-container" class="toast-container toast-top-right">
     <div class="toast toast-success" aria-live="polite" style="display: block;">
         <button type="button" class="toast-close-button" role="button"></button>
@@ -337,7 +352,7 @@
 <script src="/plugins/alertify/custom-alertify.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         var getID = document.getElementById("mauSac").value;
     });
 </script>
@@ -558,6 +573,7 @@
     }
 
     var idMau;
+
     function capNhatTrangThaiMauSac(id) {
         idMau = id;
         let trangThai = document.getElementById("flexSwitchCheck_" + id).value;

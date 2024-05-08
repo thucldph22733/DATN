@@ -1,14 +1,14 @@
 package com.example.shoesmanagement.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/manage")
-public class AdminController {
-    @RequestMapping(value = {"", "/", "/home"})
-    public String hienThi(Model model) {
-        return "manage/activities";
+public class TestController {
+    @GetMapping("/test")
+    public String test(){
+        return "manage/test";
     }
 }
