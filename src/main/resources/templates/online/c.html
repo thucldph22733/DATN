@@ -26,10 +26,6 @@
         <link rel="stylesheet" href="/cssx/style.css" type="text/css">
         <link rel="stylesheet" href="/cssx/scroll.min.css" type="text/css">
         <link rel="stylesheet" href="/cssx/styleNhan.css" type="text/css">
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
         <style>
             header {
@@ -43,9 +39,9 @@
 <body style="margin-top: -10px">
 
 
-<!--<div id="preloder">-->
-<!--    <div class="loader"></div>-->
-<!--</div>-->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
 
 <!-- Header Section Begin -->
 <header class="header">
@@ -107,9 +103,9 @@
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
-                    <a th:href="@{'/buyer/home'}"><img src="/images/img/logo.png"
-                                                       style="width: 240px; height: 240px; margin-top: -84px"
-                                                       alt=""></a>
+                    <a th:href="@{'/buyer/home'}">
+                        <img src="/images/img/logo.png" style="width: 240px; height: 240px; margin-top: -84px" alt="">
+                    </a>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
@@ -117,13 +113,13 @@
                     <ul>
                         <li><a th:href="@{'/buyer/'}">Home</a></li>
                         <li><a th:href="@{'/buyer/shop'}">Shop</a></li>
-                        <li class="active"><a th:href="@{'/buyer/about'}">About Us</a></li>
+                        <li><a th:href="@{'/buyer/about'}">About Us</a></li>
                         <li><a th:href="@{'/buyer/blog'}">Blog</a>
                             <ul class="dropdown">
                                 <li><a th:href="@{'/buyer/blog/blog-details'}">Blog Details</a></li>
                             </ul>
                         </li>
-                        <li><a th:href="@{'/buyer/contact'}">Contact</a></li>
+                        <li class="active"><a th:href="@{'/buyer/contact'}">Contact</a></li>
                     </ul>
                 </nav>
             </div>
@@ -179,55 +175,12 @@
                     </div>
                     <a th:href="@{'/buyer/fa&recently'}"><img src="/images/img/icon/heart2.png" alt=""></a>
 
-                    <script>
-                        document.addEventListener('DOMContentLoaded', (event) => {
-                            const cartLink = document.querySelector('.cart-link');
-
-                            cartLink.addEventListener('click', (e) => {
-                                e.preventDefault(); // Ngăn không cho điều hướng theo th:href mặc định
-                                // Gọi một API để xác minh trạng thái đăng nhập
-                                checkLoginStatus().then(loggedIn => {
-                                    if (loggedIn) {
-                                        // Nếu đăng nhập, điều hướng tới trang giỏ hàng
-                                        window.location.href = '/buyer/cart';
-                                    } else {
-                                        // Nếu chưa đăng nhập, hiển thị thông báo và chuyển hướng sang trang đăng nhập
-                                        Swal.fire({
-                                            title: 'Thông báo!',
-                                            text: 'Bạn cần đăng nhập để xem giỏ hàng',
-                                            icon: 'info',
-                                            confirmButtonText: 'Đăng nhập',
-                                            confirmButtonColor: '#3085d6',
-                                            preConfirm: () => {
-                                                window.location.href = '/buyer/login';
-                                            }
-                                        });
-                                    }
-                                }).catch(error => {
-                                    console.error('Có lỗi xảy ra khi kiểm tra trạng thái đăng nhập', error);
-                                });
-                            });
-
-                            function checkLoginStatus() {
-                                // Gửi yêu cầu tới server để kiểm tra trạng thái đăng nhập
-                                return fetch('/api/check-login', {
-                                    method: 'GET',
-                                    credentials: 'include'  // Đảm bảo cookie/session được gửi kèm với request
-                                })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        return data.loggedIn;  // Giả sử API trả về một object có thuộc tính loggedIn là true hoặc false
-                                    });
-                            }
-                        });
-                    </script>
-
-
-                    <a href="/buyer/cart" class="cart-link" style="position: relative; display: inline-block;">
+                    <a th:href="@{'/buyer/cart'}" style="position: relative; display: inline-block; ">
                         <img src="/images/img/icon/cart.png" alt="">
                         <span class="cart-count"
                               style="position: absolute; height:20px; width: 25px; top: -13px; left: 3px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;"
-                              th:text="${sumProductInCart}"></span>
+                              th:text="${sumProductInCart}">
+                        </span>
                     </a>
                 </div>
             </div>
@@ -240,171 +193,54 @@
     <div style="height: 150px; width: 100%;"></div>
 </section>
 
-
-<!-- Hero Section Begin -->
-<div class="bg-light">
-    <div class="container py-5">
-        <div class="row h-100 align-items-center py-5">
-            <div class="col-lg-6">
-                <h1 class="display-4">About Teezy Shop</h1>
-                <p class="lead text-muted mb-0">Thành lập vào ngày 01/04/2024</p>
-                <p class="lead text-muted">Đồng sáng lập bởi 4 thành viên <a href="#" class="text-muted">
-                    <u>Thùy, Quân, Thực, Ngọc</u></a>
-                </p>
-            </div>
-            <!--            Thay ảnh-->
-            <div class="col-lg-6 d-none d-lg-block"><img src="https://bootstrapious.com/i/snippets/sn-about/illus.png"
-                                                         alt="" class="img-fluid"></div>
-        </div>
-    </div>
-</div>
-<!-- Hero Section End -->
-
-
-<div class="bg-white py-5">
-
-    <div class="container py-5">
-        <!--Sứ mệnh của chúng tôi-->
-        <div class="row align-items-center mb-5">
-            <div class="col-lg-6 order-2 order-lg-1"><i class="fa fa-bar-chart fa-2x mb-3 text-primary"></i>
-                <h2 class="font-weight-light">Sứ mệnh của chúng tôi</h2>
-                <p class="font-italic text-muted mb-4">Chúng tôi muốn mang đến cho khách hàng trải nghiệm mua sắm trực
-                    tuyến tiện lợi và an toàn. Khách hàng có thể dễ dàng tìm kiếm và lựa chọn những đôi giày phù hợp với
-                    nhu cầu của mình, đồng thời được hưởng các dịch vụ khách hàng chu đáo như đổi trả hàng miễn phí,
-                    giao hàng tận nơi,...</p>
-                <a href="/buyer/shop"
-                   class="btn btn-light px-5 rounded-pill shadow-sm">Khám phá những đôi giày tuyệt vời nhất và chỉ dành
-                    riêng cho bạn!</a>
-            </div>
-            <div class="col-lg-5 px-5 mx-auto order-1 order-lg-2"><img
-                    src="https://bootstrapious.com/i/snippets/sn-about/img-1.jpg" alt="" class="img-fluid mb-4 mb-lg-0">
-            </div>
-        </div>
-
-        <!--Câu chuyện của chúng tôi-->
-        <div class="row align-items-center">
-            <div class="col-lg-5 px-5 mx-auto"><img src="https://bootstrapious.com/i/snippets/sn-about/img-2.jpg" alt=""
-                                                    class="img-fluid mb-4 mb-lg-0"></div>
-            <div class="col-lg-6"><i class="fa fa-leaf fa-2x mb-3 text-primary"></i>
-                <h2 class="font-weight-light">Câu chuyện của chúng tôi</h2>
-                <p class="font-italic text-muted mb-4">Câu chuyện của Teezy Shop bắt đầu từ niềm đam mê mãnh liệt
-                    với những đôi giày mà bọn mình đã thấy qua trên các trang xã hôi, các tờ tạp chí .... Nhìn người mẫu
-                    mang những đôi giày đa dạng về kiểu dáng và màu sắc khiến bộ đồ họ mặc trông thật đẹp và khiến đôi
-                    chân của họ trông thật sự nổi bật...
-
-                    Sau nhiều tháng ấp ủ, Nhóm mình đã quyết định biến đam mê bất chợt đó thành hiện thực bằng
-                    cách thành lập Teezy Shop</p>
-                <!--                <a href="#" class="btn btn-light px-5 rounded-pill shadow-sm">Learn-->
-                <!--                    More</a>-->
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Banner Section Begin -->
-
-<div class="bg-light py-5">
-    <div class="container py-5">
-        <div class="row mb-4">
-            <div class="col-lg-5">
-                <h2 class="display-4 font-weight-light">Các thành viên</h2>
-                <p class="font-italic text-muted">Trẻ tuổi, hết mình vì đam mê, không say không về :)))</p>
-            </div>
-        </div>
-
-        <div class="row text-center">
-            <!-- Team item-->
-            <div class="col-xl-3 col-sm-6 mb-5">
-                <div class="bg-white rounded shadow-sm py-5 px-4"><img
-                        src="https://bootstrapious.com/i/snippets/sn-about/avatar-4.png" alt="" width="100"
-                        class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
-                    <h5 class="mb-0">Thùy</h5><span
-                            class="small text-uppercase text-muted">Trưởng nhóm - DEV, Test</span>
-                    <ul class="social mb-0 list-inline mt-3">
-                        <li class="list-inline-item"><a href="#" class="social-link"><i
-                                class="fa fa-facebook-f"></i></a></li>
-                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-twitter"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-instagram"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-linkedin"></i></a>
-                        </li>
-                    </ul>
+<div class="col-md-10">
+    <div class="wrapper">
+        <div class="row no-gutters">
+            <div class="col-md-6">
+                <div class="contact_img">
+                    <img src="https://i.pinimg.com/564x/12/27/eb/1227ebcbb648c8cb7c14a647ad3d50ab.jpg" height="539px"
+                         alt="">
                 </div>
             </div>
-            <!-- End-->
-
-            <!-- Team item-->
-            <div class="col-xl-3 col-sm-6 mb-5">
-                <div class="bg-white rounded shadow-sm py-5 px-4"><img
-                        src="https://bootstrapious.com/i/snippets/sn-about/avatar-3.png" alt="" width="100"
-                        class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
-                    <h5 class="mb-0">Quân</h5><span
-                            class="small text-uppercase text-muted">Thành viên - DEV, Test</span>
-                    <ul class="social mb-0 list-inline mt-3">
-                        <li class="list-inline-item"><a href="#" class="social-link"><i
-                                class="fa fa-facebook-f"></i></a></li>
-                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-twitter"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-instagram"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-linkedin"></i></a>
-                        </li>
-                    </ul>
+            <div class="col-md-6 d-flex align-items-stretch">
+                <div class="info-wrap w-100 p-lg-5 p-4 img">
+                    <h3>Contact us</h3>
+                    <p class="mb-4">We're open for any suggestion or just to have a chat</p>
+                    <div class="dbox w-100 d-flex align-items-start">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="fa fa-map-marker"></span>
+                        </div>
+                        <div class="text pl-3">
+                            <p><span>Address:</span> 198 West 21th Street, Suite 721 New York NY 10016</p>
+                        </div>
+                    </div>
+                    <div class="dbox w-100 d-flex align-items-center">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="fa fa-phone"></span>
+                        </div>
+                        <div class="text pl-3">
+                            <p><span>Phone:</span> <a href="tel://1234567920">+ 1235 2355 98</a></p>
+                        </div>
+                    </div>
+                    <div class="dbox w-100 d-flex align-items-center">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="fa fa-paper-plane"></span>
+                        </div>
+                        <div class="text pl-3">
+                            <p><span>Email:</span> <a href="mailto:info@yoursite.com">info@yoursite.com</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="dbox w-100 d-flex align-items-center">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="fa fa-globe"></span>
+                        </div>
+                        <div class="text pl-3">
+                            <p><span>Website</span> <a href="#">yoursite.com</a></p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- End-->
-
-            <!-- Team item-->
-            <div class="col-xl-3 col-sm-6 mb-5">
-                <div class="bg-white rounded shadow-sm py-5 px-4"><img
-                        src="https://bootstrapious.com/i/snippets/sn-about/avatar-2.png" alt="" width="100"
-                        class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
-                    <h5 class="mb-0">Thực</h5><span
-                            class="small text-uppercase text-muted">Thành viên - DEV, Test</span>
-                    <ul class="social mb-0 list-inline mt-3">
-                        <li class="list-inline-item"><a href="#" class="social-link"><i
-                                class="fa fa-facebook-f"></i></a></li>
-                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-twitter"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-instagram"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-linkedin"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- End-->
-
-            <!-- Team item-->
-            <div class="col-xl-3 col-sm-6 mb-5">
-                <div class="bg-white rounded shadow-sm py-5 px-4"><img
-                        src="https://bootstrapious.com/i/snippets/sn-about/avatar-1.png" alt="" width="100"
-                        class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
-                    <h5 class="mb-0">Nguyễn Minh Ngọc</h5><span class="small text-uppercase text-muted">Thành viên - DEV, Test</span>
-                    <ul class="social mb-0 list-inline mt-3">
-                        <li class="list-inline-item"><a href="https://www.facebook.com/ngoc209203"
-                                                        class="social-link"><i
-                                class="fa fa-facebook-f"></i></a></li>
-                        <li class="list-inline-item"><a href="https://twitter.com/Minhngoc209" class="social-link"><i
-                                class="fa fa-twitter"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="https://www.instagram.com/nguyen_minh_ngoc_209/"
-                                                        class="social-link"><i class="fa fa-instagram"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a
-                                href="https://www.linkedin.com/in/nguy%E1%BB%85n-ng%E1%BB%8Dc-03430529b/"
-                                class="social-link"><i class="fa fa-linkedin"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- End-->
-            <!-- Banner Section End -->
-
-            <!-- Product Section Begin -->
-
-
-            <!-- Product Section End -->
         </div>
     </div>
 </div>
