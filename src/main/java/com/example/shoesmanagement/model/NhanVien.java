@@ -1,9 +1,6 @@
 package com.example.shoesmanagement.model;
 
-import com.example.shoesmanagement.model.ChucVu;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
