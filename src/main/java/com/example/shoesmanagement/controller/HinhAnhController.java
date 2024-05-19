@@ -6,7 +6,6 @@ import com.example.shoesmanagement.service.HinhAnhService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,10 +34,10 @@ public class HinhAnhController {
     private HttpSession session;
 
     @ModelAttribute("dsTrangThai")
-    public Map<Integer, String> getDSTrangThai() {
-        Map<Integer, String> dsTrangThai = new HashMap<>();
-        dsTrangThai.put(1, "Hoạt Động");
-        dsTrangThai.put(2, "Không Hoạt Động");
+    public Map<Integer,String> getDSTrangThai(){
+        Map<Integer,String>dsTrangThai = new HashMap<>();
+        dsTrangThai.put(1,"Hoạt Động");
+        dsTrangThai.put(2,"Không Hoạt Động");
         return dsTrangThai;
     }
 
@@ -46,10 +45,10 @@ public class HinhAnhController {
     public String dsHinhAnh(Model model, @ModelAttribute("message") String message,
                             @ModelAttribute("hinhAnhError") String maHinhAnhError,
                             @ModelAttribute("error") String error,
-                            @ModelAttribute("userInput") HinhAnh userInput,
-                            @ModelAttribute("errorMessage") String Errormessage) {
+                            @ModelAttribute("userInput")HinhAnh userInput,
+                            @ModelAttribute("errorMessage")String Errormessage){
         List<HinhAnh> listHinhAnh = hinhAnhService.getAllHinhAnh();
-        model.addAttribute("hinhAnh", listHinhAnh);
+        model.addAttribute("hinhAnh",listHinhAnh);
         model.addAttribute("hinhAnhAdd", new HinhAnh());
         if (message == null || !"true".equals(message)) {
             model.addAttribute("message", false);
@@ -73,7 +72,7 @@ public class HinhAnhController {
                              @RequestParam("anh3") MultipartFile anh3,
                              @RequestParam("anh4") MultipartFile anh4,
                              @Valid @ModelAttribute("hinhAnh") HinhAnh hinhAnh, BindingResult bindingResult,
-                             RedirectAttributes redirectAttributes) {
+                             RedirectAttributes redirectAttributes){
         HinhAnh existingAnh = hinhAnhRepository.findByMaAnh(hinhAnh.getMaAnh());
         if (existingAnh != null) {
             redirectAttributes.addFlashAttribute("userInput", hinhAnh);
@@ -112,7 +111,6 @@ public class HinhAnhController {
         redirectAttributes.addFlashAttribute("message", true);
         return "redirect:/manage/hinh-anh";
     }
-
     @GetMapping("/hinh-anh/delete/{id}")
     public String deleteHinhAnh(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         HinhAnh hinhAnh = hinhAnhService.getByIdHinhAnh(id);
@@ -224,20 +222,4 @@ public class HinhAnhController {
         return "manage/hinh-anh";
     }
 
-    @PutMapping("/hinh-anh/{idHinhAnh}")
-    public ResponseEntity<String> capNhatTrangThai(@RequestParam String trangThai,
-                                                   @PathVariable UUID idHinhAnh) {
-        int trangThaiInt = Integer.valueOf(trangThai);
-        int trangThaiUpdate;
-        if (trangThaiInt == 1) {
-            trangThaiUpdate = 0;
-        } else {
-            trangThaiUpdate = 1;
-        }
-        HinhAnh hinhAnh = hinhAnhService.getByIdHinhAnh(idHinhAnh);
-        hinhAnh.setTrangThai(trangThaiUpdate);
-        hinhAnh.setTgSua(new Date());
-        hinhAnhService.save(hinhAnh);
-        return ResponseEntity.ok("ok");
-    }
 }
