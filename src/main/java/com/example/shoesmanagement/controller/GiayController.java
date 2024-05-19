@@ -8,7 +8,6 @@ import com.example.shoesmanagement.service.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -292,7 +291,6 @@ public class GiayController {
         redirectAttributes.addFlashAttribute("message", true);
         return "redirect:/manage/giay";
     }
-
     public void deleteGiayById(UUID idGiay) {
         Giay giay = giayService.getByIdGiay(idGiay);
         giay.setTrangThai(0);
@@ -440,7 +438,6 @@ public class GiayController {
         session.setAttribute("idCTG", id);
         return "manage/giay-detail";
     }
-
     @GetMapping("/giay/filter")
     public String searchGiay(Model model, @RequestParam(name = "searchTerm") String searchTerm) {
         List<Giay> filteredGiays;
@@ -468,20 +465,5 @@ public class GiayController {
         return "redirect:/manage/giay";
     }
 
-    @PutMapping("/giay/{idGiay}")
-    public ResponseEntity<String> capNhatTrangThai(@RequestParam String trangThai,
-                                                   @PathVariable UUID idGiay) {
-        int trangThaiInt = Integer.valueOf(trangThai);
-        int trangThaiUpdate;
-        if (trangThaiInt == 1) {
-            trangThaiUpdate = 0;
-        } else {
-            trangThaiUpdate = 1;
-        }
-        Giay giay = giayService.getByIdGiay(idGiay);
-        giay.setTrangThai(trangThaiUpdate);
-        giay.setTgSua(new Date());
-        giayService.save(giay);
-        return ResponseEntity.ok("ok");
-    }
+
 }

@@ -25,7 +25,7 @@
         <link rel="stylesheet" href="/cssx/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="/cssx/style.css" type="text/css">
         <link rel="stylesheet" href="/cssx/nhanngu.css" type="text/css">
-        <link rel="stylesheet" href="/cssx/scroll.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/scroll.min.css" type="text/css">git a
         <link rel="stylesheet" href="/cssx/styleNhan.css" type="text/css">
 
         <style>
@@ -1149,18 +1149,18 @@
                 <div th:if="${pagePurchaseUser}" class="card">
                     <div class="card-body" >
 
-                        <div class="row" style="background-color: #f3f2ee; height: 81px; width: 836px; border-radius: 5px; margin-top: -10px;">
-                            <nav class="header__menu mobile-menu" >
-                                <ul>
-                                    <li th:class="${type1}" style="margin-left: 50px; margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase'}" >Tất cả</a></li>
-                                    <li th:class="${type2}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/pay'}" >Chờ thanh toán</a></li>
-                                    <li th:class="${type3}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/ship'}" >Chờ giao hàng</a></li>
-                                    <li th:class="${type4}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/receive'}">Giao hàng</a></li>
-                                    <li th:class="${type5}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/completed'}">Thành công</a></li>
-                                    <li th:class="${type6}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/cancel'}">Đã hủy</a></li>
-                                </ul>
-                            </nav>
-                        </div>
+                            <div class="row" style="background-color: #f3f2ee; height: 81px; width: 836px; border-radius: 5px; margin-top: -10px;">
+                                <nav class="header__menu mobile-menu" >
+                                    <ul>
+                                        <li th:class="${type1}" style="margin-left: 50px; margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase'}" >Tất cả</a></li>
+                                        <li th:class="${type2}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/pay'}" >Chờ thanh toán</a></li>
+                                        <li th:class="${type3}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/ship'}" >Chờ giao hàng</a></li>
+                                        <li th:class="${type4}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/receive'}">Giao hàng</a></li>
+                                        <li th:class="${type5}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/completed'}">Thành công</a></li>
+                                        <li th:class="${type6}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/cancel'}">Đã hủy</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
 
                         <!-- ALL begin -->
 
@@ -1384,7 +1384,7 @@
                                     <!-- List CTDP in HD begin -->
                                     <th:block th:each="product : ${x.hoaDonChiTiets}">
                                         <div style="display: flex; padding-left: 40px;">
-                                            F              <img th:src="@{'/images/imgsProducts/' + ${product.chiTietGiay.hinhAnh.url1}}" style="height: 80px; width: 80px; border-radius: 5px;" alt="">
+                              F              <img th:src="@{'/images/imgsProducts/' + ${product.chiTietGiay.hinhAnh.url1}}" style="height: 80px; width: 80px; border-radius: 5px;" alt="">
                                             <div style="width: 300px;">
                                                 <p style="margin: 5px 0 0 15px; color: #637381; font-size: 11pt;" th:text="${product.chiTietGiay.giay.tenGiay}"></p>
                                                 <p style="margin: 0 0 0 15px; color: #637381; font-size: 10pt;" th:text="'Phân loại: ' + ${product.chiTietGiay.mauSac.tenMau} +' | ' + ${product.chiTietGiay.size.soSize} "></p>

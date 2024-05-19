@@ -23,6 +23,10 @@ public class HoaDonServieImpl implements HoaDonService {
     @Override
     public void add(HoaDon hoaDon) {
         hoaDonRepository.save(hoaDon);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 28d3b5bc3c0b19c80d66e8ea81f26f528f63a0db
     }
 
     @Override

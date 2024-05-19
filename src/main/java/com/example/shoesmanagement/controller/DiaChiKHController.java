@@ -12,13 +12,13 @@ import com.example.shoesmanagement.service.LoaiKhachHangService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import java.io.InputStream;
 import java.util.*;
@@ -46,7 +46,6 @@ public class DiaChiKHController {
 
     @Autowired
     private LoaiKhachHangService loaiKhachHangService;
-
     @ModelAttribute("dsTrangThai")
     public Map<Integer, String> getDsTrangThai() {
         Map<Integer, String> dsTrangThai = new HashMap<>();
@@ -236,13 +235,13 @@ public class DiaChiKHController {
         diaChiKHdb.setTrangThai(1);
         diaChiKHdb.setKhachHang(diaChiKH.getKhachHang());
         diaChiKHdb.setTgThem(new Date());
-        if (diaChiKH.isLoai() == true) {
-            for (DiaChiKH x : diaChiKHService.findByKhachHang(diaChiKH.getKhachHang())) {
+        if(diaChiKH.isLoai() == true){
+            for (DiaChiKH x: diaChiKHService.findByKhachHang(diaChiKH.getKhachHang())){
                 x.setLoai(false);
                 diaChiKHService.save(x);
             }
             diaChiKHdb.setLoai(true);
-        } else {
+        }else{
             diaChiKHdb.setLoai(false);
         }
         diaChiKHService.save(diaChiKHdb);
@@ -474,13 +473,13 @@ public class DiaChiKHController {
             diaChiKHdb.setTgSua(new Date());
             diaChiKHdb.setKhachHang(diaChiKH.getKhachHang());
 
-            if (diaChiKH.isLoai() == true) {
-                for (DiaChiKH x : diaChiKHService.findByKhachHang(diaChiKH.getKhachHang())) {
+            if(diaChiKH.isLoai() == true){
+                for (DiaChiKH x: diaChiKHService.findByKhachHang(diaChiKH.getKhachHang())){
                     x.setLoai(false);
                     diaChiKHService.save(x);
                 }
                 diaChiKHdb.setLoai(true);
-            } else {
+            }else{
                 diaChiKHdb.setLoai(false);
             }
 
@@ -489,7 +488,6 @@ public class DiaChiKHController {
         }
         return link1;
     }
-
     @GetMapping("/diaChi/filter")
     public String filterData(Model model,
                              @RequestParam(value = "maDC", required = false) String maDC,
@@ -521,23 +519,5 @@ public class DiaChiKHController {
             }
         }
         return "redirect:/manage/dia-chi"; // Chuyển hướng sau khi nhập liệu thành công hoặc không thành công
-    }
-
-    @PutMapping("/dia-chi/{idDC}")
-    public ResponseEntity<String> capNhatTrangThai(@RequestParam String trangThai,
-                                                   @PathVariable UUID idDC) {
-        int trangThaiInt = Integer.valueOf(trangThai);
-        int trangThaiUpdate;
-        if (trangThaiInt == 1) {
-            trangThaiUpdate = 0;
-        } else {
-            trangThaiUpdate = 1;
-        }
-        System.out.println(trangThaiUpdate);
-        DiaChiKH diaChiKH = diaChiKHService.getByIdDiaChikh(idDC);
-        diaChiKH.setTrangThai(trangThaiUpdate);
-        diaChiKH.setTgSua(new Date());
-        diaChiKHService.save(diaChiKH);
-        return ResponseEntity.ok("ok");
     }
 }
