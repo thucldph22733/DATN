@@ -19,5 +19,4 @@ public interface ChatLieuService {
     public List<ChatLieu> fillterChatLieu(String maCL, String tenCL);
 
     public void importDataFromExcel(InputStream excelFile);
-    public void capNhatTrangThai(int trangThai, UUID ma);
 }

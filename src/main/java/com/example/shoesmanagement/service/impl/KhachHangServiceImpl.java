@@ -25,11 +25,6 @@ public class KhachHangServiceImpl  implements KhachHangService {
     }
 
     @Override
-    public KhachHang checkLoginSDT(String sdt, String pass) {
-        return khachHangRepository.findBySdtKHAndTrangThaiAndMatKhau(sdt, 1, pass);
-    }
-
-    @Override
     public List<KhachHang> getAllKhachHang() {
         return khachHangRepository.findAll();
     }
