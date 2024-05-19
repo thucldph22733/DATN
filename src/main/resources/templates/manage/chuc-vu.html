@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <!--    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="POS - Bootstrap Admin Template">
@@ -11,17 +12,18 @@
     <title>Sneaker Shop - Admin</title>
 
     <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
-
+    <link rel="stylesheet" href="/plugins/icons/flags/flags.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="/css/animate.css">
-    <link rel="stylesheet" href="/plugins/icons/flags/flags.css">
+
     <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
 
     <link rel="stylesheet" href="/css/dataTables.bootstrap4.min.css">
 
     <link rel="stylesheet" href="/plugins/fontawesome/css/fontawesome.min.css">
     <link rel="stylesheet" href="/plugins/fontawesome/css/all.min.css">
+
     <link rel="stylesheet" href="/plugins/toastr/toatr.css"/>
 
     <link rel="stylesheet" href="/css/style.css">
@@ -44,6 +46,24 @@
         .alertify .ajs-buttons .ajs-ok {
             background-color: #2ecc71;
             color: #ffffff;
+        }
+    </style>
+    <style>
+        .color-box {
+            width: 40px; /* Độ rộng của hộp màu */
+            height: 40px; /* Chiều cao của hộp màu */
+            display: inline-block; /* Hiển thị như một hộp chữ nằm cạnh nhau */
+            border: 1px solid #000; /* Viền xung quanh hộp màu */
+            margin: 0 5px; /* Khoảng cách giữa các hộp màu */
+            border-radius: 50%;
+        }
+    </style>
+    <style>
+        /* Định dạng lớp CSS để làm cho input to hơn */
+        .large-input {
+            /*width: 230px; !* Điều chỉnh kích thước theo nhu cầu của bạn *!*/
+            /*height: 40px; !* Điều chỉnh kích thước theo nhu cầu của bạn *!*/
+            border: none;
         }
     </style>
 </head>
@@ -73,6 +93,83 @@
             </span>
         </a>
 
+        <ul class="nav user-menu">
+
+            <li class="nav-item dropdown has-arrow flag-nav">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
+                    <i class="flag flag-vn"></i>
+                </a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                    <img src="/images/img/icons/notification-bing.svg" alt="img"> <span
+                        class="badge rounded-pill" th:text="${soThongBao}"></span>
+                </a>
+                <div class="dropdown-menu notifications">
+                    <div class="topnav-dropdown-header">
+                        <span class="notification-title">Notifications</span>
+                        <a href="javascript:void(0)" class="clear-noti"> Clear All </a>
+                    </div>
+                    <div class="noti-content">
+                        <ul class="notification-list">
+                            <th:block  th:each="x : ${listThongBao}">
+                                <li th:if="${x.trangThai == 3}"class="notification-message">
+                                    <a href="/manage/bill/online">
+                                        <div class="media d-flex">
+                                        <span class="avatar flex-shrink-0">
+                                        <img alt="" src="/images/img/profiles/avatar-02.jpg">
+                                        </span>
+                                            <div class="media-body flex-grow-1">
+                                                <p class="noti-details" >
+                                                    <span class="noti-title" th:text="${x.khachHang.hoTenKH}"></span>
+                                                    <span th:text="${x.noiDungTB}"></span>
+                                                    <span class="noti-title" th:text="${x.hoaDon.maHD}"></span>
+                                                </p>
+                                                <p class="noti-time">
+                                                    <span class="notification-time"th:text="${#dates.format(x.tgTB, 'HH:mm yyyy-MM-dd')}"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </th:block>
+                        </ul>
+                    </div>
+                    <div class="topnav-dropdown-footer">
+                        <a href="activities.html">View all Notifications</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown has-arrow main-drop">
+                <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
+                    <!--                    <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">-->
+                    <span class="status online"></span></span>
+                </a>
+                <div class="dropdown-menu menu-drop-user">
+                    <div class="profilename">
+                        <!--                        <div class="profileset">-->
+                        <!--                            <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">-->
+                        <!--                            <span class="status online"></span></span>-->
+                        <!--                            <div class="profilesets">-->
+                        <!--                                <h6 th:text="${session.managerLogged.hoTenNV}"></h6>-->
+                        <!--                                <h5 th:text="${session.managerLogged.chucVu.tenCV}"></h5>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <hr class="m-0">
+                        <a class="dropdown-item" href="profile.html"> <i class="me-2" data-feather="user"></i> My
+                            Profile</a>
+                        <a class="dropdown-item" href="generalsettings.html"><i class="me-2"
+                                                                                data-feather="settings"></i>Settings</a>
+                        <hr class="m-0">
+                        <a class="dropdown-item logout pb-0" href="/logout"><img src="/images/img/icons/log-out.svg"
+                                                                                 class="me-2" alt="img">Logout</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
         <div class="dropdown mobile-user-menu">
             <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
@@ -84,7 +181,6 @@
         </div>
 
     </div>
-
     <div class="sidebar" id="sidebar">
         <div class="sidebar-inner slimscroll">
             <div id="sidebar-menu" class="sidebar-menu">
@@ -94,8 +190,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/manage/thongke"><img src="/images/img/icons/dashboard.svg"
-                                                       alt="img"><span> Thống Kê</span>
+                        <a href="/manage/thongke"><img src="/images/img/icons/dashboard.svg" alt="img"><span> Thống Kê</span>
                         </a>
                     </li>
                     <li class="submenu">
@@ -104,9 +199,9 @@
                         <ul>
                             <li><a href="/manage/chat-lieu">Chất Liệu</a></li>
                             <li><a href="/manage/giay">Giày</a></li>
-                            <li><a href="/manage/hang" class="active">Hãng</a></li>
+                            <li><a href="/manage/hang">Hãng</a></li>
                             <li><a href="/manage/hinh-anh">Hình Ảnh</a></li>
-                            <li><a href="/manage/mau-sac">Màu Sắc</a></li>
+                            <li><a href="/manage/mau-sac" class="active">Màu Sắc</a></li>
                             <li><a href="/manage/size">Size</a></li>
                             <li><a href="/manage/giay/old">Giày lỗi</a></li>
                         </ul>
@@ -169,17 +264,16 @@
             </div>
         </div>
     </div>
-
     <div class="page-wrapper">
         <div class="content">
             <div class="page-header">
                 <div class="page-title">
-                    <h4>List Hãng</h4>
-                    <h6>Quản Lý Giày</h6>
+                    <h4>List Chức Vụ</h4>
+                    <h6>Quản Lý Nhân Viên</h6>
                 </div>
                 <div class="page-btn">
                     <button class="btn btn-added" id="show-form-button">
-                        <img src="/images/img/icons/plus.svg" class="me-1" alt="img">Thêm Hãng
+                        <img src="/images/img/icons/plus.svg" class="me-1" alt="img">Thêm Chức Vụ
                     </button>
                 </div>
             </div>
@@ -187,40 +281,29 @@
             <div class="card">
                 <div class="card-body">
                     <div class="hidden-form" style="display: none">
-                        <form th:object="${hangAdd}" method="post" th:action="@{/manage/hang/viewAdd/add}"
-                              enctype="multipart/form-data" onsubmit="return validateHangForm()" name="hangForm">
+                        <form th:object="${chucVuAdd}" method="post"
+                              th:action="@{/manage/chuc-vu/viewAdd/add}" onsubmit="return validateForm()">
                             <div class="row">
-                                <div class="col-lg-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label>Logo</label>
-                                        <input name="logoHang" type="file" id="imageInput" accept="image/*"
-                                               onchange="previewImage(event)">
-                                        <br><br><img id="imagePreview" src="#" alt="Ảnh mô tả"
-                                                     style="display: none; max-width: 150px; max-height: 150px;">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-sm-6 col-12"></div>
                                 <div class="col-lg-2 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label>Mã Hãng</label><br><br>
-                                        <input type="text" name="maHang">
+                                        <label>Mã Chức Vụ <span style="color: red;">*</span></label>
+                                        <input type="text" th:field="*{maCV}">
+                                        <br><br>
+                                        <strong th:if="${#fields.hasErrors('maCV')}"
+                                                class="alert alert-danger alert-dismissible fade show"
+                                                role="alert" th:errors="*{maCV}"></strong>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label>Tên Hãng</label><br><br>
-                                        <input type="text" name="tenHang">
+                                        <label>Tên Chức Vụ <span style="color: red;">*</span></label>
+                                        <input type="text" th:field="*{tenCV}">
+                                        <br><br>
+                                        <strong th:if="${#fields.hasErrors('tenCV')}"
+                                                class="alert alert-danger alert-dismissible fade show"
+                                                role="alert" th:errors="*{tenCV}"></strong>
                                     </div>
                                 </div>
-                                <!--                                <div class="col-lg-6 col-sm-6 col-12">-->
-                                <!--                                    <div class="form-group">-->
-                                <!--                                        <label>Trạng Thái</label>-->
-                                <!--                                        <select class="select" th:field="*{trangThai}">-->
-                                <!--                                            <option th:each="loc : ${dsTrangThai.entrySet()}" th:value="${loc.key}"-->
-                                <!--                                                    th:text="${loc.value}"></option>-->
-                                <!--                                        </select>-->
-                                <!--                                    </div>-->
-                                <!--                                </div>-->
                                 <div class="col-lg-12">
                                     <button type="submit" class="btn btn-submit me-2">Submit</button>
                                 </div>
@@ -229,7 +312,7 @@
                     </div>
                     <br>
                     <div class="form-hidden-2" style="display: none">
-                        <form action="/manage/hang/import" method="post" enctype="multipart/form-data">
+                        <form action="/manage/chucVu/import" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label> Upload Excel File</label>
                                 <input type="file" name="file" onchange="displaySelectedFileName()"/>
@@ -261,12 +344,12 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a th:href="@{/manage/hang/export/pdf}" data-bs-toggle="tooltip"
+                                    <a th:href="@{/manage/chucVu/export/pdf}" data-bs-toggle="tooltip"
                                        data-bs-placement="top" title="pdf"><img
                                             src="/images/img/icons/pdf.svg" alt="img"></a>
                                 </li>
                                 <li>
-                                    <a th:href="@{/manage/hang/export/excel}" data-bs-toggle="tooltip"
+                                    <a th:href="@{/manage/chucVu/export/excel}" data-bs-toggle="tooltip"
                                        data-bs-placement="top" title="excel"><img
                                             src="/images/img/icons/excel.svg" alt="img"></a>
                                 </li>
@@ -279,42 +362,33 @@
                         </div>
                     </div>
 
-                    <form method="get" th:action="@{/manage/hang/filter}">
+                    <form method="get" th:action="@{/manage/chucVu/filter}">
                         <div class="card" id="filter_inputs">
                             <div class="card-body pb-0">
                                 <div class="row">
                                     <div class="col-lg-2 col-sm-6 col-12">
                                         <div class="form-group">
-                                            <select class="select" id="hangFilterMa" name="maHang">
-                                                <option>Mã Hãng</option>
-                                                <option th:each="loc : ${hang}" th:value="${loc.maHang}"
-                                                        th:text="${loc.maHang}"></option>
+                                            <select class="select" id="chucVuFilterMa" name="searchTerm">
+                                                <option>Mã Chức Vụ</option>
+                                                <option th:each="loc : ${chucVu}" th:value="${loc.maCV}"
+                                                        th:text="${loc.maCV}"></option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-sm-6 col-12">
                                         <div class="form-group">
-                                            <select class="select" id="hangFilterTen" name="tenHang">
-                                                <option>Tên Hãng</option>
-                                                <option th:each="loc : ${hang}" th:value="${loc.tenHang}"
-                                                        th:text="${loc.tenHang}"></option>
+                                            <select class="select" id="chucVuFilterTen" name="searchTerm">
+                                                <option>Tên Chất Liệu</option>
+                                                <option th:each="loc : ${chucVu}" th:value="${loc.tenCV}"
+                                                        th:text="${loc.tenCV}"></option>
                                             </select>
                                         </div>
                                     </div>
-                                    <!--                                <div class="col-lg-2 col-sm-6 col-12">-->
-                                    <!--                                    <div class="form-group">-->
-                                    <!--                                        <select class="select">-->
-                                    <!--                                            <option>Trạng Thái</option>-->
-                                    <!--                                            <option th:each="loc : ${dsTrangThai.entrySet()}" th:value="${loc.key}"-->
-                                    <!--                                                    th:text="${loc.value}"></option>-->
-                                    <!--                                        </select>-->
-                                    <!--                                    </div>-->
-                                    <!--                                </div>-->
                                     <div class="col-lg-1 col-sm-6 col-12 ms-auto">
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-filters ms-auto"><img
+                                            <a class="btn btn-filters ms-auto"><img
                                                     src="/images/img/icons/search-whites.svg"
-                                                    alt="img"></button>
+                                                    alt="img"></a>
                                         </div>
                                     </div>
                                 </div>
@@ -323,42 +397,48 @@
                     </form>
 
                     <div class="table-responsive">
-                        <table class="table datanew" id="data-table">
+                        <table class="table  datanew" id="data-table">
                             <thead>
                             <tr>
-                                <th>Logo</th>
-                                <th>Mã Hãng</th>
-                                <th>Tên Hãng</th>
+                                <th>
+                                    <label class="checkboxs">
+                                        <input type="checkbox" id="select-all">
+                                        <span class="checkmarks"></span>
+                                    </label>
+                                </th>
+                                <th>Mã Chức Vụ</th>
+                                <th>Tên Chức Vụ</th>
                                 <th>Trạng Thái</th>
-                                <th>Action</th>
                                 <th>Thời Gian Thêm</th>
                                 <th>Thời Gian Sửa</th>
-
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="items : ${hang}">
-                                <td><img width="80px" height="90px"
-                                         th:src="@{'/images/logoBrands/'+ ${items.logoHang}}"></td>
-                                <td th:text="${items.maHang}"></td>
-                                <td th:text="${items.tenHang}"></td>
+                            <tr th:each="items : ${chucVu}">
                                 <td>
-                                    <span th:if="${items.trangThai == 1}" class="badges bg-lightgreen">Hoạt Động</span>
-                                    <span th:unless="${items.trangThai == 1}"
-                                          class="badges bg-lightred">Không Hoạt Động</span>
+                                    <label class="checkboxs">
+                                        <input type="checkbox">
+                                        <span class="checkmarks"></span>
+                                    </label>
                                 </td>
+                                <td th:text="${items.maCV}"></td>
+                                <td th:text="${items.tenCV}"></td>
                                 <td>
-                                    <a class="me-3" th:href="@{'/manage/hang/viewUpdate/' + ${items.idHang}}">
-                                        <img src="/images/img/icons/edit.svg" alt="img">
-                                    </a>
-                                    <a class="me-3 delete-button"
-                                       th:data-delete-url="@{'/manage/hang/delete/' + ${items.idHang}}">
-                                        <img src="/images/img/icons/delete.svg" alt="img">
-                                    </a>
+                                    <p th:if="${items.trangThai == 1}"  class="badges bg-lightgreen">Hoạt Động</p>
+                                    <p th:unless="${items.trangThai == 1}"  class="badges bg-lightred">Không Hoạt Động</p>
                                 </td>
                                 <td th:text="${#dates.format(items.tgThem, 'dd-MM-yyyy')}" align="center"/>
                                 <td th:text="${#dates.format(items.tgSua, 'dd-MM-yyyy')}" align="center"/>
-
+                                <td>
+                                    <a class="me-3" th:href="@{'/manage/chuc-vu/viewUpdate/' + ${items.idCV}}">
+                                        <img src="/images/img/icons/edit.svg" alt="img">
+                                    </a>
+                                    <a class="me-3 delete-button"
+                                       th:data-delete-url="@{'/manage/chuc-vu/delete/' + ${items.idCV}}">
+                                        <img src="/images/img/icons/delete.svg" alt="img">
+                                    </a>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -375,25 +455,11 @@
         <div class="toast-message">Dữ liệu của bạn đã được cập nhật</div>
     </div>
 </div>
-<div th:if="${maHangError}" id="warning1" class="toast-container toast-top-right">
-    <div class="toast toast-error" aria-live="assertive" style="display: block;">
-        <button type="button" class="toast-close-button" role="button"></button>
-        <div class="toast-title">Error!</div>
-        <div class="toast-message">Mã không được bỏ trống.</div>
-    </div>
-</div>
-<div th:if="${tenHangError}" id="warning2" class="toast-container toast-top-right">
-    <div class="toast toast-error" aria-live="assertive" style="display: block;">
-        <button type="button" class="toast-close-button" role="button"></button>
-        <div class="toast-title">Error!</div>
-        <div class="toast-message">Tên hãng không được bỏ trống.</div>
-    </div>
-</div>
 <div th:if="${Errormessage}" id="checkMa" class="toast-container toast-top-right">
     <div class="toast toast-error" aria-live="assertive" style="display: block;">
         <button type="button" class="toast-close-button" role="button"></button>
         <div class="toast-title">Error!</div>
-        <div class="toast-message">Mã Hãng đã tồn tại.</div>
+        <div class="toast-message">Mã Chức Vụ đã tồn tại.</div>
     </div>
 </div>
 <script src="/js/jquery-3.6.0.min.js"></script>
@@ -414,8 +480,25 @@
 <script src="/plugins/toastr/toastr.min.js"></script>
 <script src="/plugins/toastr/toastr.js"></script>
 <script src="/js/script.js"></script>
-<script src="/plugins/alertify/custom-alertify.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
+
+<script>
+    function validateForm() {
+        var maCV = document.getElementById("maCV").value;
+        var tenCV = document.getElementById("tenCV").value;
+
+        if (maCV.trim() === "") {
+            alert("Vui lòng nhập mã chức vụ.");
+            return false;
+        }
+
+        if (tenCV.trim() === "") {
+            alert("Vui lòng nhập tên chức vụ.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Lấy thẻ nút in bằng id
@@ -467,17 +550,17 @@
         });
     }
 </script>
-<!--<script>-->
-<!--    $(document).ready(function () {-->
-<!--        $('#filter_inputs').slideToggle("slow");-->
-<!--        $('#filter_search').toggleClass("setclose");-->
-<!--    });-->
-<!--</script>-->
+<script>
+    $(document).ready(function () {
+        $('#filter_inputs').slideToggle("slow");
+        $('#filter_search').toggleClass("setclose");
+    });
+</script>
 <script>
     $(document).ready(function () {
         // Lắng nghe sự kiện thay đổi trong dropdown kích thước
-        $("#hangFilterMa").change(function () {
-            var maHang = $(this).val();
+        $("#chucVuFilterMa").change(function () {
+            var maCV = $(this).val();
 
             // Ẩn tất cả các dòng trong bảng
             $("#data-table tbody tr").hide();
@@ -485,14 +568,14 @@
             // Hiển thị các dòng có giá trị kích thước tương ứng
             $("#data-table tbody tr").each(function () {
                 var maColumn = $(this).find("td:eq(1)").text(); // Vị trí cột chứa giá trị kích thước
-                if (maColumn === maHang || maHang === "Mã Hãng") {
+                if (maColumn === maCV || maCV === "Mã Chức Vụ") {
                     $(this).show();
                 }
             });
         });
         //
-        $("#hangFilterTen").change(function () {
-            var tenHang = $(this).val();
+        $("#chucVuFilterTen").change(function () {
+            var tenCV = $(this).val();
 
             // Ẩn tất cả các dòng trong bảng
             $("#data-table tbody tr").hide();
@@ -500,7 +583,7 @@
             // Hiển thị các dòng có giá trị kích thước tương ứng
             $("#data-table tbody tr").each(function () {
                 var tenColumn = $(this).find("td:eq(2)").text(); // Vị trí cột chứa giá trị kích thước
-                if (tenColumn === tenHang || tenHang === "Tên Hãng") {
+                if (tenColumn === tenCV || tenCV === "Tên Chức Vụ") {
                     $(this).show();
                 }
             });
@@ -534,41 +617,10 @@
     });
 </script>
 <script>
-    function previewImage(event) {
-        const imageInput = document.getElementById('imageInput');
-        const imagePreview = document.getElementById('imagePreview');
-
-        if (imageInput.files && imageInput.files[0]) {
-            const reader = new FileReader();
-
-            reader.onload = function (e) {
-                imagePreview.src = e.target.result;
-                imagePreview.style.display = 'block';
-            };
-
-            reader.readAsDataURL(imageInput.files[0]);
-        }
-    }
-</script>
-<script>
     setTimeout(function () {
         var successToast = document.getElementById('toast-container');
         if (successToast) {
             successToast.style.display = 'none';
-        }
-    }, 5000);
-    //
-    setTimeout(function () {
-        var warning1 = document.getElementById('warning1');
-        if (warning1) {
-            warning1.style.display = 'none';
-        }
-    }, 5000);
-    //
-    setTimeout(function () {
-        var warning2 = document.getElementById('warning2');
-        if (warning2) {
-            warning2.style.display = 'none';
         }
     }, 5000);
     //
@@ -578,53 +630,6 @@
             checkMa.style.display = 'none';
         }
     }, 5000);
-</script>
-<script>
-    // In your Javascript (external .js resource or <script> tag)
-    $(document).ready(function () {
-        $('.select').select2();
-    });
-</script>
-<script>
-    function validateHangForm() {
-        var maHang = document.forms["hangForm"]["maHang"].value;
-        var tenHang = document.forms["hangForm"]["tenHang"].value;
-        var logoHang = document.forms["hangForm"]["logoHang"].value;
-
-
-        if (maHang === "") {
-            showAlert("Vui lòng nhập Mã Hãng");
-            return false;
-        }
-
-        if (!maHang.match(/^[a-zA-Z0-9]+$/)) {
-            showAlert("Mã Hãng chỉ được chứa chữ cái và số");
-            return false;
-        }
-
-        if (tenHang === "") {
-            showAlert("Vui lòng nhập Tên Hãng");
-            return false;
-        }
-
-        if (!tenHang.match(/^[a-zA-Z0-9]+$/)) {
-            showAlert("Tên Hãng chỉ được chứa chữ cái và số");
-            return false;
-        }
-
-        if (logoHang === "") {
-            showAlert("Vui lòng chọn Logo Hãng");
-            return false;
-        }
-        return true;
-    }
-
-    function showAlert(message) {
-        alertify.alert(message).setting({
-            'title': 'Thông báo',
-            'label': 'Đồng ý',
-        }).show();
-    }
 </script>
 </body>
 </html>

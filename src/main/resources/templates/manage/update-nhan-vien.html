@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="description" content="POS - Bootstrap Admin Template">
+    <meta name="keywords"
+          content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
+    <meta name="author" content="Dreamguys - Bootstrap Admin Template">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Sneaker Shop - Admin</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/css/animate.css">
+
+    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+
+    <link rel="stylesheet" href="/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/plugins/icons/flags/flags.css">
+    <link rel="stylesheet" href="/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/plugins/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/plugins/alertify/alertify.min.css"/>
+    <link rel="stylesheet" href="/plugins/toastr/toatr.css"/>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="mini-sidebar">
+<div id="global-loader">
+    <div class="whirly-loader"></div>
+</div>
+<div class="main-wrapper">
+    <div class="header">
+
+
+        <div class="header-left active">
+            <a href="/manage" class="logo">
+                <img src="/images/img/logo.png" alt="">
+            </a>
+            <a href="/manage" class="logo-small">
+                <img src="/images/img/logo-small.png" alt="">
+            </a>
+            <a id="toggle_btn" href="javascript:void(0);">
+            </a>
+        </div>
+
+        <a id="mobile_btn" class="mobile_btn" href="#sidebar">
+            <span class="bar-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+            </span>
+        </a>
+        <div class="dropdown mobile-user-menu">
+            <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+               aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="profile.html">Thông tin cá nhân</a>
+                <a class="dropdown-item" href="generalsettings.html">Cài đặt</a>
+                <a class="dropdown-item" href="signin.html">Đăng xuất</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-inner slimscroll">
+            <div id="sidebar-menu" class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="/manage/"><img src="/images/iconlogo.png" alt="img"><span>Trang chủ nè</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/manage/thongke"><img src="/images/img/icons/dashboard.svg"
+                                                       alt="img"><span> Thống Kê</span>
+                        </a>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/product.svg" alt="img"><span> Quản lý Giày</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/chat-lieu" class="active">Chất Liệu</a></li>
+                            <li><a href="/manage/giay">Giày</a></li>
+                            <li><a href="/manage/hang">Hãng</a></li>
+                            <li><a href="/manage/hinh-anh">Hình Ảnh</a></li>
+                            <li><a href="/manage/mau-sac">Màu Sắc</a></li>
+                            <li><a href="/manage/size">Size</a></li>
+                            <li><a href="/manage/giay/old">Giày lỗi</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/expense1.svg" alt="img"><span> Quản Lý Hóa Đơn</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/bill/offline">Hóa đơn tại quầy</a></li>
+                            <li><a href="/manage/bill/online">Quản lý hóa đơn online</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/users1.svg" alt="img"><span> Quản Lý Khách Hàng</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/khach-hang">Khách Hàng</a></li>
+                            <li><a href="/manage/dia-chi">Địa Chỉ </a></li>
+                            <li><a href="/manage/loai-khach-hang">Loại Khách Hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/purchase1.svg" alt="img"><span> Lịch sử thanh toán</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/history/delivery">Thanh toán tiền mặt</a></li>
+                            <li><a href="/manage/history/pay">Thanh toán chuyển khoản </a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/users1.svg" alt="img"><span> Quản Lý Nhân Viên</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/chuc-vu">Chức Vụ</a></li>
+                            <li><a href="/manage/nhan-vien">Nhân Viên</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);">
+                            <img src="/images/img/icons/transfer1.svg" alt="img"/>
+                            <span>Quản lý Khuyến Mãi</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul>
+                            <li><a href="/manage/voucher">Khuyến Mãi Chung</a></li>
+                            <li><a href="/manage/voucher-product">Khuyến Mãi Sản Phẩm</a></li>
+                            <li><a href="/manage/voucher-bill">Khuyến Mãi Hóa Đơn</a></li>
+                            <li><a href="/manage/voucher-ship">Khuyến Mãi Giao Hàng</a></li>
+                            <li><a href="/manage/voucher-ship">Khuyến Mãi Khách Hàng</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/manage/giao-hang"><i data-feather="layers"></i><span> Quản lý giao hàng</span> </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <form th:object="${nhanVien}" method="post"
+          th:action="@{'/manage/nhan-vien/viewUpdate/' + ${nhanVien.idNV}}" onsubmit="return validateForm()">
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h4>Update Nhân Viên</h4>
+                        <h6>Quản Lý Nhân Viên</h6>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>Mã Nhân Viên <span style="color: red;">*</span></label>
+                                    <input type="text" th:field="*{maNV}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>Tên Nhân Viên<span style="color: red;">*</span></label>
+                                    <input type="text" th:field="*{hoTenNV}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>Giới Tính <span style="color: red;">*</span></label>
+                                    <select class="select" th:field="*{gioiTinh}" id="gioitinh" name="gioitinh">
+                                        <option th:each="loc : ${dsGioiTinh.entrySet()}" th:value="${loc.key}"
+                                                th:text="${loc.value}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>Ngày Sinh <span style="color: red;">*</span></label>
+                                    <div class="input-groupicon">
+                                        <input type="date" th:field="*{ngaySinh}" name="ngaysinh"
+                                               style="width: 100%; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                                       font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;"
+                                               th:pattern="yyyy-MM-dd" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>SDT Nhân Viên <span style="color: red;">*</span></label>
+                                    <input type="text" th:field="*{sdtNV}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>Ảnh Nhân Viên <span style="color: red;">*</span></label>
+                                    <img width="80px" height="90px"
+                                         th:src="@{'/images/imgsNhanVien/'+ ${nhanVien.AnhNV}}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>Email Nhân Viên <span style="color: red;">*</span></label>
+                                    <input type="text" th:field="*{emailNV}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>Địa Chỉ <span style="color: red;">*</span></label>
+                                    <input type="text" th:field="*{diaChi}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>Căn Cước Công Dân <span style="color: red;">*</span></label>
+                                    <input type="text" th:field="*{CCCDNV}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>Mật Khẩu <span style="color: red;">*</span></label>
+                                    <input type="text" th:field="*{matKhau}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>Chức Vụ <span style="color: red;">*</span></label>
+                                    <select class="select" th:field="*{chucVu}" id="loc" name="loc">
+                                        <option th:each="loc : ${chucVu}" th:value="${loc.idCV}"
+                                                th:text="${loc.tenCV}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>Trạng Thái <span style="color: red;">*</span></label>
+                                    <select class="select" th:field="*{trangThai}" id="trangthai" name="trangThai">
+                                        <option th:each="loc : ${dsTrangThai.entrySet()}" th:value="${loc.key}"
+                                                th:text="${loc.value}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <button type="submit" class="btn btn-submit me-2">Submit</button>
+                                <a href="/manage/nhan-vien" class="btn btn-cancel">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Modal Chức Vụ-->
+<div class="modal fade" id="myModal-chucVu" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel-chucVu"></h5>
+                <button type="button" class="close btn-secondary chucVu" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:object="${chucVuAdd}" method="post"
+                      th:action="@{/manage/nhan-vien/chuc-vu/viewAdd/add}"
+                      style="width: auto;height: auto">
+                    <div class="page-header">
+                        <div class="page-title">
+                            <h4>Thêm Chức Vụ </h4>
+                            <h6>Quản Lý Chức Vụ</h6>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div th:utext="'&nbsp;'"></div>
+                                <div class="col-lg-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label>Mã Chức Vụ <span style="color: red;">*</span></label>
+                                        <input type="text" th:field="*{maCV}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label>Tên Chức Vụ <span style="color: red;">*</span></label>
+                                        <input type="text" th:field="*{tenCV}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <button type="submit" class="btn btn-submit me-2">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+//
+<div th:if="${Errormessage}" id="checkMaNV" class="toast-container toast-top-right">
+    <div class="toast toast-error" aria-live="assertive" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">Mã Nhân Viên đã tồn tại.</div>
+    </div>
+</div>
+<div th:if="${ErrormessageeEmail}" id="checkEmail" class="toast-container toast-top-right">
+    <div class="toast toast-error" aria-live="assertive" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">Email đã tồn tại.</div>
+    </div>
+</div>
+<div th:if="${ErrormessageCCCD}" id="checkCCCD" class="toast-container toast-top-right">
+    <div class="toast toast-error" aria-live="assertive" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">CCCD đã tồn tại.</div>
+    </div>
+</div>
+<div th:if="${ErrormessageSDT}" id="checkSDT" class="toast-container toast-top-right">
+    <div class="toast toast-error" aria-live="assertive" style="display: block;">
+        <button type="button" class="toast-close-button" role="button"></button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">Sdt đã tồn tại.</div>
+    </div>
+</div>
+
+<script src="/js/jquery-3.6.0.min.js"></script>
+
+<script src="/js/feather.min.js"></script>
+
+<script src="/js/jquery.slimscroll.min.js"></script>
+
+<script src="/js/jquery.dataTables.min.js"></script>
+
+<script src="/js/dataTables.bootstrap4.min.js"></script>
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+
+<script src="/plugins/select2/js/select2.min.js"></script>
+
+<script src="/plugins/sweetalert/sweetalert2.all.min.js"></script>
+
+<script src="/plugins/sweetalert/sweetalerts.min.js"></script>
+
+<script src="/plugins/alertify/alertify.min.js"></script>
+
+<script src="/plugins/alertify/custom-alertify.min.js"></script>
+
+<script src="/js/script.js"></script>
+
+
+<script>
+    function validateForm() {
+        var maNV = document.getElementById("maNV").value;
+        var hoTenNV = document.getElementById("hoTenNV").value;
+        var ngaySinh = document.getElementById("ngaySinh").value;
+        var sdtNV = document.getElementById("sdtNV").value;
+        var emailNV = document.getElementById("emailNV").value;
+        var CCCDNV = document.getElementById("CCCDNV").value;
+        var matkhau = document.getElementById("matKhau").value;
+
+        // Kiểm tra không để trống các trường
+        if (maNV === "" || hoTenNV === "" || ngaySinh === "" || sdtNV === "" || emailNV === "" || CCCDNV === "" || matkhau === "" ) {
+            alert("Vui lòng điền đầy đủ thông tin");
+            return false;
+        }
+        // Regular expressions for validation
+        var phoneRegex = /^0\d{9}$/;
+        var emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/;
+        var idCardRegex = /^(\d{6})(\d{6})$/;
+
+
+        // Validate phone number
+        if (!phoneRegex.test(sdtNV)) {
+            alert("số điện thoại phải bắt đầu bằng số 0 và đủ 10 số");
+            return false;
+        }
+
+        // Validate email
+        if (!emailRegex.test(emailNV)) {
+            alert("email phải đúng định dạng");
+            return false;
+        }
+
+        // Validate ID card number
+        if (!idCardRegex.test(CCCDNV)) {
+            alert("căn cước phải đúng định dạng");
+            return false;
+        }
+        return true;
+    }
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Lấy phần tử có id="modal"
+        var modalElement = document.getElementById("modal-chucVu");
+        // Lắng nghe sự kiện click trên phần tử có id="modal"
+        modalElement.addEventListener("click", function () {
+            // Khi người dùng nhấn vào phần tử có id="modal", kích hoạt modal
+            $('#myModal-chucVu').modal('show');
+        });
+
+        var closeButton = document.querySelector(".chucVu");
+        closeButton.addEventListener("click", function () {
+            // Tắt modal có id="myModal"
+            $('#myModal-chucVu').modal('hide');
+        });
+    });
+</script>
+<script>
+    function previewImage(event) {
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+
+        if (imageInput.files && imageInput.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            };
+
+            reader.readAsDataURL(imageInput.files[0]);
+        }
+    }
+</script>
+<script>
+    setTimeout(function () {
+        var checkMaNV = document.getElementById('checkMaNV');
+        if (checkMaNV) {
+            checkMaNV.style.display = 'none';
+        }
+    }, 5000);
+    //
+    setTimeout(function () {
+        var checkEmail = document.getElementById('checkEmail');
+        if (checkEmail) {
+            checkEmail.style.display = 'none';
+        }
+    }, 5000);
+    setTimeout(function () {
+        var checkCCCD = document.getElementById('checkCCCD');
+        if (checkCCCD) {
+            checkCCCD.style.display = 'none';
+        }
+    }, 5000);
+    setTimeout(function () {
+        var checkSDT = document.getElementById('checkSDT');
+        if (checkSDT) {
+            checkSDT.style.display = 'none';
+        }
+    }, 5000);
+</script>
+<script>
+    // In your Javascript (external .js resource or <script> tag)
+    $(document).ready(function () {
+        $('.select').select2();
+    });
+</script>
+
+</body>
+</html>

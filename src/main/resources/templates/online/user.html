@@ -52,7 +52,7 @@
 
         .btn-primary {
             display: block;
-            width: 200px;
+            width: 140px;
             border-radius: 0px;
             box-shadow: 0px 4px 6px 2px rgba(0, 0, 0, 0.2);
             margin-top: -5px;
@@ -77,6 +77,37 @@
             cursor: pointer;
         }
 
+        .modal-content {
+            border: 1px solid #dee2e6;
+            box-shadow: 0 5px 15px rgba(0,0,0,.5);
+            padding: 20px;
+        }
+
+        .modal-title {
+            font-family: var(--font-family);
+            font-size: var(--font-size);
+            font-weight: bold;
+        }
+
+        .modal-body {
+            font-family: var(--font-family);
+            font-size: var(--font-size);
+        }
+
+        .modal.fade .modal-dialog {
+            transition: transform .3s ease-out;
+            transform: translate(0, -50%);
+        }
+
+        .modal.show .modal-dialog {
+            transform: translate(0, 0);
+        }
+
+        .modal-dialog {
+            position: fixed;
+            left: 40%;
+            transform: translateX(-50%);
+        }
 
     </style>
 <body>
@@ -125,17 +156,63 @@
             </div>
         </div>
     </div>
+
+
     <div class="container" style=" height: 100px">
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
-                    <a th:href="@{'/buyer/home'}"><img src="/images/img/logo.png" style="width: 150px; height: 50px"
+                    <a th:href="@{'/buyer/home'}"><img src="/images/img/logo.png"
+                                                       style="width: 240px; height: 240px; margin-top: -84px"
                                                        alt=""></a>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
+
+                        <div th:if="${addSuccessMessage}" th:attr="data-message=${addSuccessMessage}" id="success-toast" style="position: fixed; top: 1rem; right: 1rem; z-index: 1050;">
+                            <!-- Toast container, ẩn mặc định và sẽ được hiển thị bằng JavaScript -->
+                            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="7000">
+                                <div class="toast-header">
+                                    <strong class="mr-auto">Thông báo</strong>
+                                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="toast-body" th:text="${addSuccessMessage}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div th:if="${updateSuccessMessage}" th:attr="data-message=${updateSuccessMessage}" id="success-toast" style="position: fixed; top: 1rem; right: 1rem; z-index: 1050;">
+                            <!-- Toast container, ẩn mặc định và sẽ được hiển thị bằng JavaScript -->
+                            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="7000">
+                                <div class="toast-header">
+                                    <strong class="mr-auto">Thông báo</strong>
+                                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="toast-body" th:text="${updateSuccessMessage}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div th:if="${deleteSuccessMessage}" th:attr="data-message=${deleteSuccessMessage}" id="success-toast" style="position: fixed; top: 1rem; right: 1rem; z-index: 1050;">
+                            <!-- Toast container, ẩn mặc định và sẽ được hiển thị bằng JavaScript -->
+                            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="7000">
+                                <div class="toast-header">
+                                    <strong class="mr-auto">Thông báo</strong>
+                                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="toast-body" th:text="${deleteSuccessMessage}">
+                                </div>
+                            </div>
+                        </div>
+
                         <li class="active"><a th:href="@{'/buyer/'}">Home</a></li>
                         <li><a th:href="@{'/buyer/shop'}">Shop</a></li>
                         <li><a th:href="@{'/buyer/about'}">About Us</a></li>
@@ -322,7 +399,7 @@
                                             th:text="${x.sdtNguoiNhan}"></h3>
                                         <a th:href="@{'/buyer/addresses/viewEdit/' + ${x.idDC}}"
                                            style="color: black; margin-top: 30px; margin-left: 398px;">Edit</a>
-                                        <a th:href="@{'/buyer/addresses/delete/' +${x.idDC}}" class="delete"
+                                        <a th:href="@{'/buyer/addresses/delete/' +${x.idDC}}" id="deleteToCartButton" data-toggle="modal" data-target="#confirmationModal"
                                            style=" margin-top: 30px; margin-left: 10px; ">Delete</a>
                                     </div>
 
@@ -335,7 +412,24 @@
                                 </div>
                             </div>
 
+                            <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                <div style="width:500px;">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            Bạn có chắc chắn muốn xoá Địa Chỉ này không?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                            <a th:href="@{'/buyer/addresses/delete/' +${x.idDC}}" style="margin-top: 3px"  class="btn btn-primary">Xoá</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
                         </th:block>
+                        <!-- Modal xnx-->
+
 
                     </div>
                     <div th:if="${diaChiShowNull}" class="card-body">
@@ -579,6 +673,7 @@
         </div>
     </div>
     <!--    Thêm địa chỉ end-->
+
 </section>
 <!--Modal end-->
 
@@ -601,10 +696,44 @@
 <script src="/js/scrollbar.min.js"></script>
 <script src="/js/custom-scroll.js"></script>
 
+
+
+<script>
+    $(document).ready(function(){
+        $('#yourTriggerButton').click(function(){
+            $('#simpleModal').modal('show');
+        });
+    });
+</script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 
+
+<script th:if="${deleteSuccessMessage}">
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var toastElement = document.getElementById('success-toast').querySelector('.toast');
+        var toast = new bootstrap.Toast(toastElement);
+        toast.show();
+    });
+</script>
+
+<script th:if="${addSuccessMessage}">
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var toastElement = document.getElementById('success-toast').querySelector('.toast');
+        var toast = new bootstrap.Toast(toastElement);
+        toast.show();
+    });
+</script>
+
+<script th:if="${updateSuccessMessage}">
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var toastElement = document.getElementById('success-toast').querySelector('.toast');
+        var toast = new bootstrap.Toast(toastElement);
+        toast.show();
+    });
+</script>
 <script>
     const host = "https://esgoo.net/";
     var callAPI = (api) => {
@@ -725,6 +854,7 @@
         $('#thongBaoThayDoiHTTT').modal('show');
     });
 </script>
+
 
 </body>
 
