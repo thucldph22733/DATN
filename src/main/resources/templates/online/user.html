@@ -172,7 +172,7 @@
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li class="active"><a th:href="@{'/buyer/'}" >Trang chủ</a></li>
+                        <li class=" "><a th:href="@{'/buyer/'}" >Trang chủ</a></li>
                         <li><a th:href="@{'/buyer/shop'}" >Cửa Hàng</a></li>
                     </ul>
                 </nav>
@@ -301,9 +301,7 @@
 
                         <div class="row">
                             <a style="display: flex; margin-right: 250px" href="/buyer/purchase/pay">
-                                <svg style="width: 30px; height: 30px;" viewBox="0 0 1024 1024" fill="#000000" class="icon" version="1.1"
-                                     xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="24.576"><g id="SVGRepo_bgCarrier"
-                                         stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M669.6 849.6c8.8 8 22.4 7.2 30.4-1.6s7.2-22.4-1.6-30.4l-309.6-280c-8-7.2-8-17.6 0-24.8l309.6-270.4c8.8-8 9.6-21.6 2.4-30.4-8-8.8-21.6-9.6-30.4-2.4L360.8 480.8c-27.2 24-28 64-0.8 88.8l309.6 280z" fill=""></path></g></svg>
+                                <svg style="width: 30px; height: 30px;" viewBox="0 0 1024 1024" fill="#000000" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="24.576"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M669.6 849.6c8.8 8 22.4 7.2 30.4-1.6s7.2-22.4-1.6-30.4l-309.6-280c-8-7.2-8-17.6 0-24.8l309.6-270.4c8.8-8 9.6-21.6 2.4-30.4-8-8.8-21.6-9.6-30.4-2.4L360.8 480.8c-27.2 24-28 64-0.8 88.8l309.6 280z" fill=""></path></g></svg>
                                 <p style="margin:4px 0 0 0; font-weight: 600; font-size: 12pt;">Quay lại</p>
                             </a>
                             <p style="float: right; display: flex; " th:text="'MÃ ĐƠN HÀNG : ' + ${billDetailPay.maHD}">
@@ -547,9 +545,8 @@
 
                     <div class="row coupon__code" style="margin-bottom: 30px;">
                         <div class="col-lg-8">
-                            <p th:text="'Dự kiến nhận hàng vào ' + ${#dates.format(billDetailShip.giaoHang.tgNhanDK, 'yyyy-MM-dd')}"></p>
-                            <p style="font-size: 10pt; margin-top: 100px;">Mọi chi tiết xin liên hệ tới tổng đài <b>0384329003</b> để được nhân viên CSKH tư vấn</p>
-                        </div>
+                            <p th:text="'Dự kiến nhận hàng vào ' + ${#dates.format(billDetailShip.tgNhanDK, 'yyyy-MM-dd')}"></p>
+                            <p style="font-size: 10pt; margin-top: 100px;">Mọi chi tiết xin liên hệ tới tổng đài <b>0362965179</b> để được nhân viên CSKH tư vấn</p>   </div>
                         <div class="col-lg-4">
                             <div style="display: grid;">
                                 <button style="border: 0.3px solid black; height: 40px; background-color: #e4e1db;">Chờ</button>
@@ -858,7 +855,7 @@
                                 <p style="font-size: 12pt; font-weight: 600;" th:text="'Lý do hủy đơn : ' + ${billDetailCancel.lyDoHuy}"></p>
                                 <p style="font-size: 10pt;">*Tiền sẽ được hoàn vào tài khoản ngân hàng của bạn trong vòng 24h (nếu bạn đã thanh toán)</p>
                                 <p style="font-size: 10pt; color: red;">*Đơn hàng đã giao nếu không nhận hàng sẽ không được hoàn lại tiền đã thanh toán</p>
-                                <p style="font-size: 9pt; margin-top: 10px;">Mọi chi tiết xin liên hệ tới tổng đài <b>0384329003</b> để được nhân viên CSKH tư vấn</p>
+                                <p style="font-size: 9pt; margin-top: 10px;">Mọi chi tiết xin liên hệ tới tổng đài <b>0362965179</b> để được nhân viên CSKH tư vấn</p>
                             </div>
                             <div class="col-lg-4">
                                 <div style="display: grid;">
@@ -1152,18 +1149,18 @@
                 <div th:if="${pagePurchaseUser}" class="card">
                     <div class="card-body" >
 
-                        <div class="row" style="background-color: #f3f2ee; height: 81px; width: 836px; border-radius: 5px; margin-top: -10px;">
-                            <nav class="header__menu mobile-menu" >
-                                <ul>
-                                    <li th:class="${type1}" style="margin-left: 50px; margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase'}" >Tất cả</a></li>
-                                    <li th:class="${type2}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/pay'}" >Chờ thanh toán</a></li>
-                                    <li th:class="${type3}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/ship'}" >Chờ giao hàng</a></li>
-                                    <li th:class="${type4}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/receive'}">Giao hàng</a></li>
-                                    <li th:class="${type5}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/completed'}">Thành công</a></li>
-                                    <li th:class="${type6}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/cancel'}">Đã hủy</a></li>
-                                </ul>
-                            </nav>
-                        </div>
+                            <div class="row" style="background-color: #f3f2ee; height: 81px; width: 836px; border-radius: 5px; margin-top: -10px;">
+                                <nav class="header__menu mobile-menu" >
+                                    <ul>
+                                        <li th:class="${type1}" style="margin-left: 50px; margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase'}" >Tất cả</a></li>
+                                        <li th:class="${type2}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/pay'}" >Chờ thanh toán</a></li>
+                                        <li th:class="${type3}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/ship'}" >Chờ giao hàng</a></li>
+                                        <li th:class="${type4}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/receive'}">Giao hàng</a></li>
+                                        <li th:class="${type5}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/completed'}">Thành công</a></li>
+                                        <li th:class="${type6}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/cancel'}">Đã hủy</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
 
                         <!-- ALL begin -->
 
@@ -1387,7 +1384,7 @@
                                     <!-- List CTDP in HD begin -->
                                     <th:block th:each="product : ${x.hoaDonChiTiets}">
                                         <div style="display: flex; padding-left: 40px;">
-                                            <img th:src="@{'/images/imgsProducts/' + ${product.chiTietGiay.hinhAnh.url1}}" style="height: 80px; width: 80px; border-radius: 5px;" alt="">
+                              F              <img th:src="@{'/images/imgsProducts/' + ${product.chiTietGiay.hinhAnh.url1}}" style="height: 80px; width: 80px; border-radius: 5px;" alt="">
                                             <div style="width: 300px;">
                                                 <p style="margin: 5px 0 0 15px; color: #637381; font-size: 11pt;" th:text="${product.chiTietGiay.giay.tenGiay}"></p>
                                                 <p style="margin: 0 0 0 15px; color: #637381; font-size: 10pt;" th:text="'Phân loại: ' + ${product.chiTietGiay.mauSac.tenMau} +' | ' + ${product.chiTietGiay.size.soSize} "></p>
@@ -2705,44 +2702,52 @@
 <script src="/js/jquery.slimscroll.min.js"></script>
 <script src="/js/scrollbar.min.js"></script>
 <script src="/js/custom-scroll.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
 <script>
-    const host = "https://provinces.open-api.vn/api/";
+    const host = "https://esgoo.net/";
     var callAPI = (api) => {
         return axios.get(api)
             .then((response) => {
-                renderData(response.data, "city");
+                renderData(response.data.data, "city");
             });
     }
-    callAPI('https://provinces.open-api.vn/api/?depth=1');
+    callAPI(host + "api-tinhthanh/1/0.htm");
+
     var callApiDistrict = (api) => {
         return axios.get(api)
             .then((response) => {
-                renderData(response.data.districts, "district");
+                renderData(response.data.data, "district");
             });
     }
     var callApiWard = (api) => {
         return axios.get(api)
             .then((response) => {
-                renderData(response.data.wards, "ward");
+                renderData(response.data.data, "ward");
             });
     }
 
     var renderData = (array, select) => {
         let row = ' <option disable value="">Chọn</option>';
         array.forEach(element => {
-            row += `<option data-id="${element.code}" value="${element.name}">${element.name}</option>`
+            row += `<option data-id="${element.id}" value="${element.full_name}">${element.full_name}</option>`
         });
         document.querySelector("#" + select).innerHTML = row
     }
 
     $("#city").change(() => {
-        callApiDistrict(host + "p/" + $("#city").find(':selected').data('id') + "?depth=2");
+        if ($("#city").val() === "") {
+            $("#district").html('<option value="" selected>Chọn quận huyện</option>');
+            $("#ward").html('<option value="" selected>Chọn phường/xã</option>');
+        } else {
+            callApiDistrict(host + "api-tinhthanh/2/" + $("#city").find(':selected').data('id') + ".htm");
+        }
         printResult();
     });
     $("#district").change(() => {
-        callApiWard(host + "d/" + $("#district").find(':selected').data('id') + "?depth=2");
+        callApiWard(host + "api-tinhthanh/3/" + $("#district").find(':selected').data('id') + ".htm");
         printResult();
     });
     $("#ward").change(() => {

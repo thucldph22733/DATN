@@ -93,7 +93,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/manage/thongke"><img src="/images/img/icons/dashboard.svg" alt="img"><span> Thống Kê</span>
+                        <a href="/manage/thongke"><img src="/images/img/icons/dashboard.svg"
+                                                       alt="img"><span> Thống Kê</span>
                         </a>
                     </li>
                     <li class="submenu">
@@ -180,7 +181,8 @@
             <div class="card">
                 <div class="card-body">
                     <div class="hidden-form" style="display: none">
-                        <form th:object="${chatLieuAdd}" method="post" th:action="@{/manage/chat-lieu/viewAdd/add}" onsubmit="return validateChatLieuForm()" name="chatLieuForm">
+                        <form th:object="${chatLieuAdd}" method="post" th:action="@{/manage/chat-lieu/viewAdd/add}"
+                              onsubmit="return validateChatLieuForm()" name="chatLieuForm">
                             <div class="row">
                                 <div class="col-lg-2 col-sm-6 col-12">
                                     <div class="form-group">
@@ -322,7 +324,6 @@
                                 <th>Action</th>
                                 <th>Thời Gian Thêm</th>
                                 <th>Thời Gian Sửa</th>
-
                             </tr>
                             </thead>
                             <tbody>
@@ -338,10 +339,18 @@
                                     <a class="me-3" th:href="@{'/manage/chat-lieu/viewUpdate/' + ${items.idChatLieu}}">
                                         <img src="/images/img/icons/edit.svg" alt="img">
                                     </a>
-                                    <a class="me-3 delete-button"
-                                       th:data-delete-url="@{'/manage/chat-lieu/delete/' + ${items.idChatLieu}}">
-                                        <img src="/images/img/icons/delete.svg" alt="img">
+                                    <a class="form-check form-switch">
+                                        <input class="me-3 form-check-input" type="checkbox" role="switch"
+                                               th:checked="${items.trangThai == 1}"
+                                               th:data-ma="${items.idChatLieu}"
+                                               onclick="capNhatTrangThaiChatLieu(this.getAttribute('data-ma'))">
+                                        <input style="display: none" th:id="'flexSwitchCheck_' + ${items.idChatLieu}"
+                                               th:value="${items.trangThai}">
                                     </a>
+<!--                                    <a class="me-3 delete-button"-->
+<!--                                       th:data-delete-url="@{'/manage/chat-lieu/delete/' + ${items.idChatLieu}}">-->
+<!--                                        <img src="/images/img/icons/delete.svg" alt="img">-->
+<!--                                    </a>-->
                                 </td>
                                 <td th:text="${#dates.format(items.tgThem, 'dd-MM-yyyy')}" align="center"/>
                                 <td th:text="${#dates.format(items.tgSua, 'dd-MM-yyyy')}" align="center"/>
@@ -551,7 +560,7 @@
 </script>
 <script>
     // In your Javascript (external .js resource or <script> tag)
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.select').select2();
     });
 </script>
@@ -589,6 +598,26 @@
             'title': 'Thông báo',
             'label': 'Đồng ý',
         }).show();
+    }
+
+    function capNhatTrangThaiChatLieu(id) {
+        let trangThai = document.getElementById("flexSwitchCheck_" + id).value;
+        var formData = new FormData();
+        formData.append("trangThai", trangThai);
+        $.ajax({
+            type: "PUT",
+            // url: "/bumblebee/khuyen-mai/cap-nhat-trang-thai/" + ma,
+            url: "/manage/chat-lieu/" + id,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                console.log("Success: " + response);
+            },
+            error: function (error) {
+                console.log("Error1: " + JSON.stringify(error));
+            }
+        });
     }
 </script>
 

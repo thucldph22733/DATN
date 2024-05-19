@@ -81,9 +81,7 @@ public class UserController {
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
 
         UserForm(model, khachHang);
-        showThongBao(model, khachHang);
-
-        model.addAttribute("pagesettingAccount", true);
+//        showThongBao(model, khachHang);
         return "online/user";
     }
 
@@ -228,7 +226,7 @@ public class UserController {
     }
 
     @GetMapping("/purchase/pay")
-    private String getPurchasePay(Model model) {
+    private String getPurchasePay(Model model){
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
 
@@ -238,9 +236,9 @@ public class UserController {
 
         model.addAttribute("listAllHDByKhachHang", listHoaDonByKhachHang);
 
-        model.addAttribute("pagePurchaseUser", true);
-        model.addAttribute("purchasePay", true);
-        model.addAttribute("type2", "active");
+        model.addAttribute("pagePurchaseUser",true);
+        model.addAttribute("purchasePay",true);
+        model.addAttribute("type2","active");
         return "online/user";
     }
 
@@ -261,7 +259,22 @@ public class UserController {
 
         return "online/user";
     }
+    @GetMapping("/purchase/receive")
+    private String getPurchaseReceive(Model model){
 
+        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+
+        UserForm(model, khachHang);
+
+        List<HoaDon> listHoaDonByKhachHang = hoaDonService.listHoaDonKhachHangAndTrangThaiOnline(khachHang, 2);
+
+        model.addAttribute("listAllHDByKhachHang", listHoaDonByKhachHang);
+
+        model.addAttribute("pagePurchaseUser",true);
+        model.addAttribute("purchaseReceive",true);
+        model.addAttribute("type4","active");
+        return "online/user";
+    }
     @GetMapping("/purchase/completed")
     private String getPurchaseCompleted(Model model) {
 
@@ -603,6 +616,8 @@ public class UserController {
             }
 
             hoaDonHuy.setTrangThai(4);
+            hoaDonHuy.setLyDoHuy(lyDoHuy);
+            hoaDonHuy.setTgHuy(new Date());
             hoaDonService.add(hoaDonHuy);
         }else if(lyDoHuy.equals("none")){
             lyDoHuy = "Tôi không  có nhu cầu mua nữa";
@@ -621,6 +636,8 @@ public class UserController {
                 lsThanhToanService.addLSTT(lichSuThanhToan);
             }
             hoaDonHuy.setTrangThai(4);
+            hoaDonHuy.setLyDoHuy(lyDoHuy);
+            hoaDonHuy.setTgHuy(new Date());
             hoaDonService.add(hoaDonHuy);
         }else if (lyDoHuy.equals("lyDoKhac")) {
             lyDoHuy = request.getParameter("hutThuocNenDauDaDay");
@@ -639,9 +656,11 @@ public class UserController {
                 lsThanhToanService.addLSTT(lichSuThanhToan);
             }
             hoaDonHuy.setTrangThai(4);
+            hoaDonHuy.setLyDoHuy(lyDoHuy);
+            hoaDonHuy.setTgHuy(new Date());
             hoaDonService.add(hoaDonHuy);
         }else if(lyDoHuy.equals("changeSize")) {
-            lyDoHuy = request.getParameter("hutThuocNenDauDaDay");
+            lyDoHuy = "Tôi muốn thay đổi size/ màu";
 
 
             GiaoHang giaoHang = hoaDonHuy.getGiaoHang();
@@ -659,6 +678,8 @@ public class UserController {
                 lsThanhToanService.addLSTT(lichSuThanhToan);
             }
             hoaDonHuy.setTrangThai(4);
+            hoaDonHuy.setLyDoHuy(lyDoHuy);
+            hoaDonHuy.setTgHuy(new Date());
             hoaDonService.add(hoaDonHuy);
         }
         return "redirect:/buyer/purchase/cancel";
@@ -771,12 +792,11 @@ public class UserController {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(ngayBatDau);
 
-        calendar.add(Calendar.DATE, shippingFeeService.tinhNgayNhanDuKien(hoaDon));
+        calendar.add(Calendar.DATE, shippingFeeService.tinhNgayNhanDuKien(hoaDon.getGiaoHang().getDiaChiNguoiNhan()));
 
         hoaDon.setTongTien(hoaDon.getTongTien() - tienShipCu + tienShip);
         hoaDon.setTienShip(tienShip);
 //        hoaDon.setTgNhanDK(calendar.getTime());
-        hoaDon.setSoLanThayDoiViTriShip(1);
 //        hoaDon.setTongTienDG(hoaDon.getTongTienDG() + tienShip - tienShipCu);
 
         hoaDonService.add(hoaDon);
@@ -820,15 +840,14 @@ public class UserController {
         double tienShipCu = hoaDon.getTienShip();
 
         Date ngayBatDau =  hoaDon.getTgTao();
-
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(ngayBatDau);
+        calendar.add(Calendar.DATE, shippingFeeService.tinhNgayNhanDuKien(hoaDon.getGiaoHang().getDiaChiNguoiNhan()));
 
-        calendar.add(Calendar.DATE, shippingFeeService.tinhNgayNhanDuKien(hoaDon));
 
         hoaDon.setTongTien(hoaDon.getTongTien() - tienShipCu + tienShip);
         hoaDon.setTienShip(tienShip);
-        hoaDon.setSoLanThayDoiViTriShip(1);
+
 
         hoaDonService.add(hoaDon);
 

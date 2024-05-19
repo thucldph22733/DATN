@@ -197,11 +197,11 @@
 
         <form action="/buyer/checkout/placeoder" method="post">
 
-            <div class="checkout__form">
+            <div class="checkout__form" >
 
                 <!--Show Dia Chi Khach Hang Begin-->
                 <div th:if="${addNewAddressNotNull}" class="row">
-                    <div class="col-lg-12 col-md-12" style="height: 130px; background-color: #f5f5f5;" th:object="${diaChiKHDefault}">
+                    <div class="col-lg-12 col-md-12" style="height: 130px;  background-color: #f5f5f5; border: 1px solid red" th:object="${diaChiKHDefault}">
 
                         <h6 class="coupon__code">
                             <a href="" style="margin-top: -10px;">
@@ -219,7 +219,7 @@
                             <span style="margin: -4px 5px 0 5px ;"> | </span>
                             <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${diaChiKHDefault.sdtNguoiNhan}"></h5>
                             <span style="margin-left: 20px;"></span>
-                            <h5 style="font-size: 11pt ;"  th:text="${diaChiKHDefault.diaChiChiTiet}"></h5>
+                            <h5 style="font-size: 11pt ;" id="address" th:text="${diaChiKHDefault.diaChiChiTiet}"></h5>
                         </div>
 
                         <div style="display: flex; margin-left: 100px; margin-top: 10px;">
@@ -298,6 +298,40 @@
 
                         </div>
                         <!--Total product & price End -->
+                        <div class="row" style="background-color: #f5f5f5; height: 150px; margin-top: 25px;">
+                            <div class="col-lg-5" style="display: flex; align-items: center; border-right: 0.5px solid #979797 ;">
+
+                                <p style="margin-left: 10px; margin-top: 17px;">Lời nhắn :</p>
+
+                                <textarea class="form-group" style="height: 40px; width: 300px; margin: 10px 0 0 20px" placeholder="Ghi chú cho đơn hàng ...." name="loiNhan"></textarea>
+                            </div>
+                            <div class="col-lg-5" style="padding-left: 60px;">
+
+                                <p style=" color: black; margin-top: 20px;">Đơn vị giao hàng : Nhanh</p>
+
+                                <p style=" color: #979797; font-size: 8pt; margin-top: -20px;">( Giao hàng dự kiến :  2 tới 7 ngày  )</p>
+
+
+                                <!-- Hiển thị thời gian hiện tại -->
+                                <p th:text="'Dự kiến nhận hàng vào ' + ${#dates.format(ngayDuKien, 'yyyy-MM-dd')}"></p>
+                                <div style="background-color: #979797; height: 0.5px; width: 100%;  margin-top: -10px;"></div>
+
+                                <p style=" color: black; font-size: 11pt; margin-top: 10px;" th:text="'Tổng đơn ( ' + ${sumQuantity} + ' sản phẩm): '"></p>
+
+                            </div>
+<!--                            <div class="col-lg-2">-->
+
+<!--                                <p style=" color: black; margin-top: 20px;" th:text="'₫' + ${#numbers.formatDecimal(shippingFee, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>-->
+
+<!--                                <p style=" color: #979797; font-size: 8pt; margin-top: -20px;">-</p>-->
+
+
+<!--                                <div style="background-color: #979797; height: 0.5px; width: 100%;  margin-top: -10px;"></div>-->
+
+<!--                                <p style=" color: black; font-size: 11pt; margin-top: 10px; font-weight: 700;" th:text="'₫' + ${#numbers.formatDecimal(tongTienDaGiamVoucherShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>-->
+
+<!--                            </div>-->
+                        </div>
 
                         <!-- Payment Method begin -->
                         <div class="row" style="background-color: #f5f5f5; height: 60px; margin-top: 15px;">
@@ -744,6 +778,43 @@
         }
     }
 </script>
+<script>
+    function addDays(date, days) {
+        var result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+    }
 
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    function calculateEstimatedDate(address) {
+        var now = new Date();
+        var deliveryDays;
+
+        if (address.includes("Hà Nội")) {
+            deliveryDays = 2;
+        } else {
+            deliveryDays = 5;
+        }
+
+        var estimatedDate = addDays(now, deliveryDays);
+        return formatDate(estimatedDate);
+    }
+
+    function updateEstimatedDate() {
+        var address = document.getElementById('address').innerText;
+        var estimatedDate = calculateEstimatedDate(address);
+        document.getElementById('estimated-date').innerText = estimatedDate;
+    }
+
+    window.onload = function() {
+        updateEstimatedDate();
+    }
+</script>
 </body>
 </html>

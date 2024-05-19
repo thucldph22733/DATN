@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
@@ -79,6 +81,9 @@ public class CheckOutController {
         hoaDonService.add(hoaDon);
 
         if (diaChiKHDefault != null){
+            hoaDon.setDiaChiNguoiNhan(diaChiKHDefault.getDiaChiChiTiet());
+            hoaDon.setSdtNguoiNhan(diaChiKHDefault.getSdtNguoiNhan());
+            hoaDon.setTenNguoiNhan(diaChiKHDefault.getTenNguoiNhan());
             session.removeAttribute("diaChiGiaoHang");
             session.setAttribute("diaChiGiaoHang", diaChiKHDefault);
 
@@ -134,6 +139,12 @@ public class CheckOutController {
             giaoHang.setTenNguoiNhan(diaChiKHDefault.getTenNguoiNhan());
             giaoHangService.saveGiaoHang(giaoHang);
 
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            calendar.add(Calendar.DATE, shippingFeeService.tinhNgayNhanDuKien(diaChiKHDefault.getDiaChiChiTiet()));
+            Date ngayDuKien = calendar.getTime();
+            model.addAttribute("ngayDuKien", ngayDuKien);
+
             model.addAttribute("shippingFee", shippingFee);
             model.addAttribute("billPlaceOrder", hoaDon);
             model.addAttribute("toTalOder", total  + shippingFee );
@@ -141,6 +152,10 @@ public class CheckOutController {
             model.addAttribute("diaChiKHDefault", diaChiKHDefault);
             model.addAttribute("addNewAddressNotNull", true);
             model.addAttribute("listAddressKH", diaChiKHList);
+            // Tính toán ngày giao hàng dự kiến
+//            LocalDate estimatedDeliveryDate = deliveryTimeService.calculateDeliveryDate(diaChiKHDefault.getDiaChiChiTiet());
+//            model.addAttribute("estimatedDeliveryDate", estimatedDeliveryDate);
+
         }else{
             model.addAttribute("tongTienDaGiamVoucherShip", total);
             model.addAttribute("addNewAddressNulll", true);
@@ -159,10 +174,13 @@ public class CheckOutController {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi") ;
+        GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
+        List<GioHangChiTiet> listGHCTActive = ghctService.findByGHActive(gioHang);
 
         List<HoaDonChiTiet> hoaDonChiTietList = hoaDonChiTietService.findByHoaDon(hoaDon);
         List<DiaChiKH> diaChiKHList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, false, 1);
 
+        Integer sumProductInCart = listGHCTActive.size();
         Date date = new Date();
 
         if (defaultSelected){
@@ -198,7 +216,9 @@ public class CheckOutController {
         diaChiKH.setLoai(defaultSelected);
 
         diaChiKHService.save(diaChiKH);
-
+        hoaDon.setDiaChiNguoiNhan(diaChiChiTiet);
+        hoaDon.setTenNguoiNhan(fullName);
+        hoaDon.setSdtNguoiNhan(phoneAddress);
         hoaDonService.add(hoaDon);
 
         int sumQuantity = hoaDonChiTietList.stream()
@@ -210,9 +230,7 @@ public class CheckOutController {
                 .sum();
 
         Double shippingFee = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
-
         hoaDon.setTongTien(total + shippingFee);
-
         hoaDonService.add(hoaDon);
 
         GiaoHang giaoHang = hoaDon.getGiaoHang();
@@ -226,11 +244,16 @@ public class CheckOutController {
 
         Double shippingFee2 = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
 
+
+
         model.addAttribute("sumQuantity", sumQuantity);
         model.addAttribute("total", total);
         model.addAttribute("diaChiKHDefault", diaChiKH);
         model.addAttribute("listProductCheckOut", hoaDonChiTietList);
         model.addAttribute("listAddressKH", diaChiKHList);
+        model.addAttribute("fullNameLogin", khachHang.getHoTenKH());
+        model.addAttribute("sumProductInCart", sumProductInCart);
+
         model.addAttribute("addNewAddressNotNull", true);
         model.addAttribute("billPlaceOrder", hoaDon);
         model.addAttribute("shippingFee", shippingFee2);
@@ -247,9 +270,11 @@ public class CheckOutController {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi") ;
+        GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
 
         List<HoaDonChiTiet> hoaDonChiTietList = hoaDonChiTietService.findByHoaDon(hoaDon);
         List<DiaChiKH> diaChiKHList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, false, 1);
+        List<GioHangChiTiet> listGHCTActive = ghctService.findByGHActive(gioHang);
 
         UUID idDCKH = UUID.fromString(request.getParameter("idDCKH"));
         DiaChiKH diaChiKHChange = diaChiKHService.findByIdDiaChiKH(idDCKH);
@@ -275,10 +300,20 @@ public class CheckOutController {
         hoaDon.setTongTien(total + shippingFee);
         hoaDon.setTienShip(shippingFee);
         hoaDonService.add(hoaDon);
+        //
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DATE, shippingFeeService.tinhNgayNhanDuKien(diaChiKHChange.getDiaChiChiTiet()));
+        Date ngayDuKien = calendar.getTime();
+        model.addAttribute("ngayDuKien", ngayDuKien);
+
 
         model.addAttribute("sumQuantity", sumQuantity);
         model.addAttribute("total", total);
         model.addAttribute("diaChiKHDefault", diaChiKHChange);
+        model.addAttribute("fullNameLogin", khachHang.getHoTenKH());
+
         model.addAttribute("listProductCheckOut", hoaDonChiTietList);
         model.addAttribute("listAddressKH", diaChiKHList);
         model.addAttribute("addNewAddressNotNull", true);
@@ -309,14 +344,15 @@ public class CheckOutController {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(ngayBatDau);
-        calendar.add(Calendar.DATE, shippingFeeService.tinhNgayNhanDuKien(hoaDon));
+
+        calendar.add(Calendar.DATE, shippingFeeService.tinhNgayNhanDuKien(hoaDon.getGiaoHang().getDiaChiNguoiNhan()));
 
         Date ngayKetThuc = calendar.getTime();
 
         GiaoHang giaoHang = hoaDon.getGiaoHang();;
-        giaoHang.setTgNhanDK(ngayKetThuc);
-        giaoHang.setNoiDung(loiNhan);
-        giaoHangService.saveGiaoHang(giaoHang);
+        hoaDon.setLoiNhan(loiNhan);
+        hoaDon.setTgNhanDK(ngayKetThuc);
+        hoaDonService.add(hoaDon);
 
         hoaDon.setTienShip(shippingFee);
 
@@ -433,6 +469,7 @@ public class CheckOutController {
         }
 
         DiaChiKH diaChiKHDefault = diaChiKHService.findDCKHDefaulByKhachHang(khachHang);
+
         List<DiaChiKH> diaChiKHList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, false, 1);
 
         Date date = new Date();
@@ -445,6 +482,7 @@ public class CheckOutController {
         hoaDon.setLoaiHD(0);
         hoaDon.setTgTao(date);
         hoaDon.setTrangThai(6);
+        hoaDon.setLoiNhan(hoaDon.getLoiNhan());
         hoaDonService.add(hoaDon);
 
         GiaoHang giaoHang = new GiaoHang();
@@ -456,7 +494,9 @@ public class CheckOutController {
         if (diaChiKHDefault != null){
             session.removeAttribute("diaChiGiaoHang");
             session.setAttribute("diaChiGiaoHang", diaChiKHDefault);
-
+            hoaDon.setDiaChiNguoiNhan(diaChiKHDefault.getDiaChiChiTiet());
+            hoaDon.setSdtNguoiNhan(diaChiKHDefault.getSdtNguoiNhan());
+            hoaDon.setTenNguoiNhan(diaChiKHDefault.getTenNguoiNhan());
             giaoHang.setTenNguoiNhan(diaChiKHDefault.getTenNguoiNhan());
             giaoHang.setMaGiaoHang("");
             giaoHang.setSdtNguoiNhan(diaChiKHDefault.getSdtNguoiNhan());
@@ -488,6 +528,7 @@ public class CheckOutController {
 
         hoaDonService.add(hoaDon);
 
+
         model.addAttribute("sumQuantity", sumQuantity);
         model.addAttribute("total", total);
         model.addAttribute("listProductCheckOut", listHDCTCheckOut);
@@ -503,6 +544,12 @@ public class CheckOutController {
             giaoHang.setSdtNguoiNhan(diaChiKHDefault.getSdtNguoiNhan());
             giaoHang.setTenNguoiNhan(diaChiKHDefault.getTenNguoiNhan());
             giaoHangService.saveGiaoHang(giaoHang);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            calendar.add(Calendar.DATE, shippingFeeService.tinhNgayNhanDuKien(diaChiKHDefault.getDiaChiChiTiet()));
+            Date ngayDuKien = calendar.getTime();
+            model.addAttribute("ngayDuKien", ngayDuKien);
 
             model.addAttribute("shippingFee", shippingFee);
             model.addAttribute("billPlaceOrder", hoaDon);
@@ -522,8 +569,8 @@ public class CheckOutController {
         session.setAttribute("hoaDonTaoMoi", hoaDon);
 
         showData(model);
-        return "online/checkout";
 
+        return "online/checkout";
     }
 
     @GetMapping("/vnpay-payment")

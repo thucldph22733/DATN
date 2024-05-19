@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class ShippingFeeServiceImpl implements ShippingFeeService {
     @Autowired
-    private HoaDonChiTIetService hoaDonChiTietService;
+    private  HoaDonChiTIetService hoaDonChiTietService;
 
     @Autowired
     private ThanhPhoService thanhPhoService;
@@ -61,10 +61,7 @@ public class ShippingFeeServiceImpl implements ShippingFeeService {
     }
 
     @Override
-    public Integer tinhNgayNhanDuKien(HoaDon hoaDon) {
-
-
-        String diaChiChiTiet = hoaDon.getGiaoHang().getDiaChiNguoiNhan();
+    public Integer tinhNgayNhanDuKien(String diaChiChiTiet) {
 
         String[] parts = diaChiChiTiet.split(",");
         String thanhPho = parts[parts.length - 1].trim();

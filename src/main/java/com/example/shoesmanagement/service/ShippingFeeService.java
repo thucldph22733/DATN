@@ -4,6 +4,6 @@ import com.example.shoesmanagement.model.HoaDon;
 
 public interface ShippingFeeService {
     Double calculatorShippingFee(HoaDon hoaDon, Double giaTriMacDinh);
-    Integer tinhNgayNhanDuKien (HoaDon hoaDon);
+    Integer tinhNgayNhanDuKien (String tinhNgayNhanDuKien);
 
 }

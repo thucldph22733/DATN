@@ -5,22 +5,16 @@ import com.example.shoesmanagement.model.MauSac;
 import com.example.shoesmanagement.repository.MauSacRepository;
 import com.example.shoesmanagement.service.GiayChiTietService;
 import com.example.shoesmanagement.service.MauSacService;
-import com.lowagie.text.DocumentException;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -76,6 +70,7 @@ public class MauSacController {
             model.addAttribute("Errormessage", false);
         }
         return "manage/mau-sac";
+//        return "manage/activities";
     }
 
 //    @GetMapping("/mau-sac/viewAdd")
@@ -253,4 +248,24 @@ public class MauSacController {
 //        }
 //        return "redirect:/manage/mau-sac"; // Chuyển hướng sau khi nhập liệu thành công hoặc không thành công
 //    }
+
+    @PutMapping("/mau-sac/{idMau}")
+    public ResponseEntity<String> capNhatTrangThai(@RequestParam String trangThai,
+                                                   @PathVariable UUID idMau) {
+        int trangThaiInt = Integer.valueOf(trangThai);
+        System.out.println(trangThai);
+
+        int trangThaiUpdate;
+        if (trangThaiInt == 1) {
+            trangThaiUpdate = 0;
+        } else {
+            trangThaiUpdate = 1;
+        }
+        System.out.println(trangThaiUpdate);
+        MauSac mauSac = mauSacService.getByIdMauSac(idMau);
+        mauSac.setTrangThai(trangThaiUpdate);
+        mauSac.setTgSua(new Date());
+        mauSacService.save(mauSac);
+        return ResponseEntity.ok("ok");
+    }
 }
