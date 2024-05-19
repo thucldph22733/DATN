@@ -24,6 +24,7 @@ import java.util.*;
 @RequestMapping("/manage")
 @Controller
 public class GiayChiTietController {
+
     @Autowired
     private GiayChiTietService giayChiTietService;
     @Autowired

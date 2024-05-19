@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sneaker Shop</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Male_Fashion Template">
+        <meta name="keywords" content="Male_Fashion, unica, creative, html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Sneaker Shop</title>
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+              rel="stylesheet">
+        <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
+        <!-- Css Styles -->
+        <link rel="stylesheet" href="/cssx/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/elegant-icons.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/magnific-popup.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/nice-select.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/owl.carousel.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/slicknav.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/style.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/scroll.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/styleNhan.css" type="text/css">
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
+        <style>
+            header {
+                position: fixed;
+                width: 100%;
+                z-index: 100;
+            }
+        </style>
+    </head>
+
+
+    <style>
+
+        .form-group {
+            margin-bottom: 25px
+        }
+
+        .form-group label {
+            margin-bottom: 8px;
+            color: #212b36;
+            font-weight: 500;
+            font-size: 14px;
+            display: block
+        }
+
+        .form-group label .manitory {
+            color: red
+        }
+
+        .form-group .input-groupicon {
+            position: relative
+        }
+
+        .form-group .input-groupicon .addonset {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            line-height: 0;
+            transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%)
+        }
+
+        @media (max-width: 991px) {
+            .form-group .input-groupicon .addonset {
+                display: none
+            }
+        }
+
+        .form-group input[type=text], .form-group input[type=password] {
+            border: 1px solid rgba(145, 158, 171, .32);
+            height: 40px;
+            width: 100%;
+            font-size: 14px;
+            font-weight: 500;
+            color: #637381;
+            padding: 10px 15px;
+            border-radius: 5px
+        }
+
+        .btn-submit {
+            color: #fff;
+            background-color: #0b5ed7 !important;
+            border-color: #1da1f2 !important;
+            display: inline-block;
+            width: 100px;
+            border-radius: 0px;
+            box-shadow: 0px 4px 6px 2px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-submit:hover {
+            background: #0dcaf0;
+            color: #fff
+        }
+
+        @media (max-width: 991px) {
+            .btn-submit {
+                min-width: auto;
+                padding: 5px 7px
+            }
+        }
+
+        .btn-secondary{
+            display: inline-block;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+
+        .imgUp {
+            margin-bottom: 15px;
+            width: 200px;
+            margin-right: 120px;
+            height: 200px;
+        }
+
+        .del {
+            position: absolute;
+            top: 0px;
+            right: 180px;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            background-color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+        }
+    </style>
+<body>
+<<<<<<< HEAD
+<!-- Page Preloder -->
+<!--<div id="preloder">-->
+<!--    <div class="loader"></div>-->
+<!--</div>-->
+
+<!-- Header Section BegiAccount  -->
+=======
+>>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-3  d-flex align-items-center">
+                    <div class="header__top__left">
+                        <p>Chào mừng đến với trải nghiệm mua sắm </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 d-flex align-items-center">
+                    <form action="/buyer/search" method="post">
+                        <div style="width: 100%; display: flex; background-color: white; border: 10px;">
+                            <input th:value="${keyword}" name="keyWord" class="form-control"
+                                   style="border: none; width: 500px;" placeholder="Nhập văn bản..." type="text">
+                            <div style="width: 60px; background-color: #f3f2ee; height: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <a type="submit" href=""><img src="/images/img/icon/search.png" alt=""></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-lg-3 d-flex align-items-center">
+                    <div>
+                        <div class="header__top__links">
+                            <a th:href="@{'/buyer/purchase'}">Đơn mua</a>
+                        </div>
+                        <!--        Buyer FullName Begin    -->
+                        <div class="header__top__hover">
+                            <span th:text="${fullNameLogin}"><i class="arrow_carrot-down"></i></span>
+                            <ul>
+                                <li><a th:href="@{'/buyer/setting'}">Cài đặt</a></li>
+                                <li><a th:href="@{'/buyer/logout'}">Đăng xuất</a></li>
+                            </ul>
+                        </div>
+                        <!--            Buyer FullName End -->
+                        <div class="header__top__hover">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container" style=" height: 100px">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="header__logo">
+<<<<<<< HEAD
+                    <a th:href="@{'/buyer/home'}"><img src="/images/img/logo.png" style="width: 150px; height: 50px"
+=======
+                    <a th:href="@{'/buyer/home'}"><img src="/images/img/logo.png"
+                                                       style="width: 240px; height: 240px; margin-top: -84px"
+>>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
+                                                       alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <nav class="header__menu mobile-menu">
+                    <ul>
+                        <li class="active"><a th:href="@{'/buyer/'}">Home</a></li>
+                        <li><a th:href="@{'/buyer/shop'}">Shop</a></li>
+                        <li><a th:href="@{'/buyer/about'}">About Us</a></li>
+                        <li><a th:href="@{'/buyer/blog'}">Blog</a>
+                            <ul class="dropdown">
+                                <li><a th:href="@{'/buyer/blog/blog-details'}">Blog Details</a></li>
+                            </ul>
+                        </li>
+                        <li><a th:href="@{'/buyer/contact'}">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <div class="header__nav__option" style="display: flex;justify-content: end;">
+
+
+                    <div class="nav user-menu" style="height: 30px;">
+                        <li class="nav-item dropdown" style="height: 30px;">
+                            <a data-bs-toggle="dropdown" href="#">
+                                <img style="margin-bottom: 42px; width: 18px; height: 18px;"
+                                     src="/images/img/icon/notification.png">
+                            </a>
+                            <span style="position: absolute; height:20px; width: 25px; top: -13px; left: 7px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;"
+                                  th:text="${soThongBao}"></span>
+                            <div class="dropdown-menu notifications"
+                                 style="width:300px; top: -80px; position: absolute;">
+                                <div class="topnav-dropdown-header">
+                                    <span class="notification-title">Thông báo</span>
+                                    <a class="clear-noti"> Xóa sạch </a>
+                                </div>
+                                <div class="vertical-scroll scroll-demo">
+                                    <th:block th:if="${x.trangThai != 3}" th:each="x : ${listThongBao}">
+                                        <a href="#" class="items-noticafitions">
+                                            <div class="items-notica">
+                                        <span class="avatar">
+                                            <img alt="" src="/images/img/blog/blog-1.jpg">
+                                        </span>
+                                                <div class="text-notica">
+                                                    <span class="notica-title" th:text="${fullNameLogin}"></span>
+                                                    <p class="notica-times">1 phút trước</p>
+                                                    <input th:if="x.trangThai == 1" checked class="notica-read"
+                                                           type="radio" name="" id="">
+                                                    <input th:if="x.trangThai == 0">
+                                                </div>
+                                                <p class="notica-status">---------</p>
+                                                <div class="text-contents">
+                                                    <p class="notica-contents" th:text="${x.noiDungTB}"></p>
+                                                </div>
+
+
+                                            </div>
+                                        </a>
+                                    </th:block>
+                                </div>
+                                <div class="topnav-dropdown-footer">
+                                    <a href="activities.html">Xem tất cả thông báo</a>
+                                </div>
+                            </div>
+
+                        </li>
+                    </div>
+                    <a th:href="@{'/buyer/fa&recently'}"><img src="/images/img/icon/heart2.png" alt=""></a>
+
+                    <a th:href="@{'/buyer/cart'}" style="position: relative; display: inline-block; ">
+                        <img src="/images/img/icon/cart.png" alt="">
+                        <span class="cart-count"
+                              style="position: absolute; height:20px; width: 25px; top: -13px; left: 3px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;"
+                              th:text="${sumProductInCart}"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open"><i class="fa fa-bars"></i></div>
+    </div>
+</header>
+<!-- Header Section End -->
+
+<section>
+    <div style="height: 150px; width: 100%;"></div>
+</section>
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Shop</h4>
+                    <div class="breadcrumb__links">
+                        <a th:href="@{'/buyer/home'}">Home</a>
+                        <span>Cài đặt tài khoản</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Shop Section Begin -->
+<section class="shop spad" style="margin-top: -70px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="shop__sidebar__search">
+                    <form action="#">
+                        <input type="text" placeholder="Search...">
+                        <button type="submit"><span class="icon_search"></span></button>
+                    </form>
+                </div>
+                <div class="shop__sidebar__accordion">
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div class="card-heading">
+                                <a data-toggle="collapse" data-target="#collapseOne">Tài khoản của tôi</a>
+                            </div>
+                            <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <div class="shop__sidebar__categories">
+                                        <ul class="nice-scroll" style="height: 20%">
+<<<<<<< HEAD
+                                            <li><a href="/buyer/setting">Thông tin</a></li>
+                                            <li><a href="/buyer/addresses">Địa chỉ</a></li>
+                                            <li><a href="/buyer/setting">Ngân hàng</a></li>
+=======
+                                            <li><a href="/buyer/addresses">Địa chỉ</a></li>
+>>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-heading">
+                                <a href="/buyer/purchase">Đơn mua</a>
+                            </div>
+                        </div>
+<<<<<<< HEAD
+                        <div class="card">
+                            <div class="card-heading">
+                                <a href="/buyer/notification">Thông báo</a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-heading">
+                                <a href="/buyer/voucher">Khuyến mãi</a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-heading">
+                                <a href="/buyer/coins">Xu</a>
+                            </div>
+                        </div>
+=======
+>>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <form th:object="${diaChi}" method="post" th:action="@{'/buyer/addresses/viewEdit/' + ${diaChi.idDC}}">
+                    <div class="page-wrapper">
+                        <div class="content">
+                            <div class="page-header">
+                                <div class="page-title">
+                                    <div class="row"
+                                         style="background-color: #f3f2ee; height: 80px; width: 836px; border-radius: 5px; margin-top: -10px;margin-left: 3px">
+                                        <p style="font-size: 14pt; margin-top: 26px; margin-left: 30px;">Edit
+                                            Address</p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="card"
+                                 style="margin-top: 5px; background-color: #f3f2ee; width: 836px ;  border-radius: 5px; height: 460px;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label>Tên
+                                                    Địa Chỉ <span style="color: red;">*</span></label>
+                                                <input type="text" th:field="*{tenDC}">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label>Tên Người Nhận <span style="color: red;">*</span></label>
+                                                <input type="text" th:field="*{tenNguoiNhan}">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label>Số ĐT Địa Chỉ <span style="color: red;">*</span></label>
+                                                <input type="text" th:field="*{sdtNguoiNhan}">
+                                            </div>
+                                        </div>
+<<<<<<< HEAD
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label>Tỉnh Thành Phố <span style="color: red;">*</span></label>
+                                                <select class="select" id="tinhthanhpho">
+                                                    <option value="" selected>Chọn thành phố</option>
+                                                </select>
+                                                <input type="text" hidden th:field="*{tinhTP}" id="tinh-tp-hidden"/>
+=======
+
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label>Tỉnh Thành Phố <span style="color: red;">*</span></label>
+                                                <select class="select" id="city" name="city" style="width: 290px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;margin-right: 30px; ">
+                                                    <option th:each="tinhTP : ${diaChi}" th:value="${diaChi.idDC}" th:text="${diaChi.tinhTP}" selected></option>
+                                                </select>
+>>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label>Quận Huyện <span style="color: red;">*</span></label>
+<<<<<<< HEAD
+                                                <select class="select" id="quanhuyen">
+                                                    <option value="" selected>Chọn quận huyện</option>
+                                                </select>
+                                                <input type="text" hidden th:field="*{quanHuyen}"
+                                                       id="quan-huyen-hidden"/>
+=======
+                                                <select class="select" id="district" name="district" style="width: 290px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;margin-right: 30px; ">
+                                                    <option th:each="quanHuyen : ${diaChi}" th:value="${diaChi.idDC}" th:text="${diaChi.quanHuyen}" selected></option>
+                                                </select>
+>>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label>Xã Phường <span style="color: red;">*</span></label>
+<<<<<<< HEAD
+                                                <select class="select" id="xaphuong">
+                                                    <option value="" selected>Chọn xã phường</option>
+                                                </select>
+                                                <input type="text" hidden th:field="*{xaPhuong}" id="phuong-xa-hidden"/>
+                                            </div>
+                                        </div>
+=======
+                                                <select class="select" id="ward" name="ward" style="width: 290px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; ">
+                                                    <option th:each="xaPhuong : ${diaChi}" th:value="${diaChi.idDC}" th:text="${diaChi.xaPhuong}" selected></option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+>>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label>Mô Tả <span style="color: red;">*</span></label>
+                                                <input type="text" th:field="*{moTa}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <button type="submit" value="submit" class="btn btn-submit me-2">Submit
+                                            </button>
+                                            <a href="/buyer/addresses" id="cancelButton"
+                                               class="btn btn-secondary">Cancel</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!--                Address End-->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Section End -->
+<!-- Footer Section Begin -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    <div class="footer__logo">
+                        <a href="#"><img src="/Logo.png" alt=""></a>
+                    </div>
+                    <p> Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế.</p>
+                    <a href="#"><img src="img/payment.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Cửa hàng</h6>
+                    <ul>
+                        <li><a href="/buyer/shop">Gian hàng</a></li>
+                        <li><a href="/buyer/shop">Xu Hướng</a></li>
+                        <li><a href="/buyer/shop">Đề Xuất</a></li>
+                        <li><a href="/buyer/shop/sale">Giảm giá</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Mua sắm</h6>
+                    <ul>
+                        <li><a href="#">Liên Hệ</a></li>
+                        <li><a href="#">Thanh Toán</a></li>
+                        <li><a href="#">Giao Hàng</a></li>
+                        <li><a href="#">Hoàn Hàng/Tiền</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                <div class="footer__widget">
+                    <h6>NewLetter</h6>
+                    <div class="footer__newslatter">
+                        <p>Hãy là người đầu tiên biết về hàng mới, sách tra cứu, khuyến mại và khuyến mãi!</p>
+                        <form action="#">
+                            <input type="text" placeholder="Your email">
+                            <button type="submit"><span class="icon_mail_alt"></span></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="footer__copyright__text">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    <p>Copyright ©
+                        2023
+                        All rights reserved | This template is edit with <i class="fa fa-heart-o"
+                                                                            aria-hidden="true"></i> by <a
+                                href="https://www.instagram.com/nhanngu_03/" target="_blank">Nhan Pham</a>
+                    </p>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer Section End -->
+
+<!-- Js Plugins -->
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/js/feather.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/script.js"></script>
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.nicescroll.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/jquery.countdown.min.js"></script>
+<script src="/js/jquery.slicknav.js"></script>
+<script src="/js/mixitup.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/jquery.slimscroll.min.js"></script>
+<script src="/js/scrollbar.min.js"></script>
+<script src="/js/custom-scroll.js"></script>
+<<<<<<< HEAD
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Hàm để tải dữ liệu tỉnh thành từ API
+    const loadTinhThanhData = () => {
+        const host = "https://esgoo.net/"; // URL cơ sở của API
+        callAPI(host + "api-tinhthanh/1/0.htm").then(res => {
+            // Sau khi dữ liệu được tải, hiển thị trong dropdown
+            renderData(res.data, "tinhthanhpho");
+        });
+    }
+
+    // Hàm để gọi API và render dữ liệu
+    var callAPI = async (api) => {
+        return await axios.get(api);
+    }
+
+    // Hàm render dữ liệu vào dropdown
+    var renderData = (array, select) => {
+        let row = ' <option disable value="">Chọn</option>';
+        array.forEach(element => {
+            row += `<option data-id="${element.id}" value="${element.full_name}">${element.full_name}</option>`
+        });
+        document.querySelector("#" + select).innerHTML = row;
+    }
+
+    // Gọi hàm tải dữ liệu tỉnh thành khi trang được tải
+    loadTinhThanhData();
+
+    // Các sự kiện khi dropdown thay đổi
+    $("#tinhthanhpho").change(() => {
+        const tinhtp = $("#tinhthanhpho").find(':selected')
+        callApiDistrict(host + "api-tinhthanh/2/" + tinhtp.data('id') + ".htm");
+        document.getElementById("tinh-tp-hidden").value = tinhtp.text();
+        printResult();
+    });
+    $("#quanhuyen").change(() => {
+        const quanhuyen =  $("#quanhuyen").find(':selected')
+        callApiWard(host + "api-tinhthanh/3/" + quanhuyen.data('id') + ".htm");
+        document.getElementById("quan-huyen-hidden").value = quanhuyen.text();
+        printResult();
+    });
+    $("#xaphuong").change(() => {
+        const phuongxa =  $("#xaphuong").find(':selected')
+        document.getElementById("phuong-xa-hidden").value = phuongxa.text();
+        printResult();
+    })
+
+    // Các hàm khác có thể bạn cần
+    var callApiDistrict = async (api) => {
+        return await axios.get(api)
+            .then((response) => {
+                renderData(response.data.data, "quanhuyen");
+                return response;
+            });
+    }
+    var callApiWard = async (api) => {
+        return await axios.get(api)
+            .then((response) => {
+                renderData(response.data.data, "xaphuong");
+                return response;
+            });
+    }
+    const printResult = () => {
+        const quanHuyen = $("#quanhuyen").find(':selected').data('name');
+        const xaPhuong = $("#xaphuong").find(':selected').data('name');
+        const tinhTP = $("#tinhthanhpho").find(':selected').data('name');
+
+        if (quanHuyen != "" && xaPhuong != "" &&
+            tinhTP != "") {
+            let idDiaChi = $("#diachict");
+            idDiaChi[0].value = xaPhuong + " , " + quanHuyen + " , " + tinhTP;
+        }
+        console.log(tinhTP);
+    }
+=======
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+
+    const host = "https://esgoo.net/";
+    var callAPI = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.data, "city");
+            });
+    }
+    callAPI(host + "api-tinhthanh/1/0.htm");
+
+    var callApiDistrict = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.data, "district");
+            });
+    }
+
+    var callApiWard = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.data, "ward");
+            });
+    }
+
+    var renderData = (array, select) => {
+        let row = '<option disabled value="">Chọn</option>';
+        array.forEach(element => {
+            row += `<option data-id="${element.id}" value="${element.full_name}">${element.full_name}</option>`
+        });
+        document.querySelector("#" + select).innerHTML = row
+    }
+
+    $("#city").change(() => {
+        if ($("#city").val() === "") {
+            $("#district").html('<option value="" selected>Chọn quận huyện</option>');
+            $("#ward").html('<option value="" selected>Chọn phường/xã</option>');
+        } else {
+            callApiDistrict(host + "api-tinhthanh/2/" + $("#city").find(':selected').data('id') + ".htm");
+        }
+        printResult();
+    });
+
+    $("#district").change(() => {
+        callApiWard(host + "api-tinhthanh/3/" + $("#district").find(':selected').data('id') + ".htm");
+        printResult();
+    });
+
+    $("#ward").change(() => {
+        printResult();
+    })
+
+    var printResult = () => {
+        if ($("#district").find(':selected').data('id') != "" && $("#ward").find(':selected').data('id') != "" &&
+            $("#city").find(':selected').data('id') != "") {
+        }
+    }
+
+>>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
+</script>
+
+<script>
+    $(".imgAdd").click(function () {
+        $(this).closest(".row").find('.imgAdd').before('<div class="col-sm-2 imgUp"><div class="imagePreview"></div><label class="btn btn-primary">Tải <input type="file" class="uploadFile img" style="width:0px;height:0px;overflow:hidden;"></label><i class="del">X</i></div>');
+    });
+    $(document).on("click", "i.del", function () {
+        $(this).parent().remove();
+    });
+    $(function () {
+        $(document).on("change", ".uploadFile", function () {
+            var uploadFile = $(this);
+            var files = !!this.files ? this.files : [];
+            if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+
+            if (/^image/.test(files[0].type)) { // only image file
+                var reader = new FileReader(); // instance of the FileReader
+                reader.readAsDataURL(files[0]); // read the local file
+
+                reader.onloadend = function () { // set image data as background of div
+                    //alert(uploadFile.closest(".upimage").find('.imagePreview').length);
+                    uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url(" + this.result + ")");
+                }
+            }
+
+        });
+    });
+</script>
+
+<<<<<<< HEAD
+=======
+
+
+<script>
+    $(".imgAdd").click(function () {
+        $(this).closest(".row").find('.imgAdd').before('<div class="col-sm-2 imgUp"><div class="imagePreview"></div><label class="btn btn-primary">Tải <input type="file" class="uploadFile img" style="width:0px;height:0px;overflow:hidden;"></label><i class="del">X</i></div>');
+    });
+    $(document).on("click", "i.del", function () {
+        $(this).parent().remove();
+    });
+    $(function () {
+        $(document).on("change", ".uploadFile", function () {
+            var uploadFile = $(this);
+            var files = !!this.files ? this.files : [];
+            if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+
+            if (/^image/.test(files[0].type)) { // only image file
+                var reader = new FileReader(); // instance of the FileReader
+                reader.readAsDataURL(files[0]); // read the local file
+
+                reader.onloadend = function () { // set image data as background of div
+                    //alert(uploadFile.closest(".upimage").find('.imagePreview').length);
+                    uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url(" + this.result + ")");
+                }
+            }
+
+        });
+    });
+</script>
+
+>>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
+<script>
+    $(document).on("click", "i.del", function () {
+        $(this).parent().remove();
+    });
+    $(function () {
+        $(document).on("change", ".uploadFile", function () {
+            var uploadFile = $(this);
+            var files = !!this.files ? this.files : [];
+            if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+
+            if (/^image/.test(files[0].type)) { // only image file
+                var reader = new FileReader(); // instance of the FileReader
+                reader.readAsDataURL(files[0]); // read the local file
+
+                reader.onloadend = function () { // set image data as background of div
+                    //alert(uploadFile.closest(".upimage").find('.imagePreview').length);
+                    uploadFile.closest(".imgUp2").find('.imagePreview2').css("background-image", "url(" + this.result + ")");
+                }
+            }
+
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#modalHuyHoaDonInDetailBillPay').modal('show');
+    });
+    $(document).ready(function () {
+        $('#messBillDeliveryThanhCong').modal('show');
+    });
+    $(document).ready(function () {
+        $('#thongBaoThayDoiDiaChiNhanHangThanhCong').modal('show');
+    });
+    $(document).ready(function () {
+        $('#thongBaoThayDoiHTTT').modal('show');
+    });
+</script>
+
+</body>
+
+</html>

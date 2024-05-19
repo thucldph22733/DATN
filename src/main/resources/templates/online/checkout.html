@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Control Shop</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Male_Fashion Template">
+        <meta name="keywords" content="Male_Fashion, unica, creative, html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Control Shop</title>
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+              rel="stylesheet">
+        <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
+        <!-- Css Styles -->
+        <link rel="stylesheet" href="/cssx/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/elegant-icons.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/magnific-popup.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/nice-select.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/owl.carousel.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/slicknav.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/style.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/scroll.min.css" type="text/css">
+        <link rel="stylesheet" href="/cssx/styleNhan.css" type="text/css">
+
+        <style>
+            header {
+                position: fixed;
+                width: 100%;
+                z-index: 100;
+            }
+        </style>
+    </head>
+
+<body>
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Header Section Begin -->
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-3  d-flex align-items-center" >
+                    <div class="header__top__left">
+                        <p>Chào mừng đến với trải nghiệm mua sắm !</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 d-flex align-items-center" >
+                    <form action="/buyer/search" method="post">
+                        <div style="width: 100%; display: flex; background-color: white; border: 10px;">
+                            <input th:value="${keyword}" name="keyWord" class="form-control" style="border: none; width: 500px;"  placeholder="Nhập văn bản..." type="text">
+                            <div style="width: 60px; background-color: #f3f2ee; height: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <button type="submit" href=""><img src="/images/img/icon/search.png" alt=""></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-lg-3 d-flex align-items-center">
+                    <div>
+
+                        <div class="header__top__links"  >
+                            <a th:href="@{'/buyer/purchase'}">ĐƠN MUA</a>
+                        </div>
+
+                        <!--        Buyer FullName Begin    -->
+                        <div class="header__top__hover">
+                            <span th:text="${fullNameLogin}"><i class="arrow_carrot-down" ></i></span>
+                            <ul>
+                                <li><a th:href="@{'/buyer/setting'}" >Cài đặt</a></li>
+                                <li><a th:href="@{'/buyer/logout'}">Đăng xuất</a></li>
+                            </ul>
+                        </div>
+                        <!--            Buyer FullName End -->
+
+                        <div class="header__top__hover"  >
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container" style=" height: 100px">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="header__logo">
+                    <a th:href="@{'/buyer/home'}" ><img src="/images/img/logo.png" style="width: 50px; height: 50px" alt=""></a>
+
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <nav class="header__menu mobile-menu">
+                    <ul>
+                        <li><a th:href="@{'/buyer/'}" >Trang Chủ</a></li>
+                        <li class="active"><a th:href="@{'/buyer/shop'}" >Cửa Hàng</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <div class="header__nav__option" style="display: flex;justify-content: end;">
+
+                    <div class="nav user-menu" style="height: 30px;">
+
+                        <li class="nav-item dropdown" style="height: 30px;">
+                            <a data-bs-toggle="dropdown" href="#" >
+                                <img style="margin-bottom: 42px; width: 18px; height: 18px;"   src="/images/img/icon/notification.png" >
+                            </a>
+                            <span style="position: absolute; height:20px; width: 25px; top: -13px; left: 7px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;" th:text="${soThongBao}"></span>
+                            <div class="dropdown-menu notifications" style="width:300px; top: -80px; position: absolute;">
+                                <div class="topnav-dropdown-header">
+                                    <span class="notification-title">Thông báo</span>
+                                    <a class="clear-noti"> Xóa sạch </a>
+                                </div>
+                                <div class="vertical-scroll scroll-demo" >
+                                    <th:block th:if="${x.trangThai != 3}" th:each="x : ${listThongBao}">
+                                        <a href="#" class="items-noticafitions">
+                                            <div class="items-notica">
+                                        <span class="avatar">
+                                            <img alt="" src="/images/img/blog/blog-1.jpg">
+                                        </span>
+                                                <div class="text-notica">
+                                                    <span class="notica-title" th:text="${fullNameLogin}"></span>
+                                                    <p class="notica-times">1 phút trước</p>
+                                                    <input th:if="x.trangThai == 1" checked class="notica-read" type="radio" name="" id="">
+                                                    <input th:if="x.trangThai == 0">
+                                                </div>
+                                                <p class="notica-status">---------</p>
+                                                <div class="text-contents">
+                                                    <p class="notica-contents" th:text="${x.noiDungTB}"></p>
+                                                </div>
+
+
+                                            </div>
+                                        </a>
+                                    </th:block>
+                                </div>
+                                <div class="topnav-dropdown-footer">
+                                    <a href="activities.html">Xem tất cả thông báo</a>
+                                </div>
+                            </div>
+
+                        </li>
+
+                    </div>
+                    <!--                    <a th:href="@{'/buyer/fa&recently'}"><img src="/images/img/icon/heart2.png" alt=""></a>-->
+
+                    <a th:href="@{'/buyer/cart'}" style="position: relative; display: inline-block; ">
+                        <img src="/images/img/icon/cart.png" alt="">
+                        <span class="cart-count" style="position: absolute; height:20px; width: 25px; top: -13px; left: 3px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;" th:text="${sumProductInCart}"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open"><i class="fa fa-bars"></i></div>
+    </div>
+</header>
+<!-- Header Section End -->
+
+<section>
+    <div style="height: 150px; width: 100%;"></div>
+</section>
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Thanh toán</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Trang chủ</a>
+                        <a class="nhanHover" href="./shop.html">Shop</a>
+                        <span>Thanh toán</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Checkout Section Begin -->
+<section class="checkout spad">
+    <div class="container">
+
+        <form action="/buyer/checkout/placeoder" method="post">
+
+            <div class="checkout__form" >
+
+                <!--Show Dia Chi Khach Hang Begin-->
+                <div th:if="${addNewAddressNotNull}" class="row">
+                    <div class="col-lg-12 col-md-12" style="height: 130px;  background-color: #f5f5f5; border: 1px solid red" th:object="${diaChiKHDefault}">
+
+                        <h6 class="coupon__code">
+                            <a href="" style="margin-top: -10px;">
+                                <svg style="height: 30px; width: 30px;" viewBox="0 0 1024 1024" fill="#000000" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier"><path d="M512 1012.8c-253.6 0-511.2-54.4-511.2-158.4 0-92.8 198.4-131.2 283.2-143.2h3.2c12 0 22.4 8.8 24 20.8 0.8 6.4-0.8 12.8-4.8 17.6-4 4.8-9.6 8.8-16 9.6-176.8 25.6-242.4 72-242.4 96 0 44.8 180.8 110.4 463.2 110.4s463.2-65.6 463.2-110.4c0-24-66.4-70.4-244.8-96-6.4-0.8-12-4-16-9.6-4-4.8-5.6-11.2-4.8-17.6 1.6-12 12-20.8 24-20.8h3.2c85.6 12 285.6 50.4 285.6 143.2 0.8 103.2-256 158.4-509.6 158.4z m-16.8-169.6c-12-11.2-288.8-272.8-288.8-529.6 0-168 136.8-304.8 304.8-304.8S816 145.6 816 313.6c0 249.6-276.8 517.6-288.8 528.8l-16 16-16-15.2zM512 56.8c-141.6 0-256.8 115.2-256.8 256.8 0 200.8 196 416 256.8 477.6 61.6-63.2 257.6-282.4 257.6-477.6C768.8 172.8 653.6 56.8 512 56.8z m0 392.8c-80 0-144.8-64.8-144.8-144.8S432 160 512 160c80 0 144.8 64.8 144.8 144.8 0 80-64.8 144.8-144.8 144.8zM512 208c-53.6 0-96.8 43.2-96.8 96.8S458.4 401.6 512 401.6c53.6 0 96.8-43.2 96.8-96.8S564.8 208 512 208z" fill=""></path>
+                                    </g>
+                                </svg>
+                            </a>
+                            <a style="margin-left: 15px; font-weight: 700; font-size: 13pt;">Địa chỉ nhận hàng</a>
+                        </h6>
+
+                        <div style="display: flex; margin-left: 100px; margin-top: -10px;">
+                            <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${diaChiKHDefault.tenNguoiNhan}"></h5>
+                            <span style="margin: -4px 5px 0 5px ;"> | </span>
+                            <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${diaChiKHDefault.sdtNguoiNhan}"></h5>
+                            <span style="margin-left: 20px;"></span>
+                            <h5 style="font-size: 11pt ;" id="address" th:text="${diaChiKHDefault.diaChiChiTiet}"></h5>
+                        </div>
+
+                        <div style="display: flex; margin-left: 100px; margin-top: 10px;">
+                            <a th:if="${diaChiKHDefault.loai}" style="color: red;  margin: 0px 20px 0 0px;">Mặc định</a>
+                            <a data-toggle="modal" data-target="#modalAddress" style="text-decoration: none; color: rgb(84, 84, 250); cursor: pointer"> Thay đổi</a>
+                        </div>
+
+                    </div>
+                </div>
+                <!--Show Dia Chi Khach Hang End-->
+
+                <!--Show Product in Bill Begin-->
+                <div th:unless="${addNewAddressNull}" class="row" style="margin-top: 40px;">
+                    <div class="col-lg-12 col-md-12">
+
+                        <h6 class="checkout__title">Chi tiết thanh toán</h6>
+
+                        <h6  class="coupon__code" > </h6>
+
+                        <div class="row" style="background-color: #f5f5f5; height: 80px; margin-top: -40px; border-bottom: 0.5px solid #979797;">
+
+                            <span class="col-lg-12"></span>
+
+                            <span class="col-lg-4" style="text-align: center; color: #979797;"> Sản phẩm</span>
+                            <span class="col-lg-2" style="text-align: center; color: #979797;"> Loại </span>
+                            <span class="col-lg-2" style="text-align: center; color: #979797;"> Đơn giá</span>
+                            <span class="col-lg-1" style="text-align: center; color: #979797;"> Số lượng</span>
+                            <span class="col-lg-3" style="text-align: center; color: #979797;"> Thành tiền</span>
+
+                        </div>
+
+                        <div class="row" style="background-color: #f5f5f5; height: 20px;">
+                        </div>
+
+                        <!-- Product in checkout start -->
+                        <th:block th:each="x : ${listProductCheckOut}">
+                            <div class="row" style="background-color: #f5f5f5; height: 130px;">
+                                <div class="col-lg-4" style="display: flex;">
+                                    <img style="height: 100px; width: 100px; border-radius: 5px; margin:0 10px 0 0px;" th:src="@{'/images/imgsProducts/' + ${x.chiTietGiay.hinhAnh.url1}}" alt="">
+                                    <p style="margin-top: 20px; color: #979797;" th:text="${x.chiTietGiay.giay.tenGiay}"> </p>
+                                </div>
+                                <div class="col-lg-2" style="text-align: center;">
+                                    <p th:text="'Màu : ' + ${x.chiTietGiay.mauSac.tenMau}"> </p>
+                                    <p th:text="'Size : ' + ${x.chiTietGiay.size.soSize}" > </p>
+                                </div>
+                                <div class="col-lg-2" style="text-align: center;">
+                                    <p th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                </div>
+                                <div class="col-lg-1" style="text-align: center;">
+                                    <p th:text="${x.soLuong}" ></p>
+                                </div>
+                                <div class="col-lg-3" style="text-align: center;" th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}">
+                                </div>
+                                <p style="width: 94%; height: 0.3px; background-color: #979797; margin-left: 3%; margin-top: 15px;"></p>
+                            </div>
+                        </th:block>
+                        <!-- Product in checkout end -->
+
+                        <!--Total product & price Begin -->
+                        <div class="row" style="background-color: #f5f5f5; height: 60px; padding-top: 10px;">
+
+                            <div class="col-lg-4" style="display: flex;">
+                            </div>
+                            <div class="col-lg-2" style="text-align: center;">
+                                <p></p>
+                            </div>
+                            <div class="col-lg-2" style="text-align: center;">
+                                <p style="font-size: 13pt; font-weight: 700;">Tổng cộng</p>
+                            </div>
+                            <div class="col-lg-1" style="text-align: center;">
+                                <p style="font-size: 13pt; font-weight: 700;" th:text="${sumQuantity}"></p>
+                            </div>
+                            <div class="col-lg-3" style="text-align: center;">
+                                <p style="font-size: 13pt; font-weight: 700;" th:text="'₫' + ${#numbers.formatDecimal(total, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                            </div>
+
+                        </div>
+                        <!--Total product & price End -->
+                        <div class="row" style="background-color: #f5f5f5; height: 150px; margin-top: 25px;">
+                            <div class="col-lg-5" style="display: flex; align-items: center; border-right: 0.5px solid #979797 ;">
+
+                                <p style="margin-left: 10px; margin-top: 17px;">Lời nhắn :</p>
+
+                                <textarea class="form-group" style="height: 40px; width: 300px; margin: 10px 0 0 20px" placeholder="Ghi chú cho đơn hàng ...." name="loiNhan"></textarea>
+                            </div>
+                            <div class="col-lg-5" style="padding-left: 60px;">
+
+                                <p style=" color: black; margin-top: 20px;">Đơn vị giao hàng : Nhanh</p>
+
+                                <p style=" color: #979797; font-size: 8pt; margin-top: -20px;">( Giao hàng dự kiến :  2 tới 7 ngày  )</p>
+
+
+                                <!-- Hiển thị thời gian hiện tại -->
+                                <p th:text="'Dự kiến nhận hàng vào ' + ${#dates.format(ngayDuKien, 'yyyy-MM-dd')}"></p>
+                                <div style="background-color: #979797; height: 0.5px; width: 100%;  margin-top: -10px;"></div>
+
+                                <p style=" color: black; font-size: 11pt; margin-top: 10px;" th:text="'Tổng đơn ( ' + ${sumQuantity} + ' sản phẩm): '"></p>
+
+                            </div>
+<!--                            <div class="col-lg-2">-->
+
+<!--                                <p style=" color: black; margin-top: 20px;" th:text="'₫' + ${#numbers.formatDecimal(shippingFee, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>-->
+
+<!--                                <p style=" color: #979797; font-size: 8pt; margin-top: -20px;">-</p>-->
+
+
+<!--                                <div style="background-color: #979797; height: 0.5px; width: 100%;  margin-top: -10px;"></div>-->
+
+<!--                                <p style=" color: black; font-size: 11pt; margin-top: 10px; font-weight: 700;" th:text="'₫' + ${#numbers.formatDecimal(tongTienDaGiamVoucherShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>-->
+
+<!--                            </div>-->
+                        </div>
+
+                        <!-- Payment Method begin -->
+                        <div class="row" style="background-color: #f5f5f5; height: 60px; margin-top: 15px;">
+                            <div class="col-lg-4" style="padding: 17px 0 0 65px;">
+                                <a href="#" style=" color: black;">Lựa chọn phương thức thanh toán : </a>
+                            </div>
+                            <div class="col-lg-8" style="display: flex; text-align: right; ">
+                                <div class=""  style="margin:15px 0 0 0;">
+                                    <select name="hinhThucThanhToan" style="border: none; height: 25px; background-color: #f5f5f5;">
+                                        <option value="thanhToanKhiNhanHang" style="height: 25px; border: none; background-color: #f5f5f5 ;">Thanh toán khi nhận hàng</option>
+                                        <option value="QRCodeBanking" style="height: 25px;background-color: #f5f5f5;border: none; ">Thanh toán qua ví VNPAY</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Payment Method End -->
+
+                    </div>
+                </div>
+                <!--Show Product in Bill End-->
+
+                <!--Show Total Bill End-->
+                <div th:unless="${addNewAddressNull}" class="row" th:object="${billPlaceOrder}">
+                    <div class="col-lg-12 col-md-12" style="height: 300px; background-color: #f5f5f5;">
+
+                        <h6 class="coupon__code"> </h6>
+
+                        <div class="row" style="border-bottom: 0.5 solid #000000;">
+                            <div class="col-lg-7">
+                            </div>
+                            <div class="col-lg-3">
+                                <p  th:text="'Tổng tiền hàng (  ' + ${billPlaceOrder.tongSP} + ' sản phẩm ) :'"></p>
+                                <p>Phí giao hàng :</p>
+                                <p style="font-size: 12pt; font-weight: 700;">Tổng tiền đơn hàng:</p>
+                            </div>
+                            <div class="col-lg-2">
+                                <p th:text="'₫' + ${#numbers.formatDecimal(billPlaceOrder.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                <p th:text="'₫' + ${#numbers.formatDecimal(billPlaceOrder.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                <p style="font-size: 18pt; font-weight: 700;" th:text="'₫' + ${#numbers.formatDecimal(billPlaceOrder.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                            </div>
+                        </div>
+
+                        <div class="row" style="height: 0.5px; background-color: #979797; width: 100%;">
+
+                        </div>
+
+                        <div class="row" style="height: 70px; margin-top: 20px; background-color: #f5f5f5;">
+                            <div class="col-lg-9">
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="product__details__cart__option">
+                                    <button type="submit" href="#" class="primary-btn">Đặt hàng</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!--Show Total Bill End-->
+
+            </div>
+        </form>
+    </div>
+</section>
+<!-- Checkout Section End -->
+
+<!-- Footer Section Begin -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    <div class="footer__logo">
+                        <a href="#"><img src="/Logo.png" alt=""></a>
+                    </div>
+                    <p> Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế.</p>
+                    <a href="#"><img src="img/payment.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Cửa hàng</h6>
+                    <ul>
+                        <li><a href="/buyer/shop">Gian hàng</a></li>
+                        <li><a href="/buyer/shop">Xu Hướng</a></li>
+                        <li><a href="/buyer/shop">Đề Xuất</a></li>
+                        <li><a href="/buyer/shop/sale">Giảm giá</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Mua sắm</h6>
+                    <ul>
+                        <li><a href="#">Liên Hệ</a></li>
+                        <li><a href="#">Thanh Toán</a></li>
+                        <li><a href="#">Giao Hàng</a></li>
+                        <li><a href="#">Hoàn Hàng/Tiền</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                <div class="footer__widget">
+                    <h6>NewLetter</h6>
+                    <div class="footer__newslatter">
+                        <p>Hãy là người đầu tiên biết về hàng mới, sách tra cứu, khuyến mại và khuyến mãi!</p>
+                        <form action="#">
+                            <input type="text" placeholder="Your email">
+                            <button type="submit"><span class="icon_mail_alt"></span></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer Section End -->
+
+<!--Modal Address Begin-->
+<section>
+
+    <div th:if="${addNewAddressNotNull}" class="modal fade" id="modalAddress" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;">
+            <form action="/buyer/checkout/change/address" method="post">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle2">Thay đổi địa chỉ nhận hàng</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div>
+                            <div style="display: flex; margin-left: 20px; margin:10px 0 10px 10px;" th:object="${diaChiKHDefault}">
+                                <input type="radio" th:value="${diaChiKHDefault.idDC}" name="idDCKH" style="height: 20px; width: 20px; margin: 0 20px 0 -10px;" >
+                                <h5 style="font-weight: 700; font-size: 13pt ;" th:text="${diaChiKHDefault.tenNguoiNhan}" ></h5>
+                                <span style="margin: -4px 5px 0 5px ;"> | </span>
+                                <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${diaChiKHDefault.sdtNguoiNhan}"></h5>
+                                <span style="margin-left: 20px;"></span>
+                                <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${diaChiKHDefault.tenDC}"></h5>
+                                <span style="margin-left: 10px;"></span>
+                                <h5 style="font-weight: 700; font-size: 12pt ; color: red">Mặc định</h5>
+                            </div>
+                            <h5 style=" margin-bottom: 10px ;font-size: 11pt;" th:text="${diaChiKHDefault.diaChiChiTiet}"></h5>
+                        </div>
+
+                        <div style="width: 465px; margin: 20px 0 20px 0; height: 0.5px; background: rgba(0,0,0,.54);"></div>
+
+                        <th:block th:each="x : ${listAddressKH}">
+
+                            <div>
+                                <div style="display: flex; margin-left: 20px; margin:10px 0 10px 10px;">
+                                    <input type="radio" th:value="${x.idDC}" name="idDCKH" style=" height: 20px; width: 20px; margin: 0 20px 0 -10px;">
+                                    <h5 style="font-weight: 700; font-size: 13pt ;" th:text="${x.tenNguoiNhan}" ></h5>
+                                    <span style="margin: -4px 5px 0 5px ;"> | </span>
+                                    <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${x.sdtNguoiNhan}"></h5>
+                                    <span style="margin-left: 20px;"></span>
+                                    <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${x.tenDC}"></h5>
+                                    <span style="margin-left: 10px;"></span>
+                                </div>
+                                <h5 style=" margin-bottom: 10px ;font-size: 11pt;" th:text="${x.diaChiChiTiet}"></h5>
+                            </div>
+
+                            <div style="width: 465px; margin: 20px 0 20px 0; height: 0.5px; background: rgba(0,0,0,.54);"></div>
+
+                        </th:block>
+
+                        <a data-toggle="modal" data-target="#addNewAddress" style="height: 40px; width: 200px; color: #363434; font-size: 12pt; margin-top: 20px;" href=""> + Thêm mới địa chỉ</a>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <div th:if="${addNewAddressNotNull}" class="modal fade" id="addNewAddress" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px">
+            <div class="modal-content">
+                <form action="/buyer/checkout/add/address" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Thêm địa chỉ mới</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="row" style="margin-bottom: 20px;">
+                                <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên địa chỉ" name="nameAddress">
+
+                                <input style="height: 40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên người nhận" name="fullName" >
+                            </div>
+                            <div class="row" style="margin-bottom: 20px;">
+                                <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="SDT người nhận" name="phoneAddress">
+
+                                <select class="select" id="city" name="city"
+                                        style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                                       font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
+                                    <option value="" selected>Chọn thành phố</option>
+                                </select>
+                            </div>
+
+                            <div class="row" style="margin-bottom: 20px;">
+
+                                <select class="select" id="district" name="district" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; margin-left: 38px; margin-right: 30px; ">
+                                    <option value="" selected>Chọn quận huyện</option>
+                                </select>
+
+                                <select class="select" id="ward" name="ward" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; ">
+                                    <option value="" selected>Chọn phường/xã</option>
+                                </select>
+
+                            </div>
+
+                            <div class="row" style="margin-bottom: 20px;" >
+
+                                <input name="description" style="height: 40px;width: 410px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381;  padding: 10px 15px; margin-left: 38px;" type="text" placeholder="Mô tả";  >
+
+                            </div>
+
+                            <div style="width: 100%; height:15px;"></div>
+                            <div style="width: 100%; height: 0.5px; background-color: rgb(64, 64, 64) ;"></div>
+                            <div style="width: 100%; height:15px;"></div>
+
+                            <div class="row">
+                                <input style="margin: 0 10px 0 38px;" type="checkbox" name="defaultSelected">  Đặt làm mặc định
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${addNewAddressNulll}" class="modal fade" id="addNewAddressNull" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px">
+            <div class="modal-content">
+                <form action="/buyer/checkout/add/address" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Thêm ít nhất một địa chỉ nhận hàng</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="row" style="margin-bottom: 20px;">
+                                <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên địa chỉ" name="nameAddress">
+
+                                <input style="height: 40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên người nhận" name="fullName" >
+                            </div>
+
+                            <div class="row" style="margin-bottom: 20px;">
+                                <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Số điện thoại người nhận" name="phoneAddress">
+
+                                <select class="select" id="city" name="city"
+                                        style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                                       font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
+                                    <option value="" selected>Chọn tỉnh/Thành phố</option>
+                                </select>
+                            </div>
+
+                            <div class="row" style="margin-bottom: 20px;">
+
+
+                                <select class="select" id="district" name="district" style="margin-left: 38px; width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; margin-right: 30px;">
+                                    <option value="" selected>Chọn Quận/Huyện</option>
+                                </select>
+
+                                <select class="select" id="ward" name="ward" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
+                                    <option value="" selected>Chọn Phường/Xã</option>
+                                </select>
+
+                            </div>
+
+                            <div class="row" style="margin-bottom: 20px;" >
+
+                                <input name="description" style="margin-left: 38px; height: 40px;width: 410px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381;  padding: 10px 15px;" type="text" placeholder="Mô tả";>
+
+                            </div>
+
+                            <div style="width: 100%; height: 0.5px; background-color: rgb(64, 64, 64) ;"></div>
+
+                            <div class="row">
+                                <input style="margin: 0 10px 0 38px;" checked type="radio" name="defaultSelected"> Đặt làm mặc định
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!--Modal Address End-->
+
+<!--Thong bao điều kiện voucher begin-->
+<div class="modal fade" th:if="${noticaAddVoucher}" id="noticaAddVoucher" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="messAddThanhCongTitle" >Thông báo !</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">
+                    <p th:if="${addErr}" style="font-size: 13pt; font-weight: 600;">Hóa đơn không đủ điều kiện để áp dụng khuyến mãi.</p>
+                    <p th:if="${addSuccess}" style="font-size: 13pt; font-weight: 600;">Áp dụng khuyến mãi thành công</p>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Thông báo điều kiện voucher end-->
+
+<!-- Js Plugins -->
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/js/feather.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/script.js"></script>
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.nicescroll.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/jquery.countdown.min.js"></script>
+<script src="/js/jquery.slicknav.js"></script>
+<script src="/js/mixitup.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/jquery.slimscroll.min.js"></script>
+<script src="/js/scrollbar.min.js"></script>
+<script src="/js/custom-scroll.js"></script>
+
+<!--Show modal Thong Bao dia chi begin-->
+<script>
+    $(document).ready(function () {
+        $('#addNewAddressNull').modal('show');
+    });
+    $(document).ready(function () {
+        $('#addNewAddressNotNull').modal('show');
+    });
+    $(document).ready(function () {
+        $('#noticaAddVoucher').modal('show');
+    });
+</script>
+
+<!--Show modal thong bao dia chi end-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
+<script>
+    const host = "https://esgoo.net/";
+    var callAPI = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.data, "city");
+            });
+    }
+    callAPI(host + "api-tinhthanh/1/0.htm");
+
+    var callApiDistrict = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.data, "district");
+            });
+    }
+    var callApiWard = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.data, "ward");
+            });
+    }
+
+    var renderData = (array, select) => {
+        let row = ' <option disable value="">Chọn</option>';
+        array.forEach(element => {
+            row += `<option data-id="${element.id}" value="${element.full_name}">${element.full_name}</option>`
+        });
+        document.querySelector("#" + select).innerHTML = row
+    }
+
+    $("#city").change(() => {
+        if ($("#city").val() === "") {
+            $("#district").html('<option value="" selected>Chọn quận huyện</option>');
+            $("#ward").html('<option value="" selected>Chọn phường/xã</option>');
+        } else {
+            callApiDistrict(host + "api-tinhthanh/2/" + $("#city").find(':selected').data('id') + ".htm");
+        }
+        printResult();
+    });
+    $("#district").change(() => {
+        callApiWard(host + "api-tinhthanh/3/" + $("#district").find(':selected').data('id') + ".htm");
+        printResult();
+    });
+    $("#ward").change(() => {
+        printResult();
+    })
+
+    var printResult = () => {
+        if ($("#district").find(':selected').data('id') != "" && $("#ward").find(':selected').data('id') != "" &&
+            $("#city").find(':selected').data('id') != "") {
+        }
+    }
+</script>
+<script>
+    function addDays(date, days) {
+        var result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+    }
+
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    function calculateEstimatedDate(address) {
+        var now = new Date();
+        var deliveryDays;
+
+        if (address.includes("Hà Nội")) {
+            deliveryDays = 2;
+        } else {
+            deliveryDays = 5;
+        }
+
+        var estimatedDate = addDays(now, deliveryDays);
+        return formatDate(estimatedDate);
+    }
+
+    function updateEstimatedDate() {
+        var address = document.getElementById('address').innerText;
+        var estimatedDate = calculateEstimatedDate(address);
+        document.getElementById('estimated-date').innerText = estimatedDate;
+    }
+
+    window.onload = function() {
+        updateEstimatedDate();
+    }
+</script>
+</body>
+</html>
