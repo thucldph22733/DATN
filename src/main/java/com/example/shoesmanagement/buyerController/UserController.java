@@ -59,9 +59,6 @@ public class UserController {
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
 
         UserForm(model, khachHang);
-        showThongBao(model, khachHang);
-
-        model.addAttribute("pagesettingAccount", true);
         return "online/user";
     }
 
@@ -91,7 +88,7 @@ public class UserController {
     }
 
     @PostMapping("/addresses/add")
-    private String addnewAddress(Model model, @RequestParam(name = "defaultSelected", defaultValue = "false") boolean defaultSelected, RedirectAttributes redirectAttribute) {
+    private String addnewAddress(Model model, @RequestParam(name = "defaultSelected", defaultValue = "false") boolean defaultSelected) {
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
 
         String nameAddress = request.getParameter("nameAddress");
@@ -120,16 +117,13 @@ public class UserController {
         diaChiKH.setLoai(defaultSelected);
 
         diaChiKHService.save(diaChiKH);
-        redirectAttribute.addFlashAttribute("addSuccessMessage", "Thêm Địa Chỉ thành công!");
 
         return "redirect:/buyer/addresses";
     }
 
     @GetMapping("/addresses/viewEdit/{id}")
     public String viewEditAddresses(@PathVariable UUID id, Model model, @ModelAttribute("userInput") DiaChiKH userInputDC) {
-
         DiaChiKH diaChiKH = diaChiKHService.getByIdDiaChikh(id);
-
         model.addAttribute("diaChi", diaChiKH);
         List<KhachHang> khachHangs = khachHangService.getAllKhachHang();
         Collections.sort(khachHangs, (a, b) -> b.getTgThem().compareTo(a.getTgThem()));
@@ -144,35 +138,28 @@ public class UserController {
 
         DiaChiKH diaChiKHdb = diaChiKHService.getByIdDiaChikh(id);
 
-        String city = request.getParameter("city");
-        String district = request.getParameter("district");
-        String ward = request.getParameter("ward");
-        String diaChiChiTiet = diaChiKH.getMoTa() + ", " + ward + ", " + district + ", " + city;
-
-        diaChiKHdb.setTenDC(diaChiKH.getTenDC());
-        diaChiKHdb.setTenNguoiNhan(diaChiKH.getTenNguoiNhan());
-        diaChiKHdb.setSdtNguoiNhan(diaChiKH.getSdtNguoiNhan());
-        diaChiKHdb.setTinhTP(city);
-        diaChiKHdb.setQuanHuyen(district);
-        diaChiKHdb.setXaPhuong(ward);
-        diaChiKHdb.setMoTa(diaChiKH.getMoTa());
-        diaChiKHdb.setDiaChiChiTiet(diaChiChiTiet);
-        diaChiKHdb.setTgSua(new Date());
-
-        diaChiKHService.save(diaChiKHdb);
-        redirectAttributes.addFlashAttribute("message", true);
-        redirectAttributes.addFlashAttribute("updateSuccessMessage", "Update Địa Chỉ thành công!");
+        if (diaChiKHdb != null) {
+            diaChiKHdb.setTenDC(diaChiKH.getTenDC());
+            diaChiKHdb.setTenNguoiNhan(diaChiKH.getTenNguoiNhan());
+            diaChiKHdb.setSdtNguoiNhan(diaChiKH.getSdtNguoiNhan());
+            diaChiKHdb.setXaPhuong(diaChiKH.getXaPhuong());
+            diaChiKHdb.setQuanHuyen(diaChiKH.getQuanHuyen());
+            diaChiKHdb.setTinhTP(diaChiKH.getTinhTP());
+            diaChiKHdb.setMoTa(diaChiKH.getMoTa());
+            diaChiKHdb.setTgSua(new Date());
+            diaChiKHService.save(diaChiKHdb);
+            redirectAttributes.addFlashAttribute("message", true);
+        }
         return "redirect:/buyer/addresses";
-
     }
 
+
     @GetMapping("/addresses/delete/{idDC}")
-    private String deleteAddress(Model model, @PathVariable UUID idDC, RedirectAttributes redirectAttribute) {
+    private String deleteAddress(Model model, @PathVariable UUID idDC) {
 
         DiaChiKH diaChiKH = diaChiKHService.getByIdDiaChikh(idDC);
         diaChiKH.setTrangThai(0);
         diaChiKHService.save(diaChiKH);
-        redirectAttribute.addFlashAttribute("deleteSuccessMessage", "Địa Chỉ đã được xoá thành công!");
 
         return "redirect:/buyer/addresses";
     }

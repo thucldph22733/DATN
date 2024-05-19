@@ -2537,7 +2537,7 @@ ol {
 .coupon__code {
 	color: #0d0d0d;
 	font-size: 14px;
-	border-top: 2px solid #77b527;
+	/*border-top: 2px solid #77b527;*/
 	background: #f5f5f5;
 	padding: 23px 30px 18px;
 	margin-bottom: 0px;

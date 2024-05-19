@@ -45,4 +45,9 @@ public class GHCTServiceImpl implements GHCTService {
     public GioHangChiTiet findByCTGActiveAndKhachHangAndTrangThai(ChiTietGiay chiTietGiay,GioHang gioHang) {
         return ghctRepository.findByChiTietGiayAndTrangThaiAndGioHang(chiTietGiay,1, gioHang);
     }
+
+    @Override
+    public void remove(GioHangChiTiet gioHangChiTiet) {
+            ghctRepository.delete(gioHangChiTiet);
+    }
 }

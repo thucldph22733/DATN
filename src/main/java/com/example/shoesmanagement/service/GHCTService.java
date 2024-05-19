@@ -22,6 +22,8 @@ public interface GHCTService {
 
     GioHangChiTiet findByCTGActiveAndKhachHangAndTrangThai(ChiTietGiay chiTietGiay, GioHang gioHang);
 
+    void remove(GioHangChiTiet gioHangChiTiet);
+
 
 
 
