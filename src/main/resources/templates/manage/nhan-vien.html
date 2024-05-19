@@ -112,22 +112,21 @@
                     </div>
                     <div class="noti-content">
                         <ul class="notification-list">
-                            <th:block th:each="x : ${listThongBao}">
-                                <li th:if="${x.trangThai == 3}" class="notification-message">
+                            <th:block  th:each="x : ${listThongBao}">
+                                <li th:if="${x.trangThai == 3}"class="notification-message">
                                     <a href="/manage/bill/online">
                                         <div class="media d-flex">
                                         <span class="avatar flex-shrink-0">
                                         <img alt="" src="/images/img/profiles/avatar-02.jpg">
                                         </span>
                                             <div class="media-body flex-grow-1">
-                                                <p class="noti-details">
+                                                <p class="noti-details" >
                                                     <span class="noti-title" th:text="${x.khachHang.hoTenKH}"></span>
                                                     <span th:text="${x.noiDungTB}"></span>
                                                     <span class="noti-title" th:text="${x.hoaDon.maHD}"></span>
                                                 </p>
                                                 <p class="noti-time">
-                                                    <span class="notification-time"
-                                                          th:text="${#dates.format(x.tgTB, 'HH:mm yyyy-MM-dd')}"></span>
+                                                    <span class="notification-time"th:text="${#dates.format(x.tgTB, 'HH:mm yyyy-MM-dd')}"></span>
                                                 </p>
                                             </div>
                                         </div>
@@ -190,8 +189,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/manage/thongke"><img src="/images/img/icons/dashboard.svg"
-                                                       alt="img"><span> Thống Kê</span>
+                        <a href="/manage/thongke"><img src="/images/img/icons/dashboard.svg" alt="img"><span> Thống Kê</span>
                         </a>
                     </li>
                     <li class="submenu">
@@ -265,70 +263,43 @@
             </div>
         </div>
     </div>
-
     <div class="page-wrapper">
         <div class="content">
             <div class="page-header">
                 <div class="page-title">
-                    <h4>List Màu Sắc</h4>
-                    <h6>Quản Lý Giày</h6>
+                    <h4>List Nhân Viên</h4>
+                    <h6>Quản Lý Nhân Viên</h6>
                 </div>
                 <div class="page-btn">
-                    <button class="btn btn-added" id="show-form-button">
-                        <img src="/images/img/icons/plus.svg" class="me-1" alt="img">Thêm Màu
-                    </button>
+                    <a href="/manage/nhan-vien/viewAdd" class="btn btn-added"><img
+                            src="/images/img/icons/plus.svg"
+                            alt="img" class="me-1"/>Thêm Nhân Viên</a>
                 </div>
             </div>
             <div class="card">
                 <div class="card-body">
-                    <div class="hidden-form" style="display: none">
-                        <form th:object="${mauSacAdd}" method="post" th:action="@{/manage/mau-sac/viewAdd/add}"
-                              onsubmit="return validateMauSacForm()" name="mauSacForm">
-                            <div class="row">
-                                <div class="col-lg-2 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label for="ma">Mã</label>
-                                        <input type="text" id="ma" name="ma" th:field="*{ma}" class="form-control"/>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label for="maMau">Mã Màu (RGB)</label>
-                                        <input type="text" id="rgbValue" name="maMau" th:field="*{maMau}" readonly
-                                               class="form-control" style="margin-top: 5px;"/>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label for="chonMau">Chọn Màu:</label>
-                                        <input type="color" id="chonMau" name="chonMau"
-                                               onchange="updateRGBValue(this.value)" required class="large-input"/>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label for="tenMau">Tên Màu</label>
-                                        <input type="text" id="tenMau" name="tenMau" th:field="*{tenMau}"
-                                               class="form-control"/>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <button type="submit" class="btn btn-submit me-2">Submit</button>
-                                </div>
+                    <div class="form-hidden-2" style="display: none">
+                        <form action="/manage/nhanVien/import" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label> Upload Excel File</label>
+                                <input type="file" name="file" onchange="displaySelectedFileName()"/>
                             </div>
+                            <button type="submit" class="btn btn-submit me-2">Submit</button>
                         </form>
                     </div>
+                    <br>
                     <div class="table-top">
                         <div class="search-set">
                             <div class="search-path">
                                 <a class="btn btn-filter" id="filter_search">
-                                    <img src="/images/img/icons/filter.svg" alt="img">
-                                    <span><img src="/images/img/icons/closes.svg" alt="img"></span>
+                                    <img src="/images/img/icons/filter.svg" alt="img"/><span>
+                                    <img src="/images/img/icons/closes.svg" alt="img"/></span>
                                 </a>
                             </div>
                             <div class="search-input">
-                                <a class="btn btn-searchset"><img src="/images/img/icons/search-white.svg"
-                                                                  alt="img"></a>
+                                <a class="btn btn-searchset"
+                                ><img src="/images/img/icons/search-white.svg" alt="img"
+                                /></a>
                             </div>
                         </div>
                         <div class="wordset">
@@ -341,141 +312,160 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a th:href="@{/manage/mauSac/export/pdf}" data-bs-toggle="tooltip"
-                                       data-bs-placement="top" title="pdf"><img
-                                            src="/images/img/icons/pdf.svg" alt="img"></a>
+                                    <a th:href="@{/manage/nhanVien/export/pdf}"
+                                       data-bs-toggle="tooltip"
+                                       data-bs-placement="top"
+                                       title="pdf"
+                                    ><img src="/images/img/icons/pdf.svg" alt="img"
+                                    /></a>
                                 </li>
                                 <li>
-                                    <a th:href="@{/manage/mauSac/export/excel}" data-bs-toggle="tooltip"
-                                       data-bs-placement="top" title="excel"><img
-                                            src="/images/img/icons/excel.svg" alt="img"></a>
+                                    <a th:href="@{/manage/nhanVien/export/excel}"
+                                       data-bs-toggle="tooltip"
+                                       data-bs-placement="top"
+                                       title="excel"
+                                    ><img src="/images/img/icons/excel.svg" alt="img"
+                                    /></a>
                                 </li>
                                 <li>
-                                    <a id="printButton" data-bs-toggle="tooltip" data-bs-placement="top"
-                                       title="print"><img
-                                            src="/images/img/icons/printer.svg" alt="img"></a>
+                                    <a id="printButton"
+                                       data-bs-toggle="tooltip"
+                                       data-bs-placement="top"
+                                       title="print"
+                                    ><img src="/images/img/icons/printer.svg" alt="img"
+                                    /></a>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <form method="get" th:action="@{/manage/mauSac/filter}">
 
-
-                        <div class="card" id="filter_inputs">
+                    <form method="get" th:action="@{/manage/nhanVien/filter}">
+                        <div class="card mb-0" id="filter_inputs">
                             <div class="card-body pb-0">
                                 <div class="row">
-                                    <div class="col-lg-2 col-sm-6 col-12">
-                                        <div class="form-group">
-                                            <select class="select" name="trangThai">
-                                                <option value="">Trạng thái</option>
-                                                <option value="1">Hoạt động</option>
-                                                <option value="0">Không hoạt động</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-1 col-sm-6 col-12 ms-auto">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-filters ms-auto"><img
-                                                    src="/images/img/icons/search-whites.svg"
-                                                    alt="img"></button>
+                                    <div class="col-lg-12 col-sm-12">
+                                        <div class="row">
+                                            <div class="col-lg-2 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <select class="select" id="NhanVienFilterMa" name="searchTerm">
+                                                        <option>Mã Nhân Viên</option>
+                                                        <option th:each="loc : ${nhanVien}" th:value="${loc.maNV}"
+                                                                th:text="${loc.maNV}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <select class="select" id="NhanVienFilterTen" name="searchTerm">
+                                                        <option>Tên Nhân Viên</option>
+                                                        <option th:each="loc : ${nhanVien}" th:value="${loc.hoTenNV}"
+                                                                th:text="${loc.hoTenNV}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <select class="select" id="chucVuFilterTen" name="searchTerm">
+                                                        <option>Chức Vụ</option>
+                                                        <option th:each="loc : ${chucVu}" th:value="${loc.idCV}"
+                                                                th:text="${loc.tenCV}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-filters ms-auto"
+                                                    ><img
+                                                            src="/images/img/icons/search-whites.svg"
+                                                            alt="img"
+                                                    /></button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
-                        <!--                        <div class="card" id="filter_inputs">-->
-                        <!--                            <div class="card-body pb-0">-->
-                        <!--                                <div class="row">-->
-                        <!--                                    <div class="col-lg-2 col-sm-6 col-12">-->
-                        <!--                                        <div class="form-group">-->
-                        <!--                                            <select class="select" id="mauSacFilterMa" name="maMau">-->
-                        <!--                                                <option>Mã</option>-->
-                        <!--                                                <option th:each="loc : ${mauSac}" th:value="${loc.ma}"-->
-                        <!--                                                        th:text="${loc.ma}"></option>-->
-                        <!--                                            </select>-->
-                        <!--                                        </div>-->
-                        <!--                                    </div>-->
-                        <!--                                    <div class="col-lg-2 col-sm-6 col-12">-->
-                        <!--                                        <div class="form-group">-->
-                        <!--                                            <select class="select" id="mauSacFilterTen" name="tenMau">-->
-                        <!--                                                <option>Tên Màu</option>-->
-                        <!--                                                <option th:each="loc : ${mauSac}" th:value="${loc.tenMau}"-->
-                        <!--                                                        th:text="${loc.tenMau}"></option>-->
-                        <!--                                            </select>-->
-                        <!--                                        </div>-->
-                        <!--                                    </div>-->
-                        <!--                                    &lt;!&ndash;                                <div class="col-lg-2 col-sm-6 col-12">&ndash;&gt;-->
-                        <!--                                    &lt;!&ndash;                                    <div class="form-group">&ndash;&gt;-->
-                        <!--                                    &lt;!&ndash;                                        <select class="select">&ndash;&gt;-->
-                        <!--                                    &lt;!&ndash;                                            <option>Trạng Thái</option>&ndash;&gt;-->
-                        <!--                                    &lt;!&ndash;                                            <option th:each="loc : ${dsTrangThai.entrySet()}" th:value="${loc.key}"&ndash;&gt;-->
-                        <!--                                    &lt;!&ndash;                                                    th:text="${loc.value}"></option>&ndash;&gt;-->
-                        <!--                                    &lt;!&ndash;                                        </select>&ndash;&gt;-->
-                        <!--                                    &lt;!&ndash;                                    </div>&ndash;&gt;-->
-                        <!--                                    &lt;!&ndash;                                </div>&ndash;&gt;-->
-                        <!--                                    <div class="col-lg-1 col-sm-6 col-12 ms-auto">-->
-                        <!--                                        <div class="form-group">-->
-                        <!--                                            <button type="submit" class="btn btn-filters ms-auto"><img-->
-                        <!--                                                    src="/images/img/icons/search-whites.svg"-->
-                        <!--                                                    alt="img"></button>-->
-                        <!--                                        </div>-->
-                        <!--                                    </div>-->
-                        <!--                                </div>-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
                     </form>
+
                     <div class="table-responsive">
                         <table class="table datanew" id="data-table">
                             <thead>
                             <tr>
-                                <th>Mã</th>
-                                <th>Mã Màu</th>
-                                <th>Tên Màu</th>
+                                <th>
+                                    <label class="checkboxs">
+                                        <input type="checkbox" id="select-all"/>
+                                        <span class="checkmarks"></span>
+                                    </label>
+                                </th>
+                                <th>Ảnh</th>
+                                <th>Mã Nhân Viên</th>
+                                <th>Tên Nhân Viên</th>
+                                <th>Giới Tính</th>
+                                <th>Ngày Sinh</th>
+                                <th>Sdt</th>
+                                <th>Email</th>
+                                <th>Địa Chỉ</th>
+                                <th>Căn Cước Công Dân</th>
+                                <th>Mật Khẩu</th>
                                 <th>Trạng Thái</th>
-                                <th>Action</th>
+                                <th>Chức Vụ</th>
                                 <th>Thời Gian Thêm</th>
                                 <th>Thời Gian Sửa</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="items : ${mauSac}">
-                                <td th:text="${items.ma}"></td>
+                            <tr th:each="items : ${nhanVien}">
                                 <td>
-                                    <span class="color-box" th:style="'background-color: ' + ${items.maMau}"></span>
-                                </td>
-                                <td th:text="${items.tenMau}"></td>
-                                <td>
-<!--                                                                        <span th:id="'trangThaiOn_' + ${items.idMau}" th:if="${items.trangThai == 1}"-->
-<!--                                                                              class="badges bg-lightgreen"></span>-->
-<!--                                                                        <span th:id="'trangThaiOff_' + ${items.idMau}" th:if="${items.trangThai == 0}"-->
-<!--                                                                              class="badges bg-lightred">Không Hoạt Động</span>-->
-                                    <span th:id="'trangThaiUpdate_' + ${items.idMau}" th:if="${items.trangThai == 1}" class="badges bg-lightgreen">Hoạt Động</span>
-                                    <span th:id="'trangThaiUpdate_' + ${items.idMau}" th:if="${items.trangThai == 0}" class="badges bg-lightred">Không Hoạt Động</span>
+                                    <label class="checkboxs">
+                                        <input type="checkbox">
+                                        <span class="checkmarks"></span>
+                                    </label>
                                 </td>
                                 <td>
-                                    <a class="me-3" th:href="@{'/manage/mau-sac/viewUpdate/' + ${items.idMau}}">
-                                        <img src="/images/img/icons/edit.svg" alt="img">
-                                    </a>
-                                    <a class="form-check form-switch">
-                                        <input class="me-3 form-check-input" type="checkbox" role="switch"
-                                               th:checked="${items.trangThai == 1}"
-                                               th:data-ma="${items.idMau}"
-                                               onchange="thayDoiTrangThai(this)"
-                                               onclick="capNhatTrangThaiMauSac(this.getAttribute('data-ma'))">
-                                        <input style="display: none" th:id="'flexSwitchCheck_' + ${items.idMau}"
-                                               th:value="${items.trangThai}">
-                                    </a>
+                                    <img width="80px" height="90px"
+                                         th:src="@{'/images/imgsNhanVien/'+ ${items.AnhNV}}">
                                 </td>
+                                <td th:text="${items.maNV}"></td>
+                                <td th:text="${items.hoTenNV}"></td>
+                                <td>
+                                    <div th:switch="${items.gioiTinh}">
+                                        <p th:case="1">Nam</p>
+                                        <p th:case="0">Nữ</p>
+                                        <p th:case="2">Khác</p>
+                                    </div>
+                                </td>
+                                <td th:text="${#dates.format(items.ngaySinh, 'yyyy-MM-dd')}"/>
+                                <td th:text="${items.sdtNV}"></td>
+                                <td th:text="${items.emailNV}"></td>
+                                <td th:text="${items.diaChi}"></td>
+                                <td th:text="${items.CCCDNV}"></td>
+                                <td th:text="${items.matKhau}"></td>
+                                <td>
+                                    <p th:if="${items.trangThai == 1}" class="badges bg-lightgreen">Đang làm việc</p>
+                                    <p th:unless="${items.trangThai == 1}"  class="badges bg-lightred">Đã nghỉ việc</p>
+                                </td>
+                                <td th:text="${items.chucVu.tenCV}"></td>
                                 <td th:text="${#dates.format(items.tgThem, 'dd-MM-yyyy')}" align="center"/>
                                 <td th:text="${#dates.format(items.tgSua, 'dd-MM-yyyy')}" align="center"/>
+                                <td>
+                                    <!--                                    <a class="me-3" th:href="@{'/manage/giay/detail/' + ${items.idGiay}}">-->
+                                    <!--                                        <img src="/images/img/icons/eye.svg" alt="img"/>-->
+                                    <!--                                    </a>-->
+                                    <a class="me-2" th:href="@{'/manage/nhan-vien/viewUpdate/' + ${items.idNV}}">
+                                        <img src="/images/img/icons/edit.svg" alt="img"/>
+                                    </a>
+                                    <a class="me-2 delete-button"
+                                       th:data-delete-url="@{'/manage/nhan-vien/delete/' + ${items.idNV}}">
+                                        <img src="/images/img/icons/delete.svg" alt="img"/>
+                                    </a>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -485,34 +475,6 @@
         <button type="button" class="toast-close-button" role="button"></button>
         <div class="toast-title">Thành Công</div>
         <div class="toast-message">Dữ liệu của bạn đã được cập nhật</div>
-    </div>
-</div>
-<div th:if="${maError}" id="warning1" class="toast-container toast-top-right">
-    <div class="toast toast-error" aria-live="assertive" style="display: block;">
-        <button type="button" class="toast-close-button" role="button"></button>
-        <div class="toast-title">Error!</div>
-        <div class="toast-message">Mã không được trống.</div>
-    </div>
-</div>
-<div th:if="${maMauError}" id="warning2" class="toast-container toast-top-right">
-    <div class="toast toast-error" aria-live="assertive" style="display: block;">
-        <button type="button" class="toast-close-button" role="button"></button>
-        <div class="toast-title">Error!</div>
-        <div class="toast-message">Mã màu không được để trống.</div>
-    </div>
-</div>
-<div th:if="${tenMauError}" id="warning3" class="toast-container toast-top-right">
-    <div class="toast toast-error" aria-live="assertive" style="display: block;">
-        <button type="button" class="toast-close-button" role="button"></button>
-        <div class="toast-title">Error!</div>
-        <div class="toast-message">Tên màu không được để trống.</div>
-    </div>
-</div>
-<div th:if="${Errormessage}" id="checkMa" class="toast-container toast-top-right">
-    <div class="toast toast-error" aria-live="assertive" style="display: block;">
-        <button type="button" class="toast-close-button" role="button"></button>
-        <div class="toast-title">Error!</div>
-        <div class="toast-message">Mã Màu đã tồn tại.</div>
     </div>
 </div>
 <script src="/js/jquery-3.6.0.min.js"></script>
@@ -532,8 +494,7 @@
 <script src="/plugins/sweetalert/sweetalerts.min.js"></script>
 
 <script src="/js/script.js"></script>
-<script src="/plugins/alertify/custom-alertify.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Lấy thẻ nút in bằng id
@@ -585,59 +546,64 @@
         });
     }
 </script>
-<!--<script>-->
-<!--    $(document).ready(function () {-->
-<!--        $('#filter_inputs').slideToggle("slow");-->
-<!--        $('#filter_search').toggleClass("setclose");-->
-<!--    });-->
-<!--</script>-->
 <script>
     $(document).ready(function () {
-        // Lắng nghe sự kiện thay đổi trong dropdown kích thước
-        $("#mauSacFilterMa").change(function () {
-            var maMau = $(this).val();
-
-            // Ẩn tất cả các dòng trong bảng
-            $("#data-table tbody tr").hide();
-
-            // Hiển thị các dòng có giá trị kích thước tương ứng
-            $("#data-table tbody tr").each(function () {
-                var maColumn = $(this).find("td:eq(0)").text(); // Vị trí cột chứa giá trị kích thước
-                if (maColumn === maMau || maMau === "Mã") {
-                    $(this).show();
-                }
-            });
-        });
-        //
-        $("#mauSacFilterTen").change(function () {
-            var tenMau = $(this).val();
-
-            // Ẩn tất cả các dòng trong bảng
-            $("#data-table tbody tr").hide();
-
-            // Hiển thị các dòng có giá trị kích thước tương ứng
-            $("#data-table tbody tr").each(function () {
-                var tenColumn = $(this).find("td:eq(2)").text(); // Vị trí cột chứa giá trị kích thước
-                if (tenColumn === tenMau || tenMau === "Tên Màu") {
-                    $(this).show();
-                }
-            });
-        });
+        $('#filter_inputs').slideToggle("slow");
+        $('#filter_search').toggleClass("setclose");
     });
 </script>
 <script>
-    //Mở form
-    document.getElementById("show-form-button").addEventListener("click", function () {
-        var form1 = document.querySelector(".hidden-form");
-        var form2 = document.querySelector(".form-hidden-2");
-        if (form1.style.display === "none" || form1.style.display === "" || form2.style.display === "block") {
-            $('.hidden-form').slideToggle("slow");
-            form1.style.display = "block";  // Hiển thị form
-            form2.style.display = "none";
-        } else {
-            form1.style.display = "none";  // Ẩn form
-        }
+    $(document).ready(function () {
+        // Lắng nghe sự kiện thay đổi trong dropdown kích thước
+        $("#NhanVienFilterMa").change(function () {
+            var maNV = $(this).val();
+
+            // Ẩn tất cả các dòng trong bảng
+            $("#data-table tbody tr").hide();
+
+            // Hiển thị các dòng có giá trị kích thước tương ứng
+            $("#data-table tbody tr").each(function () {
+                var maColumn = $(this).find("td:eq(2)").text(); // Vị trí cột chứa giá trị kích thước
+                if (maColumn === maNV || maNV === "Mã Nhân viên") {
+                    $(this).show();
+                }
+            });
+            console.log(maNV);
+        });
+        //
+        $("#NhanVienFilterTen").change(function () {
+            var hoTenNV = $(this).val();
+
+            // Ẩn tất cả các dòng trong bảng
+            $("#data-table tbody tr").hide();
+
+            // Hiển thị các dòng có giá trị kích thước tương ứng
+            $("#data-table tbody tr").each(function () {
+                var tenColumn = $(this).find("td:eq(3)").text(); // Vị trí cột chứa giá trị kích thước
+                if (tenColumn === hoTenNV || hoTenNV === "Tên Nhân Viên") {
+                    $(this).show();
+                }
+            });
+            console.log(hoTenNV);
+        });
+        //
+        $("#chucVuFilterTen").change(function () {
+            var tenCV = $(this).find(":selected").text();
+            // Ẩn tất cả các dòng trong bảng
+            $("#data-table tbody tr").hide();
+
+            // Hiển thị các dòng có giá trị kích thước tương ứng
+            $("#data-table tbody tr").each(function () {
+                var chucVu = $(this).find("td:eq(12)").text(); // Vị trí cột chứa giá trị kích thước
+                if (chucVu === tenCV || tenCV === "Chức Vụ") {
+                    $(this).show();
+                }
+            });
+        });
+
     });
+</script>
+<script>
     //
     document.getElementById("import-excel").addEventListener("click", function () {
         var form2 = document.querySelector(".form-hidden-2");
@@ -658,137 +624,6 @@
             successToast.style.display = 'none';
         }
     }, 5000);
-    //
-    setTimeout(function () {
-        var warning1 = document.getElementById('warning1');
-        if (warning1) {
-            warning1.style.display = 'none';
-        }
-    }, 5000);
-    //
-    setTimeout(function () {
-        var warning2 = document.getElementById('warning2');
-        if (warning2) {
-            warning2.style.display = 'none';
-        }
-    }, 5000);
-    //
-    setTimeout(function () {
-        var warning3 = document.getElementById('warning3');
-        if (warning3) {
-            warning3.style.display = 'none';
-        }
-    }, 5000);
-    //
-    setTimeout(function () {
-        var checkMa = document.getElementById('checkMa');
-        if (checkMa) {
-            checkMa.style.display = 'none';
-        }
-    }, 5000);
 </script>
-<script>
-    // In your Javascript (external .js resource or <script> tag)
-    $(document).ready(function () {
-        $('.select').select2();
-    });
-</script>
-<script>
-    function updateRGBValue(hexValue) {
-        var rgbValue = hexToRgb(hexValue);
-        document.getElementById('rgbValue').value = 'RGB(' + rgbValue.r + ', ' + rgbValue.g + ', ' + rgbValue.b + ')';
-    }
-
-    function hexToRgb(hex) {
-        // Chuyển đổi mã màu hex thành giá trị RGB
-        var bigint = parseInt(hex.substring(1), 16);
-        var r = (bigint >> 16) & 255;
-        var g = (bigint >> 8) & 255;
-        var b = bigint & 255;
-        return {r: r, g: g, b: b};
-    }
-</script>
-<script>
-    function validateMauSacForm() {
-        var ma = document.forms["mauSacForm"]["ma"].value;
-        var maMau = document.forms["mauSacForm"]["maMau"].value;
-        var tenMau = document.forms["mauSacForm"]["tenMau"].value;
-
-        if (ma === "") {
-            showAlert("Vui lòng nhập Mã");
-            return false;
-        }
-
-        if (!ma.match(/^[a-zA-Z0-9]+$/)) {
-            showAlert("Mã Chất Liệu chỉ được chứa chữ cái và số");
-            return false;
-        }
-
-        if (maMau === "") {
-            showAlert("Vui lòng chọn Mã Màu");
-            return false;
-        }
-
-        if (tenMau === "") {
-            showAlert("Vui lòng nhập Tên Màu");
-            return false;
-        }
-
-        if (!tenMau.match(/^[a-zA-Z0-9\s]+$/)) {
-            showAlert("Tên Màu chỉ được chứa chữ cái, số và khoảng trắng");
-            return false;
-        }
-
-        return true;
-    }
-
-    function showAlert(message) {
-        alertify.alert(message).setting({
-            'title': 'Thông báo',
-            'label': 'Đồng ý',
-        }).show();
-    }
-    var idMau;
-
-    // test
-    function capNhatTrangThaiMauSac(id) {
-        idMau = id;
-        let trangThai = document.getElementById("flexSwitchCheck_" + id).value;
-        var formData = new FormData();
-        formData.append("trangThai", trangThai);
-        $.ajax({
-            type: "PUT",
-            // url: "/bumblebee/khuyen-mai/cap-nhat-trang-thai/" + ma,
-            url: "/manage/mau-sac/" + id,
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                console.log("Success: " + response);
-            },
-            error: function (error) {
-                console.log("Error1: " + JSON.stringify(error));
-            }
-        });
-    }
-
-    function thayDoiTrangThai(checkbox) {
-        let trangThai = checkbox.checked;
-        let tThai = document.getElementById("trangThaiUpdate_" + idMau);
-        console.log(trangThai);
-        if (trangThai) {
-            tThai.innerText = "Hoạt Động";
-            tThai.style.color = "white";
-            tThai.classList.remove("bg-lightred");
-            tThai.classList.add("bg-lightgreen");
-        } else {
-            tThai.innerText = "Không Hoạt Động";
-            tThai.style.color = "white";
-            tThai.classList.remove("bg-lightgreen");
-            tThai.classList.add("bg-lightred");
-        }
-    }
-</script>
-
 </body>
 </html>
