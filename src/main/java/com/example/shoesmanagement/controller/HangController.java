@@ -3,12 +3,14 @@ package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.Giay;
 import com.example.shoesmanagement.model.Hang;
+import com.example.shoesmanagement.model.MauSac;
 import com.example.shoesmanagement.repository.HangRepository;
 import com.example.shoesmanagement.service.GiayService;
 import com.example.shoesmanagement.service.HangService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -224,4 +226,20 @@ public class HangController {
         return "redirect:/manage/hang";
     }
 
+    @PutMapping("/hang/{idHang}")
+    public ResponseEntity<String> capNhatTrangThai(@RequestParam String trangThai,
+                                                   @PathVariable UUID idHang) {
+        int trangThaiInt = Integer.valueOf(trangThai);
+        int trangThaiUpdate;
+        if (trangThaiInt == 1) {
+            trangThaiUpdate = 0;
+        } else {
+            trangThaiUpdate = 1;
+        }
+        Hang hang = hangService.getByIdHang(idHang);
+        hang.setTrangThai(trangThaiUpdate);
+        hang.setTgSua(new Date());
+        hangService.save(hang);
+        return ResponseEntity.ok("ok");
+    }
 }

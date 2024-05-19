@@ -53,12 +53,15 @@ public class UserController {
         return dsLoaiDC;
     }
 
-    @GetMapping("/setting")
+        @GetMapping("/setting")
     private String getSettingAccount(Model model) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
 
         UserForm(model, khachHang);
+        showThongBao(model, khachHang);
+
+        model.addAttribute("pagesettingAccount", true);
         return "online/user";
     }
 
