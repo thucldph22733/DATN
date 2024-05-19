@@ -74,7 +74,7 @@
             <div class="page-header">
                 <div class="page-title">
                     <h4>List Màu Sắc</h4>
-                    <h6>Quản Lý Màu Sắc</h6>
+                    <h6>Quản Lý Giày</h6>
                 </div>
                 <div class="page-btn">
                     <button class="btn btn-added" id="show-form-button">
@@ -337,11 +337,6 @@
 <script src="/plugins/alertify/custom-alertify.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var getID = document.getElementById("mauSac").value;
-    });
-</script>
-<script>
     document.addEventListener("DOMContentLoaded", function () {
         // Lấy thẻ nút in bằng id
         var printButton = document.getElementById("printButton");
@@ -398,7 +393,13 @@
 <!--        $('#filter_search').toggleClass("setclose");-->
 <!--    });-->
 <!--</script>-->
-
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var getID = document.getElementById("mauSac").value;
+        console.log("aa" + getID);
+        // var value = getID.value;
+    });
+</script>
 <script>
     $(document).ready(function () {
         // Lắng nghe sự kiện thay đổi trong dropdown kích thước
