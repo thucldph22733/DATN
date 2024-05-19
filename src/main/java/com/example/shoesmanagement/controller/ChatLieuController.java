@@ -191,12 +191,15 @@ public class ChatLieuController {
     public ResponseEntity<String> capNhatTrangThai(@RequestParam String trangThai,
                                                    @PathVariable UUID idChatLieu) {
         int trangThaiInt = Integer.valueOf(trangThai);
+        System.out.println(trangThai);
+
         int trangThaiUpdate;
         if (trangThaiInt == 1) {
             trangThaiUpdate = 0;
         } else {
             trangThaiUpdate = 1;
         }
+        System.out.println(trangThaiUpdate);
         ChatLieu chatLieu = chatLieuService.getByIdChatLieu(idChatLieu);
         chatLieu.setTrangThai(trangThaiUpdate);
         chatLieuService.save(chatLieu);

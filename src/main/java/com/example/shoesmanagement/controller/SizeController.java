@@ -5,16 +5,22 @@ import com.example.shoesmanagement.model.Size;
 import com.example.shoesmanagement.repository.SizeRepository;
 import com.example.shoesmanagement.service.GiayChiTietService;
 import com.example.shoesmanagement.service.SizeService;
+import com.lowagie.text.DocumentException;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -53,7 +59,6 @@ public class SizeController {
             , @ModelAttribute("Errormessage") String Errormessage
             , @ModelAttribute("trungSoSize") String trungSoSize) {
         List<Size> size = sizeService.getAllSize();
-        model.addAttribute("active","SizeActive");
         model.addAttribute("size", size);
         //
         model.addAttribute("sizeAll", sizeService.getAllSize());
@@ -224,6 +229,7 @@ public class SizeController {
     }
 
 
+
     @GetMapping("/size/filter")
     public String filterData(Model model,
                              @RequestParam(value = "selectedSize", required = false) Integer selectedSize,
@@ -243,20 +249,5 @@ public class SizeController {
         return "manage/size-giay"; // Trả về mẫu HTML chứa bảng dữ liệu sau khi lọc
     }
 
-    @PutMapping("/size/{idSize}")
-    public ResponseEntity<String> capNhatTrangThai(@RequestParam String trangThai,
-                                                   @PathVariable UUID idSize) {
-        int trangThaiInt = Integer.valueOf(trangThai);
-        int trangThaiUpdate;
-        if (trangThaiInt == 1) {
-            trangThaiUpdate = 0;
-        } else {
-            trangThaiUpdate = 1;
-        }
-        Size size = sizeService.getByIdSize(idSize);
-        size.setTrangThai(trangThaiUpdate);
-        size.setTgSua(new Date());
-        sizeService.save(size);
-        return ResponseEntity.ok("ok");
-    }
+
 }
