@@ -112,21 +112,22 @@
                     </div>
                     <div class="noti-content">
                         <ul class="notification-list">
-                            <th:block  th:each="x : ${listThongBao}">
-                                <li th:if="${x.trangThai == 3}"class="notification-message">
+                            <th:block th:each="x : ${listThongBao}">
+                                <li th:if="${x.trangThai == 3}" class="notification-message">
                                     <a href="/manage/bill/online">
                                         <div class="media d-flex">
                                         <span class="avatar flex-shrink-0">
                                         <img alt="" src="/images/img/profiles/avatar-02.jpg">
                                         </span>
                                             <div class="media-body flex-grow-1">
-                                                <p class="noti-details" >
+                                                <p class="noti-details">
                                                     <span class="noti-title" th:text="${x.khachHang.hoTenKH}"></span>
                                                     <span th:text="${x.noiDungTB}"></span>
                                                     <span class="noti-title" th:text="${x.hoaDon.maHD}"></span>
                                                 </p>
                                                 <p class="noti-time">
-                                                    <span class="notification-time"th:text="${#dates.format(x.tgTB, 'HH:mm yyyy-MM-dd')}"></span>
+                                                    <span class="notification-time"
+                                                          th:text="${#dates.format(x.tgTB, 'HH:mm yyyy-MM-dd')}"></span>
                                                 </p>
                                             </div>
                                         </div>
@@ -143,19 +144,19 @@
 
             <li class="nav-item dropdown has-arrow main-drop">
                 <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
-<!--                    <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">-->
+                    <!--                    <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">-->
                     <span class="status online"></span></span>
                 </a>
                 <div class="dropdown-menu menu-drop-user">
                     <div class="profilename">
-<!--                        <div class="profileset">-->
-<!--                            <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">-->
-<!--                            <span class="status online"></span></span>-->
-<!--                            <div class="profilesets">-->
-<!--                                <h6 th:text="${session.managerLogged.hoTenNV}"></h6>-->
-<!--                                <h5 th:text="${session.managerLogged.chucVu.tenCV}"></h5>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                        <!--                        <div class="profileset">-->
+                        <!--                            <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">-->
+                        <!--                            <span class="status online"></span></span>-->
+                        <!--                            <div class="profilesets">-->
+                        <!--                                <h6 th:text="${session.managerLogged.hoTenNV}"></h6>-->
+                        <!--                                <h5 th:text="${session.managerLogged.chucVu.tenCV}"></h5>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
                         <hr class="m-0">
                         <a class="dropdown-item" href="profile.html"> <i class="me-2" data-feather="user"></i> My
                             Profile</a>
@@ -189,7 +190,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/manage/thongke"><img src="/images/img/icons/dashboard.svg" alt="img"><span> Thống Kê</span>
+                        <a href="/manage/thongke"><img src="/images/img/icons/dashboard.svg"
+                                                       alt="img"><span> Thống Kê</span>
                         </a>
                     </li>
                     <li class="submenu">
@@ -280,30 +282,34 @@
             <div class="card">
                 <div class="card-body">
                     <div class="hidden-form" style="display: none">
-                        <form th:object="${mauSacAdd}" method="post" th:action="@{/manage/mau-sac/viewAdd/add}" onsubmit="return validateMauSacForm()" name="mauSacForm">
+                        <form th:object="${mauSacAdd}" method="post" th:action="@{/manage/mau-sac/viewAdd/add}"
+                              onsubmit="return validateMauSacForm()" name="mauSacForm">
                             <div class="row">
                                 <div class="col-lg-2 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="ma">Mã</label>
-                                        <input type="text" id="ma" name="ma" th:field="*{ma}" class="form-control" />
+                                        <input type="text" id="ma" name="ma" th:field="*{ma}" class="form-control"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="maMau">Mã Màu (RGB)</label>
-                                        <input type="text" id="rgbValue" name="maMau" th:field="*{maMau}" readonly class="form-control" style="margin-top: 5px;" />
+                                        <input type="text" id="rgbValue" name="maMau" th:field="*{maMau}" readonly
+                                               class="form-control" style="margin-top: 5px;"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="chonMau">Chọn Màu:</label>
-                                        <input type="color" id="chonMau" name="chonMau" onchange="updateRGBValue(this.value)" required class="large-input" />
+                                        <input type="color" id="chonMau" name="chonMau"
+                                               onchange="updateRGBValue(this.value)" required class="large-input"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="tenMau">Tên Màu</label>
-                                        <input type="text" id="tenMau" name="tenMau" th:field="*{tenMau}" class="form-control" />
+                                        <input type="text" id="tenMau" name="tenMau" th:field="*{tenMau}"
+                                               class="form-control"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -355,70 +361,70 @@
                     <form method="get" th:action="@{/manage/mauSac/filter}">
 
 
-                            <div class="card" id="filter_inputs">
-                                <div class="card-body pb-0">
-                                    <div class="row">
-                                        <div class="col-lg-2 col-sm-6 col-12">
-                                            <div class="form-group">
-                                                <select class="select" name="trangThai">
-                                                    <option value="">Trạng thái</option>
-                                                    <option value="1">Hoạt động</option>
-                                                    <option value="0">Không hoạt động</option>
-                                                </select>
-                                            </div>
+                        <div class="card" id="filter_inputs">
+                            <div class="card-body pb-0">
+                                <div class="row">
+                                    <div class="col-lg-2 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <select class="select" name="trangThai">
+                                                <option value="">Trạng thái</option>
+                                                <option value="1">Hoạt động</option>
+                                                <option value="0">Không hoạt động</option>
+                                            </select>
                                         </div>
-                                        <div class="col-lg-1 col-sm-6 col-12 ms-auto">
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-filters ms-auto"><img
-                                                        src="/images/img/icons/search-whites.svg"
-                                                        alt="img"></button>
-                                            </div>
+                                    </div>
+                                    <div class="col-lg-1 col-sm-6 col-12 ms-auto">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-filters ms-auto"><img
+                                                    src="/images/img/icons/search-whites.svg"
+                                                    alt="img"></button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
 
-<!--                        <div class="card" id="filter_inputs">-->
-<!--                            <div class="card-body pb-0">-->
-<!--                                <div class="row">-->
-<!--                                    <div class="col-lg-2 col-sm-6 col-12">-->
-<!--                                        <div class="form-group">-->
-<!--                                            <select class="select" id="mauSacFilterMa" name="maMau">-->
-<!--                                                <option>Mã</option>-->
-<!--                                                <option th:each="loc : ${mauSac}" th:value="${loc.ma}"-->
-<!--                                                        th:text="${loc.ma}"></option>-->
-<!--                                            </select>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-lg-2 col-sm-6 col-12">-->
-<!--                                        <div class="form-group">-->
-<!--                                            <select class="select" id="mauSacFilterTen" name="tenMau">-->
-<!--                                                <option>Tên Màu</option>-->
-<!--                                                <option th:each="loc : ${mauSac}" th:value="${loc.tenMau}"-->
-<!--                                                        th:text="${loc.tenMau}"></option>-->
-<!--                                            </select>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    &lt;!&ndash;                                <div class="col-lg-2 col-sm-6 col-12">&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                    <div class="form-group">&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                        <select class="select">&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                            <option>Trạng Thái</option>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                            <option th:each="loc : ${dsTrangThai.entrySet()}" th:value="${loc.key}"&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                                    th:text="${loc.value}"></option>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                        </select>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                    </div>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                </div>&ndash;&gt;-->
-<!--                                    <div class="col-lg-1 col-sm-6 col-12 ms-auto">-->
-<!--                                        <div class="form-group">-->
-<!--                                            <button type="submit" class="btn btn-filters ms-auto"><img-->
-<!--                                                    src="/images/img/icons/search-whites.svg"-->
-<!--                                                    alt="img"></button>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                        <!--                        <div class="card" id="filter_inputs">-->
+                        <!--                            <div class="card-body pb-0">-->
+                        <!--                                <div class="row">-->
+                        <!--                                    <div class="col-lg-2 col-sm-6 col-12">-->
+                        <!--                                        <div class="form-group">-->
+                        <!--                                            <select class="select" id="mauSacFilterMa" name="maMau">-->
+                        <!--                                                <option>Mã</option>-->
+                        <!--                                                <option th:each="loc : ${mauSac}" th:value="${loc.ma}"-->
+                        <!--                                                        th:text="${loc.ma}"></option>-->
+                        <!--                                            </select>-->
+                        <!--                                        </div>-->
+                        <!--                                    </div>-->
+                        <!--                                    <div class="col-lg-2 col-sm-6 col-12">-->
+                        <!--                                        <div class="form-group">-->
+                        <!--                                            <select class="select" id="mauSacFilterTen" name="tenMau">-->
+                        <!--                                                <option>Tên Màu</option>-->
+                        <!--                                                <option th:each="loc : ${mauSac}" th:value="${loc.tenMau}"-->
+                        <!--                                                        th:text="${loc.tenMau}"></option>-->
+                        <!--                                            </select>-->
+                        <!--                                        </div>-->
+                        <!--                                    </div>-->
+                        <!--                                    &lt;!&ndash;                                <div class="col-lg-2 col-sm-6 col-12">&ndash;&gt;-->
+                        <!--                                    &lt;!&ndash;                                    <div class="form-group">&ndash;&gt;-->
+                        <!--                                    &lt;!&ndash;                                        <select class="select">&ndash;&gt;-->
+                        <!--                                    &lt;!&ndash;                                            <option>Trạng Thái</option>&ndash;&gt;-->
+                        <!--                                    &lt;!&ndash;                                            <option th:each="loc : ${dsTrangThai.entrySet()}" th:value="${loc.key}"&ndash;&gt;-->
+                        <!--                                    &lt;!&ndash;                                                    th:text="${loc.value}"></option>&ndash;&gt;-->
+                        <!--                                    &lt;!&ndash;                                        </select>&ndash;&gt;-->
+                        <!--                                    &lt;!&ndash;                                    </div>&ndash;&gt;-->
+                        <!--                                    &lt;!&ndash;                                </div>&ndash;&gt;-->
+                        <!--                                    <div class="col-lg-1 col-sm-6 col-12 ms-auto">-->
+                        <!--                                        <div class="form-group">-->
+                        <!--                                            <button type="submit" class="btn btn-filters ms-auto"><img-->
+                        <!--                                                    src="/images/img/icons/search-whites.svg"-->
+                        <!--                                                    alt="img"></button>-->
+                        <!--                                        </div>-->
+                        <!--                                    </div>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
                     </form>
                     <div class="table-responsive">
                         <table class="table datanew" id="data-table">
@@ -431,7 +437,6 @@
                                 <th>Action</th>
                                 <th>Thời Gian Thêm</th>
                                 <th>Thời Gian Sửa</th>
-
                             </tr>
                             </thead>
                             <tbody>
@@ -442,22 +447,29 @@
                                 </td>
                                 <td th:text="${items.tenMau}"></td>
                                 <td>
-                                    <span th:if="${items.trangThai == 1}" class="badges bg-lightgreen">Hoạt Động</span>
-                                    <span th:unless="${items.trangThai == 1}"
-                                          class="badges bg-lightred">Không Hoạt Động</span>
+<!--                                                                        <span th:id="'trangThaiOn_' + ${items.idMau}" th:if="${items.trangThai == 1}"-->
+<!--                                                                              class="badges bg-lightgreen"></span>-->
+<!--                                                                        <span th:id="'trangThaiOff_' + ${items.idMau}" th:if="${items.trangThai == 0}"-->
+<!--                                                                              class="badges bg-lightred">Không Hoạt Động</span>-->
+                                    <span th:id="'trangThaiUpdate_' + ${items.idMau}" th:if="${items.trangThai == 1}" class="badges bg-lightgreen">Hoạt Động</span>
+                                    <span th:id="'trangThaiUpdate_' + ${items.idMau}" th:if="${items.trangThai == 0}" class="badges bg-lightred">Không Hoạt Động</span>
                                 </td>
                                 <td>
                                     <a class="me-3" th:href="@{'/manage/mau-sac/viewUpdate/' + ${items.idMau}}">
                                         <img src="/images/img/icons/edit.svg" alt="img">
                                     </a>
-                                    <a class="me-3 delete-button"
-                                       th:data-delete-url="@{'/manage/mau-sac/delete/' + ${items.idMau}}">
-                                        <img src="/images/img/icons/delete.svg" alt="img">
+                                    <a class="form-check form-switch">
+                                        <input class="me-3 form-check-input" type="checkbox" role="switch"
+                                               th:checked="${items.trangThai == 1}"
+                                               th:data-ma="${items.idMau}"
+                                               onchange="thayDoiTrangThai(this)"
+                                               onclick="capNhatTrangThaiMauSac(this.getAttribute('data-ma'))">
+                                        <input style="display: none" th:id="'flexSwitchCheck_' + ${items.idMau}"
+                                               th:value="${items.trangThai}">
                                     </a>
                                 </td>
                                 <td th:text="${#dates.format(items.tgThem, 'dd-MM-yyyy')}" align="center"/>
                                 <td th:text="${#dates.format(items.tgSua, 'dd-MM-yyyy')}" align="center"/>
-
                             </tr>
                             </tbody>
                         </table>
@@ -735,6 +747,46 @@
             'title': 'Thông báo',
             'label': 'Đồng ý',
         }).show();
+    }
+    var idMau;
+
+    // test
+    function capNhatTrangThaiMauSac(id) {
+        idMau = id;
+        let trangThai = document.getElementById("flexSwitchCheck_" + id).value;
+        var formData = new FormData();
+        formData.append("trangThai", trangThai);
+        $.ajax({
+            type: "PUT",
+            // url: "/bumblebee/khuyen-mai/cap-nhat-trang-thai/" + ma,
+            url: "/manage/mau-sac/" + id,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                console.log("Success: " + response);
+            },
+            error: function (error) {
+                console.log("Error1: " + JSON.stringify(error));
+            }
+        });
+    }
+
+    function thayDoiTrangThai(checkbox) {
+        let trangThai = checkbox.checked;
+        let tThai = document.getElementById("trangThaiUpdate_" + idMau);
+        console.log(trangThai);
+        if (trangThai) {
+            tThai.innerText = "Hoạt Động";
+            tThai.style.color = "white";
+            tThai.classList.remove("bg-lightred");
+            tThai.classList.add("bg-lightgreen");
+        } else {
+            tThai.innerText = "Không Hoạt Động";
+            tThai.style.color = "white";
+            tThai.classList.remove("bg-lightgreen");
+            tThai.classList.add("bg-lightred");
+        }
     }
 </script>
 

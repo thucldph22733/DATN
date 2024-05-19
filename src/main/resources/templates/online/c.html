@@ -36,11 +36,12 @@
         </style>
     </head>
 
-<body>
-<!-- Page Preloder -->
-<!--<div id="preloder">-->
-<!--    <div class="loader"></div>-->
-<!--</div>-->
+<body style="margin-top: -10px">
+
+
+<div id="preloder">
+    <div class="loader"></div>
+</div>
 
 <!-- Header Section Begin -->
 <header class="header">
@@ -50,7 +51,7 @@
 
                 <div class="col-lg-3  d-flex align-items-center">
                     <div class="header__top__left">
-                        <p>Chào mừng đến với trải nghiệm mua sắm </p>
+                        <p>Chào mừng đến với trải nghiệm mua sắm</p>
                     </div>
                 </div>
 
@@ -70,7 +71,7 @@
                     <div>
 
                         <div th:if="${heartLogged}" class="header__top__links">
-                            <a th:href="@{'/buyer/purchase'}">Purchase</a>
+                            <a th:href="@{'/buyer/purchase'}">Đơn mua</a>
                         </div>
 
 
@@ -102,9 +103,9 @@
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
-                    <a th:href="@{'/buyer/home'}"><img src="/images/img/logo.png"
-                                                       style="width: 240px; height: 240px; margin-top: -84px"
-                                                       alt=""></a>
+                    <a th:href="@{'/buyer/home'}">
+                        <img src="/images/img/logo.png" style="width: 240px; height: 240px; margin-top: -84px" alt="">
+                    </a>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
@@ -113,12 +114,12 @@
                         <li><a th:href="@{'/buyer/'}">Home</a></li>
                         <li><a th:href="@{'/buyer/shop'}">Shop</a></li>
                         <li><a th:href="@{'/buyer/about'}">About Us</a></li>
-                        <li class="active"><a th:href="@{'/buyer/blog'}">Blog</a>
+                        <li><a th:href="@{'/buyer/blog'}">Blog</a>
                             <ul class="dropdown">
                                 <li><a th:href="@{'/buyer/blog/blog-details'}">Blog Details</a></li>
                             </ul>
                         </li>
-                        <li><a th:href="@{'/buyer/contact'}">Contact</a></li>
+                        <li class="active"><a th:href="@{'/buyer/contact'}">Contact</a></li>
                     </ul>
                 </nav>
             </div>
@@ -127,6 +128,7 @@
 
 
                     <div class="nav user-menu" style="height: 30px;">
+
                         <li class="nav-item dropdown" style="height: 30px;">
                             <a data-bs-toggle="dropdown" href="#">
                                 <img style="margin-bottom: 42px; width: 18px; height: 18px;"
@@ -144,9 +146,9 @@
                                     <th:block th:if="${x.trangThai != 3}" th:each="x : ${listThongBao}">
                                         <a href="#" class="items-noticafitions">
                                             <div class="items-notica">
-                                        <span class="avatar">
-                                            <img alt="" src="/images/img/blog/blog-1.jpg">
-                                        </span>
+                                            <span class="avatar">
+                                                <img alt="" src="/images/img/blog/blog-1.jpg">
+                                            </span>
                                                 <div class="text-notica">
                                                     <span class="notica-title" th:text="${fullNameLogin}"></span>
                                                     <p class="notica-times">1 phút trước</p>
@@ -177,7 +179,8 @@
                         <img src="/images/img/icon/cart.png" alt="">
                         <span class="cart-count"
                               style="position: absolute; height:20px; width: 25px; top: -13px; left: 3px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;"
-                              th:text="${sumProductInCart}"></span>
+                              th:text="${sumProductInCart}">
+                        </span>
                     </a>
                 </div>
             </div>
@@ -186,135 +189,61 @@
     </div>
 </header>
 <!-- Header Section End -->
-
-<!-- Blog Details Hero Begin -->
-<section class="blog-hero spad">
-    <div class="container" style=" height: 100px">
-        <div class="row d-flex justify-content-center">
-            <div class="col-lg-9 text-center">
-                <div class="blog__hero__text">
-                    <h2 style="margin-top: 100px">THE NEWS</h2>
-                    <ul>
-                        <li>By Deercreative</li>
-                        <li>February 21, 2019</li>
-                        <li>8 Comments</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Blog Details Hero End -->
 <section>
     <div style="height: 150px; width: 100%;"></div>
 </section>
-<!-- Blog Details Section Begin -->
-<section class="blog-details spad">
-    <div class="container">
-        <div class="row d-flex justify-content-center">
-            <div class="col-lg-12">
-                <div class="blog__details__pic">
-                    <img src="/images/img/blog/details/blog-3.jpg" alt="">
+
+<div class="col-md-10">
+    <div class="wrapper">
+        <div class="row no-gutters">
+            <div class="col-md-6">
+                <div class="contact_img">
+                    <img src="https://i.pinimg.com/564x/12/27/eb/1227ebcbb648c8cb7c14a647ad3d50ab.jpg" height="539px"
+                         alt="">
                 </div>
             </div>
-            <div class="col-lg-8">
-                <div class="blog__details__content">
-                    <div class="blog__details__share">
-                        <span>share</span>
-                        <ul>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#" class="youtube"><i class="fa fa-youtube-play"></i></a></li>
-                            <li><a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="blog__details__text">
-                        <p>Travis Scott’s been all over the grid for Nike, from launching his standalone sneaker with
-                            Jordan Brand at the end of the month to personally hand-gifting a pair to Dawn Staley in
-                            Paris. He’s certainly not involved in the ranks of the seasonal in-line releases like the
-                            Dunk Low you see here, but it’s clear — La Flame’s presence is felt.</p>
-                        <p>If you’re a fan of the mid-80s aesthetic and this section of the color wheel, these Dunks are
-                            a no-brainer; expect this Dunk Low Next Nature to be available on Nike.com this Summer
-                            season for $125</p>
-                    </div>
-                    <div class="blog__details__quote">
-                        <i class="fa fa-quote-left"></i>
-                        <p>“This post contains references to products from one or more of our advertisers. We may
-                            receive compensation when you click on links to those products. The opinions and information
-                            provided on this site are original editorial content of Sneaker News.”</p>
-                    </div>
-                    <div class="blog__details__text">
-                        <p>Vyo-Serum along with tightening the skin also reduces the fine lines indicating aging of
-                            skin. Problems like dark circles, puffiness, and crow’s feet can be control from the
-                            strong effects of this serum.</p>
-                        <p>Hydroderm is a multi-functional product that helps in reducing the cellulite and giving
-                            the body a toned shape, also helps in cleansing the skin from the root and not letting
-                            the pores clog, nevertheless also let’s sweeps out the wrinkles and all signs of aging
-                            from the sensitive near the eyes.</p>
-                    </div>
-                    <div class="blog__details__option">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="blog__details__author">
-                                    <div class="blog__details__author__pic">
-                                        <img src="/images/img/blog/details/blog-author.jpg" alt="">
-                                    </div>
-                                    <div class="blog__details__author__text">
-                                        <h5>Aiden Blair</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="blog__details__tags">
-                                    <a href="#">#Fashion</a>
-                                    <a href="#">#Trending</a>
-                                    <a href="#">#2020</a>
-                                </div>
-                            </div>
+            <div class="col-md-6 d-flex align-items-stretch">
+                <div class="info-wrap w-100 p-lg-5 p-4 img">
+                    <h3>Contact us</h3>
+                    <p class="mb-4">We're open for any suggestion or just to have a chat</p>
+                    <div class="dbox w-100 d-flex align-items-start">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="fa fa-map-marker"></span>
+                        </div>
+                        <div class="text pl-3">
+                            <p><span>Address:</span> 198 West 21th Street, Suite 721 New York NY 10016</p>
                         </div>
                     </div>
-                    <div class="blog__details__btns">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <a href="" class="blog__details__btns__item">
-                                    <p><span class="arrow_left"></span> Previous Pod</p>
-                                    <h5>It S Classified How To Utilize Free Classified Ad Sites</h5>
-                                </a>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <a href="" class="blog__details__btns__item blog__details__btns__item--next">
-                                    <p>Next Pod <span class="arrow_right"></span></p>
-                                    <h5>Tips For Choosing The Perfect Gloss For Your Lips</h5>
-                                </a>
-                            </div>
+                    <div class="dbox w-100 d-flex align-items-center">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="fa fa-phone"></span>
+                        </div>
+                        <div class="text pl-3">
+                            <p><span>Phone:</span> <a href="tel://1234567920">+ 1235 2355 98</a></p>
                         </div>
                     </div>
-                    <div class="blog__details__comment">
-                        <h4>Leave A Comment</h4>
-                        <form action="#">
-                            <div class="row">
-                                <div class="col-lg-4 col-md-4">
-                                    <input type="text" placeholder="Name">
-                                </div>
-                                <div class="col-lg-4 col-md-4">
-                                    <input type="text" placeholder="Email">
-                                </div>
-                                <div class="col-lg-4 col-md-4">
-                                    <input type="text" placeholder="Phone">
-                                </div>
-                                <div class="col-lg-12 text-center">
-                                    <textarea placeholder="Comment"></textarea>
-                                    <button type="submit" class="site-btn">Post Comment</button>
-                                </div>
-                            </div>
-                        </form>
+                    <div class="dbox w-100 d-flex align-items-center">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="fa fa-paper-plane"></span>
+                        </div>
+                        <div class="text pl-3">
+                            <p><span>Email:</span> <a href="mailto:info@yoursite.com">info@yoursite.com</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="dbox w-100 d-flex align-items-center">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="fa fa-globe"></span>
+                        </div>
+                        <div class="text pl-3">
+                            <p><span>Website</span> <a href="#">yoursite.com</a></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
-<!-- Blog Details Section End -->
+</div>
 
 <!-- Footer Section Begin -->
 <footer class="footer">
@@ -325,7 +254,8 @@
                     <div class="footer__logo">
                         <a href="#"><img src="/Logo.png" alt=""></a>
                     </div>
-                    <p> Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế.</p>
+                    <p> Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả
+                        thiết kế.</p>
                     <a href="#"><img src="img/payment.png" alt=""></a>
                 </div>
             </div>
@@ -355,7 +285,8 @@
                 <div class="footer__widget">
                     <h6>NewLetter</h6>
                     <div class="footer__newslatter">
-                        <p>Hãy là người đầu tiên biết về hàng mới, sách tra cứu, khuyến mại và khuyến mãi!</p>
+                        <p>Hãy là người đầu tiên biết về hàng mới, sách tra cứu, khuyến mại và khuyến
+                            mãi!</p>
                         <form action="#">
                             <input type="text" placeholder="Your email">
                             <button type="submit"><span class="icon_mail_alt"></span></button>
@@ -370,9 +301,7 @@
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     <p>Copyright ©
                         2023
-                        All rights reserved | This template is edit with <i class="fa fa-heart-o"
-                                                                            aria-hidden="true"></i> by <a
-                                href="https://www.instagram.com/nhanngu_03/" target="_blank">Nhan Pham</a>
+                        All rights reserved | This template is edit with Thùy Péo
                     </p>
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                 </div>
@@ -381,10 +310,6 @@
     </div>
 </footer>
 <!-- Footer Section End -->
-
-<!-- Search Begin -->
-
-<!-- Search End -->
 
 <!-- Js Plugins -->
 <script src="/js/jquery-3.6.0.min.js"></script>
@@ -404,6 +329,9 @@
 <script src="/js/jquery.slimscroll.min.js"></script>
 <script src="/js/scrollbar.min.js"></script>
 <script src="/js/custom-scroll.js"></script>
+
+
 </body>
+
 
 </html>
