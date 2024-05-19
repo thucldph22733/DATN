@@ -34,25 +34,6 @@ public class HoaDon {
 
     @OneToMany(mappedBy = "hoaDon")
     private List<LichSuThanhToan> lichSuThanhToans;
-    @Column(name = "tg_Huy")
-    private Date tgHuy;
-
-    @Column(name = "ly_do_huy")
-    private String lyDoHuy;
-
-    @Column(name = "tg_Nhan_DK")
-    private Date tgNhanDK;
-
-    @Column(name = "ten_Nguoi_Nhan")
-    private String tenNguoiNhan;
-
-    @Column(name = "dia_Chi_Nguoi_Nhan")
-    private String diaChiNguoiNhan;
-
-    @Column(name = "sdt_Nguoi_Nhan")
-    private String sdtNguoiNhan;
-    @Column(name = "loi_nhan")
-    private String loiNhan;
 
     @OneToOne
     @JoinColumn(name = "id_Giao_Hang")
@@ -89,6 +70,7 @@ public class HoaDon {
     @Column(name="hinh_Thuc_Thanh_Toan")
     private Integer hinhThucThanhToan;
 
-
+    @Column(name = "so_lan_thay_doi_vi_tri_nhan")
+    private Integer soLanThayDoiViTriShip;
 
 }
