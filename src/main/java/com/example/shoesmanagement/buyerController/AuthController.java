@@ -7,11 +7,13 @@ import com.example.shoesmanagement.service.KhachHangService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
@@ -83,9 +85,6 @@ public class AuthController {
             return ResponseEntity.ok("Tk and mk sai");
         }
     }
-
-
-
     @PostMapping("/register")
     public String buyerRegister(Model model, RedirectAttributes redirectAttributes) {
         String fullName = request.getParameter("fullname");

@@ -8,7 +8,6 @@ import java.util.UUID;
 public interface KhachHangService {
     KhachHang checkLoginEmail(String email, String pass);
     KhachHang checkEmail(String email);
-    KhachHang checkLoginSDT(String sdt, String pass);
 
     public List<KhachHang> getAllKhachHang();
 
