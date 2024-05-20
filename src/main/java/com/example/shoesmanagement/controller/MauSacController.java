@@ -45,6 +45,7 @@ public class MauSacController {
             , @ModelAttribute("error") String error, @ModelAttribute("userInput") MauSac userInput, @ModelAttribute("Errormessage") String Errormessage) {
 
         List<MauSac> mauSac = mauSacService.getALlMauSac();
+        model.addAttribute("active", "mauSacActive");
         model.addAttribute("mauSac", mauSac);
         //
         model.addAttribute("mauSacAdd", new MauSac());
