@@ -75,7 +75,7 @@ public class GiayController {
         model.addAttribute("giay", listGiay);
         model.addAttribute("hang", listHang);
         model.addAttribute("chatLieu", listChatLieu);
-        if ("true".equals(message)) {
+        if (message == null || "true".equals(message)) {
             model.addAttribute("message", false);
         }
         return "manage/giay";

@@ -17,11 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @RequestMapping("/buyer")
@@ -46,13 +45,24 @@ public class CartController {
     @Autowired
     private GiayService giayService;
 
+
     @GetMapping("/cart")
-    private String getShoppingCart(Model model){
+    private String getShoppingCart(HttpSession session, Model model){
+        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+
+        if(khachHang == null){
+            model.addAttribute("error", "Bạn cần đăng nhập để xem giỏ hàng");
+            return "redirect:/buyer/login"; // Sử dụng redirect ở đây
+        }
+
         model.addAttribute("reLoadPageCart", true);
         showDataBuyer(model);
 
         return "/online/shopping-cart";
     }
+
+
+
 
 //    @GetMapping("/cart/delete/{idCTG}")
 //    private String deleteInCard(Model model, @PathVariable UUID idCTG, RedirectAttributes redirectAttribute){
@@ -83,27 +93,54 @@ public class CartController {
 
 
 
-    private void showDataBuyer(Model model){
-        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-        GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
+//    private void showDataBuyer(Model model){
+//        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+//        GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
+//        List<GioHangChiTiet> listGHCTActiveOriginal = ghctService.findByGHActive(gioHang);
+//        // Khởi tạo một danh sách rỗng nếu kết quả là null để tránh NullPointerException
+//
+//        List<GioHangChiTiet> listGHCTActive = ghctService.findByGHActive(gioHang);
+//        Integer sumProductInCart = listGHCTActive.size();
+//
+//        Double sumAllProduct = listGHCTActive.stream().mapToDouble(GioHangChiTiet::getDonGia).sum();
+//
+//        if (listGHCTActive != null){
+//            for (GioHangChiTiet gioHangChiTiet: listGHCTActive) {
+//                gioHangChiTiet.setDonGia(gioHangChiTiet.getChiTietGiay().getGiaBan()* gioHangChiTiet.getSoLuong());
+//                gioHangChiTiet.setDonGiaTruocKhiGiam(gioHangChiTiet.getChiTietGiay().getSoTienTruocKhiGiam()* gioHangChiTiet.getSoLuong());
+//                ghctService.addNewGHCT(gioHangChiTiet);
+//            }
+//        }
+//        model.addAttribute("fullNameLogin", khachHang.getHoTenKH());
+//        model.addAttribute("sumProductInCart", sumProductInCart);
+//        model.addAttribute("listCartDetail", listGHCTActive);
+//        model.addAttribute("totalPrice", sumAllProduct);
+//    }
+private void showDataBuyer(Model model) {
+    KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+    GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
 
-        List<GioHangChiTiet> listGHCTActive = ghctService.findByGHActive(gioHang);
-        Integer sumProductInCart = listGHCTActive.size();
+    List<GioHangChiTiet> listGHCTActiveOriginal = ghctService.findByGHActive(gioHang);
+    // Khởi tạo một danh sách rỗng nếu kết quả là null để tránh NullPointerException
+    List<GioHangChiTiet> listGHCTActive = listGHCTActiveOriginal != null ? listGHCTActiveOriginal : new ArrayList<>();
 
-        Double sumAllProduct = listGHCTActive.stream().mapToDouble(GioHangChiTiet::getDonGia).sum();
+    Integer sumProductInCart = listGHCTActive.size();
+    Double sumAllProduct = listGHCTActive.stream().mapToDouble(GioHangChiTiet::getDonGia).sum();
 
-        if (listGHCTActive != null){
-            for (GioHangChiTiet gioHangChiTiet: listGHCTActive) {
-                gioHangChiTiet.setDonGia(gioHangChiTiet.getChiTietGiay().getGiaBan()* gioHangChiTiet.getSoLuong());
-                gioHangChiTiet.setDonGiaTruocKhiGiam(gioHangChiTiet.getChiTietGiay().getSoTienTruocKhiGiam()* gioHangChiTiet.getSoLuong());
-                ghctService.addNewGHCT(gioHangChiTiet);
-            }
+    if (!listGHCTActive.isEmpty()) {
+        for (GioHangChiTiet gioHangChiTiet : listGHCTActive) {
+            gioHangChiTiet.setDonGia(gioHangChiTiet.getChiTietGiay().getGiaBan() * gioHangChiTiet.getSoLuong());
+            gioHangChiTiet.setDonGiaTruocKhiGiam(gioHangChiTiet.getChiTietGiay().getSoTienTruocKhiGiam() * gioHangChiTiet.getSoLuong());
+            ghctService.addNewGHCT(gioHangChiTiet);
         }
-        model.addAttribute("fullNameLogin", khachHang.getHoTenKH());
-        model.addAttribute("sumProductInCart", sumProductInCart);
-        model.addAttribute("listCartDetail", listGHCTActive);
-        model.addAttribute("totalPrice", sumAllProduct);
     }
+
+    model.addAttribute("fullNameLogin", khachHang != null ? khachHang.getHoTenKH() : "");
+    model.addAttribute("sumProductInCart", sumProductInCart);
+    model.addAttribute("listCartDetail", listGHCTActive);
+    model.addAttribute("totalPrice", sumAllProduct);
+}
+
     public String generateRandomNumbers() {
         Random random = new Random();
         StringBuilder sb = new StringBuilder();
