@@ -67,14 +67,209 @@
     </style>
 </head>
 <body class="mini-sidebar">
-<div th:replace="~{manage/activities :: main}"></div>
+<!--<div id="global-loader">-->
+<!--    <div class="whirly-loader"></div>-->
+<!--</div>-->
 <div class="main-wrapper">
+    <div class="header">
+
+        <div class="header-left active">
+            <a href="/manage" class="logo">
+                <img src="/images/img/logo.png" alt="">
+            </a>
+            <a href="/manage" class="logo-small">
+                <img src="/images/img/logo-small.png" alt="">
+            </a>
+            <a id="toggle_btn" href="javascript:void(0);">
+            </a>
+        </div>
+
+        <a id="mobile_btn" class="mobile_btn" href="#sidebar">
+            <span class="bar-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+            </span>
+        </a>
+
+        <ul class="nav user-menu">
+
+            <li class="nav-item dropdown has-arrow flag-nav">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
+                    <i class="flag flag-vn"></i>
+                </a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                    <img src="/images/img/icons/notification-bing.svg" alt="img"> <span
+                        class="badge rounded-pill" th:text="${soThongBao}"></span>
+                </a>
+                <div class="dropdown-menu notifications">
+                    <div class="topnav-dropdown-header">
+                        <span class="notification-title">Notifications</span>
+                        <a href="javascript:void(0)" class="clear-noti"> Clear All </a>
+                    </div>
+                    <div class="noti-content">
+                        <ul class="notification-list">
+                            <th:block  th:each="x : ${listThongBao}">
+                                <li th:if="${x.trangThai == 3}"class="notification-message">
+                                    <a href="/manage/bill/online">
+                                        <div class="media d-flex">
+                                        <span class="avatar flex-shrink-0">
+                                        <img alt="" src="/images/img/profiles/avatar-02.jpg">
+                                        </span>
+                                            <div class="media-body flex-grow-1">
+                                                <p class="noti-details" >
+                                                    <span class="noti-title" th:text="${x.khachHang.hoTenKH}"></span>
+                                                    <span th:text="${x.noiDungTB}"></span>
+                                                    <span class="noti-title" th:text="${x.hoaDon.maHD}"></span>
+                                                </p>
+                                                <p class="noti-time">
+                                                    <span class="notification-time"th:text="${#dates.format(x.tgTB, 'HH:mm yyyy-MM-dd')}"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </th:block>
+                        </ul>
+                    </div>
+                    <div class="topnav-dropdown-footer">
+                        <a href="activities.html">View all Notifications</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown has-arrow main-drop">
+                <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
+<!--                    <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">-->
+                    <span class="status online"></span></span>
+                </a>
+                <div class="dropdown-menu menu-drop-user">
+                    <div class="profilename">
+<!--                        <div class="profileset">-->
+<!--                            <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">-->
+<!--                            <span class="status online"></span></span>-->
+<!--                            <div class="profilesets">-->
+<!--                                <h6 th:text="${session.managerLogged.hoTenNV}"></h6>-->
+<!--                                <h5 th:text="${session.managerLogged.chucVu.tenCV}"></h5>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <hr class="m-0">
+                        <a class="dropdown-item" href="profile.html"> <i class="me-2" data-feather="user"></i> My
+                            Profile</a>
+                        <a class="dropdown-item" href="generalsettings.html"><i class="me-2"
+                                                                                data-feather="settings"></i>Settings</a>
+                        <hr class="m-0">
+                        <a class="dropdown-item logout pb-0" href="/logout"><img src="/images/img/icons/log-out.svg"
+                                                                                 class="me-2" alt="img">Logout</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <div class="dropdown mobile-user-menu">
+            <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+               aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="profile.html">Thông tin cá nhân</a>
+                <a class="dropdown-item" href="generalsettings.html">Cài đặt</a>
+                <a class="dropdown-item" href="signin.html">Đăng xuất</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-inner slimscroll">
+            <div id="sidebar-menu" class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="/manage/"><img src="/images/iconlogo.png" alt="img"><span>Trang chủ nè</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/manage/thongke"><img src="/images/img/icons/dashboard.svg" alt="img"><span> Thống Kê</span>
+                        </a>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/product.svg" alt="img"><span> Quản lý Giày</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/chat-lieu">Chất Liệu</a></li>
+                            <li><a href="/manage/giay">Giày</a></li>
+                            <li><a href="/manage/hang">Hãng</a></li>
+                            <li><a href="/manage/hinh-anh">Hình Ảnh</a></li>
+                            <li><a href="/manage/mau-sac" class="active">Màu Sắc</a></li>
+                            <li><a href="/manage/size">Size</a></li>
+                            <li><a href="/manage/giay/old">Giày lỗi</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/expense1.svg" alt="img"><span> Quản Lý Hóa Đơn</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/bill/offline">Hóa đơn tại quầy</a></li>
+                            <li><a href="/manage/bill/online">Quản lý hóa đơn online</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/users1.svg" alt="img"><span> Quản Lý Khách Hàng</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/khach-hang">Khách Hàng</a></li>
+                            <li><a href="/manage/dia-chi">Địa Chỉ </a></li>
+                            <li><a href="/manage/loai-khach-hang">Loại Khách Hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/purchase1.svg" alt="img"><span> Lịch sử thanh toán</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/history/delivery">Thanh toán tiền mặt</a></li>
+                            <li><a href="/manage/history/pay">Thanh toán chuyển khoản </a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="/images/img/icons/users1.svg" alt="img"><span> Quản Lý Nhân Viên</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="/manage/chuc-vu">Chức Vụ</a></li>
+                            <li><a href="/manage/nhan-vien">Nhân Viên</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);">
+                            <img src="/images/img/icons/transfer1.svg" alt="img"/>
+                            <span>Quản lý Khuyến Mãi</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul>
+                            <li><a href="/manage/voucher">Khuyến Mãi Chung</a></li>
+                            <li><a href="/manage/voucher-product">Khuyến Mãi Sản Phẩm</a></li>
+                            <li><a href="/manage/voucher-bill">Khuyến Mãi Hóa Đơn</a></li>
+                            <li><a href="/manage/voucher-ship">Khuyến Mãi Giao Hàng</a></li>
+                            <li><a href="/manage/voucher-ship">Khuyến Mãi Khách Hàng</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/manage/giao-hang"><i data-feather="layers"></i><span> Quản lý giao hàng</span> </a>
+                    </li>
+                    <li>
+                        <a href="/manage/change-password" ><img src="/images/img/icons/edit-6.svg" alt="img"><span>Đổi Mật Khẩu</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <div class="page-wrapper">
         <div class="content">
             <div class="page-header">
                 <div class="page-title">
                     <h4>List Màu Sắc</h4>
-                    <h6>Quản Lý Màu Sắc</h6>
+                    <h6>Quản Lý Giày</h6>
                 </div>
                 <div class="page-btn">
                     <button class="btn btn-added" id="show-form-button">
@@ -85,34 +280,30 @@
             <div class="card">
                 <div class="card-body">
                     <div class="hidden-form" style="display: none">
-                        <form th:object="${mauSacAdd}" method="post" th:action="@{/manage/mau-sac/viewAdd/add}"
-                              onsubmit="return validateMauSacForm()" name="mauSacForm">
+                        <form th:object="${mauSacAdd}" method="post" th:action="@{/manage/mau-sac/viewAdd/add}" onsubmit="return validateMauSacForm()" name="mauSacForm">
                             <div class="row">
                                 <div class="col-lg-2 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="ma">Mã</label>
-                                        <input type="text" id="ma" name="ma" th:field="*{ma}" class="form-control"/>
+                                        <input type="text" id="ma" name="ma" th:field="*{ma}" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="maMau">Mã Màu (RGB)</label>
-                                        <input type="text" id="rgbValue" name="maMau" th:field="*{maMau}" readonly
-                                               class="form-control" style="margin-top: 5px;"/>
+                                        <input type="text" id="rgbValue" name="maMau" th:field="*{maMau}" readonly class="form-control" style="margin-top: 5px;" />
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="chonMau">Chọn Màu:</label>
-                                        <input type="color" id="chonMau" name="chonMau"
-                                               onchange="updateRGBValue(this.value)" required class="large-input"/>
+                                        <input type="color" id="chonMau" name="chonMau" onchange="updateRGBValue(this.value)" required class="large-input" />
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="tenMau">Tên Màu</label>
-                                        <input type="text" id="tenMau" name="tenMau" th:field="*{tenMau}"
-                                               class="form-control"/>
+                                        <input type="text" id="tenMau" name="tenMau" th:field="*{tenMau}" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -164,70 +355,70 @@
                     <form method="get" th:action="@{/manage/mauSac/filter}">
 
 
-                        <div class="card" id="filter_inputs">
-                            <div class="card-body pb-0">
-                                <div class="row">
-                                    <div class="col-lg-2 col-sm-6 col-12">
-                                        <div class="form-group">
-                                            <select class="select" name="trangThai">
-                                                <option value="">Trạng thái</option>
-                                                <option value="1">Hoạt động</option>
-                                                <option value="0">Không hoạt động</option>
-                                            </select>
+                            <div class="card" id="filter_inputs">
+                                <div class="card-body pb-0">
+                                    <div class="row">
+                                        <div class="col-lg-2 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <select class="select" name="trangThai">
+                                                    <option value="">Trạng thái</option>
+                                                    <option value="1">Hoạt động</option>
+                                                    <option value="0">Không hoạt động</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-1 col-sm-6 col-12 ms-auto">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-filters ms-auto"><img
-                                                    src="/images/img/icons/search-whites.svg"
-                                                    alt="img"></button>
+                                        <div class="col-lg-1 col-sm-6 col-12 ms-auto">
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-filters ms-auto"><img
+                                                        src="/images/img/icons/search-whites.svg"
+                                                        alt="img"></button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
 
-                        <!--                        <div class="card" id="filter_inputs">-->
-                        <!--                            <div class="card-body pb-0">-->
-                        <!--                                <div class="row">-->
-                        <!--                                    <div class="col-lg-2 col-sm-6 col-12">-->
-                        <!--                                        <div class="form-group">-->
-                        <!--                                            <select class="select" id="mauSacFilterMa" name="maMau">-->
-                        <!--                                                <option>Mã</option>-->
-                        <!--                                                <option th:each="loc : ${mauSac}" th:value="${loc.ma}"-->
-                        <!--                                                        th:text="${loc.ma}"></option>-->
-                        <!--                                            </select>-->
-                        <!--                                        </div>-->
-                        <!--                                    </div>-->
-                        <!--                                    <div class="col-lg-2 col-sm-6 col-12">-->
-                        <!--                                        <div class="form-group">-->
-                        <!--                                            <select class="select" id="mauSacFilterTen" name="tenMau">-->
-                        <!--                                                <option>Tên Màu</option>-->
-                        <!--                                                <option th:each="loc : ${mauSac}" th:value="${loc.tenMau}"-->
-                        <!--                                                        th:text="${loc.tenMau}"></option>-->
-                        <!--                                            </select>-->
-                        <!--                                        </div>-->
-                        <!--                                    </div>-->
-                        <!--                                    &lt;!&ndash;                                <div class="col-lg-2 col-sm-6 col-12">&ndash;&gt;-->
-                        <!--                                    &lt;!&ndash;                                    <div class="form-group">&ndash;&gt;-->
-                        <!--                                    &lt;!&ndash;                                        <select class="select">&ndash;&gt;-->
-                        <!--                                    &lt;!&ndash;                                            <option>Trạng Thái</option>&ndash;&gt;-->
-                        <!--                                    &lt;!&ndash;                                            <option th:each="loc : ${dsTrangThai.entrySet()}" th:value="${loc.key}"&ndash;&gt;-->
-                        <!--                                    &lt;!&ndash;                                                    th:text="${loc.value}"></option>&ndash;&gt;-->
-                        <!--                                    &lt;!&ndash;                                        </select>&ndash;&gt;-->
-                        <!--                                    &lt;!&ndash;                                    </div>&ndash;&gt;-->
-                        <!--                                    &lt;!&ndash;                                </div>&ndash;&gt;-->
-                        <!--                                    <div class="col-lg-1 col-sm-6 col-12 ms-auto">-->
-                        <!--                                        <div class="form-group">-->
-                        <!--                                            <button type="submit" class="btn btn-filters ms-auto"><img-->
-                        <!--                                                    src="/images/img/icons/search-whites.svg"-->
-                        <!--                                                    alt="img"></button>-->
-                        <!--                                        </div>-->
-                        <!--                                    </div>-->
-                        <!--                                </div>-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
+<!--                        <div class="card" id="filter_inputs">-->
+<!--                            <div class="card-body pb-0">-->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-lg-2 col-sm-6 col-12">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <select class="select" id="mauSacFilterMa" name="maMau">-->
+<!--                                                <option>Mã</option>-->
+<!--                                                <option th:each="loc : ${mauSac}" th:value="${loc.ma}"-->
+<!--                                                        th:text="${loc.ma}"></option>-->
+<!--                                            </select>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-lg-2 col-sm-6 col-12">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <select class="select" id="mauSacFilterTen" name="tenMau">-->
+<!--                                                <option>Tên Màu</option>-->
+<!--                                                <option th:each="loc : ${mauSac}" th:value="${loc.tenMau}"-->
+<!--                                                        th:text="${loc.tenMau}"></option>-->
+<!--                                            </select>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    &lt;!&ndash;                                <div class="col-lg-2 col-sm-6 col-12">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                    <div class="form-group">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                        <select class="select">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                            <option>Trạng Thái</option>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                            <option th:each="loc : ${dsTrangThai.entrySet()}" th:value="${loc.key}"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                    th:text="${loc.value}"></option>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                        </select>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                    </div>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--                                    <div class="col-lg-1 col-sm-6 col-12 ms-auto">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <button type="submit" class="btn btn-filters ms-auto"><img-->
+<!--                                                    src="/images/img/icons/search-whites.svg"-->
+<!--                                                    alt="img"></button>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </form>
                     <div class="table-responsive">
                         <table class="table datanew" id="data-table">
@@ -240,6 +431,7 @@
                                 <th>Action</th>
                                 <th>Thời Gian Thêm</th>
                                 <th>Thời Gian Sửa</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -250,27 +442,22 @@
                                 </td>
                                 <td th:text="${items.tenMau}"></td>
                                 <td>
-                                    <span th:id="'trangThaiUpdate_' + ${items.idMau}" th:if="${items.trangThai == 1}"
-                                          class="badges bg-lightgreen">Hoạt Động</span>
-                                    <span th:id="'trangThaiUpdate_' + ${items.idMau}" th:if="${items.trangThai == 0}"
+                                    <span th:if="${items.trangThai == 1}" class="badges bg-lightgreen">Hoạt Động</span>
+                                    <span th:unless="${items.trangThai == 1}"
                                           class="badges bg-lightred">Không Hoạt Động</span>
                                 </td>
                                 <td>
                                     <a class="me-3" th:href="@{'/manage/mau-sac/viewUpdate/' + ${items.idMau}}">
                                         <img src="/images/img/icons/edit.svg" alt="img">
                                     </a>
-                                    <a class="form-check form-switch">
-                                        <input class="me-3 form-check-input" type="checkbox" role="switch"
-                                               th:checked="${items.trangThai == 1}"
-                                               th:data-ma="${items.idMau}"
-                                               onchange="thayDoiTrangThai(this)"
-                                               onclick="capNhatTrangThaiMauSac(this.getAttribute('data-ma'))">
-                                        <input style="display: none" th:id="'flexSwitchCheck_' + ${items.idMau}"
-                                               th:value="${items.trangThai}">
+                                    <a class="me-3 delete-button"
+                                       th:data-delete-url="@{'/manage/mau-sac/delete/' + ${items.idMau}}">
+                                        <img src="/images/img/icons/delete.svg" alt="img">
                                     </a>
                                 </td>
                                 <td th:text="${#dates.format(items.tgThem, 'dd-MM-yyyy')}" align="center"/>
                                 <td th:text="${#dates.format(items.tgSua, 'dd-MM-yyyy')}" align="center"/>
+
                             </tr>
                             </tbody>
                         </table>
@@ -280,7 +467,6 @@
             </div>
         </div>
     </div>
-    <input id="mauSac" th:value="${active}" style="display: none">
 </div>
 <div th:if="${message}" id="toast-container" class="toast-container toast-top-right">
     <div class="toast toast-success" aria-live="polite" style="display: block;">
@@ -550,45 +736,7 @@
             'label': 'Đồng ý',
         }).show();
     }
-
-    var idMau;
-    function capNhatTrangThaiMauSac(id) {
-        idMau = id;
-        let trangThai = document.getElementById("flexSwitchCheck_" + id).value;
-        var formData = new FormData();
-        formData.append("trangThai", trangThai);
-        $.ajax({
-            type: "PUT",
-            // url: "/bumblebee/khuyen-mai/cap-nhat-trang-thai/" + ma,
-            url: "/manage/mau-sac/" + id,
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                console.log("Success: " + response);
-            },
-            error: function (error) {
-                console.log("Error1: " + JSON.stringify(error));
-            }
-        });
-    }
-
-    function thayDoiTrangThai(checkbox) {
-        let trangThai = checkbox.checked;
-        let tThai = document.getElementById("trangThaiUpdate_" + idMau);
-        console.log(trangThai);
-        if (trangThai) {
-            tThai.innerText = "Hoạt Động";
-            tThai.style.color = "white";
-            tThai.classList.remove("bg-lightred");
-            tThai.classList.add("bg-lightgreen");
-        } else {
-            tThai.innerText = "Không Hoạt Động";
-            tThai.style.color = "white";
-            tThai.classList.remove("bg-lightgreen");
-            tThai.classList.add("bg-lightred");
-        }
-    }
 </script>
+
 </body>
 </html>
