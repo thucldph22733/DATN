@@ -11,10 +11,10 @@ import java.util.UUID;
 @Repository
 public interface KhachHangRepository extends JpaRepository< KhachHang,UUID> {
 
-    KhachHang findByEmailKHAndTrangThaiAndMatKhau(String email,int trangThai, String pass);
 
     KhachHang findBySdtKHAndTrangThaiAndMatKhau(String sdt,int trangThai, String pass);
 
+    KhachHang findByEmailKHAndTrangThaiAndMatKhau(String email,int trangThai,String pass);
     KhachHang findByEmailKH(String email);
     List<KhachHang> findByTrangThai(int trangThai);
     List<KhachHang> findByMaKHOrHoTenKH(String maKH, String tenKH);

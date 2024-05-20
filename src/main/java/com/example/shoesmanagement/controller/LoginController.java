@@ -61,19 +61,13 @@ public class LoginController {
             if (nhanVien != null) {
                 if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("CV01")) {
                     session.setAttribute("managerLogged", nhanVien);
+                    session.setAttribute("shipperLogged", nhanVien);
                     session.setAttribute("staffLogged", nhanVien);
                     return "redirect:/manage/";
-                } else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("NV01")) {
+                } else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("CV02")) {
                     session.setAttribute("staffLogged", nhanVien);
                     return "redirect:/manage/hang";
-                }else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("NV02")) {
-                    session.setAttribute("staffLogged", nhanVien);
-                    return "redirect:/manage/hang";
-                }else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("NV03")) {
-                    session.setAttribute("staffLogged", nhanVien);
-                    return "redirect:/manage/hang";
-                }
-                else {
+                } else {
                     model.addAttribute("messageLogin", "Not Access");
                     return "/login";
                 }
@@ -90,7 +84,7 @@ public class LoginController {
                     return "redirect:/manage/";
                 } else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("CV02")) {
                     session.setAttribute("staffLogged", nhanVien);
-                    return "redirect:/manage/hang";
+                    return "redirect:/manage/common/hang";
                 } else {
                     model.addAttribute("messageLogin", "Not Access");
                     return "/login";

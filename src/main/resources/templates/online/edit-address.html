@@ -26,11 +26,8 @@
         <link rel="stylesheet" href="/cssx/style.css" type="text/css">
         <link rel="stylesheet" href="/cssx/scroll.min.css" type="text/css">
         <link rel="stylesheet" href="/cssx/styleNhan.css" type="text/css">
-<<<<<<< HEAD
-=======
 
 
->>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
         <style>
             header {
                 position: fixed;
@@ -141,15 +138,6 @@
         }
     </style>
 <body>
-<<<<<<< HEAD
-<!-- Page Preloder -->
-<!--<div id="preloder">-->
-<!--    <div class="loader"></div>-->
-<!--</div>-->
-
-<!-- Header Section BegiAccount  -->
-=======
->>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
 <header class="header">
     <div class="header__top">
         <div class="container">
@@ -199,12 +187,8 @@
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
-<<<<<<< HEAD
-                    <a th:href="@{'/buyer/home'}"><img src="/images/img/logo.png" style="width: 150px; height: 50px"
-=======
                     <a th:href="@{'/buyer/home'}"><img src="/images/img/logo.png"
                                                        style="width: 240px; height: 240px; margin-top: -84px"
->>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
                                                        alt=""></a>
                 </div>
             </div>
@@ -333,13 +317,7 @@
                                 <div class="card-body">
                                     <div class="shop__sidebar__categories">
                                         <ul class="nice-scroll" style="height: 20%">
-<<<<<<< HEAD
-                                            <li><a href="/buyer/setting">Thông tin</a></li>
                                             <li><a href="/buyer/addresses">Địa chỉ</a></li>
-                                            <li><a href="/buyer/setting">Ngân hàng</a></li>
-=======
-                                            <li><a href="/buyer/addresses">Địa chỉ</a></li>
->>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
                                         </ul>
                                     </div>
                                 </div>
@@ -350,24 +328,6 @@
                                 <a href="/buyer/purchase">Đơn mua</a>
                             </div>
                         </div>
-<<<<<<< HEAD
-                        <div class="card">
-                            <div class="card-heading">
-                                <a href="/buyer/notification">Thông báo</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-heading">
-                                <a href="/buyer/voucher">Khuyến mãi</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-heading">
-                                <a href="/buyer/coins">Xu</a>
-                            </div>
-                        </div>
-=======
->>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
                     </div>
                 </div>
             </div>
@@ -410,15 +370,6 @@
                                                 <input type="text" th:field="*{sdtNguoiNhan}">
                                             </div>
                                         </div>
-<<<<<<< HEAD
-                                        <div class="col-lg-6 col-sm-6 col-12">
-                                            <div class="form-group">
-                                                <label>Tỉnh Thành Phố <span style="color: red;">*</span></label>
-                                                <select class="select" id="tinhthanhpho">
-                                                    <option value="" selected>Chọn thành phố</option>
-                                                </select>
-                                                <input type="text" hidden th:field="*{tinhTP}" id="tinh-tp-hidden"/>
-=======
 
                                         <div class="col-lg-6 col-sm-6 col-12">
                                             <div class="form-group">
@@ -426,43 +377,25 @@
                                                 <select class="select" id="city" name="city" style="width: 290px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;margin-right: 30px; ">
                                                     <option th:each="tinhTP : ${diaChi}" th:value="${diaChi.idDC}" th:text="${diaChi.tinhTP}" selected></option>
                                                 </select>
->>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 col-12">
                                             <div class="form-group">
                                                 <label>Quận Huyện <span style="color: red;">*</span></label>
-<<<<<<< HEAD
-                                                <select class="select" id="quanhuyen">
-                                                    <option value="" selected>Chọn quận huyện</option>
-                                                </select>
-                                                <input type="text" hidden th:field="*{quanHuyen}"
-                                                       id="quan-huyen-hidden"/>
-=======
                                                 <select class="select" id="district" name="district" style="width: 290px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;margin-right: 30px; ">
                                                     <option th:each="quanHuyen : ${diaChi}" th:value="${diaChi.idDC}" th:text="${diaChi.quanHuyen}" selected></option>
                                                 </select>
->>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 col-12">
                                             <div class="form-group">
                                                 <label>Xã Phường <span style="color: red;">*</span></label>
-<<<<<<< HEAD
-                                                <select class="select" id="xaphuong">
-                                                    <option value="" selected>Chọn xã phường</option>
-                                                </select>
-                                                <input type="text" hidden th:field="*{xaPhuong}" id="phuong-xa-hidden"/>
-                                            </div>
-                                        </div>
-=======
                                                 <select class="select" id="ward" name="ward" style="width: 290px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; ">
                                                     <option th:each="xaPhuong : ${diaChi}" th:value="${diaChi.idDC}" th:text="${diaChi.xaPhuong}" selected></option>
                                                 </select>
                                             </div>
                                         </div>
 
->>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
                                         <div class="col-lg-6 col-sm-6 col-12">
                                             <div class="form-group">
                                                 <label>Mô Tả <span style="color: red;">*</span></label>
@@ -571,82 +504,6 @@
 <script src="/js/jquery.slimscroll.min.js"></script>
 <script src="/js/scrollbar.min.js"></script>
 <script src="/js/custom-scroll.js"></script>
-<<<<<<< HEAD
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    // Hàm để tải dữ liệu tỉnh thành từ API
-    const loadTinhThanhData = () => {
-        const host = "https://esgoo.net/"; // URL cơ sở của API
-        callAPI(host + "api-tinhthanh/1/0.htm").then(res => {
-            // Sau khi dữ liệu được tải, hiển thị trong dropdown
-            renderData(res.data, "tinhthanhpho");
-        });
-    }
-
-    // Hàm để gọi API và render dữ liệu
-    var callAPI = async (api) => {
-        return await axios.get(api);
-    }
-
-    // Hàm render dữ liệu vào dropdown
-    var renderData = (array, select) => {
-        let row = ' <option disable value="">Chọn</option>';
-        array.forEach(element => {
-            row += `<option data-id="${element.id}" value="${element.full_name}">${element.full_name}</option>`
-        });
-        document.querySelector("#" + select).innerHTML = row;
-    }
-
-    // Gọi hàm tải dữ liệu tỉnh thành khi trang được tải
-    loadTinhThanhData();
-
-    // Các sự kiện khi dropdown thay đổi
-    $("#tinhthanhpho").change(() => {
-        const tinhtp = $("#tinhthanhpho").find(':selected')
-        callApiDistrict(host + "api-tinhthanh/2/" + tinhtp.data('id') + ".htm");
-        document.getElementById("tinh-tp-hidden").value = tinhtp.text();
-        printResult();
-    });
-    $("#quanhuyen").change(() => {
-        const quanhuyen =  $("#quanhuyen").find(':selected')
-        callApiWard(host + "api-tinhthanh/3/" + quanhuyen.data('id') + ".htm");
-        document.getElementById("quan-huyen-hidden").value = quanhuyen.text();
-        printResult();
-    });
-    $("#xaphuong").change(() => {
-        const phuongxa =  $("#xaphuong").find(':selected')
-        document.getElementById("phuong-xa-hidden").value = phuongxa.text();
-        printResult();
-    })
-
-    // Các hàm khác có thể bạn cần
-    var callApiDistrict = async (api) => {
-        return await axios.get(api)
-            .then((response) => {
-                renderData(response.data.data, "quanhuyen");
-                return response;
-            });
-    }
-    var callApiWard = async (api) => {
-        return await axios.get(api)
-            .then((response) => {
-                renderData(response.data.data, "xaphuong");
-                return response;
-            });
-    }
-    const printResult = () => {
-        const quanHuyen = $("#quanhuyen").find(':selected').data('name');
-        const xaPhuong = $("#xaphuong").find(':selected').data('name');
-        const tinhTP = $("#tinhthanhpho").find(':selected').data('name');
-
-        if (quanHuyen != "" && xaPhuong != "" &&
-            tinhTP != "") {
-            let idDiaChi = $("#diachict");
-            idDiaChi[0].value = xaPhuong + " , " + quanHuyen + " , " + tinhTP;
-        }
-        console.log(tinhTP);
-    }
-=======
 
 
 
@@ -711,7 +568,6 @@
         }
     }
 
->>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
 </script>
 
 <script>
@@ -741,8 +597,6 @@
     });
 </script>
 
-<<<<<<< HEAD
-=======
 
 
 <script>
@@ -772,7 +626,6 @@
     });
 </script>
 
->>>>>>> a9d77f4ee406f04dee781637e353e6662a003a71
 <script>
     $(document).on("click", "i.del", function () {
         $(this).parent().remove();
