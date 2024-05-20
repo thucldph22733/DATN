@@ -73,9 +73,4 @@ public class ChatLieuServiceImpl implements ChatLieuService {
             // Xử lý lỗi nếu cần
         }
     }
-
-    @Override
-    public void capNhatTrangThai(int trangThai, UUID ma) {
-
-    }
 }

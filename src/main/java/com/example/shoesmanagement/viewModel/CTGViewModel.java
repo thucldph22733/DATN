@@ -14,7 +14,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-    public class CTGViewModel {
+public class CTGViewModel {
     @Id
     @Column(name = "id_giay")
     private UUID idGiay;
