@@ -4,10 +4,6 @@
     <meta charset="UTF-8">
     <title>Control Shop</title>
     <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+z0I5t9z5lFf4vu9BU6imUHP5hq3e3oBblb7g2d" crossorigin="anonymous"></script>
-    <!-- Đặt trong thẻ <head> của tài liệu HTML -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
-
 </head>
 <style>
     body {
@@ -166,100 +162,56 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!--<script >-->
-<!--    function login(){-->
-<!--        var formData = new FormData();-->
-<!--        let username = document.getElementById("username").value;-->
-<!--        let password = document.getElementById("password").value;-->
-<!--        formData.append("username",username);-->
-<!--        formData.append("password",password);-->
-<!--        $.ajax({-->
-<!--            type: "POST",-->
-<!--            url: "/buyer/login",-->
-<!--            data: formData,-->
-<!--            contentType: false,-->
-<!--            processData: false,-->
-<!--            success: function (response) {-->
-<!--                console.log("succes " + response);-->
-<!--                if (response === 'Login thanh cong' ){-->
-<!--                    Swal.fire({-->
-<!--                        position: "center",-->
-<!--                        icon: "success",-->
-<!--                        title: "Login successful",-->
-<!--                        showConfirmButton: true,-->
-<!--                        confirmButtonText: "OK",-->
-
-<!--                    });-->
-<!--                    setTimeout(() => {-->
-<!--                        console.log('Hàm đã được gọi sau 2 giây.');-->
-<!--                        window.location.href = "http://localhost:8080/buyer/home";-->
-<!--                    }, 3000);-->
-
-
-<!--                }else {-->
-<!--                    Swal.fire({-->
-<!--                        icon: "error",-->
-<!--                        title: "Oops...",-->
-<!--                        text: "Username and Password incorrect!",-->
-
-<!--                    });-->
-
-<!--                }-->
-
-
-<!--            },-->
-<!--            error: function (error) {-->
-<!--                console.log("error " + error)-->
-<!--            }-->
-<!--        })-->
-
-<!--    }-->
-
-<!--</script>-->
-<!-- Đặt ngay trước thẻ <script> của mã JavaScript login của bạn -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
-<script>
+<script >
     function login(){
         var formData = new FormData();
         let username = document.getElementById("username").value;
         let password = document.getElementById("password").value;
-        formData.append("username", username);
-        formData.append("password", password);
-
-        fetch("/buyer/login", {
-            method: "POST",
-            body: formData
-        })
-            .then(response => response.text())
-            .then(text => {
-                console.log("success " + text);
-                if (text === 'Login thanh cong') {
+        formData.append("username",username);
+        formData.append("password",password);
+        $.ajax({
+            type: "POST",
+            url: "/buyer/login",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                console.log("succes " + response);
+                if (response === 'Login thanh cong' ){
                     Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Login successful',
+                        position: "center",
+                        icon: "success",
+                        title: "Login successful",
                         showConfirmButton: true,
-                        confirmButtonText: 'OK',
+                        confirmButtonText: "OK",
+
                     });
                     setTimeout(() => {
                         console.log('Hàm đã được gọi sau 2 giây.');
                         window.location.href = "http://localhost:8080/buyer/home";
                     }, 3000);
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Username and Password incorrect!',
-                    });
-                }
-            })
-            .catch(error => {
-                console.error("error " + error);
-            });
-    }
-</script>
 
+
+                }else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Username and Password incorrect!",
+
+                    });
+
+                }
+
+
+            },
+            error: function (error) {
+                console.log("error " + error)
+            }
+        })
+
+    }
+
+</script>
 
 
 </body>
