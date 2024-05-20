@@ -2,35 +2,23 @@ package com.example.shoesmanagement.service;
 
 import com.example.shoesmanagement.model.KhachHang;
 
-import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
 public interface KhachHangService {
-    KhachHang checkLoginSDT(String sdt, String pass);
-
     KhachHang checkLoginEmail(String email, String pass);
-
     KhachHang checkEmail(String email);
-
+    KhachHang checkLoginSDT(String sdt, String pass);
 
     public List<KhachHang> getAllKhachHang();
 
     public void save(KhachHang khachHang);
+    public void getByIdKhachHang(UUID id);
 
-    public void deteleByIdKhachHang(UUID id);
-
-    public KhachHang getByIdKhachHang(UUID id);
-
-    void addKhachHang(KhachHang khachHang);
-
-    public void importDataFromExcel(InputStream excelFile);
-
+    public void addKhachHang(KhachHang khachHang);
     public List<KhachHang> findByTrangThai(int trangThai);
-    public List<KhachHang> fillterKhachHang(String maKH, String tenKH);
-
+    public List<KhachHang> fillterKhachHang(String maKh, String tenKh);
 
     List<KhachHang> findKhachHangByTrangThai();
-
     List<KhachHang> findKhachHangByKeyword(String keyword);
 }

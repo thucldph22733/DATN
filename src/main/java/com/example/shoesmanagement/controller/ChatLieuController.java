@@ -8,6 +8,7 @@ import com.example.shoesmanagement.service.GiayService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -101,16 +102,16 @@ public class ChatLieuController {
     }
 
     @GetMapping("/chat-lieu/delete/{id}")
-    public String deleteChatLieu(@PathVariable UUID id, RedirectAttributes redirectAttributes){
+    public String deleteChatLieu(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         ChatLieu chatLieu = chatLieuService.getByIdChatLieu(id);
         chatLieu.setTrangThai(0);
         chatLieu.setTgSua(new Date());
-        List<Giay> listGiay =giayService.findByChatLieu(chatLieu);
-        for (Giay giay : listGiay){
+        List<Giay> listGiay = giayService.findByChatLieu(chatLieu);
+        for (Giay giay : listGiay) {
             giay.setTrangThai(0);
             giayService.save(giay);
 //            giayController.deleteGiayById(giay.getIdGiay());
-            }
+        }
         redirectAttributes.addFlashAttribute("message", true);
         return "redirect:/manage/chat-lieu";
     }
@@ -186,4 +187,22 @@ public class ChatLieuController {
         return "redirect:/manage/chat-lieu";
     }
 
+    @PutMapping("/chat-lieu/{idChatLieu}")
+    public ResponseEntity<String> capNhatTrangThai(@RequestParam String trangThai,
+                                                   @PathVariable UUID idChatLieu) {
+        int trangThaiInt = Integer.valueOf(trangThai);
+        System.out.println(trangThai);
+
+        int trangThaiUpdate;
+        if (trangThaiInt == 1) {
+            trangThaiUpdate = 0;
+        } else {
+            trangThaiUpdate = 1;
+        }
+        System.out.println(trangThaiUpdate);
+        ChatLieu chatLieu = chatLieuService.getByIdChatLieu(idChatLieu);
+        chatLieu.setTrangThai(trangThaiUpdate);
+        chatLieuService.save(chatLieu);
+        return ResponseEntity.ok("ok");
+    }
 }
