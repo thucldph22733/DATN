@@ -371,8 +371,8 @@
                                         </div>
                                     </td>
                                     <td style="width: 140px;" class="cart__price totalAmount" th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
-<!--                                    <td class="cart__close"><a th:href="@{'/buyer/cart/delete/' + ${x.chiTietGiay.idCTG}}" id="deleteToCartButton" style="border-radius: 20% ; " ><i class="fa fa-close"></i></a></td>-->
-<!--                                    <td class="cart__close"> <a th:href="@{/buyer/cart/delete/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}" id="deleteToCartButton" style="border-radius: 20%;" onclick="return confirm('Bạn có chắc chắn muốn xoá sản phẩm này khỏi giỏ hàng không?')" class="confirmation-box"> <i class="fa fa-close"></i> </a> </td>-->
+                                    <!--                                    <td class="cart__close"><a th:href="@{'/buyer/cart/delete/' + ${x.chiTietGiay.idCTG}}" id="deleteToCartButton" style="border-radius: 20% ; " ><i class="fa fa-close"></i></a></td>-->
+                                    <!--                                    <td class="cart__close"> <a th:href="@{/buyer/cart/delete/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}" id="deleteToCartButton" style="border-radius: 20%;" onclick="return confirm('Bạn có chắc chắn muốn xoá sản phẩm này khỏi giỏ hàng không?')" class="confirmation-box"> <i class="fa fa-close"></i> </a> </td>-->
                                     <td class="cart__close">
                                         <a th:href="@{/buyer/cart/delete/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}" id="deleteToCartButton" style="border-radius: 20%;" data-toggle="modal" data-target="#confirmationModal">
                                             <i class="fa fa-close"></i>
@@ -885,28 +885,28 @@
     </div>
     <!--Modal show option product end-->
 
-<!--    <div class="modal fade" id="messAddThanhCong" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">-->
-<!--        <div class="modal-dialog modal-dialog-centered" role="document">-->
-<!--            <div class="modal-content">-->
-<!--                <div class="modal-header">-->
-<!--                    <h5 class="modal-title" id="messAddThanhCongTitle" >FBI Waring !</h5>-->
-<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--                        <span aria-hidden="true">&times;</span>-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--                <div class="modal-body">-->
+    <!--    <div class="modal fade" id="messAddThanhCong" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">-->
+    <!--        <div class="modal-dialog modal-dialog-centered" role="document">-->
+    <!--            <div class="modal-content">-->
+    <!--                <div class="modal-header">-->
+    <!--                    <h5 class="modal-title" id="messAddThanhCongTitle" >FBI Waring !</h5>-->
+    <!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+    <!--                        <span aria-hidden="true">&times;</span>-->
+    <!--                    </button>-->
+    <!--                </div>-->
+    <!--                <div class="modal-body">-->
 
-<!--                    <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">-->
-<!--                        <p style="font-size: 13pt; font-weight: 600;">Chọn ít nhất 1 sản phẩm để mua hàng !!</p>-->
-<!--                    </div>-->
+    <!--                    <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">-->
+    <!--                        <p style="font-size: 13pt; font-weight: 600;">Chọn ít nhất 1 sản phẩm để mua hàng !!</p>-->
+    <!--                    </div>-->
 
-<!--                </div>-->
-<!--                <div class="modal-footer">-->
-<!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+    <!--                </div>-->
+    <!--                <div class="modal-footer">-->
+    <!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
 
 
     <!-- Button trigger modal -->
@@ -967,7 +967,7 @@
 
 
 <script>
-        $(document).ready(function(){
+    $(document).ready(function(){
         $('#yourTriggerButton').click(function(){
             $('#simpleModal').modal('show');
         });
