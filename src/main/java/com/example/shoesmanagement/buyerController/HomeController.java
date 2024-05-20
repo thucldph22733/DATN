@@ -29,13 +29,13 @@ public class HomeController {
 
     public class LoginApiController {
 
-        @GetMapping("/api/check-login1")
-        public Map<String, Boolean> checkLoginStatus(HttpSession session) {
-            KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-            Map<String, Boolean> status = new HashMap<>();
-            status.put("loggedIn", khachHang != null);
-            return status;
-        }
+//        @GetMapping("/api/check-login1")
+//        public Map<String, Boolean> checkLoginStatus(HttpSession session) {
+//            KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+//            Map<String, Boolean> status = new HashMap<>();
+//            status.put("loggedIn", khachHang != null);
+//            return status;
+//        }
     }
 
 
