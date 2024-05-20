@@ -24,6 +24,7 @@ public class BanHangController {
 
     @Autowired
     private ChatLieuService chatLieuService;
+
     @GetMapping("/ban-hang")
     public String banHang(Model model) {
         List<Giay> listGiay = giayService.getAllGiay();
