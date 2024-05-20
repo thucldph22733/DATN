@@ -53,7 +53,7 @@ public class CheckOutController {
     private VNPayService vnPayService;
 
     @PostMapping("/buyer/checkout")
-    private String checkOutCart(Model model, @RequestParam("selectedProducts") List<UUID> selectedProductIds){
+    private String checkOutCart(Model model, List<UUID> selectedProductIds){
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
