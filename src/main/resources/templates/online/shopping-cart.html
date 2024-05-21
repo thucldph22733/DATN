@@ -41,6 +41,26 @@
                 z-index: 100;
             }
         </style>
+        <style>
+            /* Tăng cường độ mờ để đảm bảo rằng các nút tăng giảm luôn hiển thị */
+            input[type="number"]::-webkit-inner-spin-button,
+            input[type="number"]::-webkit-outer-spin-button {
+                opacity: 1 !important;
+                visibility: visible !important;
+            }
+
+            /* Đối với Firefox */
+            input[type="number"] {
+                -moz-appearance: textfield;
+            }
+
+            /* Đảm bảo mũi tên đó không bị ẩn trong các trình duyệt khác */
+            input[type="number"]::up-button,
+            input[type="number"]::down-button {
+                display: block !important;
+            }
+
+        </style>
     </head>
 
 <body>
@@ -51,50 +71,50 @@
 
 <!-- Header Section Begin -->
 <header class="header">
-    <style>
-        :root {
-            --primary-color: #007bff;
-            --secondary-color: #6c757d;
-            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            --font-size: 1rem;
-        }
+    <!--    <style>-->
+    <!--        :root {-->
+    <!--            &#45;&#45;primary-color: #007bff;-->
+    <!--            &#45;&#45;secondary-color: #6c757d;-->
+    <!--            &#45;&#45;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;-->
+    <!--            &#45;&#45;font-size: 1rem;-->
+    <!--        }-->
 
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
+    <!--        .btn-primary {-->
+    <!--            background-color: var(&#45;&#45;primary-color);-->
+    <!--            color: white;-->
+    <!--        }-->
 
-        .btn-primary:hover,
-        .btn-primary:focus {
-            background-color: darken(var(--primary-color), 10%);
-        }
+    <!--        /*.btn-primary:hover,*/-->
+    <!--        /*.btn-primary:focus {*/-->
+    <!--        /*    background-color: darken(var(&#45;&#45;primary-color), 10%);*/-->
+    <!--        /*}*/-->
 
-        .modal-content {
-            border: 1px solid #dee2e6;
-            box-shadow: 0 5px 15px rgba(0,0,0,.5);
-            padding: 20px;
-        }
+    <!--        .modal-content {-->
+    <!--            border: 1px solid #dee2e6;-->
+    <!--            box-shadow: 0 5px 15px rgba(0,0,0,.5);-->
+    <!--            padding: 20px;-->
+    <!--        }-->
 
-        .modal-title {
-            font-family: var(--font-family);
-            font-size: var(--font-size);
-            font-weight: bold;
-        }
+    <!--        .modal-title {-->
+    <!--            font-family: var(&#45;&#45;font-family);-->
+    <!--            font-size: var(&#45;&#45;font-size);-->
+    <!--            font-weight: bold;-->
+    <!--        }-->
 
-        .modal-body {
-            font-family: var(--font-family);
-            font-size: var(--font-size);
-        }
+    <!--        .modal-body {-->
+    <!--            font-family: var(&#45;&#45;font-family);-->
+    <!--            font-size: var(&#45;&#45;font-size);-->
+    <!--        }-->
 
-        .modal.fade .modal-dialog {
-            transition: transform .3s ease-out;
-            transform: translate(0, -50%);
-        }
+    <!--        .modal.fade .modal-dialog {-->
+    <!--            transition: transform .3s ease-out;-->
+    <!--            transform: translate(0, -50%);-->
+    <!--        }-->
 
-        .modal.show .modal-dialog {
-            transform: translate(0, 0);
-        }
-    </style>
+    <!--        .modal.show .modal-dialog {-->
+    <!--            transform: translate(0, 0);-->
+    <!--        }-->
+    <!--    </style>-->
 
     <th:block th:if="${message != null}">
         <span class="text-danger"></span>
@@ -359,20 +379,24 @@
                                             <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);" th:text="'Size : ' + ${x.chiTietGiay.size.soSize}" ></span>
                                         </div>
                                     </td>
-                                    <td style="width: 175px;"  class="quantity__item">
+                                    <td style="width: 175px;" class="quantity__item">
                                         <div class="quantity">
 
-                                            <input style=" margin-top: 3px;border: none; font-weight: 700; font-size: 18pt; background-color: white;" type="button" value="-" class="button-minus dec button" onclick="decrementQuantity(this)">
+                                            <!--                                            <input style="margin-top: 3px; font-weight: 700; font-size: 18pt; background-color: white;" type="button" value="-" class="button-minus dec button" onclick="decrementQuantity(this)">-->
 
-                                            <input  class="quantityInput" oninput="validateQuantity(this)" th:value="${x.soLuong}" style="width: 30px; text-align: center; border: none;" type="number" th:name="${x.chiTietGiay.idCTG}">
+                                            <input class="quantityInput" oninput="validateQuantity(this)" th:value="${x.soLuong}" style="width: 50px; text-align: center; border: 1px solid black;" type="number" th:name="${x.chiTietGiay.idCTG}">
 
-                                            <input style="border: none; font-weight: 700; font-size: 14pt; background-color: white;" type="button" value="+" class="button-plus inc button a3 a5 a1 a-1" onclick="incrementQuantity(this)">
+                                            <!--                                            <input style="font-weight: 700; font-size: 14pt; background-color: white;" type="button" value="+" class="button-plus inc button a3 a5 a1 a-1" onclick="incrementQuantity(this)">-->
 
                                         </div>
+
+
                                     </td>
+
+
                                     <td style="width: 140px;" class="cart__price totalAmount" th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
-<!--                                    <td class="cart__close"><a th:href="@{'/buyer/cart/delete/' + ${x.chiTietGiay.idCTG}}" id="deleteToCartButton" style="border-radius: 20% ; " ><i class="fa fa-close"></i></a></td>-->
-<!--                                    <td class="cart__close"> <a th:href="@{/buyer/cart/delete/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}" id="deleteToCartButton" style="border-radius: 20%;" onclick="return confirm('Bạn có chắc chắn muốn xoá sản phẩm này khỏi giỏ hàng không?')" class="confirmation-box"> <i class="fa fa-close"></i> </a> </td>-->
+                                    <!--                                    <td class="cart__close"><a th:href="@{'/buyer/cart/delete/' + ${x.chiTietGiay.idCTG}}" id="deleteToCartButton" style="border-radius: 20% ; " ><i class="fa fa-close"></i></a></td>-->
+                                    <!--                                    <td class="cart__close"> <a th:href="@{/buyer/cart/delete/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}" id="deleteToCartButton" style="border-radius: 20%;" onclick="return confirm('Bạn có chắc chắn muốn xoá sản phẩm này khỏi giỏ hàng không?')" class="confirmation-box"> <i class="fa fa-close"></i> </a> </td>-->
                                     <td class="cart__close">
                                         <a th:href="@{/buyer/cart/delete/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}" id="deleteToCartButton" style="border-radius: 20%;" data-toggle="modal" data-target="#confirmationModal">
                                             <i class="fa fa-close"></i>
@@ -395,6 +419,8 @@
                                     </div>
 
                                 </tr>
+
+
 
                             </th:block>
 
@@ -444,11 +470,25 @@
 
                                 </tr>
 
+
+
                             </th:block>
+                            <div class="alert alert-warning container mt-3 text-center"
+                                 th:if="*{listCartDetail.isEmpty()}"
+                                 style="background-color: transparent; border: none;">
+                                <img src="/images/img/icon/gioHangTrong1.png" alt="Giỏ hàng trống" style="width: 350px; height: 200px;">
+                                <br>
+                                <p class="empty-message" style="margin-top: 20px; font-size: 1.8em;">Bạn chưa có sản phẩm
+                                    nào trong giỏ hàng!</p>
+                            </div>
 
 
                             </tbody>
+
+
                         </table>
+
+
 
                     </div>
 
@@ -885,28 +925,28 @@
     </div>
     <!--Modal show option product end-->
 
-<!--    <div class="modal fade" id="messAddThanhCong" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">-->
-<!--        <div class="modal-dialog modal-dialog-centered" role="document">-->
-<!--            <div class="modal-content">-->
-<!--                <div class="modal-header">-->
-<!--                    <h5 class="modal-title" id="messAddThanhCongTitle" >FBI Waring !</h5>-->
-<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--                        <span aria-hidden="true">&times;</span>-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--                <div class="modal-body">-->
+    <!--    <div class="modal fade" id="messAddThanhCong" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">-->
+    <!--        <div class="modal-dialog modal-dialog-centered" role="document">-->
+    <!--            <div class="modal-content">-->
+    <!--                <div class="modal-header">-->
+    <!--                    <h5 class="modal-title" id="messAddThanhCongTitle" >FBI Waring !</h5>-->
+    <!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+    <!--                        <span aria-hidden="true">&times;</span>-->
+    <!--                    </button>-->
+    <!--                </div>-->
+    <!--                <div class="modal-body">-->
 
-<!--                    <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">-->
-<!--                        <p style="font-size: 13pt; font-weight: 600;">Chọn ít nhất 1 sản phẩm để mua hàng !!</p>-->
-<!--                    </div>-->
+    <!--                    <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">-->
+    <!--                        <p style="font-size: 13pt; font-weight: 600;">Chọn ít nhất 1 sản phẩm để mua hàng !!</p>-->
+    <!--                    </div>-->
 
-<!--                </div>-->
-<!--                <div class="modal-footer">-->
-<!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+    <!--                </div>-->
+    <!--                <div class="modal-footer">-->
+    <!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
 
 
     <!-- Button trigger modal -->
@@ -967,7 +1007,7 @@
 
 
 <script>
-        $(document).ready(function(){
+    $(document).ready(function(){
         $('#yourTriggerButton').click(function(){
             $('#simpleModal').modal('show');
         });
@@ -983,10 +1023,32 @@
         var quantity = parseInt(inputElement.value);
 
         // Kiểm tra xem giá trị có phải là số không
-        if (isNaN(quantity) || quantity < 1 || quantity > 10) {
-            alert('Vui lòng nhập số trong khoảng từ 1 đến 10.');
+        if (isNaN(quantity) || quantity < 1 || quantity > 20) {
+            alert('Vui lòng nhập số trong khoảng từ 1 đến 20.');
             // Đặt giá trị mặc định là 1 nếu giá trị không hợp lệ hoặc là chữ
-            inputElement.value = 1;
+            inputElement.value = quantity;
+        }
+
+        // Gọi hàm updateTotalAmount để cập nhật tổng tiền
+        updateTotalAmount(inputElement);
+    }
+    /*]]>*/
+</script>
+<!--Update quantity product in cart BEGIN -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function validateQuantity(inputElement) {
+        var quantity = parseInt(inputElement.value);
+
+        // Kiểm tra xem giá trị có phải là số không
+        if (isNaN(quantity) || quantity < 1 || quantity > 10) {
+            alert('Vui lòng nhập số trong khoảng từ 1 đến 20.');
+            // Đặt giá trị mặc định là 1 nếu giá trị không hợp lệ hoặc là chữ
+
+            if (quantity < 1)  {
+                inputElement.value = 1;
+            }else
+                inputElement.value = quantity - 1;
         }
 
         // Gọi hàm updateTotalAmount để cập nhật tổng tiền
@@ -1006,75 +1068,70 @@
     function decrementQuantity(input) {
         var quantityInput = input.parentNode.querySelector('.quantityInput');
         var currentQuantity = parseInt(quantityInput.value);
-        if (currentQuantity > 0) {
+        // Kiểm tra nếu số lượng hiện tại lớn hơn 0 và nhỏ hơn hoặc bằng 10
+        if (currentQuantity > 0 && currentQuantity <= 10) {
             quantityInput.value = currentQuantity - 1;
             updateTotalAmount(quantityInput);
         }
     }
 
-    // function updateTotalAmount(input) {
-    //     var quantity = input.value;
-    //     var idCTG = input.getAttribute('name');
-    //     var totalAmount = 0;
-    //
-    //     fetch('/buyer/cart/updateQuantity', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/x-www-form-urlencoded',
-    //         },
-    //         body: 'idCTG=' + encodeURIComponent(idCTG) + '&quantity=' + encodeURIComponent(quantity),
-    //     })
-    //         .then(response => response.text())
-    //         .then(data => {
-    //         })
-    //         .catch(error => {
-    //         });
-    //
-    //     $(".itemsCart:checked").each(function () {
-    //         var priceProduct = parseFloat($(this).closest("tr").find(".cart__price").text().replace('₫', '').replace(/,/g, '').trim());
-    //         var quantity = parseInt($(this).closest("tr").find(".quantityInput").val());
-    //         totalAmount += priceProduct * quantity;
-    //     });
-    //
-    //     $("#grandTotal").text("₫" + totalAmount.toLocaleString());
-    //
-    //     var priceProduct = parseFloat($(input).closest("tr").find(".cart__price").text().replace('₫', '').replace(/,/g, '').trim());
-    //     var quantity = parseInt($(input).closest("tr").find(".quantityInput").val());
-    //     var totalAmountElement = $(input).closest("tr").find(".totalAmount");
-    //     var totalAmount = quantity * priceProduct;
-    //     totalAmountElement.text("₫" + totalAmount.toLocaleString());
-    //
-    // }
 
-
-
-
-</script>
-
-<script>
-    function selectAllItems(checkbox) {
-        $(".itemsCart").prop("checked", $(checkbox).prop("checked"));
-        // Gọi hàm updateTotal với giả định rằng mọi item đều được chọn
-        updateTotal();
-    }
-
-    function updateTotal() {
+    function updateTotalAmount(input) {
+        var quantity = input.value;
+        var idCTG = input.getAttribute('name');
         var totalAmount = 0;
-        $("input.itemsCart:checked").each(function() {
+
+        fetch('/buyer/cart/updateQuantity', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'idCTG=' + encodeURIComponent(idCTG) + '&quantity=' + encodeURIComponent(quantity),
+        })
+            .then(response => response.text())
+            .then(data => {
+            })
+            .catch(error => {
+            });
+
+        $(".itemsCart:checked").each(function () {
             var priceProduct = parseFloat($(this).closest("tr").find(".cart__price").text().replace('₫', '').replace(/,/g, '').trim());
             var quantity = parseInt($(this).closest("tr").find(".quantityInput").val());
             totalAmount += priceProduct * quantity;
         });
+
         $("#grandTotal").text("₫" + totalAmount.toLocaleString());
+
+        var priceProduct = parseFloat($(input).closest("tr").find(".cart__price").text().replace('₫', '').replace(/,/g, '').trim());
+        var quantity = parseInt($(input).closest("tr").find(".quantityInput").val());
+        var totalAmountElement = $(input).closest("tr").find(".totalAmount");
+        var totalAmount = quantity * priceProduct;
+        totalAmountElement.text("₫" + totalAmount.toLocaleString());
+
     }
 
-    // Gọi hàm này một lần ngay tại thời điểm trang được load để có tổng số tiền khởi điểm
-    updateTotal();
-    $(document).on('click', 'input.itemsCart', function() {
-        updateTotal();
-    });
+    function selectAllItems(checkbox) {
+        $(".itemsCart").prop("checked", $(checkbox).prop("checked"));
+        var totalAmount = 0;
+
+        if ($(checkbox).prop("checked")) {
+            // Nếu tất cả sản phẩm được chọn, cập nhật tổng tiền cho mỗi sản phẩm
+            $(".itemsCart:checked").each(function () {
+                updateTotalAmount($(this).closest("tr").find(".quantityInput")[0]);
+            });
+        } else {
+            // Nếu không có sản phẩm nào được chọn, đặt tổng tiền về 0
+            $("#grandTotal").text("₫0");
+        }
+    }
+
+
+    function formatCurrency(amount) {
+        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
 </script>
+
 <!--<script>-->
 <!--    function selectAllItems(checkbox) {-->
 <!--        $(".itemsCart").prop("checked", $(checkbox).prop("checked"));-->
@@ -1186,7 +1243,7 @@
 </script>
 
 <!--Receive mail end-->
-
+<!--aaaa-->
 </body>
 
 </html>

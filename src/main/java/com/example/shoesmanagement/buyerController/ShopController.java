@@ -23,7 +23,6 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/buyer")
 public class ShopController {
-
     @Autowired
     private HangService hangService;
 
@@ -43,27 +42,27 @@ public class ShopController {
     private HttpSession session;
 
 
-//    @Autowired
+    //    @Autowired
 //    private HttpServletRequest request;
-@GetMapping("/shop")
-private String getShopBuyer(Model model,
-                            @RequestParam(name = "pageSize", defaultValue = "9") Integer pageSize,
-                            @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum) {
-    showDataBuyerShop(model);
-    checkKhachHangLogged(model);
+    @GetMapping("/shop")
+    private String getShopBuyer(Model model,
+                                @RequestParam(name = "pageSize", defaultValue = "9") Integer pageSize,
+                                @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum) {
+        showDataBuyerShop(model);
+        checkKhachHangLogged(model);
 
-    List<CTGViewModel> listCTGModelSoldOff = ctgViewModelService.getAllSoldOff();
+        List<CTGViewModel> listCTGModelSoldOff = ctgViewModelService.getAllSoldOff();
 
-    Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
-    Page<CTGViewModel> page = ctgViewModelService.getAllPage(pageable);
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+        Page<CTGViewModel> page = ctgViewModelService.getAllPage(pageable);
 
-    model.addAttribute("totalPage", page.getTotalPages());
-    model.addAttribute("listCTGModel", page.getContent());
-    model.addAttribute("listCTGModelSoldOff", listCTGModelSoldOff);
-    model.addAttribute("pageNumber", true);
-    model.addAttribute("showPage", true);
-    return "online/shop";
-}
+        model.addAttribute("totalPage", page.getTotalPages());
+        model.addAttribute("listCTGModel", page.getContent());
+        model.addAttribute("listCTGModelSoldOff", listCTGModelSoldOff);
+        model.addAttribute("pageNumber", true);
+        model.addAttribute("showPage", true);
+        return "online/shop";
+    }
     @GetMapping("/shop/best")
     private String getShopBuyerBestSeller(Model model){
 
@@ -283,5 +282,5 @@ private String getShopBuyer(Model model,
             model.addAttribute("messageLoginOrSignin", true);
         }
     }
-    }
+}
 

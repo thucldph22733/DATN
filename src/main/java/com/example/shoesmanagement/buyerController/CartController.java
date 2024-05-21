@@ -93,7 +93,7 @@ public class CartController {
 
 
 
-//    private void showDataBuyer(Model model){
+    //    private void showDataBuyer(Model model){
 //        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
 //        GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
 //        List<GioHangChiTiet> listGHCTActiveOriginal = ghctService.findByGHActive(gioHang);
@@ -116,30 +116,30 @@ public class CartController {
 //        model.addAttribute("listCartDetail", listGHCTActive);
 //        model.addAttribute("totalPrice", sumAllProduct);
 //    }
-private void showDataBuyer(Model model) {
-    KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-    GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
+    private void showDataBuyer(Model model) {
+        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
 
-    List<GioHangChiTiet> listGHCTActiveOriginal = ghctService.findByGHActive(gioHang);
-    // Khởi tạo một danh sách rỗng nếu kết quả là null để tránh NullPointerException
-    List<GioHangChiTiet> listGHCTActive = listGHCTActiveOriginal != null ? listGHCTActiveOriginal : new ArrayList<>();
+        List<GioHangChiTiet> listGHCTActiveOriginal = ghctService.findByGHActive(gioHang);
+        // Khởi tạo một danh sách rỗng nếu kết quả là null để tránh NullPointerException
+        List<GioHangChiTiet> listGHCTActive = listGHCTActiveOriginal != null ? listGHCTActiveOriginal : new ArrayList<>();
 
-    Integer sumProductInCart = listGHCTActive.size();
-    Double sumAllProduct = listGHCTActive.stream().mapToDouble(GioHangChiTiet::getDonGia).sum();
+        Integer sumProductInCart = listGHCTActive.size();
+        Double sumAllProduct = listGHCTActive.stream().mapToDouble(GioHangChiTiet::getDonGia).sum();
 
-    if (!listGHCTActive.isEmpty()) {
-        for (GioHangChiTiet gioHangChiTiet : listGHCTActive) {
-            gioHangChiTiet.setDonGia(gioHangChiTiet.getChiTietGiay().getGiaBan() * gioHangChiTiet.getSoLuong());
-            gioHangChiTiet.setDonGiaTruocKhiGiam(gioHangChiTiet.getChiTietGiay().getSoTienTruocKhiGiam() * gioHangChiTiet.getSoLuong());
-            ghctService.addNewGHCT(gioHangChiTiet);
+        if (!listGHCTActive.isEmpty()) {
+            for (GioHangChiTiet gioHangChiTiet : listGHCTActive) {
+                gioHangChiTiet.setDonGia(gioHangChiTiet.getChiTietGiay().getGiaBan() * gioHangChiTiet.getSoLuong());
+                gioHangChiTiet.setDonGiaTruocKhiGiam(gioHangChiTiet.getChiTietGiay().getSoTienTruocKhiGiam() * gioHangChiTiet.getSoLuong());
+                ghctService.addNewGHCT(gioHangChiTiet);
+            }
         }
-    }
 
-    model.addAttribute("fullNameLogin", khachHang != null ? khachHang.getHoTenKH() : "");
-    model.addAttribute("sumProductInCart", sumProductInCart);
-    model.addAttribute("listCartDetail", listGHCTActive);
-    model.addAttribute("totalPrice", sumAllProduct);
-}
+        model.addAttribute("fullNameLogin", khachHang != null ? khachHang.getHoTenKH() : "");
+        model.addAttribute("sumProductInCart", sumProductInCart);
+        model.addAttribute("listCartDetail", listGHCTActive);
+        model.addAttribute("totalPrice", sumAllProduct);
+    }
 
     public String generateRandomNumbers() {
         Random random = new Random();
@@ -151,5 +151,4 @@ private void showDataBuyer(Model model) {
         return sb.toString();
     }
 
-//aaaa
 }
