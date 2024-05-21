@@ -488,6 +488,13 @@
 
                         </table>
 
+                        <div class="col-lg-7 col-md-7 col-sm-7">
+                            <div class="continue__btn update__btn">
+                                <button type="submit" class="btn btn-md btn-primary" style="margin-left: 125px">
+                                    <i class="fa fa-spinner "></i>Cập nhật giỏ hàng
+                                </button>
+                            </div>
+                        </div>
 
 
                     </div>
@@ -1041,7 +1048,7 @@
         var quantity = parseInt(inputElement.value);
 
         // Kiểm tra xem giá trị có phải là số không
-        if (isNaN(quantity) || quantity < 1 || quantity > 10) {
+        if (isNaN(quantity) || quantity < 1 || quantity > 20) {
             alert('Vui lòng nhập số trong khoảng từ 1 đến 20.');
             // Đặt giá trị mặc định là 1 nếu giá trị không hợp lệ hoặc là chữ
 
