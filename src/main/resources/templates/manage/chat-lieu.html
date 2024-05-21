@@ -49,14 +49,16 @@
     </style>
 </head>
 <body class="mini-sidebar">
+<!--<div id="global-loader">-->
+<!--    <div class="whirly-loader"></div>-->
+<!--</div>-->
 <div th:replace="~{manage/activities :: main}"></div>
-<div class="main-wrapper">
     <div class="page-wrapper">
         <div class="content">
             <div class="page-header">
                 <div class="page-title">
                     <h4>List Chất Liệu</h4>
-                    <h6>Quản Lý Chất Liệu</h6>
+                    <h6>Quản Chất liệu</h6>
                 </div>
                 <div class="page-btn">
                     <button class="btn btn-added" id="show-form-button">
@@ -68,8 +70,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="hidden-form" style="display: none">
-                        <form th:object="${chatLieuAdd}" method="post" th:action="@{/manage/chat-lieu/viewAdd/add}"
-                              onsubmit="return validateChatLieuForm()" name="chatLieuForm">
+                        <form th:object="${chatLieuAdd}" method="post" th:action="@{/manage/chat-lieu/viewAdd/add}" onsubmit="return validateChatLieuForm()" name="chatLieuForm">
                             <div class="row">
                                 <div class="col-lg-2 col-sm-6 col-12">
                                     <div class="form-group">
@@ -211,6 +212,7 @@
                                 <th>Action</th>
                                 <th>Thời Gian Thêm</th>
                                 <th>Thời Gian Sửa</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -218,31 +220,22 @@
                                 <td th:text="${items.maChatLieu}"></td>
                                 <td th:text="${items.tenChatLieu}"></td>
                                 <td>
-                                    <span th:id="'trangThaiUpdate_' + ${items.idChatLieu}"
-                                          th:if="${items.trangThai == 1}"
-                                          class="badges bg-lightgreen">Hoạt Động
-                                    </span>
-                                    <span th:id="'trangThaiUpdate_' + ${items.idChatLieu}"
-                                          th:if="${items.trangThai == 0}"
-                                          class="badges bg-lightred">Không Hoạt Động
-                                    </span>
+                                    <span th:if="${items.trangThai == 1}" class="badges bg-lightgreen">Hoạt Động</span>
+                                    <span th:unless="${items.trangThai == 1}"
+                                          class="badges bg-lightred">Không Hoạt Động</span>
                                 </td>
                                 <td>
                                     <a class="me-3" th:href="@{'/manage/chat-lieu/viewUpdate/' + ${items.idChatLieu}}">
                                         <img src="/images/img/icons/edit.svg" alt="img">
                                     </a>
-                                    <a class="form-check form-switch">
-                                        <input class="me-3 form-check-input" type="checkbox" role="switch"
-                                               th:checked="${items.trangThai == 1}"
-                                               th:data-ma="${items.idChatLieu}"
-                                               onchange="thayDoiTrangThai(this)"
-                                               onclick="capNhatTrangThaiChatLieu(this.getAttribute('data-ma'))">
-                                        <input style="display: none" th:id="'flexSwitchCheck_' + ${items.idChatLieu}"
-                                               th:value="${items.trangThai}">
+                                    <a class="me-3 delete-button"
+                                       th:data-delete-url="@{'/manage/chat-lieu/delete/' + ${items.idChatLieu}}">
+                                        <img src="/images/img/icons/delete.svg" alt="img">
                                     </a>
                                 </td>
                                 <td th:text="${#dates.format(items.tgThem, 'dd-MM-yyyy')}" align="center"/>
                                 <td th:text="${#dates.format(items.tgSua, 'dd-MM-yyyy')}" align="center"/>
+
                             </tr>
                             </tbody>
                         </table>
@@ -448,7 +441,7 @@
 </script>
 <script>
     // In your Javascript (external .js resource or <script> tag)
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('.select').select2();
     });
 </script>
@@ -487,42 +480,7 @@
             'label': 'Đồng ý',
         }).show();
     }
-
-    function capNhatTrangThaiChatLieu(id) {
-        idChatLieu = id
-        let trangThai = document.getElementById("flexSwitchCheck_" + id).value;
-        var formData = new FormData();
-        formData.append("trangThai", trangThai);
-        $.ajax({
-            type: "PUT",
-            url: "/manage/chat-lieu/" + id,
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                console.log("Success: " + response);
-            },
-            error: function (error) {
-                console.log("Error1: " + JSON.stringify(error));
-            }
-        });
-    }
-
-    function thayDoiTrangThai(checkbox) {
-        let trangThai = checkbox.checked;
-        let tThai = document.getElementById("trangThaiUpdate_" + idChatLieu);
-        if (trangThai) {
-            tThai.innerText = "Hoạt Động";
-            tThai.style.color = "white";
-            tThai.classList.remove("bg-lightred");
-            tThai.classList.add("bg-lightgreen");
-        } else {
-            tThai.innerText = "Không Hoạt Động";
-            tThai.style.color = "white";
-            tThai.classList.remove("bg-lightgreen");
-            tThai.classList.add("bg-lightred");
-        }
-    }
 </script>
+
 </body>
 </html>

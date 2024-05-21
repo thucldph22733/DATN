@@ -45,18 +45,6 @@ public class CartController {
     @Autowired
     private GiayService giayService;
 
-    @RestController
-    public class LoginApiController {
-
-        @GetMapping("/api/check-login")
-        public Map<String, Boolean> checkLoginStatus(HttpSession session) {
-            KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-            Map<String, Boolean> status = new HashMap<>();
-            status.put("loggedIn", khachHang != null);
-            return status;
-        }
-    }
-
 
     @GetMapping("/cart")
     private String getShoppingCart(HttpSession session, Model model){

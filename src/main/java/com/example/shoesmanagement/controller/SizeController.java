@@ -59,7 +59,6 @@ public class SizeController {
             , @ModelAttribute("Errormessage") String Errormessage
             , @ModelAttribute("trungSoSize") String trungSoSize) {
         List<Size> size = sizeService.getAllSize();
-        model.addAttribute("active","SizeActive");
         model.addAttribute("size", size);
         //
         model.addAttribute("sizeAll", sizeService.getAllSize());
