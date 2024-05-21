@@ -23,7 +23,6 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/buyer")
 public class ShopController {
-
     @Autowired
     private HangService hangService;
 
