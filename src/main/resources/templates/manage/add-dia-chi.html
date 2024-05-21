@@ -30,8 +30,11 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body class="mini-sidebar">
-<div th:replace="~{manage/activities :: main}"></div>
+<div id="global-loader">
+    <div class="whirly-loader"></div>
+</div>
 <div class="main-wrapper">
+    <div th:replace="~{manage/activities :: main}"></div>
     <form th:object="${diaChi}" method="post"
           th:action="@{/manage/dia-chi/viewAdd/add}" onsubmit="return validateForm()">
         <div class="page-wrapper">

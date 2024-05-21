@@ -246,49 +246,6 @@ public class ShopController {
         showDataBuyerShop(model);
         return "online/shop";
     }
-
-    @GetMapping("/shop/highToLow")
-    private String getShopByPriceHighToLow(Model model,
-                                           @RequestParam(name= "pageSize", defaultValue = "9") Integer pageSize,
-                                           @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum){
-        showDataBuyerShop(model);
-        checkKhachHangLogged(model);
-        model.addAttribute("pageNumberHTL", true);
-
-        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
-        Page<CTGViewModel> page = ctgViewModelService.getAllByPriceHighToLow(pageable);
-
-        model.addAttribute("totalPageHTL", page.getTotalPages());
-        model.addAttribute("listCTGModel", page.getContent());
-
-        List<CTGViewModel> listCTGModelSoldOff = ctgViewModelService.getAllSoldOff();
-        model.addAttribute("listCTGModelSoldOff", listCTGModelSoldOff);
-        model.addAttribute("showPage", true);
-
-        return "online/shop";
-    }
-
-    @GetMapping("/shop/lowToHigh")
-    private String getShopByPriceLowToHigh(Model model,
-                                           @RequestParam(name= "pageSize", defaultValue = "9") Integer pageSize,
-                                           @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum){
-        showDataBuyerShop(model);
-        checkKhachHangLogged(model);
-
-        model.addAttribute("pageNumberLTH", true);
-
-        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
-        Page<CTGViewModel> page = ctgViewModelService.getAllByPriceLowToHigh(pageable);
-
-        model.addAttribute("totalPageLTH", page.getTotalPages());
-        model.addAttribute("listCTGModel", page.getContent());
-
-        List<CTGViewModel> listCTGModelSoldOff = ctgViewModelService.getAllSoldOff();
-        model.addAttribute("listCTGModelSoldOff", listCTGModelSoldOff);
-        model.addAttribute("showPage", true);
-
-        return "online/shop";
-    }
     private void showDataBuyerShop(Model model){
 
         List<Hang> listHang = hangService.getAllActive();

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sneaker Shop</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="description" content="POS - Bootstrap Admin Template">
+    <meta name="keywords"
+          content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
+    <meta name="author" content="Dreamguys - Bootstrap Admin Template">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Sneaker Shop - Admin</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/css/animate.css">
+
+    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/plugins/icons/flags/flags.css">
+
+    <link rel="stylesheet" href="/css/dataTables.bootstrap4.min.css">
+
+    <link rel="stylesheet" href="/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/plugins/fontawesome/css/all.min.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/img/icon.png">
+    <link rel="stylesheet" href="/cssx/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/cssx/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/cssx/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/cssx/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/cssx/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/cssx/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/cssx/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/cssx/style.css" type="text/css">
+    <link rel="stylesheet" href="/cssx/scroll.min.css" type="text/css">
+    <link rel="stylesheet" href="/cssx/styleNhan.css" type="text/css">
+</head>
+<style>
+    body {
+        background-image: url('/images/wall2.png');
+        background-size: 100% auto;
+        background-position: center center;
+        background-attachment: fixed;
+    }
+
+    .form {
+        background-color: whitesmoke;
+        display: block;
+        margin-left: 40%;
+        margin-top: 13%;
+        padding: 1rem;
+        width: 70%;
+        max-width: 350px;
+        border-radius: 0.5rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-title {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+        text-align: center;
+        color: #834F36;
+    }
+
+    .input-container {
+        position: relative;
+        display: flex;
+        margin-bottom: 8px;
+    }
+
+    .input-container input,
+    .form button {
+        outline: none;
+        border: 1px solid #834F36;
+    }
+
+    .input-container input {
+        background-color: #fff;
+        padding: 1rem;
+        padding-right: 3rem;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        width: 100%;
+        height: 10px;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .input-container span {
+        display: grid;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        place-content: center;
+    }
+
+    .input-container span svg {
+        color: #9CA3AF;
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .submit {
+        display: block;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        background-color: #834F36;
+        color: #ffffff;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        font-weight: 500;
+        width: 100%;
+        border-radius: 0.5rem;
+        text-transform: uppercase;
+    }
+
+    .modal-content {
+        border: 1px solid #dee2e6;
+        box-shadow: 0 5px 15px rgba(0,0,0,.5);
+        padding: 20px;
+    }
+
+    .modal-title {
+        font-family: var(--font-family);
+        font-size: var(--font-size);
+        font-weight: bold;
+    }
+
+    .modal-body {
+        font-family: var(--font-family);
+        font-size: var(--font-size);
+    }
+
+    .modal.fade .modal-dialog {
+        transition: transform .3s ease-out;
+        transform: translate(0, -50%);
+    }
+
+    .modal.show .modal-dialog {
+        transform: translate(0, 0);
+    }
+
+    .modal-dialog {
+        position: fixed;
+        left: 40%;
+        transform: translateX(-50%);
+    }
+
+    .signup-link {
+        color: #582209;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        text-align: center;
+        margin-top: 11%;
+    }
+
+    .forgotPassword {
+        text-decoration: underline;
+    }
+
+    .forgotPassword {
+        text-align: center;
+        position: relative;
+        margin-left: 33%;
+        width: 100%;
+        bottom: -15px;
+        font-size: 0.9rem;
+        align-self: center;
+        font-weight: bold;
+        color: #2c1001;
+    }
+
+    .forgotPassword::after {
+        position: absolute;
+        content: '';
+        width: 200%;
+        height: 1px;
+        bottom: -13px;
+        margin-left: -150%;
+        background: #040404;
+    }
+
+    .forgotPassword:hover {
+        text-decoration: underline;
+    }
+
+</style>
+
+<body >
+<div id="div1" class="hidden">
+
+    <form action="/change-pass-post" method="post" class="form">
+
+        <p class="form-title">	Đổi Mật Khẩu </p>
+
+        <div class="input-container">
+            <input placeholder="Email or Phone" name="email" type="text" id="email">
+        </div>
+
+        <div class="input-container">
+            <input placeholder="Password" name="currentPass" type="password" class="form-control" id="currentPass">
+        </div>
+
+        <div class="input-container">
+            <input placeholder="New Password" name="newPass" type="password" class="form-control" id="newPass">
+        </div>
+
+        <div class="input-container">
+            <input placeholder="Enter a new password" name="reNewPass" type="password" class="form-control" id="reNewPass">
+        </div>
+
+        <button class="submit" type="submit" id="loginButton" >
+            Save
+        </button>
+
+        <!--        <div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">-->
+        <!--            <div style="width:500px;">-->
+        <!--                <div class="modal-dialog" role="document">-->
+        <!--                    <div class="modal-content">-->
+        <!--                        <div class="modal-body">-->
+        <!--                            Bạn có chắc chắn muốn lưu mật khẩu mới này?-->
+        <!--                        </div>-->
+        <!--                        <div class="modal-footer">-->
+        <!--                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>-->
+        <!--                            <a th:href="@{'/manage/'}" style="margin-top: 3px"  class="btn btn-primary">Ok</a>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+    </form>
+</div>
+</body>
+
+</html>
