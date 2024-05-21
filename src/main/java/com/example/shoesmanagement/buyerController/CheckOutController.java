@@ -53,12 +53,12 @@ public class CheckOutController {
     private VNPayService vnPayService;
 
     @PostMapping("/buyer/checkout")
-    private String checkOutCart(Model model, List<UUID> selectedProductIds){
+    private String checkOutCart(Model model,@RequestParam("selectedProducts")  List<UUID> selectedProductIds){
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
 
-        DiaChiKH diaChiKHDefault = diaChiKHService.findDCKHDefaulByKhachHang(khachHang);
+            DiaChiKH diaChiKHDefault = diaChiKHService.findDCKHDefaulByKhachHang(khachHang);
         List<DiaChiKH> diaChiKHList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, false, 1);
 
         List<HoaDonChiTiet> listHDCTCheckOut = new ArrayList<>();
@@ -297,11 +297,13 @@ public class CheckOutController {
         hoaDon.setTongTien(total + shippingFee);
         hoaDon.setTienShip(shippingFee);
         hoaDonService.add(hoaDon);
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.add(Calendar.DATE, shippingFeeService.tinhNgayNhanDuKien(diaChiKHChange.getDiaChiChiTiet()));
         Date ngayDuKien = calendar.getTime();
         model.addAttribute("ngayDuKien", ngayDuKien);
+
         model.addAttribute("sumQuantity", sumQuantity);
         model.addAttribute("total", total);
         model.addAttribute("diaChiKHDefault", diaChiKHChange);
