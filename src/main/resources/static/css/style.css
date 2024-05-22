@@ -4526,9 +4526,9 @@ span.select2-container.select2-container--default.select2-container--open {
     max-width: 100% !important
 }
 
-.dataTables_filter + .dataTables_filter {
-    display: none
-}
+/*.dataTables_filter + .dataTables_filter {*/
+/*    display: none*/
+/*}*/
 
 .dataview .dataTables_length, .dataview .dataTables_info, .dataview .dataTables_paginate {
     display: none !important
@@ -7545,7 +7545,7 @@ span.select2-container.select2-container--default.select2-container--open {
 }
 
 .vien {
-    border: gray solid 2px;
+    border: gray solid 1px;
     border-radius: 5px;
     height: auto;
 }
