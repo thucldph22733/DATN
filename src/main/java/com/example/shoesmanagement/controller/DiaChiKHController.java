@@ -2,13 +2,10 @@ package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.DiaChiKH;
 import com.example.shoesmanagement.model.KhachHang;
-import com.example.shoesmanagement.model.LoaiKhachHang;
 import com.example.shoesmanagement.repository.DiaChiRepository;
 import com.example.shoesmanagement.repository.KhachHangRepository;
-import com.example.shoesmanagement.repository.LoaiKhachHangRepsitory;
 import com.example.shoesmanagement.service.DiaChiKHService;
 import com.example.shoesmanagement.service.KhachHangService;
-import com.example.shoesmanagement.service.LoaiKhachHangService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +38,7 @@ public class DiaChiKHController {
     @Autowired
     private DiaChiRepository diaChiRepsitory;
 
-    @Autowired
-    private LoaiKhachHangRepsitory loaiKhachHangRepository;
 
-    @Autowired
-    private LoaiKhachHangService loaiKhachHangService;
     @ModelAttribute("dsTrangThai")
     public Map<Integer, String> getDsTrangThai() {
         Map<Integer, String> dsTrangThai = new HashMap<>();
@@ -98,7 +91,6 @@ public class DiaChiKHController {
             , @ModelAttribute("messageKH") String messageKH
             , @ModelAttribute("errorKH") String errorKH, @ModelAttribute("userInput") KhachHang userInputKH
             , @ModelAttribute("messageLKH") String messageLKH
-            , @ModelAttribute("errorLKH") String errorLKH, @ModelAttribute("userInput") LoaiKhachHang userInputLKH
             , @ModelAttribute("Errormessage") String Errormessage
             , @ModelAttribute("ErrormessageKH") String ErrormessageKH
             , @ModelAttribute("ErrormessageLKH") String ErrormessageLKH) {
@@ -106,12 +98,9 @@ public class DiaChiKHController {
         Collections.sort(khachHangs, (a, b) -> b.getTgThem().compareTo(a.getTgThem()));
         model.addAttribute("khachHang", khachHangs);
         //
-        List<LoaiKhachHang> loaiKhachHangs = loaiKhachHangService.getAllLoaiKhachHang();
-        Collections.sort(loaiKhachHangs, (a, b) -> b.getTgThem().compareTo(a.getTgThem()));
-        model.addAttribute("loaiKhachHang", loaiKhachHangs);
+
         //
         model.addAttribute("diaChi", new DiaChiKH());
-        model.addAttribute("loaiKhachHangAdd", new LoaiKhachHang());
         model.addAttribute("khachHangAdd", new KhachHang());
 
         // Kiểm tra xem có dữ liệu người dùng đã nhập không và điền lại vào trường nhập liệu
@@ -131,9 +120,7 @@ public class DiaChiKHController {
             model.addAttribute("messageLKH", false);
         }
         // Kiểm tra xem có dữ liệu người dùng đã nhập không và điền lại vào trường nhập liệu
-        if (userInputLKH != null) {
-            model.addAttribute("loaiKhachHangAdd", userInputLKH);
-        }
+
         //CHECK MÃ
         if (ErrormessageKH == null || !"true".equals(ErrormessageKH)) {
             model.addAttribute("ErrormessageKH", false);
@@ -154,7 +141,6 @@ public class DiaChiKHController {
             , @ModelAttribute("messageKH") String messageKH
             , @ModelAttribute("errorKH") String errorKH, @ModelAttribute("userInput") KhachHang userInputKH
             , @ModelAttribute("messageLKH") String messageLKH
-            , @ModelAttribute("errorLKH") String errorLKH, @ModelAttribute("userInput") LoaiKhachHang userInputLKH
             , @ModelAttribute("Errormessage") String Errormessage
             , @ModelAttribute("ErrormessageKH") String ErrormessageKH
             , @ModelAttribute("ErrormessageLKH") String ErrormessageLKH) {
@@ -183,9 +169,7 @@ public class DiaChiKHController {
             model.addAttribute("messageLKH", false);
         }
         // Kiểm tra xem có dữ liệu người dùng đã nhập không và điền lại vào trường nhập liệu
-        if (userInputLKH != null) {
-            model.addAttribute("loaiKhachHangAdd", userInputLKH);
-        }
+
         //CHECK MÃ
         if (ErrormessageKH == null || !"true".equals(ErrormessageKH)) {
             model.addAttribute("ErrormessageKH", false);
@@ -257,13 +241,10 @@ public class DiaChiKHController {
         Collections.sort(khachHangs, (a, b) -> b.getTgThem().compareTo(a.getTgThem()));
         model.addAttribute("khachHang", khachHangs);
         //
-        List<LoaiKhachHang> loaiKhachHangList = loaiKhachHangService.getAllLoaiKhachHang();
-        Collections.sort(loaiKhachHangList, (a, b) -> b.getTgThem().compareTo(a.getTgThem()));
-        model.addAttribute("loaiKhachHang", loaiKhachHangList);
+
         //
         model.addAttribute("diaChi", new DiaChiKH());
         model.addAttribute("khachHangAdd", new KhachHang());
-        model.addAttribute("loaiKhachHangAdd", new LoaiKhachHang());
 
         //
         DiaChiKH existingDChi = diaChiRepsitory.findByMaDC(diaChiKH.getMaDC());
@@ -321,29 +302,13 @@ public class DiaChiKHController {
         khachHang1.setNgaySinh(khachHang.getNgaySinh());
         khachHang1.setTgThem(new Date());
         khachHang1.setTrangThai(1);
-        khachHang1.setLoaiKhachHang(khachHang.getLoaiKhachHang());
+
         khachHangService.save(khachHang1);
         redirectAttributes.addFlashAttribute("messageKH", true);
         return "redirect:/manage/dia-chi/viewAdd";
     }
 
-    @PostMapping("/dia-chi/khach-hang/loai-khach-hang/viewAdd/add")
-    public String addLoaiKhachHang(@Valid @ModelAttribute("loaiKhachHangAdd") LoaiKhachHang loaiKhachHang
-            , BindingResult result, RedirectAttributes redirectAttributes) {
-        //
-        LoaiKhachHang existingLKH = loaiKhachHangRepository.findByMaLKH(loaiKhachHang.getMaLKH());
-        if (existingLKH != null) {
-            redirectAttributes.addFlashAttribute("userInput", loaiKhachHang);
-            redirectAttributes.addFlashAttribute("ErrormessageLKH", true);
-            return "redirect:/manage/dia-chi/viewAdd";
-        }
-        //
-        loaiKhachHang.setTgThem(new Date());
-        loaiKhachHang.setTrangThai(1);
-        loaiKhachHangService.save(loaiKhachHang);
-        redirectAttributes.addFlashAttribute("messageLKH", true);
-        return "redirect:/manage/dia-chi/viewAdd";
-    }
+
 
     @GetMapping("/dia-chi/delete/{id}")
     public String deleteDiaChi(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
