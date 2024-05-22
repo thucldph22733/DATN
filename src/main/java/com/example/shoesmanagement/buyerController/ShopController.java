@@ -23,7 +23,6 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/buyer")
 public class ShopController {
-
     @Autowired
     private HangService hangService;
 
@@ -43,27 +42,27 @@ public class ShopController {
     private HttpSession session;
 
 
-//    @Autowired
+    //    @Autowired
 //    private HttpServletRequest request;
-@GetMapping("/shop")
-private String getShopBuyer(Model model,
-                            @RequestParam(name = "pageSize", defaultValue = "9") Integer pageSize,
-                            @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum) {
-    showDataBuyerShop(model);
-    checkKhachHangLogged(model);
+    @GetMapping("/shop")
+    private String getShopBuyer(Model model,
+                                @RequestParam(name = "pageSize", defaultValue = "9") Integer pageSize,
+                                @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum) {
+        showDataBuyerShop(model);
+        checkKhachHangLogged(model);
 
-    List<CTGViewModel> listCTGModelSoldOff = ctgViewModelService.getAllSoldOff();
+        List<CTGViewModel> listCTGModelSoldOff = ctgViewModelService.getAllSoldOff();
 
-    Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
-    Page<CTGViewModel> page = ctgViewModelService.getAllPage(pageable);
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+        Page<CTGViewModel> page = ctgViewModelService.getAllPage(pageable);
 
-    model.addAttribute("totalPage", page.getTotalPages());
-    model.addAttribute("listCTGModel", page.getContent());
-    model.addAttribute("listCTGModelSoldOff", listCTGModelSoldOff);
-    model.addAttribute("pageNumber", true);
-    model.addAttribute("showPage", true);
-    return "online/shop";
-}
+        model.addAttribute("totalPage", page.getTotalPages());
+        model.addAttribute("listCTGModel", page.getContent());
+        model.addAttribute("listCTGModelSoldOff", listCTGModelSoldOff);
+        model.addAttribute("pageNumber", true);
+        model.addAttribute("showPage", true);
+        return "online/shop";
+    }
     @GetMapping("/shop/best")
     private String getShopBuyerBestSeller(Model model){
 
@@ -247,49 +246,6 @@ private String getShopBuyer(Model model,
         showDataBuyerShop(model);
         return "online/shop";
     }
-
-    @GetMapping("/shop/highToLow")
-    private String getShopByPriceHighToLow(Model model,
-                                           @RequestParam(name= "pageSize", defaultValue = "9") Integer pageSize,
-                                           @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum){
-        showDataBuyerShop(model);
-        checkKhachHangLogged(model);
-        model.addAttribute("pageNumberHTL", true);
-
-        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
-        Page<CTGViewModel> page = ctgViewModelService.getAllByPriceHighToLow(pageable);
-
-        model.addAttribute("totalPageHTL", page.getTotalPages());
-        model.addAttribute("listCTGModel", page.getContent());
-
-        List<CTGViewModel> listCTGModelSoldOff = ctgViewModelService.getAllSoldOff();
-        model.addAttribute("listCTGModelSoldOff", listCTGModelSoldOff);
-        model.addAttribute("showPage", true);
-
-        return "online/shop";
-    }
-
-    @GetMapping("/shop/lowToHigh")
-    private String getShopByPriceLowToHigh(Model model,
-                                           @RequestParam(name= "pageSize", defaultValue = "9") Integer pageSize,
-                                           @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum){
-        showDataBuyerShop(model);
-        checkKhachHangLogged(model);
-
-        model.addAttribute("pageNumberLTH", true);
-
-        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
-        Page<CTGViewModel> page = ctgViewModelService.getAllByPriceLowToHigh(pageable);
-
-        model.addAttribute("totalPageLTH", page.getTotalPages());
-        model.addAttribute("listCTGModel", page.getContent());
-
-        List<CTGViewModel> listCTGModelSoldOff = ctgViewModelService.getAllSoldOff();
-        model.addAttribute("listCTGModelSoldOff", listCTGModelSoldOff);
-        model.addAttribute("showPage", true);
-
-        return "online/shop";
-    }
     private void showDataBuyerShop(Model model){
 
         List<Hang> listHang = hangService.getAllActive();
@@ -326,5 +282,5 @@ private String getShopBuyer(Model model,
             model.addAttribute("messageLoginOrSignin", true);
         }
     }
-    }
+}
 

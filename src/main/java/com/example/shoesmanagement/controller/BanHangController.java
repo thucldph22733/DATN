@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/manage")
+@RequestMapping("/ban-hang")
 public class BanHangController {
     @Autowired
     private GiayService giayService;
@@ -25,7 +25,7 @@ public class BanHangController {
     @Autowired
     private ChatLieuService chatLieuService;
 
-    @GetMapping("/ban-hang")
+    @GetMapping("/hien-thi")
     public String banHang(Model model) {
         List<Giay> listGiay = giayService.getAllGiay();
         List<Hang> listHang = hangService.getALlHang();

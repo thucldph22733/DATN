@@ -49,10 +49,12 @@
     </style>
 </head>
 <body class="mini-sidebar">
-<div th:replace="~{manage/activities :: main}"></div>
+<div id="global-loader">
+    <div class="whirly-loader"></div>
+</div>
 <div class="main-wrapper">
-    <form th:object="${giay}" method="post" th:action="@{/manage/giay/viewAdd/add}" onsubmit="return validateGiayForm()"
-          name="giayForm">
+    <div th:replace="~{manage/activities :: main}"></div>
+    <form th:object="${giay}" method="post" th:action="@{/manage/giay/viewAdd/add}" onsubmit="return validateGiayForm()" name="giayForm">
         <div class="page-wrapper">
             <div class="content">
                 <div class="page-header">
@@ -68,7 +70,7 @@
                             <div class="col-lg-12 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label>Mã Giày</label>
-                                    <input type="text" th:field="*{maGiay}">
+                                    <input type="text" th:field="*{maGiay}" >
                                     <br><br>
                                     <strong th:if="${#fields.hasErrors('maGiay')}"
                                             class="alert alert-danger alert-dismissible fade"
@@ -78,7 +80,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Mô tả</label>
-                                    <textarea class="form-control" th:field="*{moTa}"></textarea>
+                                    <textarea class="form-control" th:field="*{moTa}" ></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-sm-6 col-12">
@@ -86,7 +88,7 @@
                                     <div class="col-lg-9 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label>Tên Giày</label>
-                                            <input type="text" th:field="*{tenGiay}">
+                                            <input type="text" th:field="*{tenGiay}" >
                                             <br><br>
                                             <strong th:if="${#fields.hasErrors('tenGiay')}"
                                                     class="alert alert-danger alert-dismissible fade"
@@ -199,13 +201,13 @@
                                 <div class="col-lg-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label>Mã Hãng</label>
-                                        <input type="text" name="maHang">
+                                        <input type="text" name="maHang" >
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label>Tên Hãng</label>
-                                        <input type="text" name="tenHang">
+                                        <input type="text" name="tenHang" >
                                     </div>
                                 </div>
                                 <!--                                <div class="col-lg-6 col-sm-6 col-12">-->
@@ -240,8 +242,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form th:object="${chatLieuAdd}" method="post" th:action="@{/manage/giay/chat-lieu/viewAdd/add}"
-                      onsubmit="return validateChatLieuForm()" name="chatLieuForm"
+                <form th:object="${chatLieuAdd}" method="post" th:action="@{/manage/giay/chat-lieu/viewAdd/add}" onsubmit="return validateChatLieuForm()" name="chatLieuForm"
                       style="width: auto;height: auto">
                     <div class="page-header">
                         <div class="page-title">
@@ -255,13 +256,13 @@
                                 <div class="col-lg-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label>Mã Chất Liệu</label>
-                                        <input type="text" th:field="*{maChatLieu}">
+                                        <input type="text" th:field="*{maChatLieu}" >
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label>Tên Chất Liệu</label>
-                                        <input type="text" th:field="*{tenChatLieu}">
+                                        <input type="text" th:field="*{tenChatLieu}" >
                                     </div>
                                 </div>
                                 <!--                                <div class="col-lg-6 col-sm-6 col-12">-->
@@ -640,7 +641,6 @@
         }
         return true;
     }
-
     function showAlert(message) {
         alertify.alert(message).setting({
             'title': 'Thông báo',

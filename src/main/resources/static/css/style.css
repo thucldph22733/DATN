@@ -17,7 +17,6 @@
     color: red;
     float: left
 }
-
 /*.productset {*/
 /*    height: 430px;*/
 /*}*/
@@ -7542,6 +7541,7 @@ span.select2-container.select2-container--default.select2-container--open {
     position: absolute;
     top: 50%;
     right: 10px
+
 }
 
 .vien {
@@ -7562,4 +7562,5 @@ span.select2-container.select2-container--default.select2-container--open {
 .nenBtnHoaDon{
     background-color: #ffdf7e;
     padding: 10px;
+
 }

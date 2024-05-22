@@ -35,16 +35,19 @@
     </style>
 </head>
 <body>
-<div th:replace="~{manage/activities :: main}"></div>
+<div id="global-loader" class="mini-sidebar">
+    <div class="whirly-loader"></div>
+</div>
 <div class="main-wrapper">
+    <div th:replace="~{manage/activities :: main}"></div>
     <form th:object="${giayChiTietDetail}" method="post"
           th:action="@{'/manage/giay-chi-tiet/detail/'+ ${giayChiTietDetail.idCTG}}">
         <div class="page-wrapper">
             <div class="content">
                 <div class="page-header">
                     <div class="page-title">
-                        <h4>Giày Chi Tiết</h4>
-                        <h6>Quản Lý Giày Chi Tiết</h6>
+                        <h4>Giày Chi Tiết Detail</h4>
+                        <h6>Quản Lý Giày</h6>
                     </div>
                 </div>
 

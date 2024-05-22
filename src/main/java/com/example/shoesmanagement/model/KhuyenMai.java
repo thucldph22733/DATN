@@ -25,6 +25,7 @@ public class KhuyenMai {
     @Column(name = "id_Khuyen_Mai")
     private UUID idKM;
 
+
     @Column(name = "ma_KM")
     private String maKM;
 
