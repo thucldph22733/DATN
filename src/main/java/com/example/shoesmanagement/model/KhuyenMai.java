@@ -26,7 +26,6 @@ public class KhuyenMai {
     private UUID idKM;
 
 
-
     @Column(name = "ma_KM")
     private String maKM;
 
