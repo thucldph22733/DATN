@@ -25,9 +25,6 @@ public class KhuyenMai {
     @Column(name = "id_Khuyen_Mai")
     private UUID idKM;
 
-    @ManyToOne
-    @JoinColumn(name = "id_LKM")
-    private LoaiKhuyenMai loaiKhuyenMai;
 
 
     @Column(name = "ma_KM")
