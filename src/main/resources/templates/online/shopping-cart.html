@@ -71,50 +71,7 @@
 
 <!-- Header Section Begin -->
 <header class="header">
-    <!--    <style>-->
-    <!--        :root {-->
-    <!--            &#45;&#45;primary-color: #007bff;-->
-    <!--            &#45;&#45;secondary-color: #6c757d;-->
-    <!--            &#45;&#45;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;-->
-    <!--            &#45;&#45;font-size: 1rem;-->
-    <!--        }-->
 
-    <!--        .btn-primary {-->
-    <!--            background-color: var(&#45;&#45;primary-color);-->
-    <!--            color: white;-->
-    <!--        }-->
-
-    <!--        /*.btn-primary:hover,*/-->
-    <!--        /*.btn-primary:focus {*/-->
-    <!--        /*    background-color: darken(var(&#45;&#45;primary-color), 10%);*/-->
-    <!--        /*}*/-->
-
-    <!--        .modal-content {-->
-    <!--            border: 1px solid #dee2e6;-->
-    <!--            box-shadow: 0 5px 15px rgba(0,0,0,.5);-->
-    <!--            padding: 20px;-->
-    <!--        }-->
-
-    <!--        .modal-title {-->
-    <!--            font-family: var(&#45;&#45;font-family);-->
-    <!--            font-size: var(&#45;&#45;font-size);-->
-    <!--            font-weight: bold;-->
-    <!--        }-->
-
-    <!--        .modal-body {-->
-    <!--            font-family: var(&#45;&#45;font-family);-->
-    <!--            font-size: var(&#45;&#45;font-size);-->
-    <!--        }-->
-
-    <!--        .modal.fade .modal-dialog {-->
-    <!--            transition: transform .3s ease-out;-->
-    <!--            transform: translate(0, -50%);-->
-    <!--        }-->
-
-    <!--        .modal.show .modal-dialog {-->
-    <!--            transform: translate(0, 0);-->
-    <!--        }-->
-    <!--    </style>-->
 
     <th:block th:if="${message != null}">
         <span class="text-danger"></span>
@@ -142,16 +99,17 @@
         <div class="container">
             <div class="row">
 
-                <div class="col-lg-3  d-flex align-items-center" >
+                <div class="col-lg-3  d-flex align-items-center">
                     <div class="header__top__left">
                         <p>Chào mừng đến với trải nghiệm mua sắm</p>
                     </div>
                 </div>
 
-                <div class="col-lg-6 d-flex align-items-center" >
+                <div class="col-lg-6 d-flex align-items-center">
                     <form action="/buyer/search" method="post">
                         <div style="width: 100%; display: flex; background-color: white; border: 10px;">
-                            <input th:value="${keyword}" name="keyWord" class="form-control" style="border: none; width: 500px;"  placeholder="Nhập văn bản..." type="text">
+                            <input th:value="${keyword}" name="keyWord" class="form-control"
+                                   style="border: none; width: 500px;" placeholder="Nhập văn bản..." type="text">
                             <div style="width: 60px; background-color: #f3f2ee; height: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                                 <a type="submit" href=""><img src="/images/img/icon/search.png" alt=""></a>
                             </div>
@@ -161,14 +119,14 @@
 
                 <div class="col-lg-3 d-flex align-items-center">
                     <div>
-                        <div class="header__top__links"  >
+                        <div class="header__top__links">
                             <a th:href="@{'/buyer/purchase'}">Đơn mua</a>
                         </div>
                         <!--        Buyer FullName Begin    -->
                         <div class="header__top__hover">
-                            <span th:text="${fullNameLogin}"><i class="arrow_carrot-down" ></i></span>
+                            <span th:text="${fullNameLogin}"><i class="arrow_carrot-down"></i></span>
                             <ul>
-                                <li><a th:href="@{'/buyer/setting'}" >Cài đặt</a></li>
+                                <li><a th:href="@{'/buyer/setting'}">Cài đặt</a></li>
                                 <li><a th:href="@{'/buyer/logout'}">Đăng xuất</a></li>
                             </ul>
                         </div>
@@ -187,7 +145,9 @@
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
 
-                    <a th:href="@{'/buyer/home'}" ><img src="/images/img/logo.png" style="width: 240px; height: 240px; margin-top: -84px" alt=""></a>
+                    <a th:href="@{'/buyer/home'}"><img src="/images/img/logo.png"
+                                                       style="width: 240px; height: 240px; margin-top: -84px"
+                                                       alt=""></a>
 
                 </div>
             </div>
@@ -196,12 +156,14 @@
                     <ul>
 
 
-                        <div th:if="${successMessage}" th:attr="data-message=${successMessage}" id="success-toast" style="position: fixed; top: 1rem; right: 1rem; z-index: 1050;">
+                        <div th:if="${successMessage}" th:attr="data-message=${successMessage}" id="success-toast"
+                             style="position: fixed; top: 1rem; right: 1rem; z-index: 1050;">
                             <!-- Toast container, ẩn mặc định và sẽ được hiển thị bằng JavaScript -->
                             <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="7000">
                                 <div class="toast-header">
                                     <strong class="mr-auto">Thông báo</strong>
-                                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+                                            aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
@@ -211,12 +173,8 @@
                         </div>
 
 
-
-
-
-
-                        <li><a th:href="@{'/buyer/'}" >Home</a></li>
-                        <li class="active"><a th:href="@{'/buyer/shop'}" >Shop</a></li>
+                        <li><a th:href="@{'/buyer/'}">Home</a></li>
+                        <li class="active"><a th:href="@{'/buyer/shop'}">Shop</a></li>
                         <li><a th:href="@{'/buyer/about'}">About Us</a></li>
                         <li><a th:href="@{'/buyer/blog'}">Blog</a>
                             <ul class="dropdown">
@@ -233,16 +191,19 @@
 
                     <div class="nav user-menu" style="height: 30px;">
                         <li class="nav-item dropdown" style="height: 30px;">
-                            <a data-bs-toggle="dropdown" href="#" >
-                                <img style="margin-bottom: 42px; width: 18px; height: 18px;"   src="/images/img/icon/notification.png" >
+                            <a data-bs-toggle="dropdown" href="#">
+                                <img style="margin-bottom: 42px; width: 18px; height: 18px;"
+                                     src="/images/img/icon/notification.png">
                             </a>
-                            <span style="position: absolute; height:20px; width: 25px; top: -13px; left: 7px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;" th:text="${soThongBao}"></span>
-                            <div class="dropdown-menu notifications" style="width:300px; top: -80px; position: absolute;">
+                            <span style="position: absolute; height:20px; width: 25px; top: -13px; left: 7px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;"
+                                  th:text="${soThongBao}"></span>
+                            <div class="dropdown-menu notifications"
+                                 style="width:300px; top: -80px; position: absolute;">
                                 <div class="topnav-dropdown-header">
                                     <span class="notification-title">Thông báo</span>
                                     <a class="clear-noti"> Xóa sạch </a>
                                 </div>
-                                <div class="vertical-scroll scroll-demo" >
+                                <div class="vertical-scroll scroll-demo">
                                     <th:block th:if="${x.trangThai != 3}" th:each="x : ${listThongBao}">
                                         <a href="#" class="items-noticafitions">
                                             <div class="items-notica">
@@ -252,7 +213,8 @@
                                                 <div class="text-notica">
                                                     <span class="notica-title" th:text="${fullNameLogin}"></span>
                                                     <p class="notica-times">1 phút trước</p>
-                                                    <input th:if="x.trangThai == 1" checked class="notica-read" type="radio" name="" id="">
+                                                    <input th:if="x.trangThai == 1" checked class="notica-read"
+                                                           type="radio" name="" id="">
                                                     <input th:if="x.trangThai == 0">
                                                 </div>
                                                 <p class="notica-status">---------</p>
@@ -276,7 +238,9 @@
 
                     <a th:href="@{'/buyer/cart'}" style="position: relative; display: inline-block; ">
                         <img src="/images/img/icon/cart.png" alt="">
-                        <span class="cart-count" style="position: absolute; height:20px; width: 25px; top: -13px; left: 3px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;" th:text="${sumProductInCart}"></span>
+                        <span class="cart-count"
+                              style="position: absolute; height:20px; width: 25px; top: -13px; left: 3px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;"
+                              th:text="${sumProductInCart}"></span>
                     </a>
                 </div>
             </div>
@@ -299,7 +263,9 @@
                 <div class="row" style="background-color: #f3f2ee; height: 80px; width: 1170px;  ">
                     <div class="col-lg-8">
                         <p style="margin: 20px 0 5px 50px;">
-                            <input onclick="selectAllItems(this)" style="height: 20px; width: 20px; margin-right: 10px;" type="checkbox" name="" id="checkAll" th:text="'Chọn tất cả ( ' +${sumProductInCart} +' sản phẩm )'"></p>
+                            <input onclick="selectAllItems(this)" style="height: 20px; width: 20px; margin-right: 10px;"
+                                   type="checkbox" name="" id="checkAll"
+                                   th:text="'Chọn tất cả ( ' +${sumProductInCart} +' sản phẩm )'"></p>
                         <a style="margin: 10px 0 0 50px; color: red;" href="">Xóa</a>
 
                     </div>
@@ -316,7 +282,9 @@
                         <a style="margin:10px 0 0 50px;" href="">Xóa khỏi giỏ hàng</a>
                     </div>
                     <div class="col-lg-4">
-                        <button style="width: 300px; height: 35px; border: 0.5px solid rgb(61, 61, 61);" type="submit" onclick="return validatePurchase()">Mua hàng</button>
+                        <button style="width: 300px; height: 35px; border: 0.5px solid rgb(61, 61, 61);" type="submit"
+                                onclick="return validatePurchase()">Mua hàng
+                        </button>
                     </div>
                 </div>
             </div>
@@ -349,70 +317,84 @@
 
                             <th:block th:each="x : ${listCartDetail}">
 
-                                <tr th:if="${x.chiTietGiay.trangThai == 1}" id="productId" th:value="${x.chiTietGiay.idCTG}">
+                                <tr th:if="${x.chiTietGiay.trangThai == 1}" id="productId"
+                                    th:value="${x.chiTietGiay.idCTG}">
 
                                     <td>
-                                        <input style="height: 20px; width: 20px;" class="itemsCart" onclick="updateTotalAmount(this)" name="selectedProducts" type="checkbox" th:value="${x.chiTietGiay.idCTG}">
+                                        <input style="height: 20px; width: 20px;" class="itemsCart"
+                                               onclick="updateTotalAmount(this)" name="selectedProducts" type="checkbox"
+                                               th:value="${x.chiTietGiay.idCTG}">
                                     </td>
-                                    <td style="width: 400px;" class="product__cart__item" >
+                                    <td style="width: 400px;" class="product__cart__item">
                                         <div class="product__cart__item__pic">
-                                            <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' +  ${x.chiTietGiay.mauSac.idMau}}"> <img style="width:90px; height:90px;" th:src="@{'/images/imgsProducts/' + ${x.chiTietGiay.hinhAnh.url1}}"></a>
+                                            <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' +  ${x.chiTietGiay.mauSac.idMau}}">
+                                                <img style="width:90px; height:90px;"
+                                                     th:src="@{'/images/imgsProducts/' + ${x.chiTietGiay.hinhAnh.url1}}"></a>
                                         </div>
                                         <div class="product__cart__item__text">
                                             <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' +  ${x.chiTietGiay.mauSac.idMau}}">
-                                                <h6 style="margin-top: -22px;" th:text="${x.chiTietGiay.giay.tenGiay}"></h6>
+                                                <h6 style="margin-top: -22px;"
+                                                    th:text="${x.chiTietGiay.giay.tenGiay}"></h6>
                                             </a>
-                                            <h5 class="cart__price" th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
-                                            <h5 th:if="${x.chiTietGiay.giaBan} != ${x.chiTietGiay.soTienTruocKhiGiam}" style="color: #b7b7b7; font-size: 15px; font-weight: 400; text-decoration: line-through;" th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.soTienTruocKhiGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
+                                            <h5 class="cart__price"
+                                                th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
+                                            <h5 th:if="${x.chiTietGiay.giaBan} != ${x.chiTietGiay.soTienTruocKhiGiam}"
+                                                style="color: #b7b7b7; font-size: 15px; font-weight: 400; text-decoration: line-through;"
+                                                th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.soTienTruocKhiGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
                                         </div>
 
                                     </td>
-                                    <td style="width: 175px;"  class="quantity__item">
-                                        <div  style="margin-top: -20px; display: block;">
+                                    <td style="width: 175px;" class="quantity__item">
+                                        <div style="margin-top: -20px; display: block;">
                                             <span id="showButton" style="font-weight: normal; font-size: medium;">Phân loại :</span>
                                             <a th:href="@{'/buyer/cart/option/' + ${x.chiTietGiay.giay.idGiay} + '/' + ${x.chiTietGiay.mauSac.idMau}+ '/' + ${x.chiTietGiay.idCTG}}">
-                                                <img style="height: 10px; width: 10px;" src="/images/img/icon/dropdown.png" alt="">
+                                                <img style="height: 10px; width: 10px;"
+                                                     src="/images/img/icon/dropdown.png" alt="">
                                             </a>
                                         </div>
                                         <div style="padding-right: 20px;">
-                                            <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);" th:text="'Colors : ' + ${x.chiTietGiay.mauSac.tenMau}"></span>
-                                            <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);" th:text="'Size : ' + ${x.chiTietGiay.size.soSize}" ></span>
+                                            <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);"
+                                                  th:text="'Colors : ' + ${x.chiTietGiay.mauSac.tenMau}"></span>
+                                            <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);"
+                                                  th:text="'Size : ' + ${x.chiTietGiay.size.soSize}"></span>
                                         </div>
                                     </td>
                                     <td style="width: 175px;" class="quantity__item">
                                         <div class="quantity">
-
-                                            <!--                                            <input style="margin-top: 3px; font-weight: 700; font-size: 18pt; background-color: white;" type="button" value="-" class="button-minus dec button" onclick="decrementQuantity(this)">-->
-
-                                            <input class="quantityInput" oninput="validateQuantity(this)" th:value="${x.soLuong}" style="width: 50px; text-align: center; border: 1px solid black;" type="number" th:name="${x.chiTietGiay.idCTG}">
-
-                                            <!--                                            <input style="font-weight: 700; font-size: 14pt; background-color: white;" type="button" value="+" class="button-plus inc button a3 a5 a1 a-1" onclick="incrementQuantity(this)">-->
-
+                                            <input class="quantityInput" oninput="validateQuantity(this)"
+                                                   th:value="${x.soLuong}"
+                                                   style="width: 50px; text-align: center; border: 1px solid black;"
+                                                   type="number" th:name="${x.chiTietGiay.idCTG}">
                                         </div>
-
-
                                     </td>
 
 
-                                    <td style="width: 140px;" class="cart__price totalAmount" th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+                                    <td style="width: 140px;" class="cart__price totalAmount"
+                                        th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
                                     <!--                                    <td class="cart__close"><a th:href="@{'/buyer/cart/delete/' + ${x.chiTietGiay.idCTG}}" id="deleteToCartButton" style="border-radius: 20% ; " ><i class="fa fa-close"></i></a></td>-->
                                     <!--                                    <td class="cart__close"> <a th:href="@{/buyer/cart/delete/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}" id="deleteToCartButton" style="border-radius: 20%;" onclick="return confirm('Bạn có chắc chắn muốn xoá sản phẩm này khỏi giỏ hàng không?')" class="confirmation-box"> <i class="fa fa-close"></i> </a> </td>-->
                                     <td class="cart__close">
-                                        <a th:href="@{/buyer/cart/delete/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}" id="deleteToCartButton" style="border-radius: 20%;" data-toggle="modal" data-target="#confirmationModal">
+                                        <a th:href="@{/buyer/cart/delete/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}"
+                                           id="deleteToCartButton" style="border-radius: 20%;" data-toggle="modal"
+                                           data-target="#confirmationModal">
                                             <i class="fa fa-close"></i>
                                         </a>
                                     </td>
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog"
+                                         aria-labelledby="confirmationModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-body">
                                                     Bạn có chắc chắn muốn xoá sản phẩm này khỏi giỏ hàng không?
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                                                    <a th:href="@{/buyer/cart/delete/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}" class="btn btn-primary">Xoá</a>
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Hủy
+                                                    </button>
+                                                    <a th:href="@{/buyer/cart/delete/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}"
+                                                       class="btn btn-primary">Xoá</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -421,64 +403,77 @@
                                 </tr>
 
 
-
                             </th:block>
 
                             <th:block th:each="x : ${listCartDetail}">
 
-                                <tr th:if="${x.chiTietGiay.trangThai == 0 or x.soLuong > x.chiTietGiay.soLuong }" id="productId" th:value="${x.chiTietGiay.idCTG}">
+                                <tr th:if="${x.chiTietGiay.trangThai == 0 or x.soLuong > x.chiTietGiay.soLuong }"
+                                    id="productId" th:value="${x.chiTietGiay.idCTG}">
 
                                     <td>
                                         <p>Hết hàng</p>
                                     </td>
-                                    <td style="width: 400px;" class="product__cart__item" >
+                                    <td style="width: 400px;" class="product__cart__item">
                                         <div class="product__cart__item__pic">
-                                            <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' +  ${x.chiTietGiay.mauSac.idMau}}"> <img style="width:90px; height:90px;" th:src="@{'/images/imgsProducts/' + ${x.chiTietGiay.hinhAnh.url1}}"></a>
+                                            <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' +  ${x.chiTietGiay.mauSac.idMau}}">
+                                                <img style="width:90px; height:90px;"
+                                                     th:src="@{'/images/imgsProducts/' + ${x.chiTietGiay.hinhAnh.url1}}"></a>
                                         </div>
                                         <div class="product__cart__item__text">
                                             <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' +  ${x.chiTietGiay.mauSac.idMau}}">
-                                                <h6 style="margin-top: -22px;" th:text="${x.chiTietGiay.giay.tenGiay}"></h6>
+                                                <h6 style="margin-top: -22px;"
+                                                    th:text="${x.chiTietGiay.giay.tenGiay}"></h6>
                                             </a>
-                                            <h5 class="cart__price" th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
-                                            <h5 th:if="${x.chiTietGiay.giaBan} != ${x.chiTietGiay.soTienTruocKhiGiam}" style="color: #b7b7b7; font-size: 15px; font-weight: 400; text-decoration: line-through;" th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.soTienTruocKhiGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
+                                            <h5 class="cart__price"
+                                                th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
+                                            <h5 th:if="${x.chiTietGiay.giaBan} != ${x.chiTietGiay.soTienTruocKhiGiam}"
+                                                style="color: #b7b7b7; font-size: 15px; font-weight: 400; text-decoration: line-through;"
+                                                th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.soTienTruocKhiGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
                                         </div>
 
                                     </td>
-                                    <td style="width: 175px;"  class="quantity__item">
-                                        <div  style="margin-top: -20px; display: block;">
+                                    <td style="width: 175px;" class="quantity__item">
+                                        <div style="margin-top: -20px; display: block;">
                                             <span id="showButton" style="font-weight: normal; font-size: medium;">Phân loại :</span>
                                             <a th:href="@{'/buyer/cart/option/' + ${x.chiTietGiay.giay.idGiay} + '/' + ${x.chiTietGiay.mauSac.idMau}+ '/' + ${x.chiTietGiay.idCTG}}">
-                                                <img style="height: 10px; width: 10px;" src="/images/img/icon/dropdown.png" alt="">
+                                                <img style="height: 10px; width: 10px;"
+                                                     src="/images/img/icon/dropdown.png" alt="">
                                             </a>
                                         </div>
                                         <div style="padding-right: 20px;">
-                                            <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);" th:text="'Colors : ' + ${x.chiTietGiay.mauSac.tenMau}"></span>
-                                            <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);" th:text="'Size : ' + ${x.chiTietGiay.size.soSize}" ></span>
+                                            <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);"
+                                                  th:text="'Colors : ' + ${x.chiTietGiay.mauSac.tenMau}"></span>
+                                            <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);"
+                                                  th:text="'Size : ' + ${x.chiTietGiay.size.soSize}"></span>
                                         </div>
                                     </td>
-                                    <td style="width: 175px;"  class="quantity__item">
+                                    <td style="width: 175px;" class="quantity__item">
                                         <div class="quantity">
 
 
-
                                         </div>
                                     </td>
-                                    <td style="width: 140px;" class="cart__price totalAmount" th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
-                                    <td class="cart__close"><a th:href="@{'/buyer/cart/delete/' + ${x.chiTietGiay.idCTG}}" id="deleteToCartButton" style="border-radius: 20% ; " ><i class="fa fa-close"></i></a></td>
+                                    <td style="width: 140px;" class="cart__price totalAmount"
+                                        th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+                                    <td class="cart__close"><a
+                                            th:href="@{'/buyer/cart/delete/' + ${x.chiTietGiay.idCTG}}"
+                                            id="deleteToCartButton" style="border-radius: 20% ; "><i
+                                            class="fa fa-close"></i></a></td>
                                     <!--                                    <button onclick="confirmDelete('{{idCTG}}')">Xóa sản phẩm</button>-->
 
 
                                 </tr>
 
 
-
                             </th:block>
                             <div class="alert alert-warning container mt-3 text-center"
                                  th:if="*{listCartDetail.isEmpty()}"
                                  style="background-color: transparent; border: none;">
-                                <img src="/images/img/icon/gioHangTrong1.png" alt="Giỏ hàng trống" style="width: 350px; height: 200px;">
+                                <img src="/images/img/icon/gioHangTrong1.png" alt="Giỏ hàng trống"
+                                     style="width: 350px; height: 200px;">
                                 <br>
-                                <p class="empty-message" style="margin-top: 20px; font-size: 1.8em;">Bạn chưa có sản phẩm
+                                <p class="empty-message" style="margin-top: 20px; font-size: 1.8em;">Bạn chưa có sản
+                                    phẩm
                                     nào trong giỏ hàng!</p>
                             </div>
 
@@ -488,13 +483,6 @@
 
                         </table>
 
-                        <div class="col-lg-7 col-md-7 col-sm-7">
-                            <div class="continue__btn update__btn">
-                                <button type="submit" class="btn btn-md btn-primary" style="margin-left: 125px">
-                                    <i class="fa fa-spinner "></i>Cập nhật giỏ hàng
-                                </button>
-                            </div>
-                        </div>
 
 
                     </div>
@@ -528,7 +516,8 @@
                         <span class="label">New</span>
                         <ul class="product__hover">
                             <li><a href="#"><img src="/images/img/icon/heart.png" alt=""></a></li>
-                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a>
+                            </li>
                             <li><a href="#"><img src="/images/img/icon/search.png" alt=""></a></li>
                         </ul>
                     </div>
@@ -563,7 +552,8 @@
                         <span class="label">New</span>
                         <ul class="product__hover">
                             <li><a href="#"><img src="/images/img/icon/heart.png" alt=""></a></li>
-                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a>
+                            </li>
                             <li><a href="#"><img src="/images/img/icon/search.png" alt=""></a></li>
                         </ul>
                     </div>
@@ -598,7 +588,8 @@
                         <span class="label">New</span>
                         <ul class="product__hover">
                             <li><a href="#"><img src="/images/img/icon/heart.png" alt=""></a></li>
-                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a>
+                            </li>
                             <li><a href="#"><img src="/images/img/icon/search.png" alt=""></a></li>
                         </ul>
                     </div>
@@ -633,7 +624,8 @@
                         <span class="label">New</span>
                         <ul class="product__hover">
                             <li><a href="#"><img src="/images/img/icon/heart.png" alt=""></a></li>
-                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a>
+                            </li>
                             <li><a href="#"><img src="/images/img/icon/search.png" alt=""></a></li>
                         </ul>
                     </div>
@@ -668,7 +660,8 @@
                         <span class="label">New</span>
                         <ul class="product__hover">
                             <li><a href="#"><img src="/images/img/icon/heart.png" alt=""></a></li>
-                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a>
+                            </li>
                             <li><a href="#"><img src="/images/img/icon/search.png" alt=""></a></li>
                         </ul>
                     </div>
@@ -703,7 +696,8 @@
                         <span class="label">New</span>
                         <ul class="product__hover">
                             <li><a href="#"><img src="/images/img/icon/heart.png" alt=""></a></li>
-                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a>
+                            </li>
                             <li><a href="#"><img src="/images/img/icon/search.png" alt=""></a></li>
                         </ul>
                     </div>
@@ -738,7 +732,8 @@
                         <span class="label">New</span>
                         <ul class="product__hover">
                             <li><a href="#"><img src="/images/img/icon/heart.png" alt=""></a></li>
-                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a>
+                            </li>
                             <li><a href="#"><img src="/images/img/icon/search.png" alt=""></a></li>
                         </ul>
                     </div>
@@ -773,7 +768,8 @@
                         <span class="label">New</span>
                         <ul class="product__hover">
                             <li><a href="#"><img src="/images/img/icon/heart.png" alt=""></a></li>
-                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a>
+                            </li>
                             <li><a href="#"><img src="/images/img/icon/search.png" alt=""></a></li>
                         </ul>
                     </div>
@@ -876,7 +872,8 @@
 <section>
 
     <!--Modal show option product begin-->
-    <div th:if="${showModalChooseSize}" class="modal fade" id="showOptionProductInCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div th:if="${showModalChooseSize}" class="modal fade" id="showOptionProductInCart" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;">
             <form action="/buyer/cart/change/size" method="post">
                 <div class="modal-content">
@@ -892,26 +889,32 @@
                         </div>
                         <div>
                             <div style="margin-bottom: 10px;">
-                                <span style="margin-left: 85px; "> Nhấn <img src="/images/img/icon/mail.png" style="height: 15px; width: 20px; margin:0 10px 2px 10px;" alt=""> để nhận thông báo khi có hàng </span>
+                                <span style="margin-left: 85px; "> Nhấn <img src="/images/img/icon/mail.png"
+                                                                             style="height: 15px; width: 20px; margin:0 10px 2px 10px;"
+                                                                             alt=""> để nhận thông báo khi có hàng </span>
                             </div>
-                            <div  class="radio-input">
+                            <div class="radio-input">
 
                                 <!--              List Size Start-->
                                 <th:block th:each="x : ${listCTGByGiay}">
 
-                                    <label style=" margin: 5px; font-weight: unset; font-size: small; height: 40px;" >
-                                        <a th:if="${x.trangThai == 1}" class="link" >
-                                            <input th:value="${x.idCTG}" type="radio" name="selectedValues" >
+                                    <label style=" margin: 5px; font-weight: unset; font-size: small; height: 40px;">
+                                        <a th:if="${x.trangThai == 1}" class="link">
+                                            <input th:value="${x.idCTG}" type="radio" name="selectedValues">
                                             <span th:text="${x.size.soSize}"></span>
                                         </a>
 
-                                        <a th:if="${x.trangThai == 0}" class="link" >
+                                        <a th:if="${x.trangThai == 0}" class="link">
                                             <input type="">
                                             <span th:text="${x.size.soSize}"></span>
                                         </a>
 
-                                        <a th:if="${x.trangThai == 0}" th:attr="onclick='receiveMail(event, \'' + ${x.idCTG} + '\')'" class="receiveMail">
-                                            <img src="/images/img/icon/mail.png" style="height: 15px; width: 20px; margin-bottom: 2px; cursor: pointer;" alt="">
+                                        <a th:if="${x.trangThai == 0}"
+                                           th:attr="onclick='receiveMail(event, \'' + ${x.idCTG} + '\')'"
+                                           class="receiveMail">
+                                            <img src="/images/img/icon/mail.png"
+                                                 style="height: 15px; width: 20px; margin-bottom: 2px; cursor: pointer;"
+                                                 alt="">
                                         </a>
                                     </label>
 
@@ -963,7 +966,8 @@
     </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="messAddThanhCong" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
+    <div class="modal fade" id="messAddThanhCong" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle"
+         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 400px;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -985,9 +989,7 @@
     </div>
 
 
-
     <!-- Modal HTML -->
-
 
 
 </section>
@@ -1011,8 +1013,6 @@
 <script src="/js/custom-scroll.js"></script>
 
 
-
-
 <script>
     $(document).ready(function(){
         $('#yourTriggerButton').click(function(){
@@ -1030,32 +1030,15 @@
         var quantity = parseInt(inputElement.value);
 
         // Kiểm tra xem giá trị có phải là số không
-        if (isNaN(quantity) || quantity < 1 || quantity > 20) {
-            alert('Vui lòng nhập số trong khoảng từ 1 đến 20.');
-            // Đặt giá trị mặc định là 1 nếu giá trị không hợp lệ hoặc là chữ
-            inputElement.value = quantity;
-        }
-
-        // Gọi hàm updateTotalAmount để cập nhật tổng tiền
-        updateTotalAmount(inputElement);
-    }
-    /*]]>*/
-</script>
-<!--Update quantity product in cart BEGIN -->
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    function validateQuantity(inputElement) {
-        var quantity = parseInt(inputElement.value);
-
-        // Kiểm tra xem giá trị có phải là số không
-        if (isNaN(quantity) || quantity < 1 || quantity > 20) {
-            alert('Vui lòng nhập số trong khoảng từ 1 đến 20.');
+        if (isNaN(quantity) || quantity < 1 || quantity > 10) {
+            alert('Vui lòng nhập số trong khoảng từ 1 đến 10.');
             // Đặt giá trị mặc định là 1 nếu giá trị không hợp lệ hoặc là chữ
 
             if (quantity < 1)  {
                 inputElement.value = 1;
             }else
-                inputElement.value = quantity - 1;
+
+                 inputElement.value = 10
         }
 
         // Gọi hàm updateTotalAmount để cập nhật tổng tiền
@@ -1063,6 +1046,7 @@
     }
     /*]]>*/
 </script>
+
 <!--Update quantity product in cart BEGIN -->
 <script>
     function incrementQuantity(input) {
@@ -1085,8 +1069,7 @@
 
     function updateTotalAmount(input) {
         var quantity = input.value;
-        var idCTG = input.getAttribute('name');
-        var totalAmount = 0;
+        var idCTG = input.getAttribute('name'); // Đảm bảo rằng đây là thuộc tính chứa idCTG
 
         fetch('/buyer/cart/updateQuantity', {
             method: 'POST',
@@ -1097,24 +1080,25 @@
         })
             .then(response => response.text())
             .then(data => {
+                // Cập nhật tổng số tiền sau khi server xác nhận cập nhật số lượng
+                var totalAmount = 0;
+                $(".itemsCart:checked").each(function () {
+                    var priceProduct = parseFloat($(this).closest("tr").find(".cart__price").text().replace('₫', '').replace(/,/g, '').trim());
+                    var quantity = parseInt($(this).closest("tr").find(".quantityInput").val());
+                    totalAmount += priceProduct * quantity;
+                });
+
+                $("#grandTotal").text("₫" + totalAmount.toLocaleString());
+
+                var priceProduct = parseFloat($(input).closest("tr").find(".cart__price").text().replace('₫', '').replace(/,/g, '').trim());
+                var quantity = parseInt($(input).closest("tr").find(".quantityInput").val());
+                var totalAmountElement = $(input).closest("tr").find(".totalAmount");
+                var totalAmount = quantity * priceProduct;
+                totalAmountElement.text("₫" + totalAmount.toLocaleString());
             })
             .catch(error => {
+                console.error('Error:', error);
             });
-
-        $(".itemsCart:checked").each(function () {
-            var priceProduct = parseFloat($(this).closest("tr").find(".cart__price").text().replace('₫', '').replace(/,/g, '').trim());
-            var quantity = parseInt($(this).closest("tr").find(".quantityInput").val());
-            totalAmount += priceProduct * quantity;
-        });
-
-        $("#grandTotal").text("₫" + totalAmount.toLocaleString());
-
-        var priceProduct = parseFloat($(input).closest("tr").find(".cart__price").text().replace('₫', '').replace(/,/g, '').trim());
-        var quantity = parseInt($(input).closest("tr").find(".quantityInput").val());
-        var totalAmountElement = $(input).closest("tr").find(".totalAmount");
-        var totalAmount = quantity * priceProduct;
-        totalAmountElement.text("₫" + totalAmount.toLocaleString());
-
     }
 
     function selectAllItems(checkbox) {
