@@ -4525,9 +4525,9 @@ span.select2-container.select2-container--default.select2-container--open {
     max-width: 100% !important
 }
 
-.dataTables_filter + .dataTables_filter {
-    display: none
-}
+/*.dataTables_filter + .dataTables_filter {*/
+/*    display: none*/
+/*}*/
 
 .dataview .dataTables_length, .dataview .dataTables_info, .dataview .dataTables_paginate {
     display: none !important
@@ -7541,4 +7541,26 @@ span.select2-container.select2-container--default.select2-container--open {
     position: absolute;
     top: 50%;
     right: 10px
+
+}
+
+.vien {
+    border: gray solid 1px;
+    border-radius: 5px;
+    height: auto;
+}
+
+.newButton{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.cachHam{
+    margin-top: 10px;
+}
+
+.nenBtnHoaDon{
+    background-color: #ffdf7e;
+    padding: 10px;
+
 }

@@ -135,22 +135,23 @@
 <body>
 
 <form  class="form" method="post">
-    <p class="form-title">Sign in to your account</p>
+    <p class="form-title">Đăng nhập vào hệ thống!</p> <br>
+    <p style="margin-top:-20px; text-align: center " >Xin mời bạn nhập đầy đủ thông tin đăng nhập</p>
     <span th:text="${messageLogin}" style="color: red;"></span>
     <div class="input-container">
-        <input placeholder="User name" name="username" type="text" id="username">
+        <input placeholder="Vui lòng nhập tài khoản " name="username" type="text" id="username">
     </div>
     <div class="input-container">
-        <input placeholder="Password" name="password" type="password" class="form-control" id="password">
+        <input placeholder="Vui lòng nhập mật khẩu" name="password" type="password" class="form-control" id="password">
     </div>
     <button  class="submit" onclick="login()" type="button" id="loginButton">
         Login
     </button>
-    <a class="forgotPassword" th:href="@{'/buyer/reset'}">Forggot Password ?</a>
+    <a class="forgotPassword" th:href="@{'/buyer/reset'}">Quên mật khẩu?</a>
 
     <p class="signup-link">
-        No Accounts ?
-        <a th:href="@{'/buyer/register'}">Sign Up</a>
+        Bạn chưa có tài khoản ?
+        <a th:href="@{'/buyer/register'}">đăng kí</a>
     </p>
 </form>
 <div id="loginSuccessModal" class="modal">
@@ -162,13 +163,25 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script >
-    function login(){
+<script>
+    // Dynamically add styles for Swal.fire
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .custom-swal-title {
+            font-size: 1.3em;
+        }
+        .custom-swal-button {
+            font-size: 1.3em;
+        }
+    `;
+    document.head.appendChild(style);
+
+    function login() {
         var formData = new FormData();
         let username = document.getElementById("username").value;
         let password = document.getElementById("password").value;
-        formData.append("username",username);
-        formData.append("password",password);
+        formData.append("username", username);
+        formData.append("password", password);
         $.ajax({
             type: "POST",
             url: "/buyer/login",
@@ -176,41 +189,39 @@
             contentType: false,
             processData: false,
             success: function (response) {
-                console.log("succes " + response);
-                if (response === 'Login thanh cong' ){
+                console.log("success " + response);
+                if (response === 'Login thanh cong' ) {
                     Swal.fire({
                         position: "center",
                         icon: "success",
-                        title: "Login successful",
+                        title: "Đang tiến hành đăng nhập vui lòng đợi trong giây lát",
                         showConfirmButton: true,
-                        confirmButtonText: "OK",
-
+                        confirmButtonText: "Tôi đã hiểu",
+                        customClass: {
+                            title: 'custom-swal-title',
+                            confirmButton: 'custom-swal-button'
+                        }
                     });
                     setTimeout(() => {
-                        console.log('Hàm đã được gọi sau 2 giây.');
+                        console.log('Hàm đã được gọi sau 20 giây.');
                         window.location.href = "http://localhost:8080/buyer/home";
-                    }, 3000);
-
-
-                }else {
+                    }, 3000);  // 20 seconds (20000 milliseconds)
+                } else {
                     Swal.fire({
                         icon: "error",
-                        title: "Oops...",
-                        text: "Username and Password incorrect!",
-
+                        text: "Sai thông tin đăng nhập, hãy kiểm tra lại!",
+                        customClass: {
+                            title: 'custom-swal-title',
+                            confirmButton: 'custom-swal-button'
+                        }
                     });
-
                 }
-
-
             },
             error: function (error) {
-                console.log("error " + error)
+                console.log("error " + error);
             }
-        })
-
+        });
     }
-
 </script>
 
 
