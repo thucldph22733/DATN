@@ -28,7 +28,6 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body class="mini-sidebar">
-<!--<div th:replace="~{manage/activities :: main}"></div>-->
 <div th:fragment="main">
     <div id="global-loader">
         <div class="whirly-loader"></div>
@@ -108,27 +107,31 @@
 
                 <li class="nav-item dropdown has-arrow main-drop">
                     <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
-                        <!--                                            <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">-->
+                                                                    <span class="user-img"><img
+                                                                            th:src="@{'/images/imgsNhanVien/'+${session.staffLogged.AnhNV}}"
+                                                                            alt="">
                         <span class="status online"></span></span>
                     </a>
                     <div class="dropdown-menu menu-drop-user">
                         <div class="profilename">
-                            <!--                                                    <div class="profileset">-->
-                            <!--                                                        <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">-->
-                            <!--                                                        <span class="status online"></span></span>-->
-                            <!--                                                        <div class="profilesets">-->
-                            <!--                                                            <h6 th:text="${session.managerLogged.hoTenNV}"></h6>-->
-                            <!--                                                            <h5 th:text="${session.managerLogged.chucVu.tenCV}"></h5>-->
-                            <!--                                                        </div>-->
-                            <!--                                                    </div>-->
+                            <div class="profileset">
+                                                                                    <span class="user-img"><img
+                                                                                            th:src="@{'/images/imgsNhanVien/'+${session.staffLogged.AnhNV}}"
+                                                                                            alt="">
+                                                                                    <span class="status online"></span></span>
+                                <div class="profilesets">
+                                    <h6 th:text="${session.staffLogged.hoTenNV}"></h6>
+                                    <h5 th:text="${session.staffLogged.chucVu.tenCV}"></h5>
+                                </div>
+                            </div>
                             <hr class="m-0">
-                            <a class="dropdown-item" href="/ban-hang/hien-thi">Bán hàng tại quầy</a>
-                            <a class="dropdown-item" href="/order/">Vận chuyển</a>
+                            <a class="dropdown-item me-2 delete-button2" th:data-ql-url="@{'/logout'}">Quản lý Cửa Hàng</a>
                             <a class="dropdown-item" href="profile.html">
                                 <i class="me-2" data-feather="user"></i> My Profile
                             </a>
                             <a class="dropdown-item" href="/manage/change-password"><i class="me-2"
-                                                                                       data-feather="settings"></i>Change passwoord</a>
+                                                                                       data-feather="settings"></i>Change
+                                passwoord</a>
                             <hr class="m-0">
                             <a class="dropdown-item logout pb-0" href="/logout"><img src="/images/img/icons/log-out.svg"
                                                                                      class="me-2" alt="img">Logout</a>
@@ -141,8 +144,8 @@
                 <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                    aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="/ban-hang/hien-thi">Bán hàng tại quầy</a>
-                    <a class="dropdown-item" href="/order/">Vận chuyển</a>
+                    <a class="dropdown-item" th:data-ql-url="@{'/logout'}">Quản lý Cửa Hàng</a>
+                    <!--                    <a class="dropdown-item" href="/order/">Vận chuyển</a>-->
                     <a class="dropdown-item" href="profile.html">Thông tin cá nhân</a>
                     <a class="dropdown-item" href="/manage/change-password">Cài đặt</a>
                     <a class="dropdown-item" href="signin.html">Đăng xuất</a>
@@ -150,95 +153,80 @@
             </div>
 
         </div>
-<div class="page-wrapper">
-    <div class="row p-5">
-        <div class="col-md-8">
-            <div class="nenBtnHoaDon">
-                <a id="btn1" class="btn btn-primary" onclick="createButton()">+</a>
-            </div>
+        <div class="page-wrapper">
+            <div class="row p-5">
+                <div class="col-md-8">
+                    <div class="nenBtnHoaDon">
+                        <a id="btn1" class="btn btn-primary" onclick="createButton()">+</a>
+                    </div>
 
-            <div>
-                <!--                Tìm kiếm-->
-<!--                <div class="search-input pt-5">-->
-<!--                    <div id="data-table_filter" class="dataTables_filter"><label>-->
-<!--                        <input type="search" class="form-control" placeholder="Nhập tên sản phẩm..."-->
-<!--                               aria-controls="data-table"></label>-->
-<!--                    </div>-->
-
-<!--                    <div>-->
-<!--                        <button id="scanButton"-->
-<!--                                class="btn btn-outline-dark">Quét QR-->
-<!--                        </button>-->
-<!--                        <button id="stopButton" class="btn btn-danger mt-2">-->
-<!--                            Tắt Video-->
-<!--                        </button>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-                <div class="row pt-2 pb-2">
-                        <div class="col-md-12 text-right" style="display: flex; justify-content: flex-end">
-                        <button id="scanButton" class="btn btn-outline-dark">Quét QR</button>
+                    <div>
+                        <!--                Tìm kiếm-->
+                        <div class="search-input">
+                            <div id="data-table_filter" class="dataTables_filter"><label>
+                                <input type="search" class="form-control" placeholder="Nhập tên sản phẩm..."
+                                       aria-controls="data-table"></label>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="table-responsive">
+                                <table class="table datanew">
+                                    <thead>
+                                    <tr>
+                                        <th>Mã Sản Phẩm</th>
+                                        <th>Tên Sản Phẩm</th>
+                                        <th>Số Lượng</th>
+                                        <th>Đơn Giá</th>
+                                        <th>Thành Tiền</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>1</td>
+                                        <td>1</td>
+                                        <td>1</td>
+                                        <td>1</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div>
-                    <div class="table-responsive">
-                        <table class="table datanew">
-                            <thead>
-                            <tr>
-                                <th>Mã Sản Phẩm</th>
-                                <th>Tên Sản Phẩm</th>
-                                <th>Số Lượng</th>
-                                <th>Đơn Giá</th>
-                                <th>Thành Tiền</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                <div class="vien col-md-4">
+                    <div class="row cachHam">
+                        <label class="col-md-4 form-label">SDT KH: </label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control">
+                        </div>
+
                     </div>
+
+                    <div>
+                        <label class="form-label">Mã NV: </label>
+                    </div>
+
+
+                    <div class="row">
+                        <label class="col-md-4 form-label">Khuyến mãi</label>
+                        <div class="col-md-8">
+                            <select class="form-select">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <label class="form-label">TỔNG TIỀN: </label>
+                    </div>
+
+                    <a class="btn btn-primary align-center">Thanh toán</a>
                 </div>
             </div>
-        </div>
-
-        <div class="vien col-md-4">
-            <div class="row cachHam">
-                <label class="col-md-4 form-label">SDT KH: </label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control">
-                </div>
-            </div>
-
-            <div>
-                <label class="form-label">Tên KH: </label>
-            </div>
-
-            <div>
-                <label class="form-label">Mã NV: </label>
-            </div>
-
-            <div class="row">
-                <label class="col-md-4 form-label">Khuyến mãi</label>
-                <div class="col-md-8">
-                    <select class="form-select">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                    </select>
-                </div>
-            </div>
-
-            <div>
-                <label class="form-label">TỔNG TIỀN: </label>
-            </div>
-
-            <a class="btn btn-primary align-center">Thanh toán</a>
         </div>
     </div>
 </div>
@@ -260,6 +248,18 @@
 <script src="/plugins/sweetalert/sweetalerts.min.js"></script>
 
 <script src="/js/script.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Lấy thẻ nút in bằng id
+        var printButton = document.getElementById("printButton");
+
+        // Thêm sự kiện click cho nút
+        printButton.addEventListener("click", function () {
+            // Gọi hàm in mặc định của trình duyệt
+            window.print();
+        });
+    });
+</script>
 
 <script>
     var counter = 1;
@@ -276,6 +276,43 @@
         } else {
             alert("Giới hạn 5 Hóa Đơn")
         }
+    }
+</script>
+<script>
+    document.querySelectorAll(".delete-button2").forEach(function (button) {
+        button.addEventListener("click", function (event) {
+            event.preventDefault(); // Ngăn chặn thực hiện chuyển hướng mặc định
+            const QLUrl = button.getAttribute("data-ql-url");
+            showConfirmationDialog(QLUrl);
+        });
+    });
+</script>
+<script>
+    function showConfirmationDialog(QLUrl) {
+        Swal.fire({
+            title: "Vui lòng đăng nhập tài khoản ADMIN",
+            text: "Bạn sẽ không thể hoàn tác hành động này!!",
+            type: "Chú Ý",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes!",
+            confirmButtonClass: "btn btn-primary",
+            cancelButtonClass: "btn btn-danger ml-1",
+            buttonsStyling: false
+        }).then(function (result) {
+            if (result.value) {
+                // Chuyển hướng đến URL xóa
+                window.location.href = QLUrl;
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                // Xử lý khi người dùng hủy bỏ
+                Swal.fire({
+                    title: "Không Thành Công!",
+                    type: "error",
+                    confirmButtonClass: "btn btn-success"
+                });
+            }
+        });
     }
 </script>
 </body>
