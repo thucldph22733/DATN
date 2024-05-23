@@ -43,5 +43,7 @@ public interface GiayChiTietService {
 
     HinhAnh hinhAnhByGiayAndMau(Giay giay, MauSac mauSac);
 
+    void updateQuantity(UUID id, int soLuong);
+
 
 }

@@ -5,6 +5,7 @@ import com.example.shoesmanagement.repository.*;
 import com.example.shoesmanagement.service.GHCTService;
 import com.example.shoesmanagement.service.GiayChiTietService;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -111,6 +112,11 @@ public class GiayChiTietServiceImpl implements GiayChiTietService {
     }
 
     @Override
+    public void updateQuantity(UUID id, int soLuong) {
+        giayChiTietRepository.updateQuantity(id, soLuong);
+    }
+
+    @Override
     public List<ChiTietGiay> findByGiayAndMau(Giay giay, MauSac mauSac) {
         return giayChiTietRepository.findByGiayAndMauSac(giay, mauSac);
     }
@@ -119,6 +125,7 @@ public class GiayChiTietServiceImpl implements GiayChiTietService {
         return giayChiTietRepository.findByMauSacAndGiayAndTrangThai(mauSac, giay, trangThai);
 
     }
+
 
 
 }

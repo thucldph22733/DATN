@@ -13,7 +13,7 @@ public interface KhachHangService {
     public List<KhachHang> getAllKhachHang();
 
     public void save(KhachHang khachHang);
-    public void getByIdKhachHang(UUID id);
+    public KhachHang getByIdKhachHang(UUID id);
 
     public void addKhachHang(KhachHang khachHang);
     public List<KhachHang> findByTrangThai(int trangThai);
