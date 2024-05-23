@@ -54,6 +54,9 @@ public class LoginController {
                 } else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("CV02")) {
                     session.setAttribute("staffLogged", nhanVien);
                     return "redirect:/ban-hang/hien-thi";
+                } else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("NV01")) {
+                    session.setAttribute("staffLogged", nhanVien);
+                    return "redirect:/ban-hang/hien-thi";
                 }else{
                     model.addAttribute("messageLogin", "Not Access");
                     return "/login";
