@@ -34,6 +34,8 @@ public interface GiayChiTietRepository extends JpaRepository<ChiTietGiay, UUID> 
             @Param("mauSacId") UUID mauSacId,
             @Param("hinhAnhId") UUID hinhAnhId
     );
+    @Query("UPDATE ChiTietGiay c SET c.soLuong = :quantity WHERE c.idCTG = :id")
+    void updateQuantity(@Param("id") UUID id, @Param("quantity") int quantity);
 
 
 }
