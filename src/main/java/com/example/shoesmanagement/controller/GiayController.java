@@ -99,6 +99,7 @@ public class GiayController {
             , @ModelAttribute("Errormessage") String Errormessage
             , @ModelAttribute("ErrormessageHang") String ErrormessageHang
             , @ModelAttribute("ErrormessageChatLieu") String ErrormessageChatLieu) {
+
         List<Hang> hangList = hangService.getALlHang();
         Collections.sort(hangList, (a, b) -> b.getTgThem().compareTo(a.getTgThem()));
         model.addAttribute("hang", hangList);
