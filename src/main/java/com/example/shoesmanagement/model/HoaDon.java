@@ -19,7 +19,6 @@ import java.util.UUID;
 @NoArgsConstructor
 
 public class HoaDon {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_HD")
@@ -34,6 +33,7 @@ public class HoaDon {
 
     @OneToMany(mappedBy = "hoaDon")
     private List<LichSuThanhToan> lichSuThanhToans;
+
     @Column(name = "tg_Huy")
     private Date tgHuy;
 
@@ -90,6 +90,7 @@ public class HoaDon {
     @Column(name="hinh_Thuc_Thanh_Toan")
     private Integer hinhThucThanhToan;
 
-
-
+    @ManyToOne
+    @JoinColumn(name = "id_khuyen_mai")
+    private KhuyenMai khuyenMai;
 }

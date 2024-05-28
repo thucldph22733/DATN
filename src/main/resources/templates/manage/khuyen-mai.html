@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="POS - Bootstrap Admin Template">
@@ -12,28 +11,60 @@
     <title>Sneaker Shop - Admin</title>
 
     <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
+    <link rel="stylesheet" href="/plugins/icons/flags/flags.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="/css/animate.css">
 
     <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
-    <link rel="stylesheet" href="/plugins/icons/flags/flags.css">
+
     <link rel="stylesheet" href="/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="/plugins/icons/themify/themify.css">
 
     <link rel="stylesheet" href="/plugins/fontawesome/css/fontawesome.min.css">
     <link rel="stylesheet" href="/plugins/fontawesome/css/all.min.css">
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/plugins/toastr/toatr.css"/>
 
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Thêm link thư viện Alertify -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/themes/default.min.css"/>
     <style>
-        .ellipsis {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .alertify .ajs-message {
+            background-color: black;
+            color: #ffffff;
+        }
+
+        /* Thay đổi màu nền của tiêu đề */
+        .alertify .ajs-header {
+            background-color: coral;
+            color: #ffffff;
+        }
+
+        /* Thay đổi màu nền của các nút */
+        .alertify .ajs-buttons .ajs-ok {
+            background-color: #2ecc71;
+            color: #ffffff;
         }
     </style>
-
+    <style>
+        .color-box {
+            width: 40px; /* Độ rộng của hộp màu */
+            height: 40px; /* Chiều cao của hộp màu */
+            display: inline-block; /* Hiển thị như một hộp chữ nằm cạnh nhau */
+            border: 1px solid #000; /* Viền xung quanh hộp màu */
+            margin: 0 5px; /* Khoảng cách giữa các hộp màu */
+            border-radius: 50%;
+        }
+    </style>
+    <style>
+        /* Định dạng lớp CSS để làm cho input to hơn */
+        .large-input {
+            /*width: 230px; !* Điều chỉnh kích thước theo nhu cầu của bạn *!*/
+            /*height: 40px; !* Điều chỉnh kích thước theo nhu cầu của bạn *!*/
+            border: none;
+        }
+    </style>
 </head>
 <body class="mini-sidebar">
 <div th:replace="~{manage/activities :: main}"></div>
@@ -42,582 +73,187 @@
         <div class="content">
             <div class="page-header">
                 <div class="page-title">
-                    <h4>Voucher </h4>
-                    <h6>Quản lý Khuyến Mãi Hóa Đơn</h6>
+                    <h4>Danh sách Khuyễn mãi</h4>
+                    <h6>Quản lý Khuyễn mãi</h6>
                 </div>
+
                 <div class="page-btn">
-                    <a class="btn btn-added" href="javascript:void(0);" data-bs-toggle="modal"
-                       data-bs-target="#themKMM">
-                        <img src="/images/img/icons/plus.svg" alt="img" class="me-2">Thêm khuyến mãi mới</a>
+                    <button class="btn btn-added" id="show-form-button">
+                        <img src="" class="me-1">Thêm Khuyến mãi
+                    </button>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-body">
-                    <div>
-                        <!--          <div class="card">-->
-                        <!--            <div class="card-body pb-0">-->
-                        <!--              <div class="row">-->
-                        <!--                <div class="col-lg-2 col-sm-6 col-12">-->
-                        <!--                  <div class="form-group">-->
-                        <!--                    <input type="date"-->
-                        <!--                           placeholder="Choose Date">-->
-                        <!--                  </div>-->
-                        <!--                </div>-->
-                        <!--                <div class="col-lg-2 col-sm-6 col-12">-->
-                        <!--                  <div class="form-group">-->
-                        <!--                    <input type="text" placeholder="Enter Reference">-->
-                        <!--                  </div>-->
-                        <!--                </div>-->
-                        <!--                <div class="col-lg-2 col-sm-6 col-12">-->
-                        <!--                  <div class="form-group">-->
-                        <!--                    <select class="select">-->
-                        <!--                      <option>Choose Customer</option>-->
-                        <!--                      <option>Customer</option>-->
-                        <!--                    </select>-->
-                        <!--                  </div>-->
-                        <!--                </div>-->
-                        <!--                <div class="col-lg-2 col-sm-6 col-12">-->
-                        <!--                  <div class="form-group">-->
-                        <!--                    <select class="select">-->
-                        <!--                      <option>Choose Status</option>-->
-                        <!--                      <option>Inprogress</option>-->
-                        <!--                    </select>-->
-                        <!--                  </div>-->
-                        <!--                </div>-->
-                        <!--                <div class="col-lg-1 col-sm-6 col-12">-->
-
-                        <!--                </div>-->
-                        <!--                <div class="col-lg-3 col-sm-6 col-12">-->
-                        <!--                </div>-->
-                        <!--              </div>-->
-                        <!--            </div>-->
-                        <!--          </div>-->
-                    </div>
-
-                    <div class="table-responsive">
-                        <table class="table datanew">
-                            <thead>
-                            <tr>
-                                <th style="background-color: #ff9f43; color: white;">Mã Voucher</th>
-                                <th style="background-color: #ff9f43; color: white;">Tên Voucher</th>
-                                <th style="background-color: #ff9f43; color: white;">Loại Giảm</th>
-                                <th style="background-color: #ff9f43; color: white;">Ngày Bắt Đầu</th>
-                                <th style="background-color: #ff9f43; color: white;">Ngày Kết Thúc</th>
-                                <th style="background-color: #ff9f43; color: white;">Số Lượng</th>
-                                <th style="background-color: #ff9f43; color: white;">Lượt Dùng</th>
-                                <th style="background-color: #ff9f43; color: white;">% Giảm (Max $)</th>
-                                <th style="background-color: #ff9f43; color: white;">ĐK Hóa Đơn</th>
-                                <th style="background-color: #ff9f43; color: white;">Trạng Thái</th>
-                                <th style="background-color: #ff9f43; color: white;">Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <th:block th:each="x : ${listKhuyenMai}">
-                                <tr>
-                                    <td th:text="${x.maKM}"></td>
-                                    <td class="ellipsis" th:text="${x.tenKM}"></td>
-                                    <td>
-                                        <p th:if="${x.loaiGiam == true}">Giá tiền</p>
-                                        <p th:unless="${x.loaiGiam == true}">Phần trăm</p>
-                                    </td>
-                                    <td th:text="${#dates.format(x.tgBatDau, 'yyyy-MM-dd')}"></td>
-                                    <td th:text="${#dates.format(x.tgKetThuc, 'yyyy-MM-dd')}"></td>
-                                    <td th:text="${x.soLuong}"></td>
-                                    <td th:text="${x.soLuongDaDung}"></td>
-                                    <td th:text="${x.phanTramGiam * 100} +' % ' + '( ' + '₫' + ${#numbers.formatDecimal(x.giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' )'"></td>
-                                    <td th:text="'₫' + ${#numbers.formatDecimal(x.dieuKienKMBill, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
-                                    <td>
-                                        <p th:if="${x.trangThai == 1}">Hoạt Động</p>
-                                        <p th:unless="${x.trangThai == 1}">Không Hoạt Động</p>
-                                    </td>
-                                    <td style="padding-left: 25px;">
-                                        <a href="javascript:void(0);"
-                                           th:data-bs-toggle="modal"
-                                           th:data-bs-target="'#detalKM' + ${x.idKM}">
-                                            <img src="/images/img/icons/edit.svg" alt="img">
-                                        </a>
-                                    </td>
-                                </tr>
-                            </th:block>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-
-                <div class="card-body">
-
-                    <form action="/manage/voucher-bill/send-mail" method="post">
-                        <div class="row">
-                            <div class="col-lg-4 col-sm-12 col-12">
-                                <p style="font-size: 14pt; color: black; margin: auto; font-weight: 700; text-align: center;">
-                                    Gửi thông báo khuyến mãi tới khách hàng</p>
-
-                                <div style="margin:10px 0 0 20px;">
-
+                    <div class="hidden-form" style="display: none">
+                        <form method="post" th:object="${addKhuyenMai}" th:action="@{/manage/khuyen-mai/add}">
+                            <div class="row">
+                                <div class="col-lg-5 col-12">
                                     <div class="form-group">
-                                        <div style="display: flex; margin-top: 10px;">
-                                            <label style="margin: 17px 24px 0 0 ; font-weight: 500;">Lựa chọn khuyến mãi
-                                                :</label>
-                                            <div style="width: 200px; margin-top: 10px;">
-                                                <select style="width: 200px; margin-top: 10px;" name="khuyenMaiSelected"
-                                                        class="form-control form-small select">
-                                                    <th:block th:each="km: ${listKhuyenMaiActive}">
-                                                        <option th:value="${km.idKM}" th:text="${km.tenKM}"></option>
-                                                    </th:block>
-                                                </select>
-                                            </div>
-                                        </div>
+                                        <label>Mã khuyễn mãi</label>
+                                        <input type="text" id="maKM" th:field="*{maKM}" class="form-control">
+                                    </div>
+                                </div>
 
-                                        <div style="display: flex; margin-top: 20px;">
-                                            <button type="submit"
-                                                    style="height: 40px; width: 200px; background-color: #ff9f43; border-radius: 5px; border: none; color: white; font-size: 11pt;">
-                                                Gửi thông báo
+                                <div class="col-lg-5 col-12">
+                                    <div class="form-group">
+                                        <label>Tên khuyễn mãi</label>
+                                        <input type="text" id="tenKM" th:field="*{tenKM}" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-5 col-12">
+                                    <div class="form-group">
+                                        <label>Ngày bắt đầu</label>
+                                        <input type="date" id="ngayBatDau" th:field="*{tgBatDau}" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-5 col-12">
+                                    <div class="form-group">
+                                        <label>Ngày kết thúc</label>
+                                        <input type="date" id="ngayKetThuc" th:field="*{tgKetThuc}"
+                                               class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="collg-12">
+                                    <button type="submit" class="btn btn-submit me-2">Thêm</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-top">
+                        <div class="search-set">
+                            <div class="search-path">
+                                <a class="btn btn-filter" id="filter_search">
+                                    <img src="/images/img/icons/filter.svg" alt="img">
+                                    <span><img src="/images/img/icons/closes.svg" alt="img"></span>
+                                </a>
+                            </div>
+
+                            <div class="search-input">
+                                <a class="btn btn-searchset">
+                                    <img src="/images/img/icons/search-white.svg" alt="img">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form method="get" th:action="@{/manage/khuyenMai/filter}">
+                        <div class="card" id="filter_inputs">
+                            <div class="card-body pb-0">
+                                <div class="row">
+                                    <div class="col-lg-2 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <select class="select" name="trangThai">
+                                                <option value="">Trạng thái</option>
+                                                <option value="1">Đang diễn ra</option>
+                                                <option value="0">Đã kết thúc</option>
+                                                <option value="2">Chưa diễn ra</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-1 col-sm-6 col-12 ms-auto">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-filters ms-auto">
+                                                <img src="/images/img/icons/search-whites.svg" alt="img">
                                             </button>
                                         </div>
                                     </div>
-
                                 </div>
-
-                                <div style="with:96%; height: 0.3px; margin: 10px 0 30px 10px; background-color: #656565"></div>
-
-                            </div>
-                            <div style=" height: 495px; border-left: 0.3px solid rgb(94, 94, 94);"
-                                 class="col-lg-8 col-sm-12 col-12">
-                                <p style="font-size: 14pt; color: black; margin: auto; font-weight: 700; text-align: center;">
-                                    Danh sách khách hàng</p>
-
-                                <div style="width: 98%; height: 450px" class="vertical-scroll scroll-demo">
-
-                                    <table class="table  datanew ">
-                                        <thead>
-                                        <tr>
-                                            <th style="position: sticky; top: 0;background-color: #ff9f43;">
-                                                <input id="checkAll" style="height: 20px; width: 20px" type="checkbox">
-                                            </th>
-                                            <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                Mã KH
-                                            </th>
-                                            <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                Tên KH
-                                            </th>
-                                            <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                Số điện thoại
-                                            </th>
-                                            <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                Email
-                                            </th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <th:block th:each="x: ${listKH}">
-                                            <tr>
-                                                <td><input class="itemsCart" name="idKH"
-                                                           style="height: 20px; width: 20px;" th:value="${x.idKH}"
-                                                           type="checkbox"></td>
-                                                <td><p th:text="${x.maKH}"></p></td>
-                                                <td><p th:text="${x.hoTenKH}"></p></td>
-                                                <td><p th:text="${x.sdtKH}"></p></td>
-                                                <td><p th:text="${x.emailKH}"></p></td>
-                                            </tr>
-                                        </th:block>
-
-                                        </tbody>
-                                    </table>
-
-                                </div>
-
                             </div>
                         </div>
                     </form>
-                </div>
 
-            </div>
+                    <div class="table-responsive">
+                        <table class="table datanew" id="data-table">
+                            <thead>
+                            <tr>
+                                <td style="background-color: #f2a51d; color: whitesmoke">Mã KM</td>
+                                <td style="background-color: #f2a51d; color: whitesmoke">Tên KM</td>
+                                <td style="background-color: #f2a51d; color: whitesmoke">Trạng thái</td>
+                                <td style="background-color: #f2a51d; color: whitesmoke">Ngày bắt đầu</td>
+                                <td style="background-color: #f2a51d; color: whitesmoke">Ngày kết thúc</td>
+                                <td style="background-color: #f2a51d; color: whitesmoke">Action</td>
+                            </tr>
+                            </thead>
 
-        </div>
+                            <tbody>
+                            <tr th:each="items : ${khuyenMai}">
+                                <td th:text="${items.maKM}"></td>
+                                <td th:text="${items.tenKM}"></td>
+                                <td th:text="${items.trangThai}"></td>
+                                <td th:text="${items.tgBatDau}"></td>
+                                <td th:text="${items.tgKetThuc}"></td>
+                                <td>
+                                    <a class="me-3" th:href="@{'/manage/khuyen-mai/detail/' + ${items.idKM}}">
+                                        <img src="/images/img/icons/edit.svg" alt="img">
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-    </div>
-
-</div>
-
-<section>
-
-    <!--  Modal Detail Voucher Bill Start-->
-
-    <th:block th:each="khuyenMai: ${listKhuyenMai}">
-        <form th:action="@{'/manage/voucher/voucher-bill/update/' + ${khuyenMai.idKM}}" method="post">
-            <div class="modal fade" th:id="'detalKM' + ${khuyenMai.idKM}" tabindex="-1" aria-labelledby="create"
-                 aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="width: 900px;">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Thông tin Voucher</h5>
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
+                    <div class="pt-5">
+                        <div class="border border-dark border-opacity-50 p-5 rounded-3">
                             <div class="row">
-
-                                <div class="col-lg-3 col-sm-12 col-12">
-                                    <div class="form-group">
-                                        <label>Mã Voucher :</label>
-                                        <p style="font-size: 13pt; font-weight: 700;" th:text="${khuyenMai.maKM}"></p>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-5 col-sm-12 col-12">
-                                    <div class="form-group">
-                                        <label>Tên Voucher :</label>
-                                        <input name="tenKM" th:value="${khuyenMai.tenKM}"
-                                               style="border: none; border-radius: 0px; border-bottom: 0.5px solid black; font-size: 12pt; font-weight: 600;">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-sm-12 col-12">
-                                    <div class="form-group">
-                                        <label style="font-size: 11pt; font-weight: 600;">Hình thức giảm giá</label>
-                                        <select name="loaiGiam" th:attr="value=${khuyenMai.loaiGiam}"
-                                                class="form-select">
-                                            <option th:value="false" th:selected="${khuyenMai.loaiGiam} == false">Giảm
-                                                theo phần trăm
-                                            </option>
-                                            <option th:value="true" th:selected="${khuyenMai.loaiGiam} == true">Giảm
-                                                theo giá tiền
-                                            </option>
+                                <div class="col-4 border-end border-black">
+                                    <div>
+                                        <h4 class="text-uppercase text-center">danh sách khuyễn mãi</h4>
+                                        <label for="promotion-select">Chọn khuyến mãi</label>
+                                        <select id="promotion-select" name="promotionId" class="form-select">
+                                            <option value=""></option>
+                                            <th:block th:each="promotion : ${khuyenMai}">
+                                                <option th:value="${promotion.idKM}"
+                                                        th:text="${promotion.tenKM}"></option>
+                                            </th:block>
                                         </select>
                                     </div>
-                                </div>
 
-                                <div class="col-lg-3 col-sm-12 col-12">
-                                    <div class="form-group">
-                                        <label style="font-size: 11pt; font-weight: 600; ">Thời gian bắt đầu :</label>
-                                        <div style="display: flex;">
-                                            <input name="ngayBatDau" type="date"
-                                                   th:value="${#dates.format(khuyenMai.tgBatDau, 'yyyy-MM-dd')}"
-                                                   style="border: none; margin: 0 10px 8px 0; font-size: 13pt; cursor: pointer;">
-                                        </div>
+                                    <div class="d-flex justify-content-center">
+                                        <a class="btn btn-outline-danger mt-2 w-50">Gửi</a>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-3 col-sm-12 col-12">
-                                    <div class="form-group">
-                                        <label style="font-size: 11pt; font-weight: 600; ">Thời gian kết thúc :</label>
-                                        <div style="display: flex;">
-                                            <input type="date" name="ngayKetThuc"
-                                                   th:value="${#dates.format(khuyenMai.tgKetThuc, 'yyyy-MM-dd')}"
-                                                   style="border: none; margin: 0 10px 8px 0; font-size: 13pt; cursor: pointer;">
-                                        </div>
+                                <div class="col-8">
+                                    <h4 class="text-uppercase text-center">danh sách khách hàng</h4>
+                                    <table class="table">
+                                        <thead>
+                                        <tr class="table-primary">
+                                            <td><input type="checkbox"/></td>
+                                            <td>Mã KH</td>
+                                            <td>Tên KH</td>
+                                            <td>SDT KH</td>
+                                            <td>Email KH</td>
+                                        </tr>
+                                        </thead>
 
-                                    </div>
+                                        <tbody>
+                                        <tr th:each="items1 : ${khachHang}">
+                                            <td><input type="checkbox"/></td>
+                                            <td th:text="${items1.maKH}"></td>
+                                            <td th:text="${items1.hoTenKH}"></td>
+                                            <td th:text="${items1.sdtKH}"></td>
+                                            <td th:text="${items1.emailKH}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-
-                                <div class="col-lg-3 col-sm-12 col-12">
-                                    <div class="form-group">
-                                        <label style="font-size: 11pt; font-weight: 600;"> Số lượng Khuyến Mãi</label>
-                                        <input name="soLuong" th:value="${khuyenMai.soLuong}"
-                                               class="form-control" type="number"
-                                               style=" width: 150px; margin: 0 10px 10px 0;">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-3 col-sm-12 col-12">
-                                    <div class="form-group">
-                                        <label style="font-size: 11pt; font-weight: 600;"> Số tiền giảm giá </label>
-                                        <input name="soTienGiamGia" th:value="${khuyenMai.giaTienGiam}"
-                                               class="form-control" type="number"
-                                               style=" width: 150px; margin: 0 10px 10px 0;">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-3 col-sm-12 col-12">
-                                    <div class="form-group">
-                                        <label style="font-size: 11pt; font-weight: 600;">Trạng thái</label>
-                                        <select name="trangThai" th:attr="value=${khuyenMai.trangThai}"
-                                                class="form-select">
-                                            <option th:value="1" th:selected="${khuyenMai.trangThai} == 1">Đang hoạt
-                                                động
-                                            </option>
-                                            <option th:value="0" th:selected="${khuyenMai.trangThai} == 0">Không hoạt
-                                                động
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-3 col-sm-12 col-12">
-                                    <div class="form-group">
-                                        <label style="font-size: 11pt; font-weight: 600;"> Phần trăm giảm </label>
-                                        <input name="phanTramGiam" class="form-control" type="number"
-                                               th:value="${khuyenMai.phanTramGiam * 100}"
-                                               style=" width: 150px; margin: 0 10px 10px 0;">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-3 col-sm-12 col-12">
-                                    <div class="form-group">
-                                        <label style="font-size: 11pt; font-weight: 600;"> Số tiền giảm tối đa </label>
-                                        <input name="soTienGiamToiDa" class="form-control" type="number"
-                                               th:value="${khuyenMai.giaTienGiam}"
-                                               style=" width: 150px; margin: 0 10px 10px 0;">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-3 col-sm-12 col-12">
-                                    <div class="form-group">
-                                        <label style="font-size: 11pt; font-weight: 600;"> Điều kiện hóa đơn </label>
-                                        <input name="dieuKienKMHD" class="form-control" type="number"
-                                               th:value="${khuyenMai.dieuKienKMBill}"
-                                               style=" width: 150px; margin: 0 10px 10px 0;">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12 col-sm-12 col-12">
-                                    <div class="form-group">
-                                        <label style="font-weight: 600;"> Mô tả </label>
-                                        <div style="display: flex;">
-                                            <textarea th:text="${khuyenMai.moTa}" name="moTa" id="" cols="30"
-                                                      rows="10"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-lg-12">
-                                <button class="btn btn-submit me-2" type="submit">Thay đổi</button>
-                                <a class="btn btn-cancel" data-bs-dismiss="modal">Cancel</a>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </th:block>
-
-    <!--  Modal Detail Voucher Bill End-->
-
-    <!--  Modal Add Voucher Bill Start-->
-
-    <div class="modal fade" id="themKMM" tabindex="-1" aria-labelledby="create" aria-hidden="true">
-
-        <form th:action="@{/manage/voucher/voucher-bill/add}" method="post">
-
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="width: 1000px;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Tạo mới Khuyến Mãi Sản Phẩm</h5>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-lg-3 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label>Mã Voucher :</label>
-                                    <p style="font-size: 13pt; font-weight: 700;">Tự sinh</p>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-5 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label>Tên Voucher :</label>
-                                    <input id="tenVoucherAdd" name="tenKM"
-                                           style="border: none; border-radius: 0px; border-bottom: 0.5px solid black; font-size: 12pt; font-weight: 600;">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label style="font-size: 11pt; font-weight: 600;">Hình thức giảm giá</label>
-                                    <select name="loaiGiamAdd" class="form-select">
-                                        <option th:value="false">Giảm theo phần trăm</option>
-                                        <option th:value="true">Giảm theo giá tiền</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label style="font-size: 11pt; font-weight: 600; ">Thời gian bắt đầu :</label>
-                                    <div style="display: flex;">
-                                        <input id="startDateAdd" name="dateStart" type="date"
-                                               style="border: none; margin: 0 10px 8px 0; font-size: 13pt; cursor: pointer;">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label style="font-size: 11pt; font-weight: 600; ">Thời gian kết thúc :</label>
-                                    <div style="display: flex;">
-                                        <input id="endDateAdd" name="dateEnd" type="date"
-                                               style="border: none; margin: 0 10px 8px 0; font-size: 13pt; cursor: pointer;">
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label style="font-size: 11pt; font-weight: 600;"> Số lượng Khuyến Mãi</label>
-                                    <input id="soLuongKMAdd" name="soLuongKM" oninput="validateNumber(this)"
-                                           class="form-control" type="number"
-                                           style=" width: 150px; margin: 0 10px 10px 0;">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label style="font-size: 11pt; font-weight: 600;"> Số tiền giảm giá </label>
-                                    <input id="soTienGiamGiaAdd" name="soTienGiamGia" oninput="validateNumber(this)"
-                                           class="form-control" type="number"
-                                           style=" width: 150px; margin: 0 10px 10px 0;">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label style="font-size: 11pt; font-weight: 600;">Trạng thái</label>
-                                    <select name="trangThaiAdd" class="form-select">
-                                        <option value="0">Không hoạt động</option>
-                                        <option value="1">Hoạt Động</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label style="font-size: 11pt; font-weight: 600;"> Phần trăm giảm </label>
-                                    <input id="phanTramGiamVoucherAdd" name="phanTramGiam"
-                                           oninput="validateNumber(this)" class="form-control" type="number"
-                                           style=" width: 150px; margin: 0 10px 10px 0;">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label style="font-size: 11pt; font-weight: 600;"> Số tiền giảm tối đa </label>
-                                    <input id="soTienGiamGiaTDVoucherAdd" name="soTienToiDa"
-                                           oninput="validateNumber(this)" class="form-control" type="number"
-                                           style=" width: 150px; margin: 0 10px 10px 0;">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label style="font-size: 11pt; font-weight: 600;"> Điều kiện hóa đơn </label>
-                                    <input id="dieuKienVoucherAdd" name="dieuKienKMHD"
-                                           oninput="validateNumber(this)" class="form-control" type="number"
-                                           style=" width: 150px; margin: 0 10px 10px 0;">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label style="font-size: 11pt; font-weight: 600;">Mô tả </label>
-                                    <textarea id="moTaVoucherAdd" name="moTa" type="text"></textarea>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-lg-12">
-                            <button class="btn btn-submit" style="background: #3088df;" type="submit"
-                                    onclick="validateDateRange()">Thêm
-                            </button>
-                            <a class="btn btn-cancel" data-bs-dismiss="modal">Cancel</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </form>
-
-    </div>
-
-    <!--  Modal Add Voucher Bill End-->
-
-    <!--  Mess Start-->
-    <div th:if="${showModalMess}" class="modal fade" id="messAddThanhCong" tabindex="-1" aria-labelledby="create"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="width: 500px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Thành Công</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row" style="text-align: center; align-items: center; padding: 30px 0 30px 0;">
-                        <div>
-                            <h3 th:text="${thongBaoABC} + ' Voucher Hóa Đơn thành công '"></h3>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <a class="btn btn-submit" style="background: #3088df;" data-bs-dismiss="modal">OK</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!--  Mess End-->
-
-    <div th:if="${thongBaoGuiMai}" class="modal fade" id="thongBaoGuiMai" tabindex="-1" aria-labelledby="create"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="width: 500px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Thành Công</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row" style="text-align: center; align-items: center; padding: 30px 0 30px 0;">
-                        <div>
-                            <h3>Gửi thông báo khuyến mãi tới khách hàng thành công</h3>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <a class="btn btn-submit" style="background: #3088df;" data-bs-dismiss="modal">OK</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</section>
-
-
-<script>
-    var maxLength = 15;
-    var maxLength2 = 45;
-
-    var elements = document.getElementsByClassName("ellipsis");
-    var elements2 = document.getElementsByClassName("ellips");
-
-    for (var i = 0; i < elements.length; i++) {
-        var text = elements[i].textContent;
-
-        if (text.length > maxLength) {
-            var truncatedText = text.slice(0, maxLength) + "...";
-            elements[i].textContent = truncatedText;
-        }
-    }
-    for (var i = 0; i < elements2.length; i++) {
-        var text = elements2[i].textContent;
-
-        if (text.length > maxLength2) {
-            var truncatedText2 = text.slice(0, maxLength2) + "...";
-            elements2[i].textContent = truncatedText2;
-        }
-    }
-</script>
+</div>
 
 <script src="/js/jquery-3.6.0.min.js"></script>
 
@@ -630,23 +266,28 @@
 
 <script src="/js/bootstrap.bundle.min.js"></script>
 
-<script src="/js/moment.min.js"></script>
-<script src="/js/bootstrap-datetimepicker.min.js"></script>
-
 <script src="/plugins/select2/js/select2.min.js"></script>
 
 <script src="/plugins/sweetalert/sweetalert2.all.min.js"></script>
 <script src="/plugins/sweetalert/sweetalerts.min.js"></script>
 
 <script src="/js/script.js"></script>
+<script src="/plugins/alertify/custom-alertify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
+
 <script>
-    $(document).ready(function () {
-        $('#messAddThanhCong').modal('show');
-    });
-    $(document).ready(function () {
-        $('#thongBaoGuiMai').modal('show');
+    //Mở form thêm
+    document.getElementById("show-form-button").addEventListener("click", function () {
+        var moForm = document.querySelector(".hidden-form");
+        var anForm = document.querySelector(".form-hidden-2");
+        if (moForm.style.display === "none" || moForm.style.display === "" || anForm.style.display === "block") {
+            $('.hidden-form').slideToggle("slow");
+            moForm.style.display = "block"; //hiện thị form
+            anForm.style.display = "none";
+        } else {
+            moForm.style.display = "none"; //ẩn form
+        }
     });
 </script>
-
 </body>
 </html>
