@@ -13,10 +13,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+<<<<<<< HEAD
+import java.util.*;
+=======
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+>>>>>>> 69b043a9a28dd24572c9324abe431fbde603da14
 import java.util.UUID;
 
 
@@ -93,10 +97,9 @@ public class BanHangController {
         NhanVien nhanVien = (NhanVien) httpSession.getAttribute("staffLogged");
         List<HoaDon> listHD = hoaDonService.getListHoaDonChuaThanhToan();
         if (listHD.size() < 3) {
-            String ma = String.valueOf(Math.floor(((Math.random() * 000000) + 100000)));
             HoaDon hd = new HoaDon();
             Date date = new Date();
-            hd.setMaHD("HD" + date.getDate() + ma);
+            hd.setMaHD("HD" + date.getDate() + generateRandomNumbers());
             hd.setTgTao(new Date());
             hd.setTrangThai(0);
             hd.setLoaiHD(1);
@@ -131,6 +134,16 @@ public class BanHangController {
 //        model.addAttribute("showModalQuetQR", true);
 //        return "/manage/ban-hang";
 //    }
+
+    public String generateRandomNumbers() {
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 8; i++) {
+            int randomNumber = random.nextInt(10); // Tạo số ngẫu nhiên từ 0 đến 9
+            sb.append(randomNumber);
+        }
+        return sb.toString();
+    }
 
 
 
