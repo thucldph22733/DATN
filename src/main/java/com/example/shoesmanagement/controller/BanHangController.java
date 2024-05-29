@@ -36,4 +36,6 @@ public class BanHangController {
         return "manage/ban-hang";
     }
 
+
+
 }
