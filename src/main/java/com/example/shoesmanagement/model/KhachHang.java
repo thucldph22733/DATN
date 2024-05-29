@@ -30,9 +30,7 @@ public class KhachHang {
     @JoinColumn(name = "id_GH")
     private GioHang gioHang;
 
-    @ManyToOne
-    @JoinColumn(name = "id_LKH")
-    private LoaiKhachHang loaiKhachHang;
+
 
     @Column(name = "ma_Khach_Hang")
     private String maKH;

@@ -48,10 +48,13 @@ public class LoginController {
         if (b) {
             NhanVien nhanVien = nhanVienService.checkByEmailAndPass(username, password);
             if (nhanVien != null) {
-                if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("CV01")) {
+                if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("AD")) {
                     session.setAttribute("managerLogged", nhanVien);
                     return "redirect:/manage/";
-                } else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("CV02")) {
+                } else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("NV01")) {
+                    session.setAttribute("staffLogged", nhanVien);
+                    return "redirect:/ban-hang/hien-thi";
+                } else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("NV02")) {
                     session.setAttribute("staffLogged", nhanVien);
                     return "redirect:/ban-hang/hien-thi";
                 }else{
@@ -65,10 +68,13 @@ public class LoginController {
         } else {
             NhanVien nhanVien = nhanVienService.checkBySDTAndPass(username, password);
             if (nhanVien != null) {
-                if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("CV01")) {
+                if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("AD")) {
                     session.setAttribute("managerLogged", nhanVien);
                     return "redirect:/manage/";
-                } else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("CV02")) {
+                } else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("NV01")) {
+                    session.setAttribute("staffLogged", nhanVien);
+                    return "redirect:/ban-hang/hien-thi";
+                }else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("NV02")) {
                     session.setAttribute("staffLogged", nhanVien);
                     return "redirect:/ban-hang/hien-thi";
                 } else{
