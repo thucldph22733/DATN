@@ -17,6 +17,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import java.util.UUID;
+
+
 @Controller
 @RequestMapping("/ban-hang")
 public class BanHangController {
@@ -64,7 +67,11 @@ public class BanHangController {
     public String hienThi(Model model
             , @ModelAttribute("messageSuccess") String messageSuccess
             , @ModelAttribute("messageError") String messageError) {
+
+        List<GiayViewModel> list = giayViewModelService.getAllVm();
         NhanVien nhanVien = (NhanVien) httpSession.getAttribute("staffLogged");
+        model.addAttribute("listSanPham", list);
+
         model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
         model.addAttribute("tongTien", 0);
         model.addAttribute("tongSanPham", 0);
