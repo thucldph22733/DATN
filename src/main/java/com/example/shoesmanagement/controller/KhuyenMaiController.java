@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,20 +34,21 @@ public class KhuyenMaiController {
     }
 
     @PostMapping("/khuyen-mai/add")
-    public String addKhuyenMai(@ModelAttribute("addKhuyenMai") KhuyenMai km) throws ParseException {
-        KhuyenMai khuyenMai = new KhuyenMai();
-        khuyenMai.setIdKM(km.getIdKM());
-        khuyenMai.setMaKM(km.getMaKM());
-        khuyenMai.setTenKM(km.getTenKM());
-        khuyenMai.setTgBatDau(km.getTgBatDau());
-        khuyenMai.setTgKetThuc(km.getTgKetThuc());
+    public String addKhuyenMai(@ModelAttribute("addKhuyenMai") KhuyenMai km, Model model) throws ParseException {
+//        KhuyenMai khuyenMai = new KhuyenMai();
+//        khuyenMai.setIdKM(km.getIdKM());
+//        khuyenMai.setMaKM(km.getMaKM());
+//        khuyenMai.setTenKM(km.getTenKM());
+//        khuyenMai.setTgBatDau(km.getTgBatDau());
+//        khuyenMai.setTgKetThuc(km.getTgKetThuc());
+
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 //        khuyenMai.setTgBatDau(sdf.parse(String.valueOf(km.getTgBatDau())));
 //
 //        khuyenMai.setTgKetThuc(sdf.parse(String.valueOf(km.getTgKetThuc())));
-        khuyenMai.setSoLuong(km.getSoLuong());
-
-        khuyenMaiService.save(khuyenMai);
+//        khuyenMai.setSoLuong(km.getSoLuong());
+        soSanh(km);
+        khuyenMaiService.save(km);
         return "redirect:/manage/khuyen-mai";
     }
 
@@ -59,7 +61,21 @@ public class KhuyenMaiController {
 
     @PostMapping("/khuyen-mai/update/{id}")
     public String update(@PathVariable UUID id, @ModelAttribute("updateKhuyenMai") KhuyenMai km, Model model) {
+        soSanh(km);
         khuyenMaiService.save(km);
         return "redirect:/manage/khuyen-mai";
     }
+
+    private void soSanh(KhuyenMai km) {
+        Date today = new Date();
+
+        if (today.before(km.getTgBatDau())) {
+            km.setTrangThai(2);
+        } else if (today.after(km.getTgBatDau()) && today.before(km.getTgKetThuc())) {
+            km.setTrangThai(1);
+        } else {
+            km.setTrangThai(0);
+        }
+    }
+
 }
