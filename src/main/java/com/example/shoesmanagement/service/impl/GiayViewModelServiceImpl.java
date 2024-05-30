@@ -23,4 +23,11 @@ public class GiayViewModelServiceImpl implements GiayViewModelService {
     public GiayViewModel findByIdGiay(UUID id) {
         return giayViewModelRepository.findByIdGiay(id);
     }
+
+
+    @Override
+    public List<GiayViewModel> getAllVm() {
+        return giayViewModelRepository.getAll();
+    }
+
 }

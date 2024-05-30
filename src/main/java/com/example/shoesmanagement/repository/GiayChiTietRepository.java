@@ -27,6 +27,8 @@ public interface GiayChiTietRepository extends JpaRepository<ChiTietGiay, UUID> 
 
     List<ChiTietGiay> findAllByOrderByTgThemDesc();
 
+    ChiTietGiay findByMaCTG(String ma);
+
     @Query("SELECT c FROM ChiTietGiay c WHERE c.giay.idGiay = :giayId AND c.size.idSize = :sizeId AND c.mauSac.idMau = :mauSacId AND c.hinhAnh.idHinhAnh = :hinhAnhId")
     List<ChiTietGiay> findByGiayAndSizeAndMauSacAndHinhAnh(
             @Param("giayId") UUID giayId,

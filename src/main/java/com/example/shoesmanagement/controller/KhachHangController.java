@@ -232,7 +232,6 @@ public class KhachHangController {
             khachHangdb.setNgaySinh(khachHang.getNgaySinh());
             khachHangdb.setTgSua(new Date());
             khachHangdb.setTrangThai(khachHang.getTrangThai());
-
             khachHangService.save(khachHangdb);
             redirectAttributes.addFlashAttribute("message", true);
         }

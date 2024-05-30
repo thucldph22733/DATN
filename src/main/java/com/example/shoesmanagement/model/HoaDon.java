@@ -72,6 +72,9 @@ public class HoaDon {
     @Column(name="tong_SP")
     private Integer tongSP;
 
+    @Column(name = "tg_ThanhToan")
+    private Date tgThanhToan;
+
     @Column(name = "tien_Ship")
     private Double tienShip;
 
