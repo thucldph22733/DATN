@@ -126,6 +126,10 @@ public class GiayChiTietServiceImpl implements GiayChiTietService {
 
     }
 
+    @Override
+    public ChiTietGiay findByMa(String ma) {
+        return giayChiTietRepository.findByMaCTG(ma);
+    }
 
 
 }
