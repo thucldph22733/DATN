@@ -177,6 +177,10 @@
                             <tr>
                                 <td style="background-color: #f2a51d; color: whitesmoke">Mã KM</td>
                                 <td style="background-color: #f2a51d; color: whitesmoke">Tên KM</td>
+                                <td style="background-color: #f2a51d; color: whitesmoke">Số tiền giảm</td>
+                                <td style="background-color: #f2a51d; color: whitesmoke">Điều kiện giảm</td>
+                                <td style="background-color: #f2a51d; color: whitesmoke">Số lượng</td>
+                                <td style="background-color: #f2a51d; color: whitesmoke">Số lượng đã dùng</td>
                                 <td style="background-color: #f2a51d; color: whitesmoke">Trạng thái</td>
                                 <td style="background-color: #f2a51d; color: whitesmoke">Ngày bắt đầu</td>
                                 <td style="background-color: #f2a51d; color: whitesmoke">Ngày kết thúc</td>
@@ -188,7 +192,21 @@
                             <tr th:each="items : ${khuyenMai}">
                                 <td th:text="${items.maKM}"></td>
                                 <td th:text="${items.tenKM}"></td>
-                                <td th:text="${items.trangThai}"></td>
+                                <td th:text="${items.giaTienGiam}"></td>
+                                <td th:text="${items.dieuKienKMBill}"></td>
+                                <td th:text="${items.soLuong}"></td>
+                                <td th:text="${items.soLuongDaDung}"></td>
+                                <td>
+                                   <span th:if="${items.trangThai == 1}" class="badges bg-lightgreen">
+                                       Đang diễn ra
+                                   </span>
+                                    <span th:if="${items.trangThai == 2}" class="badges bg-lightpurple">
+                                       Chưa diễn ra
+                                   </span>
+                                    <span th:if="${items.trangThai == 0}" class="badges bg-lightred bg-opacity-50">
+                                       Đã kết thúc
+                                   </span>
+                                </td>
                                 <td th:text="${items.tgBatDau}"></td>
                                 <td th:text="${items.tgKetThuc}"></td>
                                 <td>
