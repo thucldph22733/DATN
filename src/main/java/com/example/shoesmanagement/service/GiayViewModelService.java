@@ -9,4 +9,7 @@ public interface GiayViewModelService {
     List<GiayViewModel> getAll(String name);
 
     GiayViewModel findByIdGiay(UUID id);
+
+    List<GiayViewModel> getAllVm();
+
 }
