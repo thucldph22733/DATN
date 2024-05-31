@@ -29,6 +29,91 @@
 </head>
 
 <style>
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+
+    .col-lg-3, .col-sm-6 {
+        position: relative;
+        min-height: 1px;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    .tab_content.active .productset {
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .productsetimg {
+        position: relative;
+        text-align: center;
+    }
+
+    .productsetimg img {
+        max-width: 100%;
+        height: auto;
+        border-bottom: 1px solid #f1f1f1;
+    }
+
+    .check-product {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #fff;
+        background-color: #28a745;
+        padding: 5px;
+        border-radius: 50%;
+    }
+
+    .productsetcontent {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .productsetcontent h3 {
+        font-size: 18px;
+        color: #333;
+        margin: 0 0 10px;
+    }
+
+    .productsetcontent h4 {
+        font-size: 16px;
+        color: #666;
+    }
+
+    .btn-outline-warning {
+        border: 1px solid #ffc107;
+        color: #ffc107;
+        background-color: #fff;
+        transition: all .2s ease-in-out;
+    }
+
+    .btn-outline-warning:hover {
+        background-color: #ffc107;
+        color: #fff;
+    }
+
+    .productset h6 {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        padding: 5px;
+        border-radius: 3px;
+    }
+</style>
+
+<style>
     .alertify .ajs-message {
         background-color: black;
         color: #ffffff;
@@ -460,7 +545,7 @@
                                                                             khoản</label>
                                                                         <a class="btn btn-primary m-3" style="float: right"
                                                                            th:href="@{'/ban-hang/list-khach-hang'}">
-                                                                            Chọn tài khoan
+                                                                            Chọn tài khoản
                                                                         </a>
                                                                     </div>
                                                                     <div th:if="${khachHang==null}">
