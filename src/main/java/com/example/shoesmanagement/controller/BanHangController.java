@@ -96,7 +96,7 @@ public class BanHangController {
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
         List<HoaDon> listHD = hoaDonService.getListHoaDonChuaThanhToan();
-        if (listHD.size() < 6) {
+        if (listHD.size() < 3) {
             HoaDon hd = new HoaDon();
             Date date = new Date();
             hd.setMaHD("HD" + date.getDate() + generateRandomNumbers());
@@ -235,7 +235,7 @@ public class BanHangController {
             redirectAttributes.addFlashAttribute("messageError", true);
             redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
             model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
-            return "redirect:/ban-hang/";
+            return "redirect:/ban-hang/hien-thi";
         }
         ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idChiTietGiay);
         if (soLuong > chiTietGiay.getSoLuong()) {
@@ -263,14 +263,6 @@ public class BanHangController {
             httpSession.setAttribute("tongSP", tongSanPham);
             hoaDonChiTietService.add(hdct);
         }
-//        List<HoaDonChiTiet> findByIdHoaDon= hoaDonChiTietService.findByIdHoaDon(idHoaDon);
-//        model.addAttribute("gioHang",findByIdHoaDon);
-//        model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
-
-        // tong tien
-//        tongTien = hoaDonChiTietService.tongTien(findByIdHoaDon);
-//        model.addAttribute("tongTien", this.tongTien);
-        // cập nhật sl ctg
         if (soLuong == chiTietGiay.getSoLuong()){
             chiTietGiay.setTrangThai(0);
         }

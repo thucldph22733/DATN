@@ -260,6 +260,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="tabs_container">
                                                     <div class="row">
                                                         <div th:if="${nullHoaDon}"
@@ -288,7 +289,6 @@
                                                                                     th:href="@{'/ban-hang/chon-size/' + ${product.idGiay}+'/'+${product.mauSac} }"
                                                                                     class="btn btn-outline-warning m-3">
                                                                                 Chọn</a>
-
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -408,7 +408,6 @@
                                                                                                type="text"
                                                                                                th:name="${gioHang.chiTietGiay.idCTG}"
                                                                                                min="1">
-
                                                                                         <input style="border: none; font-weight: 700; font-size: 14pt; background-color: white;"
                                                                                                type="button" value="+"
                                                                                                class="button-plus inc button a3 a5 a1 a-1"
@@ -577,10 +576,11 @@
                                                                                     <a type="button"
                                                                                        class="btn btn-warning"
                                                                                        th:href="@{'/ban-hang/thanh-toan'}"
-                                                                                       style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px"
+                                                                                       style="background-color: #37517E;height: 50px;cursor: pointer;color: white;padding: 10px 20px;border-radius: 10px;margin: auto; display: inline-block;"
                                                                                     >Thanh toán</a>
                                                                                     <button type="button"
-                                                                                            class="btn btn-danger"
+                                                                                            style="background-color: #bb2d3b;height: 50px;color: white;;cursor: pointer;border: none;border-radius: 10px;margin: auto; display: inline-block"
+                                                                                            class="btn btn-warning"
                                                                                             data-bs-dismiss="modal">Hủy
                                                                                     </button>
                                                                                 </div>
@@ -978,48 +978,6 @@
         $('#addKhachHang').modal('show');
     });
 </script>
-<script type="text/javascript">
-    let scanner = new Instascan.Scanner({video: document.getElementById('video')});
-    const videoElement = document.getElementById('video');
-    const stopButton = document.getElementById('stopButton');
-    scanButton.addEventListener('click', () => {
-        // Ẩn nút quét QR
-        scanButton.style.display = 'none';
-
-        // Hiển thị video
-        videoElement.style.display = 'block';
-        stopButton.style.display = 'block';
-        Instascan.Camera.getCameras().then(function (cameras) {
-            if (cameras.length > 0) {
-                scanner.start(cameras[0]);
-            } else {
-                alert('Cameras found');
-            }
-        }).catch(function (e) {
-            console.error(e);
-        });
-
-        scanner.addListener("scan", function (idChiTietGiay) {
-            window.location.href = `/ban-hang/quet-qr/${idChiTietGiay}`;
-        });
-    });
-    stopButton.addEventListener('click', () => {
-        // Dừng video bằng cách dừng track hình ảnh
-        const stream = videoElement.srcObject;
-        const tracks = stream.getTracks();
-
-        tracks.forEach(function (track) {
-            track.stop();
-        });
-
-        // Ẩn video
-        videoElement.style.display = 'none';
-        stopButton.style.display = 'none';
-        // Hiển thị lại nút quét QR
-        scanButton.style.display = 'block';
-
-    });
-</script>
 
 <script th:inline="javascript">
     /*<![CDATA[*/
@@ -1105,7 +1063,7 @@
             counter++;
             btn1.parentNode.insertBefore(newButton, btn1);
         } else {
-            alert("Giới hạn 5 Hóa Đơn")
+            alert("Giới hạn 3 Hóa Đơn")
         }
     }
 </script>
@@ -1146,6 +1104,5 @@
         });
     }
 </script>
-
 </body>
 </html>
