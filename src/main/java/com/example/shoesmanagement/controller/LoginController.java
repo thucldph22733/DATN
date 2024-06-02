@@ -56,10 +56,10 @@ public class LoginController {
                 if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("AD")) {
                     session.setAttribute("managerLogged", nhanVien);
                     return "redirect:/manage/";
-                } else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("NV01")) {
+                } else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("CV01")) {
                     session.setAttribute("staffLogged", nhanVien);
                     return "redirect:/ban-hang/hien-thi";
-                } else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("NV02")) {
+                } else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("CV02")) {
                     session.setAttribute("staffLogged", nhanVien);
                     return "redirect:/ban-hang/hien-thi";
                 }else{

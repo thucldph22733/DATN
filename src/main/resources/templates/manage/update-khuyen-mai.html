@@ -73,7 +73,7 @@
         <div class="content">
             <div class="page-header">
                 <div class="page-title">
-                    <h4>Update Khuyễn mãi</h4>
+                    <h4>Update Khuyến mãi</h4>
                 </div>
             </div>
 
@@ -116,6 +116,23 @@
                     <div class="row">
                         <div class="col-lg-6 col-sm-6 col-12">
                             <div class="form-group">
+                                <label>Giảm</label>
+                                <input type="text" th:field="*{giaTienGiam}" class="form-control">
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Điều kiện</label>
+                                <input type="text" th:field="*{dieuKienKMBill}" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
                                 <label>Thời gian bắt đầu</label>
                                 <input type="date" th:field="*{tgBatDau}" class="form-control">
                             </div>
@@ -131,8 +148,11 @@
                     </div>
                 </div>
 
-                <div class="pt-2">
-                    <button class="btn btn-primary" th:formaction="@{'/manage/khuyen-mai/update/' + ${updateKhuyenMai.idKM}}">Update</button>
+                <div class="col-lg-12">
+                    <button class="btn btn-submit me-2"
+                            th:formaction="@{'/manage/khuyen-mai/update/' + ${updateKhuyenMai.idKM}}">Update
+                    </button>
+                    <a href="/manage/khuyen-mai" class="btn btn-cancel">Cancel</a>
                 </div>
             </div>
         </div>
