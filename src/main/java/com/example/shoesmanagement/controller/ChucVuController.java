@@ -54,6 +54,11 @@ public class ChucVuController {
         model.addAttribute("chucVu", chucVu);
         //
         model.addAttribute("chucVuAdd", new ChucVu());
+
+        if (session.getAttribute("managerLogged") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "/login";
+        }
         //
         if (message == null || !"true".equals(message)) {
             model.addAttribute("message", false);

@@ -59,6 +59,10 @@ public class KhachHangController {
     public String dsKhachHang(Model model, @ModelAttribute("message") String message) {
         List<KhachHang> khachHangs = khachHangService.getAllKhachHang();
         model.addAttribute("khachHang", khachHangs);
+        if (session.getAttribute("managerLogged") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "/login";
+        }
         if (message == null || !"true".equals(message)) {
             model.addAttribute("message", false);
         }

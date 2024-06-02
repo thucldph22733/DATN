@@ -25,8 +25,11 @@ public class LoginController {
 
     @GetMapping("/login")
     private String getLoginAll() {
+
         return "/login";
     }
+
+
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpSession session) {
@@ -46,6 +49,8 @@ public class LoginController {
 
 
         if (b) {
+
+
             NhanVien nhanVien = nhanVienService.checkByEmailAndPass(username, password);
             if (nhanVien != null) {
                 if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("AD")) {

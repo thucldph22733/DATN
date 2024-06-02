@@ -65,6 +65,10 @@ public class NhanVienController {
         List<ChucVu> chucVus = chucVuService.getAllChucVu();
         model.addAttribute("nhanVien", nhanViens);
         model.addAttribute("chucVu", chucVus);
+        if (session.getAttribute("managerLogged") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "/login";
+        }
         if (message == null || !"true".equals(message)) {
             model.addAttribute("message", false);
         }

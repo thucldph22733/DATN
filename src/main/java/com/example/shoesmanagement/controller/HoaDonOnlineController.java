@@ -6,6 +6,7 @@ import com.example.shoesmanagement.service.HoaDonService;
 import com.example.shoesmanagement.service.LSThanhToanService;
 import com.example.shoesmanagement.service.NhanVienService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,9 @@ public class HoaDonOnlineController {
     private HttpServletRequest request;
 
     @Autowired
+    private HttpSession session;
+
+    @Autowired
     private LSThanhToanService lsThanhToanService;
 
 
@@ -38,6 +42,10 @@ public class HoaDonOnlineController {
     @GetMapping("online")
     private String manageBillOnline(Model model) {
         model.addAttribute("reLoadPage", true);
+        if (session.getAttribute("managerLogged") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "/login";
+        }
         showData(model);
         showTab1(model);
 
