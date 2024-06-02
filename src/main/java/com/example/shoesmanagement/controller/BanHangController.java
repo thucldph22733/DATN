@@ -173,18 +173,27 @@ public class BanHangController {
             redirectAttributes.addFlashAttribute("messageError", true);
             redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
             model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
-            return "redirect:/ban-hang/";
+            return "redirect:/ban-hang/hien-thi";
         }
+
         if (keyword.length() >= 3 && keyword.substring(0, 3).equals("CTG")) {
-            ChiTietGiay chiTietGiay = giayChiTietService.findByMa(keyword);
-            if (chiTietGiay == null) {
+            if (idHoaDon == null) {
                 redirectAttributes.addFlashAttribute("messageError", true);
-                redirectAttributes.addFlashAttribute("tbaoError", "Không tìm thấy sản mã phẩm ");
-                return "redirect:/ban-hang/cart/hoadon/" + this.idHoaDon;
+                redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
+                model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
+                return "redirect:/ban-hang/hien-thi";
             }
-            model.addAttribute("quetQR", chiTietGiay);
-            model.addAttribute("idHoaDon", idHoaDon);
-            model.addAttribute("showModalQuetQR", true);
+            else {
+                ChiTietGiay chiTietGiay = giayChiTietService.findByMa(keyword);
+                if (chiTietGiay == null) {
+                    redirectAttributes.addFlashAttribute("messageError", true);
+                    redirectAttributes.addFlashAttribute("tbaoError", "Không tìm thấy sản mã phẩm ");
+                    return "redirect:/ban-hang/cart/hoadon/" + this.idHoaDon;
+                }
+                model.addAttribute("quetQR", chiTietGiay);
+                model.addAttribute("idHoaDon", idHoaDon);
+                model.addAttribute("showModalQuetQR", true);
+            }
         } else {
             List<GiayViewModel> list = giayViewModelService.getAll(keyword);
             if (list.isEmpty()) {
