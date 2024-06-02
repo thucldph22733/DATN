@@ -442,7 +442,7 @@
                                                             <ul>
                                                                 <li>
                                                                     <h5>Tổng tiền </h5>
-                                                                    <div class="grandTotal"
+                                                                    <div class="grandTotal" id="tongTienSanPham"
                                                                          th:text=" ${#numbers.formatDecimal(tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
 
                                                                 </li>
@@ -498,23 +498,55 @@
                                                                     </li>
                                                                     <li style="margin-bottom: 20px;">
                                                                         <h5>
-                                                                            <a type="button" class="btn btn-primary"
-                                                                               data-bs-toggle="modal"
-                                                                               data-bs-target="#staticBackdrop">
-                                                                                Chọn khuyến mãi
-                                                                            </a>
+                                                                            <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Chọn khuyến mãi</a>
                                                                         </h5>
-                                                                        <h5>
-                                                                        </h5>
+
+                                                                        <li style="margin-bottom: 20px;">
+                                                                            <h5>Giá tiền giảm:</h5>
+                                                                            <h5 class="grandTotal" style="font-size: 13pt;" th:text=" ${giaTienGiam} + ' đ'" id="tienGiam"></h5>
+                                                                        </li>
+                                                                        <form method="get">
+                                                                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                                                <div class="modal-dialog modal-lg">
+                                                                                    <div class="modal-content">
+                                                                                        <div class="modal-header">
+                                                                                            <h5 class="modal-title" id="staticBackdropLabel" for="promotion-select">Danh sách Khuyễn mãi</h5>
+                                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                        </div>
+                                                                                        <div>
+                                                                                            <div class="table-responsive">
+                                                                                                <table class="table datanew" id="data-table">
+                                                                                                    <tbody>
+                                                                                                    <tr th:each="items : ${khuyenMai}">
+                                                                                                        <td th:text="${items.maKM}"></td>
+                                                                                                        <td th:text="${items.tenKM}"></td>
+                                                                                                        <td>
+                                                                                                            <button type="submit" class="btn btn-primary" th:formaction="@{'/ban-hang/chon-khuyen-mai/' + ${items.idKM}}">Áp dụng</button>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="modal-footer">
+                                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
                                                                     </li>
+
                                                                     <li style="margin-bottom: 20px;">
-                                                                        <h5>Tổng tiền : </h5>
+                                                                        <h5>Tổng tiền sau khuyến mãi : </h5>
                                                                         <h5 class="text-danger" style="font-size: 13pt;"
                                                                             th:text=" ${#numbers.formatDecimal(tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h5>
                                                                         <h5 class="text-danger" id="tongTien"
                                                                             th:text="${tongTien} +' đ'"
-                                                                            style="display: none; font-size: 13pt;"></h5>
+                                                                            style="display: none; font-size: 13pt;">
+                                                                        </h5>
                                                                     </li>
+
                                                                     <li style="margin-bottom: 20px;">
                                                                         <h5>Tiền khách đưa : </h5>
                                                                         <input type="number" name="tienKhachDua" min="1"
@@ -766,7 +798,7 @@
                                 <td th:text="${listKH.trangThai ==1 ? 'Đang hoạt động' : 'Ngừng hoạt động'}"></td>
                                 <td>
                                     <a th:href="@{'/ban-hang/chon-khach-hang/'+ ${listKH.idKH}}"
-                                       class="btn btn-outline-secondary">Chon</a>
+                                       class="btn btn-outline-secondary">Chọn</a>
                                 </td>
                             </tr>
                         </th:block>
@@ -1104,5 +1136,21 @@
         });
     }
 </script>
+
+
+<!--ngọc-->
+<script>
+    function tienSauKhuyenMai() {
+        var tongTienSanPham = parseFloat(document.getElementById('tongTienSanPham').innerText.replace(' đ', ''));
+        // const buttonThanhToan = document.getElementById('nutThanhToan');
+        var giaTienGiam = parseFloat(document.getElementById('tienGiam').value);
+
+        var tongTien = tongTienSanPham - giaTienGiam;
+        // document.getElementById('tongTien').innerText = tongTien.toLocaleString() + "đ";
+        document.getElementById('tongTien').innerText = tongTien.toLocaleString('vi-VN') + ' đ';
+
+    }
+</script>
+
 </body>
 </html>

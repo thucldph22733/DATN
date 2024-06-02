@@ -2,6 +2,7 @@ package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.*;
 import com.example.shoesmanagement.repository.KhachHangRepository;
+import com.example.shoesmanagement.repository.KhuyenMaiRepository;
 import com.example.shoesmanagement.repository.SizeRepository;
 import com.example.shoesmanagement.service.*;
 import com.example.shoesmanagement.viewModel.GiayViewModel;
@@ -54,6 +55,12 @@ public class BanHangController {
     @Autowired
     private KhachHangRepository khachHangRepository;
 
+    @Autowired
+    private KhuyenMaiService khuyenMaiService;
+
+    @Autowired
+    private KhuyenMaiRepository khuyenMaiRepository;
+
     private double tongTien = 0;
 
     private double tienKhuyenMai = 0;
@@ -66,6 +73,8 @@ public class BanHangController {
 
     private double dieuKienKhuyenMai = 0;
 
+    private double giaTienGiam = 0;
+
     @GetMapping("/hien-thi")
     public String hienThi(Model model
             , @ModelAttribute("messageSuccess") String messageSuccess
@@ -75,6 +84,9 @@ public class BanHangController {
         NhanVien nhanVien = (NhanVien) httpSession.getAttribute("staffLogged");
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
+
+        List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
+        model.addAttribute("khuyenMai", khuyenMai);
 
         model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
         model.addAttribute("tongTien", 0);
@@ -96,7 +108,10 @@ public class BanHangController {
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
         List<HoaDon> listHD = hoaDonService.getListHoaDonChuaThanhToan();
-        if (listHD.size() < 3) {
+        List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
+        model.addAttribute("khuyenMai", khuyenMai);
+        if (listHD.size() < 6) {
+
             HoaDon hd = new HoaDon();
             Date date = new Date();
             hd.setMaHD("HD" + date.getDate() + generateRandomNumbers());
@@ -123,6 +138,9 @@ public class BanHangController {
     ) {
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
+        List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
+        model.addAttribute("khuyenMai", khuyenMai);
+        model.addAttribute("giaTienGiam", giaTienGiam);
         httpSession.removeAttribute("idHoaDon");
         httpSession.setAttribute("idHoaDon", idHoaDon);
         this.idHoaDon = idHoaDon;
@@ -448,5 +466,11 @@ public class BanHangController {
         return sb.toString();
     }
 
-
+    @GetMapping("/chon-khuyen-mai/{idKM}")
+    public String chonKM(Model model, @PathVariable("idKM") UUID idKM){
+        KhuyenMai khuyenMai = khuyenMaiRepository.findById(idKM).orElse(null);
+        giaTienGiam = khuyenMai.getGiaTienGiam();
+        System.out.println(khuyenMai.getGiaTienGiam());
+        return "redirect:/ban-hang/cart/hoadon/" + idHoaDon;
+    }
 }
