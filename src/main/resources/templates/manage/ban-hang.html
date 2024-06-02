@@ -382,6 +382,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="col-lg-5 col-sm-12 ">
                                                 <div class="order-list">
                                                     <div class="orderid">
@@ -493,6 +494,7 @@
                                                                                                type="text"
                                                                                                th:name="${gioHang.chiTietGiay.idCTG}"
                                                                                                min="1">
+
                                                                                         <input style="border: none; font-weight: 700; font-size: 14pt; background-color: white;"
                                                                                                type="button" value="+"
                                                                                                class="button-plus inc button a3 a5 a1 a-1"
@@ -586,40 +588,40 @@
                                                                             <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Chọn khuyến mãi</a>
                                                                         </h5>
 
-                                                                        <li style="margin-bottom: 20px;">
-                                                                            <h5>Giá tiền giảm:</h5>
-                                                                            <h5 class="grandTotal" style="font-size: 13pt;" th:text=" ${giaTienGiam} + ' đ'" id="tienGiam"></h5>
-                                                                        </li>
-                                                                        <form method="get">
-                                                                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                                                <div class="modal-dialog modal-lg">
-                                                                                    <div class="modal-content">
-                                                                                        <div class="modal-header">
-                                                                                            <h5 class="modal-title" id="staticBackdropLabel" for="promotion-select">Danh sách Khuyễn mãi</h5>
-                                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    <li style="margin-bottom: 20px;">
+                                                                        <h5>Giá tiền giảm:</h5>
+                                                                        <h5 class="grandTotal" style="font-size: 13pt;" th:text=" ${giaTienGiam} + ' đ'" id="tienGiam"></h5>
+                                                                    </li>
+                                                                    <form method="get">
+                                                                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                                            <div class="modal-dialog modal-lg">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title" id="staticBackdropLabel" for="promotion-select">Danh sách Khuyễn mãi</h5>
+                                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table datanew" id="data-table">
+                                                                                                <tbody>
+                                                                                                <tr th:each="items : ${khuyenMai}">
+                                                                                                    <td th:text="${items.maKM}"></td>
+                                                                                                    <td th:text="${items.tenKM}"></td>
+                                                                                                    <td>
+                                                                                                        <button type="submit" class="btn btn-primary" th:formaction="@{'/ban-hang/chon-khuyen-mai/' + ${items.idKM}}">Áp dụng</button>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                </tbody>
+                                                                                            </table>
                                                                                         </div>
-                                                                                        <div>
-                                                                                            <div class="table-responsive">
-                                                                                                <table class="table datanew" id="data-table">
-                                                                                                    <tbody>
-                                                                                                    <tr th:each="items : ${khuyenMai}">
-                                                                                                        <td th:text="${items.maKM}"></td>
-                                                                                                        <td th:text="${items.tenKM}"></td>
-                                                                                                        <td>
-                                                                                                            <button type="submit" class="btn btn-primary" th:formaction="@{'/ban-hang/chon-khuyen-mai/' + ${items.idKM}}">Áp dụng</button>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                    </tbody>
-                                                                                                </table>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="modal-footer">
-                                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </form>
+                                                                        </div>
+                                                                    </form>
                                                                     </li>
 
                                                                     <li style="margin-bottom: 20px;">
@@ -651,139 +653,42 @@
                                                                     </li>
                                                                 </ul>
                                                             </div>
-                                                        </div>
-                                                        <div class="split-card">
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div>
-                                                                        <label class="fw-semibold fs-3 m-3">Tài
-                                                                            khoản</label>
-                                                                        <a class="btn btn-primary m-3" style="float: right"
-                                                                           th:href="@{'/ban-hang/list-khach-hang'}">
-                                                                            Chọn tài khoản
-                                                                        </a>
-                                                                    </div>
-                                                                    <div th:if="${khachHang==null}">
-                                                                        <label>Tên khách hàng : Khách lẻ</label>
-                                                                    </div>
-                                                                    <div th:if="${khachHang != null}" class="mt-5">
-                                                                        <div class="setvalue">
-                                                                            <ul>
-                                                                                <li>
-                                                                                    <h5>Họ tên :</h5>
-                                                                                    <h5 th:text="${khachHang.hoTenKH}"></h5>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <h5>Số điện thoại:</h5>
-                                                                                    <h5 th:text="${khachHang.sdtKH}"></h5>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <h5>Email : </h5>
-                                                                                    <h5 th:text="${khachHang.emailKH}"></h5>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="split-card">
-                                                            <div class="card-body pt-0 pb-2">
-                                                                <div><label class="fw-semibold fs-3 m-3">Thanh toán</label>
-                                                                </div>
-                                                                <br>
-                                                                <div class="setvalue">
-                                                                    <ul>
-                                                                        <li style="margin-bottom: 20px;">
-                                                                            <h5>Tạm tính :</h5>
-                                                                            <h5 class="grandTotal" style="font-size: 13pt;"
-                                                                                th:text=" ${#numbers.formatDecimal(tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h5>
-                                                                        </li>
-                                                                        <li style="margin-bottom: 20px;">
-                                                                            <h5>
-                                                                                <a type="button" class="btn btn-primary"
-                                                                                   data-bs-toggle="modal"
-                                                                                   data-bs-target="#staticBackdrop">
-                                                                                    Chọn khuyến mãi
-                                                                                </a>
-                                                                            </h5>
-                                                                            <h5>
-                                                                                <!--                                                <h6 th:text="' -  '+ ${khuyenMai} +' đ'"></h6>-->
-                                                                                <h5 th:text="' - '+ ${#numbers.formatDecimal(khuyenMai, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h5>
-                                                                            </h5>
-                                                                        </li>
-                                                                        <li style="margin-bottom: 20px;">
-                                                                            <h5>Tổng tiền : </h5>
-                                                                            <h5 class="text-danger" style="font-size: 13pt;"
-                                                                                th:text=" ${#numbers.formatDecimal(tongTienSauKM, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h5>
-                                                                            <h5 class="text-danger" id="tongTien"
-                                                                                th:text="${tongTienSauKM} +' đ'"
-                                                                                style="display: none; font-size: 13pt;"></h5>
-                                                                        </li>
-                                                                        <li style="margin-bottom: 20px;">
-                                                                            <h5>Tiền khách đưa : </h5>
-                                                                            <input type="number" name="tienKhachDua" min="1"
-                                                                                   id="tienKhachDua"
-                                                                                   class="form-control"
-                                                                                   oninput="tinhTienThua()"
-                                                                                   style="width: 300px "
-                                                                            >
-                                                                        </li>
-                                                                        <li style="margin-bottom: 20px;">
-                                                                            <h5><b>Tiền thừa:</b></h5>
-                                                                            <h5>
-                                                                                <label style="font-size: 13pt;"
-                                                                                       id="tienThua"
-                                                                                       name="tienThua"></label>
-                                                                            </h5>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div class="text-center">
-                                                                    <div class="dropdown mt-3">
-                                                                        <!--                                                                    <a type="button" class="btn btn-primary" disabled-->
-                                                                        <!--                                                                       th:href="@{'/ban-hang/thanh-toan'}"-->
-                                                                        <!--                                                                       onclick="return confirm('Bạn có muốn thanh toán không')"-->
-                                                                        <!--                                                                       style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px">-->
-                                                                        <!--                                                                        Thanh toán-->
-                                                                        <!--                                                                    </a>-->
-                                                                        <button id="nutThanhToan" disabled
-                                                                                class="btn btn-primary"
-                                                                                style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#exampleModal">
-                                                                            Thanh toán
-                                                                        </button>
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade" id="exampleModal"
-                                                                             tabindex="-1"
-                                                                             aria-labelledby="exampleModalLabel6"
-                                                                             aria-hidden="true">
-                                                                            <div class="modal-dialog modal-md text-center"
-                                                                                 style="width: 550px;">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h1 class="modal-title fs-5"
-                                                                                            id="exampleModalLabel6">Xác
-                                                                                            nhận</h1>
-                                                                                        <button type="button"
-                                                                                                class="btn-close"
-                                                                                                data-bs-dismiss="modal"
-                                                                                                aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="text-center" type="">Bạn có chắc
-                                                                                            muốn thanh toán
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="modal-footer text-center">
-                                                                                        <a type="button"
-                                                                                           class="btn btn-warning"
-                                                                                           th:href="@{'/ban-hang/thanh-toan'}"
-                                                                                           style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px"
-                                                                                        >Thanh toán</a>
-                                                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
-
+                                                            <div class="text-center">
+                                                                <div class="dropdown mt-3">
+                                                                    <!--                                                                    <a type="button" class="btn btn-primary" disabled-->
+                                                                    <!--                                                                       th:href="@{'/ban-hang/thanh-toan'}"-->
+                                                                    <!--                                                                       onclick="return confirm('Bạn có muốn thanh toán không')"-->
+                                                                    <!--                                                                       style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px">-->
+                                                                    <!--                                                                        Thanh toán-->
+                                                                    <!--                                                                    </a>-->
+                                                                    <button id="nutThanhToan" disabled
+                                                                            class="btn btn-primary"
+                                                                            style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#exampleModal">
+                                                                        Thanh toán
+                                                                    </button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModal"
+                                                                         tabindex="-1"
+                                                                         aria-labelledby="exampleModalLabel6"
+                                                                         aria-hidden="true">
+                                                                        <div class="modal-dialog modal-md text-center"
+                                                                             style="width: 550px;">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h1 class="modal-title fs-5"
+                                                                                        id="exampleModalLabel6">Xác
+                                                                                        nhận</h1>
+                                                                                    <button type="button"
+                                                                                            class="btn-close"
+                                                                                            data-bs-dismiss="modal"
+                                                                                            aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="text-center" type="">Bạn
+                                                                                        có chắc
+                                                                                        muốn thanh toán
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="modal-footer text-center">
