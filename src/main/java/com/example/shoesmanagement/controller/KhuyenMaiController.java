@@ -4,6 +4,7 @@ import com.example.shoesmanagement.model.KhachHang;
 import com.example.shoesmanagement.model.KhuyenMai;
 import com.example.shoesmanagement.service.KhachHangService;
 import com.example.shoesmanagement.service.KhuyenMaiService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,9 @@ public class KhuyenMaiController {
     @Autowired
     private KhachHangService khachHangService;
 
+    @Autowired
+    private HttpSession session;
+
     @GetMapping("/khuyen-mai")
     public String hienThi(Model model) {
         List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
@@ -30,6 +34,10 @@ public class KhuyenMaiController {
         model.addAttribute("khuyenMai", khuyenMai);
         model.addAttribute("addKhuyenMai", new KhuyenMai());
         model.addAttribute("khachHang", khachHang);
+        if (session.getAttribute("managerLogged") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "/login";
+        }
         return "manage/khuyen-mai";
     }
 

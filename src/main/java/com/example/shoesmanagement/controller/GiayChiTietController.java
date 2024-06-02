@@ -65,9 +65,11 @@ public class GiayChiTietController {
     @GetMapping("/giay-chi-tiet")
     public String dsGiayChiTiet(Model model, @ModelAttribute("message") String message, @ModelAttribute("importError") String importError) {
         List<ChiTietGiay> items = giayChiTietService.getAllChiTietGiay();
-
         List<ChiTietGiay> chiTietGiayList = new ArrayList<>();
-
+        if (session.getAttribute("managerLogged") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "/login";
+        }
         for (ChiTietGiay x : items) {
             if (x.getIdCTGOld() == null) {
                 chiTietGiayList.add(x);

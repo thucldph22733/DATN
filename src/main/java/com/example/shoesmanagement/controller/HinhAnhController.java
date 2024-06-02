@@ -50,6 +50,11 @@ public class HinhAnhController {
         List<HinhAnh> listHinhAnh = hinhAnhService.getAllHinhAnh();
         model.addAttribute("hinhAnh",listHinhAnh);
         model.addAttribute("hinhAnhAdd", new HinhAnh());
+
+        if (session.getAttribute("managerLogged") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "/login";
+        }
         if (message == null || !"true".equals(message)) {
             model.addAttribute("message", false);
         }

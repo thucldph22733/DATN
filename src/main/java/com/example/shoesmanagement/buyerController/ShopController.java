@@ -11,10 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +37,9 @@ public class ShopController {
 
     @Autowired
     private HttpSession session;
+
+    @Autowired
+    private HttpServletRequest request;
 
 
     //    @Autowired
@@ -125,6 +125,49 @@ public class ShopController {
 
         List<CTGViewModel> listCTGModelSoldOff = ctgViewModelService.getAllSoldOff();
         model.addAttribute("listCTGModelSoldOff", listCTGModelSoldOff);
+        return "online/shop";
+    }
+
+    @GetMapping("/shop/highToLow")
+    private String getShopByPriceHighToLow(Model model,
+                                           @RequestParam(name= "pageSize", defaultValue = "9") Integer pageSize,
+                                           @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum){
+        showDataBuyerShop(model);
+        checkKhachHangLogged(model);
+        model.addAttribute("pageNumberHTL", true);
+
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+        Page<CTGViewModel> page = ctgViewModelService.getAllByPriceHighToLow(pageable);
+
+        model.addAttribute("totalPageHTL", page.getTotalPages());
+        model.addAttribute("listCTGModel", page.getContent());
+
+        List<CTGViewModel> listCTGModelSoldOff = ctgViewModelService.getAllSoldOff();
+        model.addAttribute("listCTGModelSoldOff", listCTGModelSoldOff);
+        model.addAttribute("showPage", true);
+
+        return "online/shop";
+    }
+
+    @GetMapping("/shop/lowToHigh")
+    private String getShopByPriceLowToHigh(Model model,
+                                           @RequestParam(name= "pageSize", defaultValue = "9") Integer pageSize,
+                                           @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum){
+        showDataBuyerShop(model);
+        checkKhachHangLogged(model);
+
+        model.addAttribute("pageNumberLTH", true);
+
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+        Page<CTGViewModel> page = ctgViewModelService.getAllByPriceLowToHigh(pageable);
+
+        model.addAttribute("totalPageLTH", page.getTotalPages());
+        model.addAttribute("listCTGModel", page.getContent());
+
+        List<CTGViewModel> listCTGModelSoldOff = ctgViewModelService.getAllSoldOff();
+        model.addAttribute("listCTGModelSoldOff", listCTGModelSoldOff);
+        model.addAttribute("showPage", true);
+
         return "online/shop";
     }
 
@@ -242,6 +285,34 @@ public class ShopController {
         model.addAttribute("listCTGModelSoldOff", listCTGModelSoldOff);
         model.addAttribute("pageNumber", true);
         model.addAttribute("listCTGModel", ctgViewModelList);
+
+        showDataBuyerShop(model);
+        return "online/shop";
+    }
+
+    @PostMapping("/search")
+    private String searchBuyer(Model model){
+        checkKhachHangLogged(model);
+        List<CTGViewModel> listCTGModelNew = ctgViewModelService.getAll();
+        String keyWord = request.getParameter("keyWord");
+        String[] words = keyWord.split(" ");
+
+        List<CTGViewModel> ctgViewModelList = new ArrayList<>();
+
+        for (String word : words) {
+            for (CTGViewModel xx:listCTGModelNew) {
+                if (xx.getTenGiay().toLowerCase().contains(word.toLowerCase())){
+                    ctgViewModelList.add(xx);
+                }
+            }
+        }
+
+        if (ctgViewModelList.size() == 0){
+            model.addAttribute("khongThay", true);
+        }
+
+        model.addAttribute("listCTGModel", ctgViewModelList);
+        model.addAttribute("keyword", keyWord);
 
         showDataBuyerShop(model);
         return "online/shop";

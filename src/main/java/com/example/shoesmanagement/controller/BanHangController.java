@@ -53,6 +53,9 @@ public class BanHangController {
     private HttpServletRequest request;
 
     @Autowired
+    private HttpSession session;
+
+    @Autowired
     private KhachHangRepository khachHangRepository;
 
     @Autowired
@@ -81,6 +84,10 @@ public class BanHangController {
             , @ModelAttribute("messageError") String messageError) {
 
 
+
+
+        List<GiayViewModel> list = giayViewModelService.getAllVm();
+
         NhanVien nhanVien = (NhanVien) httpSession.getAttribute("staffLogged");
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
@@ -98,6 +105,10 @@ public class BanHangController {
         }
         if (!"true".equals(messageError)) {
             model.addAttribute("messageError", false);
+        }
+        if (session.getAttribute("staffLogged") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "/login";
         }
         return "/manage/ban-hang";
     }
