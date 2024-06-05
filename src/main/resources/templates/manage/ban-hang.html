@@ -530,7 +530,7 @@
                                                                 <li>
                                                                     <h5>Tổng tiền </h5>
                                                                     <div class="grandTotal" id="tongTienSanPham"
-                                                                         th:text=" ${#numbers.formatDecimal(tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
+                                                                         th:text=" ${#numbers.formatDecimal(tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
 
                                                                 </li>
                                                             </ul>
@@ -581,7 +581,7 @@
                                                                     <li style="margin-bottom: 20px;">
                                                                         <h5>Tạm tính :</h5>
                                                                         <h5 class="grandTotal" style="font-size: 13pt;"
-                                                                            th:text=" ${#numbers.formatDecimal(tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h5>
+                                                                            th:text=" ${#numbers.formatDecimal(tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h5>
                                                                     </li>
                                                                     <li style="margin-bottom: 20px;">
                                                                         <h5>
@@ -1076,6 +1076,7 @@
 </script>
 <script>
     function tinhTienThua() {
+
         // var tongTien = parseFloat(document.getElementById('tongTien').innerText.replace(' đ', ''));
         const element = document.getElementById("tongtienKM").value;
         //
@@ -1083,6 +1084,10 @@
         //
         // const formattedNumber = textContent.replace(/[^0-9.]/g, "");
         // const numberValue = parseFloat(formattedNumber);
+
+
+//         var tongTienSanPham = parseFloat(document.getElementById('tongTienSanPham').innerText.replace(' đ', ''));
+//         var tongTien = parseFloat(document.getElementById('tongTien').innerText.replace(' đ', ''));
 
         const buttonThanhToan = document.getElementById('nutThanhToan');
         var tienKhachDua = Number(document.getElementById('tienKhachDua').value);

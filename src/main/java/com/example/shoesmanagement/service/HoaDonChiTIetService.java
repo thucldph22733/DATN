@@ -15,5 +15,7 @@ public interface HoaDonChiTIetService {
 
     Double tongTien(List<HoaDonChiTiet> list);
 
+    Double tongTienSanPham(List<HoaDonChiTiet> list);
+
     List<HoaDonChiTiet> findByHoaDon(HoaDon hoaDon);
 }
