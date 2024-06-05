@@ -66,17 +66,17 @@ public class BanHangController {
 
     private double tongTienSanPham = 0;
 
-    private double tienKhuyenMai = 0;
+//    private double tienKhuyenMai = 0;
 
-    private double tongTien = tongTienSanPham - tienKhuyenMai;
+    private double giaTienGiam = 0;
+
+    private double tongTien = tongTienSanPham - giaTienGiam;
 
     private UUID idHoaDon = null;
 
     private int tongSanPham = 0;
 
     private double dieuKienKhuyenMai = 0;
-
-    private double giaTienGiam = 0;
 
     @GetMapping("/hien-thi")
     public String hienThi(Model model
@@ -157,17 +157,18 @@ public class BanHangController {
             model.addAttribute("gioHang", findByIdHoaDon);
         }
         model.addAttribute("tongTienSanPham", hoaDonChiTietService.tongTienSanPham(findByIdHoaDon));
-        model.addAttribute("tongTien", hoaDonChiTietService.tongTien(findByIdHoaDon));
+        model.addAttribute("tongTien", hoaDonChiTietService.tongTien(findByIdHoaDon) - giaTienGiam);
         model.addAttribute("listKhachHang", khachHangService.findKhachHangByTrangThai());
 
         model.addAttribute("tongSanPham", findByIdHoaDon.size());
         httpSession.setAttribute("tongSP", findByIdHoaDon.size());
         httpSession.setAttribute("tongTienSanPham", hoaDonChiTietService.tongTienSanPham(findByIdHoaDon));
-        httpSession.setAttribute("tongTien", hoaDonChiTietService.tongTien(findByIdHoaDon));
+        httpSession.setAttribute("tongTien", hoaDonChiTietService.tongTien(findByIdHoaDon)-giaTienGiam);
 
         // add tong tièn
         HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
         hoaDon.setTongTienSanPham(hoaDonChiTietService.tongTienSanPham(findByIdHoaDon));
+        hoaDon.setTongTien(tongTien);
         hoaDonService.add(hoaDon);
 
         //khach hang
@@ -384,7 +385,7 @@ public class BanHangController {
         model.addAttribute("idHoaDon", idHoaDon);
         model.addAttribute("tongTienSanPham", tongTienSanPham);
         model.addAttribute("tongTien", tongTien);
-        model.addAttribute("khuyenMai", this.tienKhuyenMai);
+        model.addAttribute("khuyenMai", this.giaTienGiam);
         return "/manage/ban-hang";
     }
 
