@@ -442,9 +442,11 @@ public class BanHangController {
         HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
         hoaDon.setTrangThai(1);
         hoaDon.setTgThanhToan(new Date());
-        hoaDon.setTongTien(tongTien);
+//        hoaDon.setTongTien(tongTien);
+        hoaDon.setTongTienSanPham(tongTien);
         hoaDon.setTongSP(tongSanPham);
         hoaDon.setHinhThucThanhToan(0);
+
         hoaDonService.add(hoaDon);
 
         this.tongTien = 0;
@@ -478,10 +480,17 @@ public class BanHangController {
     }
 
     @GetMapping("/chon-khuyen-mai/{idKM}")
-    public String chonKM(Model model, @PathVariable("idKM") UUID idKM){
+    public String chonKM(Model model, @PathVariable("idKM") UUID idKM, RedirectAttributes redirectAttributes){
         KhuyenMai khuyenMai = khuyenMaiRepository.findById(idKM).orElse(null);
         giaTienGiam = khuyenMai.getGiaTienGiam();
-        System.out.println(khuyenMai.getGiaTienGiam());
+
+        UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
+        HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
+        hoaDon.setKhuyenMai(khuyenMai);
+        hoaDonService.add(hoaDon);
+        httpSession.setAttribute("khuyenMai", khuyenMai);
+        redirectAttributes.addFlashAttribute("messageSuccess", true);
+//        redirectAttributes.addFlashAttribute("tb", "Thêm khách hàng thành công");
         return "redirect:/ban-hang/cart/hoadon/" + idHoaDon;
     }
 }

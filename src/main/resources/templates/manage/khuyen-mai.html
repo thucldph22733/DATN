@@ -89,30 +89,37 @@
                     <div class="hidden-form" style="display: none">
                         <form method="post" th:object="${addKhuyenMai}" th:action="@{/manage/khuyen-mai/add}">
                             <div class="row">
-                                <div class="col-lg-5 col-12">
+                                <div class="col-lg-4 col-12">
                                     <div class="form-group">
                                         <label>Mã khuyễn mãi</label>
                                         <input type="text" id="maKM" th:field="*{maKM}" class="form-control">
                                     </div>
                                 </div>
 
-                                <div class="col-lg-5 col-12">
+                                <div class="col-lg-4 col-12">
                                     <div class="form-group">
-                                        <label>Tên khuyễn mãi</label>
+                                        <label>Tên khuyến mãi</label>
                                         <input type="text" id="tenKM" th:field="*{tenKM}" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-12">
+                                    <div class="form-group">
+                                        <label>Giảm</label>
+                                        <input type="text" id="giaTienGiam" th:field="*{giaTienGiam}" class="form-control">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-lg-5 col-12">
+                                <div class="col-lg-4 col-12">
                                     <div class="form-group">
                                         <label>Ngày bắt đầu</label>
                                         <input type="date" id="ngayBatDau" th:field="*{tgBatDau}" class="form-control">
                                     </div>
                                 </div>
 
-                                <div class="col-lg-5 col-12">
+                                <div class="col-lg-4 col-12">
                                     <div class="form-group">
                                         <label>Ngày kết thúc</label>
                                         <input type="date" id="ngayKetThuc" th:field="*{tgKetThuc}"
@@ -120,9 +127,17 @@
                                     </div>
                                 </div>
 
-                                <div class="collg-12">
-                                    <button type="submit" class="btn btn-submit me-2">Thêm</button>
+                                <div class="col-lg-4 col-12">
+                                    <div class="form-group">
+                                        <label>Điều kiện giảm</label>
+                                        <input type="text" id="dieuKienKMBill" th:field="*{dieuKienKMBill}"
+                                               class="form-control">
+                                    </div>
                                 </div>
+                            </div>
+
+                            <div class="collg-12">
+                                <button type="submit" class="btn btn-submit me-2">Thêm</button>
                             </div>
                         </form>
                     </div>
