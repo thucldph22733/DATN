@@ -43,18 +43,6 @@ public class KhuyenMaiController {
 
     @PostMapping("/khuyen-mai/add")
     public String addKhuyenMai(@ModelAttribute("addKhuyenMai") KhuyenMai km, Model model) throws ParseException {
-//        KhuyenMai khuyenMai = new KhuyenMai();
-//        khuyenMai.setIdKM(km.getIdKM());
-//        khuyenMai.setMaKM(km.getMaKM());
-//        khuyenMai.setTenKM(km.getTenKM());
-//        khuyenMai.setTgBatDau(km.getTgBatDau());
-//        khuyenMai.setTgKetThuc(km.getTgKetThuc());
-
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        khuyenMai.setTgBatDau(sdf.parse(String.valueOf(km.getTgBatDau())));
-//
-//        khuyenMai.setTgKetThuc(sdf.parse(String.valueOf(km.getTgKetThuc())));
-//        khuyenMai.setSoLuong(km.getSoLuong());
         soSanh(km);
         khuyenMaiService.save(km);
         return "redirect:/manage/khuyen-mai";

@@ -1,6 +1,7 @@
 package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.*;
+import com.example.shoesmanagement.repository.HoaDonRepository;
 import com.example.shoesmanagement.repository.KhachHangRepository;
 import com.example.shoesmanagement.repository.KhuyenMaiRepository;
 import com.example.shoesmanagement.repository.SizeRepository;
@@ -64,11 +65,15 @@ public class BanHangController {
     @Autowired
     private KhuyenMaiRepository khuyenMaiRepository;
 
+    @Autowired
+    HoaDonRepository hoaDonRepository;
+
+    private double tongTienSanPham = 0;
     private int tongSanPham = 0;
 
     private double giaBan= 0;
 
-    private double tongTienSanPham = tongSanPham * giaBan;
+//     private double tongTienSanPham = tongSanPham * giaBan;
 
 //    private double tienKhuyenMai = 0;
 
@@ -149,6 +154,15 @@ public class BanHangController {
         List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
         model.addAttribute("khuyenMai", khuyenMai);
         model.addAttribute("giaTienGiam", giaTienGiam);
+
+        HoaDon hd = hoaDonService.getOne(idHoaDon);
+        double tongTienSP = 0;
+        if (hd.getTongTienSanPham() != null){
+            tongTienSP = hd.getTongTienSanPham();
+        }
+        List<KhuyenMai> listKM = hoaDonRepository.listDieuKienKhuyenMai(tongTienSP);
+        model.addAttribute("dieuKienKhuyenMai", listKM);
+
         httpSession.removeAttribute("idHoaDon");
         httpSession.setAttribute("idHoaDon", idHoaDon);
         this.idHoaDon = idHoaDon;
@@ -499,6 +513,7 @@ public class BanHangController {
 
         UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
         HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
+        httpSession.removeAttribute("idHoaDon");
         hoaDon.setKhuyenMai(khuyenMai);
         hoaDonService.add(hoaDon);
         httpSession.setAttribute("khuyenMai", khuyenMai);

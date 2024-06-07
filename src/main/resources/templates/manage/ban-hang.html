@@ -627,6 +627,8 @@
                                                                         <h5>Giá tiền giảm:</h5>
                                                                         <h5 class="grandTotal" style="font-size: 13pt;"
                                                                             th:text=" ${giaTienGiam} + ' đ'"></h5>
+<!--                                                                    <h5 class="grandTotal" style="font-size: 13pt;"-->
+<!--                                                                            th:text=" ${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h5>-->
                                                                         <input type="text" th:value="${giaTienGiam}"
                                                                                id="tienGiam" style="display: none">
                                                                     </li>
@@ -644,20 +646,22 @@
                                                                                             for="promotion-select">
                                                                                             Danh sách Khuyễn mãi
                                                                                         </h5>
-                                                                                        <button type="button"
-                                                                                                class="btn-close"
-                                                                                                data-bs-dismiss="modal"
-                                                                                                aria-label="Close">
-                                                                                        </button>
+<!--                                                                                        <button type="button"-->
+<!--                                                                                                class="btn-close"-->
+<!--                                                                                                data-bs-dismiss="modal"-->
+<!--                                                                                                aria-label="Close">-->
+<!--                                                                                        </button>-->
                                                                                     </div>
+
                                                                                     <div>
                                                                                         <div class="table-responsive">
                                                                                             <table class="table datanew"
                                                                                                    id="data-table">
                                                                                                 <tbody>
-                                                                                                <tr th:each="items : ${khuyenMai}">
-                                                                                                    <td th:text="${items.maKM}"></td>
+                                                                                                <tr th:each="items : ${dieuKienKhuyenMai}">
+<!--                                                                                                    <td th:text="${items.maKM}"></td>-->
                                                                                                     <td th:text="${items.tenKM}"></td>
+                                                                                                    <td th:text="'Điều kiện: Hóa đơn tối thiểu ' + ${items.dieuKienKMBill}"></td>
                                                                                                     <td>
                                                                                                         <button type="submit"
                                                                                                                 class="btn btn-primary"
@@ -670,6 +674,23 @@
                                                                                             </table>
                                                                                         </div>
                                                                                     </div>
+
+<!--                                                                                    <div>-->
+<!--                                                                                        <div class="row row-cols-1 row-cols-md-3 g-4">-->
+<!--                                                                                            <div class="col" th:each="items : ${dieuKienKhuyenMai}">-->
+<!--                                                                                                <div class="card">-->
+<!--                                                                                                    <div class="card-body">-->
+<!--                                                                                                        <h5 class="card-title" th:text="${items.maKM}"></h5>-->
+<!--                                                                                                        <p class="card-text" th:text="${items.tenKM}"></p>-->
+<!--                                                                                                        <button type="submit" class="btn btn-primary" th:formaction="@{'/ban-hang/chon-khuyen-mai/' + ${items.idKM}}">-->
+<!--                                                                                                            Áp dụng-->
+<!--                                                                                                        </button>-->
+<!--                                                                                                    </div>-->
+<!--                                                                                                </div>-->
+<!--                                                                                            </div>-->
+<!--                                                                                        </div>-->
+<!--                                                                                    </div>-->
+
                                                                                     <div class="modal-footer">
                                                                                         <button type="button"
                                                                                                 class="btn btn-secondary"

@@ -2,6 +2,7 @@ package com.example.shoesmanagement.repository;
 
 import com.example.shoesmanagement.model.HoaDon;
 import com.example.shoesmanagement.model.KhachHang;
+import com.example.shoesmanagement.model.KhuyenMai;
 import com.example.shoesmanagement.model.NhanVien;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,4 +24,6 @@ public interface HoaDonRepository  extends JpaRepository<HoaDon, UUID> {
     @Query(value = "select * from hoa_don where day(tg_tao) = day(GETDATE()) and loai_hd=1 ",nativeQuery = true)
     List<HoaDon> listAllHoaDonByNhanVienHienTai();
 
+    @Query("select km from KhuyenMai km join HoaDon hd on km.idKM = hd.khuyenMai.idKM where km.dieuKienKMBill <= ?1 and km.trangThai= 1 and km.soLuong > 0")
+    List<KhuyenMai> listDieuKienKhuyenMai(double tongTienSanPham);
 }
