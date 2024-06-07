@@ -284,7 +284,7 @@ public class BanHangController {
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
         UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
-        if (idHoaDon == null) {
+        if (idHoaDon == null) {z
             redirectAttributes.addFlashAttribute("messageError", true);
             redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
             model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
