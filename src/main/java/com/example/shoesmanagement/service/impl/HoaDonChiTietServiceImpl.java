@@ -43,6 +43,17 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTIetService {
     }
 
     @Override
+    public Double tongTienSanPham(List<HoaDonChiTiet> list) {
+        double tongTienSanPham = 0;
+        for (HoaDonChiTiet hoaDonChiTiet : list){
+            if (hoaDonChiTiet.getTrangThai() == 1){
+                tongTienSanPham += hoaDonChiTiet.getDonGia();
+            }
+        }
+        return tongTienSanPham;
+    }
+
+    @Override
     public List<HoaDonChiTiet> findByHoaDon(HoaDon hoaDon) {
         return hoaDonChiTietRepository.findByHoaDon(hoaDon);
     }

@@ -44,7 +44,7 @@ public class HoaDonOnlineController {
         model.addAttribute("reLoadPage", true);
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
-            return "/login";
+return "redirect:/login";
         }
         showData(model);
         showTab1(model);

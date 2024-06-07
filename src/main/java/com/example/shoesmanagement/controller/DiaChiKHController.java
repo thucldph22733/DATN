@@ -84,7 +84,9 @@ public class DiaChiKHController {
         }
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
-            return "/login";
+
+            return "redirect:/login";
+
         }
         return "manage/dia-chi";
     }

@@ -51,7 +51,7 @@ public class MauSacController {
 
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
-            return "/login";
+return "redirect:/login";
         }
         //
         if (message == null || !"true".equals(message)) {
