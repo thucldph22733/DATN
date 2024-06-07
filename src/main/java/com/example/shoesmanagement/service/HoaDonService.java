@@ -22,5 +22,5 @@ public interface HoaDonService {
 
     List<HoaDon> listAllHoaDonByNhanVienHienTai(NhanVien nhanVien);
 
-
+//    List<HoaDon> hienThiDieuKien();
 }
