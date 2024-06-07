@@ -230,7 +230,8 @@
                                             <option value=""></option>
                                             <th:block th:each="promotion : ${khuyenMai}">
                                                 <option th:value="${promotion.idKM}"
-                                                        th:text="${promotion.tenKM}"></option>
+                                                        th:text="${promotion.tenKM}">
+                                                </option>
                                             </th:block>
                                         </select>
                                     </div>

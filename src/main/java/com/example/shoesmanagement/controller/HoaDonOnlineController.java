@@ -6,6 +6,7 @@ import com.example.shoesmanagement.service.HoaDonService;
 import com.example.shoesmanagement.service.LSThanhToanService;
 import com.example.shoesmanagement.service.NhanVienService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,9 @@ public class HoaDonOnlineController {
     private HttpServletRequest request;
 
     @Autowired
+    private HttpSession session;
+
+    @Autowired
     private LSThanhToanService lsThanhToanService;
 
 
@@ -38,6 +42,10 @@ public class HoaDonOnlineController {
     @GetMapping("online")
     private String manageBillOnline(Model model) {
         model.addAttribute("reLoadPage", true);
+        if (session.getAttribute("managerLogged") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "/login";
+        }
         showData(model);
         showTab1(model);
 
@@ -92,19 +100,24 @@ public class HoaDonOnlineController {
                     if(x.getTrangThai() == 4){
                         soLuongHoaDonHuy ++;
                     }
-                    if (x.getHinhThucThanhToan() == 1 ){
-                        soLuongHoaDonBanking ++;
-                        listHoaDonOnlineQRCode.add(x);
-                    }
-                    if (x.getHinhThucThanhToan() == 0){
-                        soLuongHoaDonThanhToanKhiNhanHang ++;
-                    }
+                    if (x.getHinhThucThanhToan() != null) {
+                        if (x.getHinhThucThanhToan() == 1) {
+                            soLuongHoaDonBanking++;
+                            listHoaDonOnlineQRCode.add(x);
+                        }
+                        if (x.getHinhThucThanhToan() == 0) {
+                            soLuongHoaDonThanhToanKhiNhanHang++;
+                        }
 
-                    if (x.getTrangThai() == 1 && x.getHinhThucThanhToan() == 1 ){
-                        soLuongHoaDonDaThanhToan ++;
-                    }
-                    if (x.getTrangThai() == 3 && x.getHinhThucThanhToan() == 0 ){
-                        soLuongHoaDonDaThanhToan ++;
+                        if (x.getTrangThai() == 1 && x.getHinhThucThanhToan() == 1) {
+                            soLuongHoaDonDaThanhToan++;
+                        }
+                        if (x.getTrangThai() == 3 && x.getHinhThucThanhToan() == 0) {
+                            soLuongHoaDonDaThanhToan++;
+                        }
+                    } else {
+                        // Xử lý trường hợp giá trị của getHinhThucThanhToan() là null nếu cần thiết
+                        System.out.println("HinhThucThanhToan là null cho hóa đơn: " + x);
                     }
                     if (x.getTrangThai() == 2 ){
                         soLuongHoaDonDangGiao ++;
