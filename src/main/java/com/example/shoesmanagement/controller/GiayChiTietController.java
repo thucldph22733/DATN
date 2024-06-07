@@ -7,6 +7,7 @@ import com.example.shoesmanagement.service.impl.GiayChiTietServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -1402,6 +1403,24 @@ public class GiayChiTietController {
             redirectAttributes.addFlashAttribute("message", true);
         }
         return link1;
+    }
+    @PutMapping("/giay-chi-tiet/{idCTG}")
+    public ResponseEntity<String> capNhatTrangThai(@RequestParam String trangThai,
+                                                   @PathVariable UUID idCTG) {
+        int trangThaiInt = Integer.valueOf(trangThai);
+        System.out.println(trangThai);
+
+        int trangThaiUpdate;
+        if (trangThaiInt == 1) {
+            trangThaiUpdate = 0;
+        } else {
+            trangThaiUpdate = 1;
+        }
+        System.out.println(trangThaiUpdate);
+        ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idCTG);
+        chiTietGiay.setTrangThai(trangThaiUpdate);
+        giayChiTietService.save(chiTietGiay);
+        return ResponseEntity.ok("ok");
     }
 
 }

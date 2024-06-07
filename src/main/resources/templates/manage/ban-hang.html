@@ -531,7 +531,6 @@
                                                                     <h5>Tổng tiền </h5>
                                                                     <div class="grandTotal" id="tongTienSanPham"
                                                                          th:text=" ${#numbers.formatDecimal(tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
-
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -1170,7 +1169,9 @@
         // Tính tổng tiền và cập nhật vào phần tử hiển thị tổng tiền
         var totalAmountElement = inputElement.closest('.product-lists').querySelector('.product-lists li:nth-child(3) div');
         var totalAmount = giaBan * quantity;
+        var tongTienSanPham = giaBan * quantity;
         totalAmountElement.innerText = formatCurrency(totalAmount) + ' đ';
+        totalAmountElement.innerText = formatCurrency(tongTienSanPham) + ' đ';
 
         // Cập nhật tổng tiền bên dưới
         updateGrandTotal();

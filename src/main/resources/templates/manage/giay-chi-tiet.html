@@ -37,213 +37,221 @@
 </head>
 <body class="mini-sidebar">
 <div th:replace="~{manage/activities :: main}"></div>
-    <form>
-        <div class="page-wrapper">
-            <div class="content">
-                <div class="page-header">
-                    <div class="page-title">
-                        <h4>List Giày Chi Tiết</h4>
-                        <h6>Quản Lý Giày</h6>
-                    </div>
-                    <div class="page-btn">
-                        <a href="/manage/giay-chi-tiet/viewAdd" class="btn btn-added">
-                            <img src="/images/img/icons/plus.svg" alt="img" class="me-1"/>Thêm Giày Chi Tiết</a>
-                    </div>
-                    <div class="page-btn">
-                        <a href="/manage/chi-tiet-san-pham-thong-ke" class="btn btn-added">Thống Kê</a>
-                    </div>
+<form>
+    <div class="page-wrapper">
+        <div class="content">
+            <div class="page-header">
+                <div class="page-title">
+                    <h4>List Giày Chi Tiết</h4>
+                    <h6>Quản Lý Giày</h6>
                 </div>
+                <div class="page-btn">
+                    <a href="/manage/giay-chi-tiet/viewAdd" class="btn btn-added">
+                        <img src="/images/img/icons/plus.svg" alt="img" class="me-1"/>Thêm Giày Chi Tiết</a>
+                </div>
+                <div class="page-btn">
+                    <a href="/manage/chi-tiet-san-pham-thong-ke" class="btn btn-added">Thống Kê</a>
+                </div>
+            </div>
 
-                <div class="card">
-                    <div class="card-body">
-                        <div class="form-hidden-2" style="display: none">
-                            <form action="/manage/giayCT/importExcel" method="post" enctype="multipart/form-data">
-                                <div class="form-group">
-                                    <label> Upload Excel File</label>
-                                    <input type="file" name="file"/>
-                                </div>
-                                <button type="submit" class="btn btn-submit me-2">Submit</button>
-                            </form>
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-hidden-2" style="display: none">
+                        <form action="/manage/giayCT/importExcel" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label> Upload Excel File</label>
+                                <input type="file" name="file"/>
+                            </div>
+                            <button type="submit" class="btn btn-submit me-2">Submit</button>
+                        </form>
+                    </div>
+                    <br>
+                    <div class="table-top">
+                        <div class="search-set">
+                            <div class="search-path">
+                                <a class="btn btn-filter" id="filter_search">
+                                    <img src="/images/img/icons/filter.svg" alt="img"/>
+                                    <span
+                                    ><img src="/images/img/icons/closes.svg" alt="img"
+                                    /></span>
+                                </a>
+                            </div>
+                            <div class="search-input">
+                                <a class="btn btn-searchset"
+                                ><img src="/images/img/icons/search-white.svg" alt="img"
+                                /></a>
+                            </div>
                         </div>
-                        <br>
-                        <div class="table-top">
-                            <div class="search-set">
-                                <div class="search-path">
-                                    <a class="btn btn-filter" id="filter_search">
-                                        <img src="/images/img/icons/filter.svg" alt="img"/>
-                                        <span
-                                        ><img src="/images/img/icons/closes.svg" alt="img"
-                                        /></span>
+                        <div class="wordset">
+                            <ul>
+                                <li>
+                                    <a class="btn btn-filter" id="import-excel" data-bs-toggle="tooltip"
+                                       data-bs-placement="top" title="Import Excel">
+                                        <img src="/images/img/icons/upload.svg" alt="img">
+                                        <span><img src="/images/img/icons/closes.svg" alt="img"></span>
                                     </a>
-                                </div>
-                                <div class="search-input">
-                                    <a class="btn btn-searchset"
-                                    ><img src="/images/img/icons/search-white.svg" alt="img"
+                                </li>
+                                <li>
+                                    <a th:href="@{/manage/barCodeTest}"
+                                       data-bs-toggle="tooltip"
+                                       data-bs-placement="top"
+                                       title="Export QRCode"
+                                    ><img src="/images/img/icons/scan.svg" alt="img"
                                     /></a>
-                                </div>
-                            </div>
-                            <div class="wordset">
-                                <ul>
-                                    <li>
-                                        <a class="btn btn-filter" id="import-excel" data-bs-toggle="tooltip"
-                                           data-bs-placement="top" title="Import Excel">
-                                            <img src="/images/img/icons/upload.svg" alt="img">
-                                            <span><img src="/images/img/icons/closes.svg" alt="img"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a th:href="@{/manage/barCodeTest}"
-                                           data-bs-toggle="tooltip"
-                                           data-bs-placement="top"
-                                           title="Export QRCode"
-                                        ><img src="/images/img/icons/scan.svg" alt="img"
-                                        /></a>
-                                    </li>
-                                    <li>
-                                        <a th:href="@{/manage/giayCT/export/pdf}"
-                                           data-bs-toggle="tooltip"
-                                           data-bs-placement="top"
-                                           title="pdf"
-                                        ><img src="/images/img/icons/pdf.svg" alt="img"
-                                        /></a>
-                                    </li>
-                                    <li>
-                                        <a th:href="@{/manage/giayCT/export/excel}"
-                                           data-bs-toggle="tooltip"
-                                           data-bs-placement="top"
-                                           title="excel"
-                                        ><img src="/images/img/icons/excel.svg" alt="img"
-                                        /></a>
-                                    </li>
-                                    <li>
-                                        <a id="printButton"
-                                           data-bs-toggle="tooltip"
-                                           data-bs-placement="top"
-                                           title="print"
-                                        ><img src="/images/img/icons/printer.svg" alt="img"
-                                        /></a>
-                                    </li>
-                                </ul>
-                            </div>
+                                </li>
+                                <li>
+                                    <a th:href="@{/manage/giayCT/export/pdf}"
+                                       data-bs-toggle="tooltip"
+                                       data-bs-placement="top"
+                                       title="pdf"
+                                    ><img src="/images/img/icons/pdf.svg" alt="img"
+                                    /></a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/manage/giayCT/export/excel}"
+                                       data-bs-toggle="tooltip"
+                                       data-bs-placement="top"
+                                       title="excel"
+                                    ><img src="/images/img/icons/excel.svg" alt="img"
+                                    /></a>
+                                </li>
+                                <li>
+                                    <a id="printButton"
+                                       data-bs-toggle="tooltip"
+                                       data-bs-placement="top"
+                                       title="print"
+                                    ><img src="/images/img/icons/printer.svg" alt="img"
+                                    /></a>
+                                </li>
+                            </ul>
                         </div>
+                    </div>
 
-                        <form method="get" th:action="@{/manage/giayct/filter}">
-                            <div class="card mb-0" id="filter_inputs">
-                                <div class="card-body pb-0">
-                                    <div class="row">
-                                        <div class="col-lg-12 col-sm-12">
-                                            <div class="row">
-                                                <div class="col-lg-2 col-sm-6 col-12">
-                                                    <div class="form-group">
-                                                        <select class="select" id="giayFilter" name="searchTerm">
-                                                            <option>Giày</option>
-                                                            <option th:each="loc : ${giayList}"
-                                                                    th:value="${loc.tenGiay}"
-                                                                    th:text="${loc.tenGiay}"></option>
-                                                        </select>
-                                                    </div>
+                    <form method="get" th:action="@{/manage/giayct/filter}">
+                        <div class="card mb-0" id="filter_inputs">
+                            <div class="card-body pb-0">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12">
+                                        <div class="row">
+                                            <div class="col-lg-2 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <select class="select" id="giayFilter" name="searchTerm">
+                                                        <option>Giày</option>
+                                                        <option th:each="loc : ${giayList}"
+                                                                th:value="${loc.tenGiay}"
+                                                                th:text="${loc.tenGiay}"></option>
+                                                    </select>
                                                 </div>
-                                                <div class="col-lg-2 col-sm-6 col-12">
-                                                    <div class="form-group">
-                                                        <select class="select" id="sizeFilter" name="searchTerm">
-                                                            <option>Size</option>
-                                                            <option th:each="loc : ${sizeList}" th:value="${loc.soSize}"
-                                                                    th:text="${loc.soSize}"></option>
-                                                        </select>
-                                                    </div>
+                                            </div>
+                                            <div class="col-lg-2 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <select class="select" id="sizeFilter" name="searchTerm">
+                                                        <option>Size</option>
+                                                        <option th:each="loc : ${sizeList}" th:value="${loc.soSize}"
+                                                                th:text="${loc.soSize}"></option>
+                                                    </select>
                                                 </div>
-                                                <div class="col-lg-2 col-sm-6 col-12">
-                                                    <div class="form-group">
-                                                        <select class="select" id="mauSacFilter" name="searchTerm">
-                                                            <option>Màu Sắc</option>
-                                                            <option th:each="loc : ${mauSacList}"
-                                                                    th:value="${loc.tenMau}"
-                                                                    th:text="${loc.tenMau}"></option>
-                                                        </select>
-                                                    </div>
+                                            </div>
+                                            <div class="col-lg-2 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <select class="select" id="mauSacFilter" name="searchTerm">
+                                                        <option>Màu Sắc</option>
+                                                        <option th:each="loc : ${mauSacList}"
+                                                                th:value="${loc.tenMau}"
+                                                                th:text="${loc.tenMau}"></option>
+                                                    </select>
                                                 </div>
-                                                <div class="col-lg-6 col-sm-6 col-12">
-                                                    <div class="form-group">
-                                                        <button type="submit" class="btn btn-filters ms-auto"
-                                                        ><img
-                                                                src="/images/img/icons/search-whites.svg"
-                                                                alt="img"
-                                                        /></button>
-                                                    </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-filters ms-auto"
+                                                    ><img
+                                                            src="/images/img/icons/search-whites.svg"
+                                                            alt="img"
+                                                    /></button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-
-                        <div class="table-responsive">
-                            <table class="table datanew" id="data-table">
-                                <thead>
-                                <tr>
-                                    <th>Mã</th>
-                                    <th>Hình Ảnh</th>
-                                    <th>Giày</th>
-                                    <th>Size</th>
-                                    <th>Màu Sắc</th>
-                                    <th>Số Lượng</th>
-                                    <th>Gía Bán (Trước Giảm)</th>
-                                    <th>Trọng Lượng</th>
-                                    <th>Năm Sản Xuất</th>
-                                    <th>Năm Bảo Hành</th>
-                                    <th>Gía Bán (Sau Giảm)</th>
-                                    <th>Trạng Thái</th>
-                                    <th>Action</th>
-                                    <th>Thời Gian Thêm</th>
-                                    <th>Thời Gian Sửa</th>
-
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="items : ${items}">
-                                    <td th:text="${items.maCTG}"></td>
-                                    <td><img th:src="@{'/images/imgsProducts/'+ ${items.hinhAnh.url1}}"></td>
-                                    <td th:text="${items.giay.tenGiay}"></td>
-                                    <td th:text="${items.size.soSize}"></td>
-                                    <td th:text="${items.mauSac.tenMau}"></td>
-                                    <td th:text="${items.soLuong}"></td>
-                                    <td th:text="${#numbers.formatDecimal(items.soTienTruocKhiGiam, 2, 'COMMA', 1, 'POINT')} + ' đ'"></td>
-                                    <td th:text="${items.trongLuong}+' gram'"></td>
-                                    <td th:text="${items.namSX}"></td>
-                                    <td th:text="${items.namBH}"></td>
-                                    <td th:text="${#numbers.formatDecimal(items.giaBan, 2, 'COMMA', 1, 'POINT')} + ' đ'"></td>
-                                    <td>
-                                        <span th:if="${items.trangThai == 1}"
-                                              class="badges bg-lightgreen">Hoạt Động</span>
-                                        <span th:unless="${items.trangThai == 1}" class="badges bg-lightred">Không Hoạt Động</span>
-                                        <span th:if="${items.soLuong == 0}" class="badges bg-lightgrey">Hết Hàng</span>
-                                    </td>
-                                    <td>
-                                        <a class="me-2" th:href="@{'/manage/giay-chi-tiet/detail/' + ${items.idCTG}}">
-                                            <img src="/images/img/icons/eye.svg" alt="img"/>
-                                        </a>
-                                        <a class="me-2"
-                                           th:href="@{'/manage/giay-chi-tiet/viewUpdate/' + ${items.idCTG}}">
-                                            <img src="/images/img/icons/edit.svg" alt="img"/>
-                                        </a>
-                                        <a class="me-2 delete-button"
-                                           th:data-delete-url="@{'/manage/giay-chi-tiet/delete/' + ${items.idCTG}}">
-                                            <img src="/images/img/icons/delete.svg" alt="img"/>
-                                        </a>
-                                    </td>
-                                    <td th:text="${#dates.format(items.tgThem, 'dd-MM-yyyy')}" align="center"/>
-                                    <td th:text="${#dates.format(items.tgSua, 'dd-MM-yyyy')}" align="center"/>
-
-                                </tr>
-                                </tbody>
-                            </table>
                         </div>
+                    </form>
+
+                    <div class="table-responsive">
+                        <table class="table datanew" id="data-table">
+                            <thead>
+                            <tr>
+                                <th>Mã</th>
+                                <th>Hình Ảnh</th>
+                                <th>Giày</th>
+                                <th>Size</th>
+                                <th>Màu Sắc</th>
+                                <th>Số Lượng</th>
+                                <th>Gía Bán (Trước Giảm)</th>
+                                <th>Trọng Lượng</th>
+                                <th>Năm Sản Xuất</th>
+                                <th>Năm Bảo Hành</th>
+                                <th>Gía Bán (Sau Giảm)</th>
+                                <th>Trạng Thái</th>
+                                <th>Action</th>
+                                <th>Thời Gian Thêm</th>
+                                <th>Thời Gian Sửa</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="items : ${items}">
+                                <td th:text="${items.maCTG}"></td>
+                                <td><img th:src="@{'/images/imgsProducts/'+ ${items.hinhAnh.url1}}"></td>
+                                <td th:text="${items.giay.tenGiay}"></td>
+                                <td th:text="${items.size.soSize}"></td>
+                                <td th:text="${items.mauSac.tenMau}"></td>
+                                <td th:text="${items.soLuong}"></td>
+                                <td th:text="${#numbers.formatDecimal(items.soTienTruocKhiGiam, 2, 'COMMA', 1, 'POINT')} + ' đ'"></td>
+                                <td th:text="${items.trongLuong}+' gram'"></td>
+                                <td th:text="${items.namSX}"></td>
+                                <td th:text="${items.namBH}"></td>
+                                <td th:text="${#numbers.formatDecimal(items.giaBan, 2, 'COMMA', 1, 'POINT')} + ' đ'"></td>
+                                <td>
+                                    <span th:id="'trangThaiUpdate_' + ${items.idCTG}"
+                                          th:if="${items.trangThai == 1}"
+                                          class="badges bg-lightgreen">Hoạt Động</span>
+                                    <span th:id="'trangThaiUpdate_' + ${items.idCTG}"
+                                          th:if="${items.trangThai == 0}"
+                                          class="badges bg-lightred">Không Hoạt Động</span>
+                                    <span th:if="${items.soLuong == 0}" class="badges bg-lightgrey">Hết Hàng</span>
+                                </td>
+                                <td>
+                                    <a class="me-2" th:href="@{'/manage/giay-chi-tiet/detail/' + ${items.idCTG}}">
+                                        <img src="/images/img/icons/eye.svg" alt="img"/>
+                                    </a>
+                                    <a class="me-2"
+                                       th:href="@{'/manage/giay-chi-tiet/viewUpdate/' + ${items.idCTG}}">
+                                        <img src="/images/img/icons/edit.svg" alt="img"/>
+                                    </a>
+                                    <a class="form-check form-switch">
+                                        <input class="me-3 form-check-input" type="checkbox" role="switch"
+                                               th:checked="${items.trangThai == 1}"
+                                               th:data-ma="${items.idCTG}"
+                                               onchange="thayDoiTrangThai(this)"
+                                               onclick="capNhatTrangThaiChiTietGiay(this.getAttribute('data-ma'))">
+                                        <input style="display: none" th:id="'flexSwitchCheck_' + ${items.idCTG}"
+                                               th:value="${items.trangThai}">
+                                    </a>
+                                </td>
+                                <td th:text="${#dates.format(items.tgThem, 'dd-MM-yyyy')}" align="center"/>
+                                <td th:text="${#dates.format(items.tgSua, 'dd-MM-yyyy')}" align="center"/>
+
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+</form>
 </div>
 <div th:if="${message}" id="toast-container" class="toast-container toast-top-right">
     <div class="toast toast-success" aria-live="polite" style="display: block;">
@@ -415,6 +423,47 @@
     $(document).ready(function () {
         $('.select').select2();
     });
+</script>
+<script>
+    var idGCt;
+
+    function capNhatTrangThaiChiTietGiay(id) {
+        idCTG = id;
+        let trangThai = document.getElementById("flexSwitchCheck_" + id).value;
+        var formData = new FormData();
+        formData.append("trangThai", trangThai);
+        $.ajax({
+            type: "PUT",
+            // url: "/bumblebee/khuyen-mai/cap-nhat-trang-thai/" + ma,
+            url: "/manage/giay-chi-tiet/" + id,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                console.log("Success: " + response);
+            },
+            error: function (error) {
+                console.log("Error1: " + JSON.stringify(error));
+            }
+        });
+    }
+
+    function thayDoiTrangThai(checkbox) {
+        let trangThai = checkbox.checked;
+        let tThai = document.getElementById("trangThaiUpdate_" + idCTG);
+        console.log(trangThai);
+        if (trangThai) {
+            tThai.innerText = "Hoạt Động";
+            tThai.style.color = "white";
+            tThai.classList.remove("bg-lightred");
+            tThai.classList.add("bg-lightgreen");
+        } else {
+            tThai.innerText = "Không Hoạt Động";
+            tThai.style.color = "white";
+            tThai.classList.remove("bg-lightgreen");
+            tThai.classList.add("bg-lightred");
+        }
+    }
 </script>
 </body>
 </html>
