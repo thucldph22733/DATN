@@ -102,9 +102,9 @@ public class BanHangController {
         }
         if (session.getAttribute("staffLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
-            return "/login";
+            return "redirect:/login";
         }
-        return "/manage/ban-hang";
+        return "manage/ban-hang";
     }
 
     @GetMapping("/add-cart")
