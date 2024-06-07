@@ -40,22 +40,22 @@ public class DetailProductController {
     private MauSacService mauSacService;
 
     @GetMapping("/shop-details/{idGiay}/{idMau}")
-    private String getFormDetail(Model model, @PathVariable UUID idGiay, @PathVariable UUID idMau){
+    private String getFormDetail(Model model, @PathVariable UUID idGiay, @PathVariable UUID idMau) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
 
         Giay giay = giayService.getByIdGiay(idGiay);
         MauSac mau = mauSacService.getByIdMauSac(idMau);
 
-        if (giay == null){
+        if (giay == null) {
             giay = giayService.getByIdGiay(idMau);
             mau = mauSacService.getByIdMauSac(idGiay);
         }
 
         checkKHLogged(model, khachHang, giay, mau);
 
-        List<ChiTietGiay> listCTGByGiay = giayChiTietService.findByMauSacAndGiay(mau, giay,1);
-        List<ChiTietGiay> listCTGByGiaySold = giayChiTietService.findByMauSacAndGiay(mau, giay,0);
+        List<ChiTietGiay> listCTGByGiay = giayChiTietService.findByMauSacAndGiay(mau, giay, 1);
+        List<ChiTietGiay> listCTGByGiaySold = giayChiTietService.findByMauSacAndGiay(mau, giay, 0);
 
         List<Object[]> allSizeByGiay = new ArrayList<>();
         List<Object[]> allSizeByGiaySold = new ArrayList<>();
@@ -63,27 +63,24 @@ public class DetailProductController {
         String showReceiveProduct = "true";
 
         for (ChiTietGiay x : listCTGByGiay) {
-            if (x.getTrangThai()==1){
+            if (x.getTrangThai() == 1) {
                 showReceiveProduct = "false";
             }
-            allSizeByGiay.add(new Object[] { x.getSize().getSoSize(), x.getIdCTG(), showReceiveProduct});
+            allSizeByGiay.add(new Object[] { x.getSize().getSoSize(), x.getIdCTG(), showReceiveProduct, x.getSoLuong() });
         }
         for (ChiTietGiay x : listCTGByGiaySold) {
-            if (x.getTrangThai()==0){
+            if (x.getTrangThai() == 0) {
                 showReceiveProduct = "true";
             }
-            allSizeByGiaySold.add(new Object[] { x.getSize().getSoSize(), x.getIdCTG(), showReceiveProduct});
+            allSizeByGiaySold.add(new Object[] { x.getSize().getSoSize(), x.getIdCTG(), showReceiveProduct, x.getSoLuong() });
         }
-
 
         allSizeByGiay.sort(Comparator.comparingInt(obj -> ((Integer) obj[0])));
 
-
-
-        //Infor begin
+        // Information begin
         Optional<Double> maxPriceByGiay = listCTGByGiay.stream()
-                .map(ChiTietGiay :: getGiaBan)
-                .max(Double :: compare);
+                .map(ChiTietGiay::getGiaBan)
+                .max(Double::compare);
 
         Double maxPrice = maxPriceByGiay.get();
 
@@ -92,12 +89,11 @@ public class DetailProductController {
                 .sum();
 
         Optional<Double> minPriceByGiay = listCTGByGiay.stream()
-                .map(ChiTietGiay :: getGiaBan)
-                .min(Double :: compare);
+                .map(ChiTietGiay::getGiaBan)
+                .min(Double::compare);
 
         Double minPrice = minPriceByGiay.get();
-
-        //Infor end
+        // Information end
 
         HinhAnh hinhAnhByGiayAndMau = giayChiTietService.hinhAnhByGiayAndMau(giay, mau);
 
@@ -109,13 +105,13 @@ public class DetailProductController {
         model.addAttribute("sunProductAvaible", sumCTGByGiay);
         model.addAttribute("hinhAnh", hinhAnhByGiayAndMau);
         model.addAttribute("idHeartMau", mau.getIdMau());
-//        model.addAttribute("listMauSacByGiay", listMauSacByGiay);
         model.addAttribute("listSizeCTG", allSizeByGiay);
         model.addAttribute("listGiavaSize", listCTGByGiay);
 
         model.addAttribute(maMau, "true");
         return "online/detail-product";
     }
+
 
     @GetMapping("/shop/addProductCart")
     public String handleAddToCart(@RequestParam("idDetailProduct") UUID idDProduct, @RequestParam("quantity") int quantity, Model model, RedirectAttributes redirectAttribute) {

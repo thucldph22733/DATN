@@ -108,9 +108,9 @@ public class BanHangController {
         }
         if (session.getAttribute("staffLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
-            return "/login";
+            return "redirect:/login";
         }
-        return "/manage/ban-hang";
+        return "manage/ban-hang";
     }
 
     @GetMapping("/add-cart")
@@ -121,7 +121,7 @@ public class BanHangController {
         List<HoaDon> listHD = hoaDonService.getListHoaDonChuaThanhToan();
         List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
         model.addAttribute("khuyenMai", khuyenMai);
-        if (listHD.size() < 6) {
+        if (listHD.size() < 3) {
 
             HoaDon hd = new HoaDon();
             Date date = new Date();
