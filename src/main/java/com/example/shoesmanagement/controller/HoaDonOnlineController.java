@@ -44,7 +44,7 @@ public class HoaDonOnlineController {
         model.addAttribute("reLoadPage", true);
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
-            return "redirect:/login";
+return "redirect:/login";
         }
         showData(model);
         showTab1(model);
@@ -100,19 +100,24 @@ public class HoaDonOnlineController {
                     if(x.getTrangThai() == 4){
                         soLuongHoaDonHuy ++;
                     }
-                    if (x.getHinhThucThanhToan() == 1 ){
-                        soLuongHoaDonBanking ++;
-                        listHoaDonOnlineQRCode.add(x);
-                    }
-                    if (x.getHinhThucThanhToan() == 0){
-                        soLuongHoaDonThanhToanKhiNhanHang ++;
-                    }
+                    if (x.getHinhThucThanhToan() != null) {
+                        if (x.getHinhThucThanhToan() == 1) {
+                            soLuongHoaDonBanking++;
+                            listHoaDonOnlineQRCode.add(x);
+                        }
+                        if (x.getHinhThucThanhToan() == 0) {
+                            soLuongHoaDonThanhToanKhiNhanHang++;
+                        }
 
-                    if (x.getTrangThai() == 1 && x.getHinhThucThanhToan() == 1 ){
-                        soLuongHoaDonDaThanhToan ++;
-                    }
-                    if (x.getTrangThai() == 3 && x.getHinhThucThanhToan() == 0 ){
-                        soLuongHoaDonDaThanhToan ++;
+                        if (x.getTrangThai() == 1 && x.getHinhThucThanhToan() == 1) {
+                            soLuongHoaDonDaThanhToan++;
+                        }
+                        if (x.getTrangThai() == 3 && x.getHinhThucThanhToan() == 0) {
+                            soLuongHoaDonDaThanhToan++;
+                        }
+                    } else {
+                        // Xử lý trường hợp giá trị của getHinhThucThanhToan() là null nếu cần thiết
+                        System.out.println("HinhThucThanhToan là null cho hóa đơn: " + x);
                     }
                     if (x.getTrangThai() == 2 ){
                         soLuongHoaDonDangGiao ++;

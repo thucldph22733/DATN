@@ -36,7 +36,7 @@ public class KhuyenMaiController {
         model.addAttribute("khachHang", khachHang);
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
-            return "redirect:/login";
+return "redirect:/login";
         }
         return "manage/khuyen-mai";
     }
