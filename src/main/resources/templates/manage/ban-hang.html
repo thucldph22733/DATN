@@ -136,6 +136,29 @@
     }
 </style>
 <style>
+    .product-table {
+        width: 100%;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+    .product-table th, .product-table td {
+        text-align: center;
+        vertical-align: middle;
+        padding: 10px;
+    }
+    .product-table img {
+        max-width: 100px;
+        height: auto;
+    }
+    .product-table h6, .product-table h3, .product-table h4 {
+        margin: 0;
+    }
+    .product-table .btn {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+</style>
+<style>
     #video {
         display: none;
     }
@@ -353,33 +376,43 @@
                                                             <h3 th:text="${nullHoaDon}"></h3>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
+                                                    <table class="table table-bordered product-table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Hình Ảnh</th>
+                                                            <th>Số Lượng</th>
+                                                            <th>Tên Giày</th>
+                                                            <th>Giá Bán</th>
+                                                            <th>Màu Sắc</th>
+                                                            <th>Chọn</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
                                                         <th:block th:each="product : ${listSanPham}">
-                                                            <div class="col-lg-3 col-sm-6">
-                                                                <div class="tab_content active">
-                                                                    <div class="productset flex-fill ">
-                                                                        <div class="productsetimg">
-                                                                            <img th:src="@{'/images/imgsProducts/'+ ${product.hinhAnh}}"
-                                                                                 alt="img">
-                                                                            <h6>[[${product.soLuong}]]</h6>
-                                                                            <div class="check-product">
-                                                                                <i class="fa fa-check"></i>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="productsetcontent">
-                                                                            <h3>[[${product.tenGiay}]]</h3>
-                                                                            <h3 th:text=" ${#numbers.formatDecimal(product.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h3>
-                                                                            <h4 th:text="${product.mauSac}"></h4>
-                                                                            <a
-                                                                                    th:href="@{'/ban-hang/chon-size/' + ${product.idGiay}+'/'+${product.mauSac} }"
-                                                                                    class="btn btn-outline-warning m-3">
-                                                                                Chọn</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            <tr>
+                                                                <td>
+                                                                    <img th:src="@{'/images/imgsProducts/'+ ${product.hinhAnh}}" alt="img">
+                                                                </td>
+                                                                <td>
+                                                                    <h6>[[${product.soLuong}]]</h6>
+                                                                </td>
+                                                                <td>
+                                                                    <h3>[[${product.tenGiay}]]</h3>
+                                                                </td>
+                                                                <td>
+                                                                    <h3 th:text=" ${#numbers.formatDecimal(product.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h3>
+                                                                </td>
+                                                                <td>
+                                                                    <h4 th:text="${product.mauSac}"></h4>
+                                                                </td>
+                                                                <td>
+                                                                    <a th:href="@{'/ban-hang/chon-size/' + ${product.idGiay}+'/'+${product.mauSac} }" class="btn btn-outline-warning">Chọn</a>
+                                                                </td>
+                                                            </tr>
                                                         </th:block>
-                                                    </div>
+                                                        </tbody>
+                                                    </table>
+
                                                 </div>
                                             </div>
 
@@ -531,7 +564,6 @@
                                                                     <h5>Tổng tiền </h5>
                                                                     <div class="grandTotal" id="tongTienSanPham"
                                                                          th:text=" ${#numbers.formatDecimal(tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
-
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -1191,7 +1223,9 @@
         // Tính tổng tiền và cập nhật vào phần tử hiển thị tổng tiền
         var totalAmountElement = inputElement.closest('.product-lists').querySelector('.product-lists li:nth-child(3) div');
         var totalAmount = giaBan * quantity;
+        var tongTienSanPham = giaBan * quantity;
         totalAmountElement.innerText = formatCurrency(totalAmount) + ' đ';
+        totalAmountElement.innerText = formatCurrency(tongTienSanPham) + ' đ';
 
         // Cập nhật tổng tiền bên dưới
         updateGrandTotal();
