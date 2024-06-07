@@ -71,7 +71,9 @@ public class GiayController {
     public String getAllGiay(Model model, @ModelAttribute("message") String message) {
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
+
             return "redirect:/login";
+
         }
         List<Giay> listGiay = giayService.getAllGiay();
         List<Hang> listHang = hangService.getALlHang();
