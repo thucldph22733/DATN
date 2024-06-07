@@ -64,7 +64,11 @@ public class BanHangController {
     @Autowired
     private KhuyenMaiRepository khuyenMaiRepository;
 
-    private double tongTienSanPham = 0;
+    private int tongSanPham = 0;
+
+    private double giaBan= 0;
+
+    private double tongTienSanPham = tongSanPham * giaBan;
 
 //    private double tienKhuyenMai = 0;
 
@@ -74,7 +78,6 @@ public class BanHangController {
 
     private UUID idHoaDon = null;
 
-    private int tongSanPham = 0;
 
     private double dieuKienKhuyenMai = 0;
 
@@ -115,7 +118,7 @@ public class BanHangController {
         List<HoaDon> listHD = hoaDonService.getListHoaDonChuaThanhToan();
         List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
         model.addAttribute("khuyenMai", khuyenMai);
-        if (listHD.size() < 3) {
+        if (listHD.size() < 5) {
 
             HoaDon hd = new HoaDon();
             Date date = new Date();
@@ -130,7 +133,7 @@ public class BanHangController {
             redirectAttributes.addFlashAttribute("tb", "Tạo thành công hóa đơn");
         } else {
             redirectAttributes.addFlashAttribute("messageError", true);
-            redirectAttributes.addFlashAttribute("tbaoError", "Quá số lượng hóa đơn");
+            redirectAttributes.addFlashAttribute("tbaoError", "Bạn chỉ được tạo tối đa 5 hóa đơn");
         }
         model.addAttribute("listHoaDon", listHD);
         return "redirect:/ban-hang/hien-thi";
@@ -285,6 +288,7 @@ public class BanHangController {
         if (hoaDonChiTiet != null) {
             hoaDonChiTiet.setDonGia(chiTietGiay.getGiaBan() * (hoaDonChiTiet.getSoLuong() + soLuong));
             hoaDonChiTiet.setSoLuong(hoaDonChiTiet.getSoLuong() + soLuong);
+            hoaDon.setTongTienSanPham(chiTietGiay.getGiaBan()* soLuong);
             hoaDonChiTiet.setTrangThai(1);
             hoaDonChiTietService.add(hoaDonChiTiet);
         } else {
@@ -296,6 +300,7 @@ public class BanHangController {
             hdct.setTrangThai(1);
             hdct.setTgThem(new Date());
             tongSanPham++;
+            hoaDon.setTongTienSanPham(chiTietGiay.getGiaBan()* soLuong);
             httpSession.setAttribute("tongSP", tongSanPham);
             hoaDonChiTietService.add(hdct);
         }
@@ -440,6 +445,11 @@ public class BanHangController {
         this.tongTien = (double) httpSession.getAttribute("tongTien");
         this.tongTienSanPham = (double) httpSession.getAttribute("tongTienSanPham");
         HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
+        if(listG.isEmpty()){
+            redirectAttributes.addFlashAttribute("messageError", true);
+            redirectAttributes.addFlashAttribute("tbaoError", "Không co sản phẩm");
+            return "redirect:/ban-hang/cart/hoadon/" + this.idHoaDon;
+        }
         hoaDon.setTrangThai(1);
         hoaDon.setTgThanhToan(new Date());
 

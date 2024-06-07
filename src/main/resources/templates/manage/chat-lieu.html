@@ -220,17 +220,23 @@
                                 <td th:text="${items.maChatLieu}"></td>
                                 <td th:text="${items.tenChatLieu}"></td>
                                 <td>
-                                    <span th:if="${items.trangThai == 1}" class="badges bg-lightgreen">Hoạt Động</span>
-                                    <span th:unless="${items.trangThai == 1}"
+                                    <span th:id="'trangThaiUpdate_' + ${items.idChatLieu}" th:if="${items.trangThai == 1}"
+                                          class="badges bg-lightgreen">Hoạt Động</span>
+                                    <span th:id="'trangThaiUpdate_' + ${items.idChatLieu}" th:if="${items.trangThai == 0}"
                                           class="badges bg-lightred">Không Hoạt Động</span>
                                 </td>
                                 <td>
                                     <a class="me-3" th:href="@{'/manage/chat-lieu/viewUpdate/' + ${items.idChatLieu}}">
                                         <img src="/images/img/icons/edit.svg" alt="img">
                                     </a>
-                                    <a class="me-3 delete-button"
-                                       th:data-delete-url="@{'/manage/chat-lieu/delete/' + ${items.idChatLieu}}">
-                                        <img src="/images/img/icons/delete.svg" alt="img">
+                                    <a class="form-check form-switch">
+                                        <input class="me-3 form-check-input" type="checkbox" role="switch"
+                                               th:checked="${items.trangThai == 1}"
+                                               th:data-ma="${items.idChatLieu}"
+                                               onchange="thayDoiTrangThai(this)"
+                                               onclick="capNhatTrangThaiChatLieu(this.getAttribute('data-ma'))">
+                                        <input style="display: none" th:id="'flexSwitchCheck_' + ${items.idChatLieu}"
+                                               th:value="${items.trangThai}">
                                     </a>
                                 </td>
                                 <td th:text="${#dates.format(items.tgThem, 'dd-MM-yyyy')}" align="center"/>
@@ -479,6 +485,44 @@
             'title': 'Thông báo',
             'label': 'Đồng ý',
         }).show();
+    }
+    var idChatLieu;
+    function capNhatTrangThaiChatLieu(id) {
+        idChatLieu = id;
+        let trangThai = document.getElementById("flexSwitchCheck_" + id).value;
+        var formData = new FormData();
+        formData.append("trangThai", trangThai);
+        $.ajax({
+            type: "PUT",
+            // url: "/bumblebee/khuyen-mai/cap-nhat-trang-thai/" + ma,
+            url: "/manage/chat-lieu/" + id,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                console.log("Success: " + response);
+            },
+            error: function (error) {
+                console.log("Error1: " + JSON.stringify(error));
+            }
+        });
+    }
+
+    function thayDoiTrangThai(checkbox) {
+        let trangThai = checkbox.checked;
+        let tThai = document.getElementById("trangThaiUpdate_" + idChatLieu);
+        console.log(trangThai);
+        if (trangThai) {
+            tThai.innerText = "Hoạt Động";
+            tThai.style.color = "white";
+            tThai.classList.remove("bg-lightred");
+            tThai.classList.add("bg-lightgreen");
+        } else {
+            tThai.innerText = "Không Hoạt Động";
+            tThai.style.color = "white";
+            tThai.classList.remove("bg-lightgreen");
+            tThai.classList.add("bg-lightred");
+        }
     }
 </script>
 
