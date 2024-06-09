@@ -321,13 +321,50 @@
 
                         <!--khuyễn mãi-->
                         <div class="row" style="background-color: #f5f5f5; height: 60px; padding-top: 10px;">
-                            <div class="col-lg-4" style="display: flex;">Chọn khuyễn mãi</div>
-                            <select id="promotion-select" name="promotionId" class="form-select">
-                                <option value=""></option>
-                                <th:block th:each="promotion : ${khuyenMai}">
-                                    <option th:value="${promotion.idKM}" th:text="${promotion.tenKM}"></option>
-                                </th:block>
-                            </select>
+                            <div class="col-lg-7" style="display: flex;">Khuyễn mãi</div>
+                            <div class="col-lg-5">
+                                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Chọn khuyến mãi</button>
+
+                                <form method="get">
+                                    <div class="modal fade" id="staticBackdrop"
+                                         data-bs-backdrop="static"
+                                         data-bs-keyboard="false"
+                                         aria-labelledby="staticBackdropLabel"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title"
+                                                        id="staticBackdropLabel"
+                                                        for="promotion-select">
+                                                        Danh sách Khuyễn mãi
+                                                    </h5>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    <div class="card" th:each="items : ${dieuKienKhuyenMai}">
+                                                        <div class="card-body">
+                                                            <div class="grid gap-3">
+                                                                <div class="p-2 g-col-4">
+                                                                    <h5 class="card-title" th:text="${items.tenKM}"></h5>
+                                                                    <p class="card-text" th:text="'Điều kiện: Hóa đơn tối thiểu ' + ${items.dieuKienKMBill}"></p>
+                                                                    <p class="card-text" th:text="'Số lượng: ' + ${items.soLuong}"></p>
+                                                                    <button type="submit" class="btn btn-primary" th:formaction="@{'/buyer/checkout/chon-khuyen-mai/' + ${items.idKM}}">Áp dụng</button>
+                                                                    <br>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
 
                         <!--Total product & price End -->
@@ -404,30 +441,27 @@
                         <h6 class="coupon__code"></h6>
 
                         <div class="row" style="border-bottom: 0.5 solid #000000;">
-                            <div class="col-lg-7">
-                            </div>
+                            <div class="col-lg-7"></div>
                             <div class="col-lg-3">
                                 <p th:text="'Tổng tiền hàng (  ' + ${billPlaceOrder.tongSP} + ' sản phẩm ) :'"></p>
-                                <p>Mã khuyến mãi: </p>
+                                <p>Giảm: </p>
                                 <p>Phí giao hàng :</p>
                                 <p style="font-size: 12pt; font-weight: 700;">Tổng tiền đơn hàng:</p>
                             </div>
                             <div class="col-lg-2">
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billPlaceOrder.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                <p th:text="'đ'"></p>
+                                <p th:text=" ${giaTienGiam} + ' đ'"></p>
+                                <input type="text" th:value="${giaTienGiam}" id="tienGiam" style="display: none">
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billPlaceOrder.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p style="font-size: 18pt; font-weight: 700;"
                                    th:text="'₫' + ${#numbers.formatDecimal(billPlaceOrder.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                             </div>
                         </div>
 
-                        <div class="row" style="height: 0.5px; background-color: #979797; width: 100%;">
-
-                        </div>
+                        <div class="row" style="height: 0.5px; background-color: #979797; width: 100%;"></div>
 
                         <div class="row" style="height: 70px; margin-top: 20px; background-color: #f5f5f5;">
-                            <div class="col-lg-9">
-                            </div>
+                            <div class="col-lg-9"></div>
                             <div class="col-lg-3">
                                 <div class="product__details__cart__option">
                                     <button type="submit" href="#" class="primary-btn">Đặt hàng</button>
@@ -731,32 +765,32 @@
 <!--Modal Address End-->
 
 <!--Thong bao điều kiện voucher begin-->
-<div class="modal fade" th:if="${noticaAddVoucher}" id="noticaAddVoucher" tabindex="-1" role="dialog"
-     aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="messAddThanhCongTitle">Thông báo !</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
+<!--<div class="modal fade" th:if="${noticaAddVoucher}" id="noticaAddVoucher" tabindex="-1" role="dialog"-->
+<!--     aria-labelledby="messAddThanhCongTitle" aria-hidden="true">-->
+<!--    <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px;">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title" id="messAddThanhCongTitle">Thông báo !</h5>-->
+<!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                    <span aria-hidden="true">&times;</span>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
 
-                <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">
-                    <p th:if="${addErr}" style="font-size: 13pt; font-weight: 600;">Hóa đơn không đủ điều kiện để áp
-                        dụng khuyến mãi.</p>
-                    <p th:if="${addSuccess}" style="font-size: 13pt; font-weight: 600;">Áp dụng khuyến mãi thành
-                        công</p>
-                </div>
+<!--                <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">-->
+<!--                    <p th:if="${addErr}" style="font-size: 13pt; font-weight: 600;">Hóa đơn không đủ điều kiện để áp-->
+<!--                        dụng khuyến mãi.</p>-->
+<!--                    <p th:if="${addSuccess}" style="font-size: 13pt; font-weight: 600;">Áp dụng khuyến mãi thành-->
+<!--                        công</p>-->
+<!--                </div>-->
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-            </div>
-        </div>
-    </div>
-</div>
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 <!--Thông báo điều kiện voucher end-->
 
 <!-- Js Plugins -->

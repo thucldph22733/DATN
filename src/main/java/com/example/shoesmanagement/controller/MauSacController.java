@@ -258,7 +258,6 @@ public class MauSacController {
     public ResponseEntity<String> capNhatTrangThai(@RequestParam String trangThai,
                                                    @PathVariable UUID idMau) {
         int trangThaiInt = Integer.valueOf(trangThai);
-        System.out.println(trangThai);
 
         int trangThaiUpdate;
         if (trangThaiInt == 1) {

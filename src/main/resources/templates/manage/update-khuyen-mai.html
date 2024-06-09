@@ -68,6 +68,7 @@
 </head>
 <body class="mini-sidebar">
 <div th:replace="~{manage/activities :: main}"></div>
+
 <form th:object="${updateKhuyenMai}" method="post" name="sizeForm">
     <div class="page-wrapper">
         <div class="content">
@@ -143,6 +144,15 @@
                             <div class="form-group">
                                 <label>Thời gian kết thúc</label>
                                 <input type="date" th:field="*{tgKetThuc}" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Số lượng đã dùng</label>
+                                <input type="text" th:field="*{soLuongDaDung}" class="form-control" disabled readonly>
                             </div>
                         </div>
                     </div>

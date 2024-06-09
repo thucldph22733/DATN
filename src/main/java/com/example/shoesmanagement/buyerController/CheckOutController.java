@@ -1,6 +1,8 @@
 package com.example.shoesmanagement.buyerController;
 
 import com.example.shoesmanagement.model.*;
+import com.example.shoesmanagement.repository.HoaDonRepository;
+import com.example.shoesmanagement.repository.KhuyenMaiRepository;
 import com.example.shoesmanagement.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -8,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,6 +57,17 @@ public class CheckOutController {
     @Autowired
     private KhuyenMaiService khuyenMaiService;
 
+    @Autowired
+    private KhuyenMaiRepository khuyenMaiRepository;
+
+    @Autowired
+    private HoaDonRepository hoaDonRepository;
+
+    @Autowired
+    private HttpSession httpSession;
+
+    private double giaTienGiam = 0;
+
     @PostMapping("/buyer/checkout")
     private String checkOutCart(Model model, @RequestParam("selectedProducts") List<UUID> selectedProductIds) {
 
@@ -68,6 +83,9 @@ public class CheckOutController {
 
         List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
         model.addAttribute("khuyenMai", khuyenMai);
+
+
+
 
         String maHD = "HD_" + khachHang.getMaKH() + "_" + date.getDate() + generateRandomNumbers();
 
@@ -130,6 +148,12 @@ public class CheckOutController {
 //        }
 //
 //        double soTienConLai = total - tongSoTienGiam;
+        double tongTienSP = 0;
+        if (total != 0) {
+            tongTienSP = total;
+        }
+        List<KhuyenMai> listKM = hoaDonRepository.listDieuKienKhuyenMai(tongTienSP);
+        model.addAttribute("dieuKienKhuyenMai", listKM);
 
         hoaDon.setTongSP(sumQuantity);
         hoaDon.setTongTienSanPham(total);
@@ -672,5 +696,19 @@ public class CheckOutController {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         model.addAttribute("fullNameLogin", khachHang.getHoTenKH());
+    }
+
+    @GetMapping("/chon-khuyen-mai/{idKM}")
+    public String chonKM(Model model, @PathVariable("idKM") UUID idKM, RedirectAttributes redirectAttributes) {
+        KhuyenMai khuyenMai = khuyenMaiRepository.findById(idKM).orElse(null);
+        giaTienGiam = khuyenMai.getGiaTienGiam();
+
+        UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
+        HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
+        hoaDon.setKhuyenMai(khuyenMai);
+        httpSession.setAttribute("khuyenMai", khuyenMai);
+        hoaDonService.add(hoaDon);
+        redirectAttributes.addFlashAttribute("messageSuccess", true);
+        return "online/checkout";
     }
 }

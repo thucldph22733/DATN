@@ -1,11 +1,13 @@
 package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.HinhAnh;
+import com.example.shoesmanagement.model.MauSac;
 import com.example.shoesmanagement.repository.HinhAnhRepository;
 import com.example.shoesmanagement.service.HinhAnhService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -227,4 +229,21 @@ public class HinhAnhController {
         return "manage/hinh-anh";
     }
 
+    @PutMapping("/hinh-anh/{idHinhAnh}")
+    public ResponseEntity<String> capNhatTrangThai(@RequestParam String trangThai,
+                                                   @PathVariable UUID idHinhAnh) {
+        int trangThaiInt = Integer.valueOf(trangThai);
+
+        int trangThaiUpdate;
+        if (trangThaiInt == 1) {
+            trangThaiUpdate = 0;
+        } else {
+            trangThaiUpdate = 1;
+        }
+        HinhAnh hinhAnh = hinhAnhService.getByIdHinhAnh(idHinhAnh);
+        hinhAnh.setTrangThai(trangThaiUpdate);
+        hinhAnh.setTgSua(new Date());
+        hinhAnhService.save(hinhAnh);
+        return ResponseEntity.ok("ok");
+    }
 }

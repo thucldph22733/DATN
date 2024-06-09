@@ -615,93 +615,61 @@
                                                                         <h5 class="grandTotal" style="font-size: 13pt;"
                                                                             th:text=" ${#numbers.formatDecimal(tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h5>
                                                                     </li>
+
                                                                     <li style="margin-bottom: 20px;">
                                                                         <h5>
                                                                             <a type="button" class="btn btn-primary"
                                                                                data-bs-toggle="modal"
-                                                                               data-bs-target="#staticBackdrop">Chọn
-                                                                                khuyến mãi</a>
+                                                                               data-bs-target="#staticBackdrop">Chọn khuyến mãi
+                                                                            </a>
                                                                         </h5>
 
-                                                                    <li style="margin-bottom: 20px;">
-                                                                        <h5>Giá tiền giảm:</h5>
-                                                                        <h5 class="grandTotal" style="font-size: 13pt;"
-                                                                            th:text=" ${giaTienGiam} + ' đ'"></h5>
-<!--                                                                    <h5 class="grandTotal" style="font-size: 13pt;"-->
-<!--                                                                            th:text=" ${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h5>-->
-                                                                        <input type="text" th:value="${giaTienGiam}"
-                                                                               id="tienGiam" style="display: none">
-                                                                    </li>
-                                                                    <form method="get">
-                                                                        <div class="modal fade" id="staticBackdrop"
+                                                                        <li style="margin-bottom: 20px;">
+                                                                            <h5>Mã khuyến mãi:</h5>
+                                                                            <h5 class="grandTotal" style="font-size: 13pt;"
+                                                                                th:text=" ${giaTienGiam} + ' đ'"></h5>
+                                                                            <input type="text" th:value="${giaTienGiam}" id="tienGiam" style="display: none">
+                                                                        </li>
+
+                                                                        <form method="get">
+                                                                            <div class="modal fade" id="staticBackdrop"
                                                                              data-bs-backdrop="static"
                                                                              data-bs-keyboard="false"
                                                                              aria-labelledby="staticBackdropLabel"
                                                                              aria-hidden="true">
-                                                                            <div class="modal-dialog modal-lg">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="staticBackdropLabel"
-                                                                                            for="promotion-select">
-                                                                                            Danh sách Khuyễn mãi
-                                                                                        </h5>
-<!--                                                                                        <button type="button"-->
-<!--                                                                                                class="btn-close"-->
-<!--                                                                                                data-bs-dismiss="modal"-->
-<!--                                                                                                aria-label="Close">-->
-<!--                                                                                        </button>-->
-                                                                                    </div>
-
-                                                                                    <div>
-                                                                                        <div class="table-responsive">
-                                                                                            <table class="table datanew"
-                                                                                                   id="data-table">
-                                                                                                <tbody>
-                                                                                                <tr th:each="items : ${dieuKienKhuyenMai}">
-<!--                                                                                                    <td th:text="${items.maKM}"></td>-->
-                                                                                                    <td th:text="${items.tenKM}"></td>
-                                                                                                    <td th:text="'Điều kiện: Hóa đơn tối thiểu ' + ${items.dieuKienKMBill}"></td>
-                                                                                                    <td>
-                                                                                                        <button type="submit"
-                                                                                                                class="btn btn-primary"
-                                                                                                                th:formaction="@{'/ban-hang/chon-khuyen-mai/' + ${items.idKM}}">
-                                                                                                            Áp dụng
-                                                                                                        </button>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                                </tbody>
-                                                                                            </table>
+                                                                                <div class="modal-dialog modal-lg">
+                                                                                    <div class="modal-content">
+                                                                                        <div class="modal-header">
+                                                                                            <h5 class="modal-title"
+                                                                                                id="staticBackdropLabel"
+                                                                                                for="promotion-select">
+                                                                                                Danh sách Khuyễn mãi
+                                                                                            </h5>
                                                                                         </div>
-                                                                                    </div>
 
-<!--                                                                                    <div>-->
-<!--                                                                                        <div class="row row-cols-1 row-cols-md-3 g-4">-->
-<!--                                                                                            <div class="col" th:each="items : ${dieuKienKhuyenMai}">-->
-<!--                                                                                                <div class="card">-->
-<!--                                                                                                    <div class="card-body">-->
-<!--                                                                                                        <h5 class="card-title" th:text="${items.maKM}"></h5>-->
-<!--                                                                                                        <p class="card-text" th:text="${items.tenKM}"></p>-->
-<!--                                                                                                        <button type="submit" class="btn btn-primary" th:formaction="@{'/ban-hang/chon-khuyen-mai/' + ${items.idKM}}">-->
-<!--                                                                                                            Áp dụng-->
-<!--                                                                                                        </button>-->
-<!--                                                                                                    </div>-->
-<!--                                                                                                </div>-->
-<!--                                                                                            </div>-->
-<!--                                                                                        </div>-->
-<!--                                                                                    </div>-->
+                                                                                        <div class="modal-body">
+                                                                                            <div class="card" th:each="items : ${dieuKienKhuyenMai}">
+                                                                                                <div class="card-body">
+                                                                                                    <div class="grid gap-3">
+                                                                                                        <div class="p-2 g-col-4">
+                                                                                                            <h5 class="card-title" th:text="${items.tenKM}"></h5>
+                                                                                                            <p class="card-text" th:text="'Điều kiện: Hóa đơn tối thiểu ' + ${items.dieuKienKMBill}"></p>
+                                                                                                            <p class="card-text" th:text="'Số lượng: ' + ${items.soLuong}"></p>
+                                                                                                            <button type="submit" class="btn btn-primary" th:formaction="@{'/ban-hang/chon-khuyen-mai/' + ${items.idKM}}">Áp dụng</button>
+                                                                                                            <br>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
 
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                                class="btn btn-secondary"
-                                                                                                data-bs-dismiss="modal">
-                                                                                            Đóng
-                                                                                        </button>
+                                                                                        <div class="modal-footer">
+                                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
-                                                                    </form>
+                                                                        </form>
                                                                     </li>
 
                                                                     <li style="margin-bottom: 20px;">
