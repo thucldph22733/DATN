@@ -65,6 +65,9 @@ public class BanHangController {
     @Autowired
     private KhuyenMaiRepository khuyenMaiRepository;
 
+
+    private double tongTien = 0;
+
     @Autowired
     HoaDonRepository hoaDonRepository;
 
@@ -73,29 +76,34 @@ public class BanHangController {
 
     private double giaBan= 0;
 
+
 //     private double tongTienSanPham = tongSanPham * giaBan;
 
 //    private double tienKhuyenMai = 0;
 
-    private double giaTienGiam = 0;
+//    private double giaTienGiam = 0;
 
-    private double tongTien = tongTienSanPham - giaTienGiam;
+
 
     private UUID idHoaDon = null;
 
 
     private double dieuKienKhuyenMai = 0;
 
+    private double giaTienGiam = 0;
+
     @GetMapping("/hien-thi")
     public String hienThi(Model model
             , @ModelAttribute("messageSuccess") String messageSuccess
             , @ModelAttribute("messageError") String messageError) {
+
         List<GiayViewModel> list = giayViewModelService.getAllVm();
         NhanVien nhanVien = (NhanVien) httpSession.getAttribute("staffLogged");
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
         List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
         model.addAttribute("khuyenMai", khuyenMai);
+
         model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
         model.addAttribute("tongTienSanPham", 0);
         model.addAttribute("tongTien", 0);
@@ -110,9 +118,11 @@ public class BanHangController {
         }
         if (session.getAttribute("staffLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
+
             return "redirect:/login";
         }
         return "manage/ban-hang";
+
     }
 
     @GetMapping("/add-cart")
@@ -123,7 +133,9 @@ public class BanHangController {
         List<HoaDon> listHD = hoaDonService.getListHoaDonChuaThanhToan();
         List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
         model.addAttribute("khuyenMai", khuyenMai);
+
         if (listHD.size() < 5) {
+
 
             HoaDon hd = new HoaDon();
             Date date = new Date();
@@ -152,7 +164,9 @@ public class BanHangController {
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
         List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
+        
         model.addAttribute("khuyenMai", khuyenMai);
+
 
 
         HoaDon hd = hoaDonService.getOne(idHoaDon);
@@ -517,6 +531,7 @@ public class BanHangController {
     }
 
     @GetMapping("/chon-khuyen-mai/{idKM}")
+
     public String chonKM(Model model, @PathVariable("idKM") UUID idKM, RedirectAttributes redirectAttributes){
         KhuyenMai khuyenMai = khuyenMaiRepository.findById(idKM).orElse(null);
         giaTienGiam = khuyenMai.getGiaTienGiam();
@@ -529,6 +544,7 @@ public class BanHangController {
         hoaDonService.add(hoaDon);
         redirectAttributes.addFlashAttribute("messageSuccess", true);
 //        redirectAttributes.addFlashAttribute("tb", "Thêm khách hàng thành công");
+
         return "redirect:/ban-hang/cart/hoadon/" + idHoaDon;
     }
 }

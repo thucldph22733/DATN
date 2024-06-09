@@ -18,7 +18,9 @@ public class AdminController {
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
 
+
             return "redirect:/login";
+
         }
         System.out.println("aaaaa");
         return "manage/activities";

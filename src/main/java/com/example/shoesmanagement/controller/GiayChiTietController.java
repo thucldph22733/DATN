@@ -69,7 +69,9 @@ public class GiayChiTietController {
         List<ChiTietGiay> chiTietGiayList = new ArrayList<>();
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
+
             return "redirect:/login";
+
         }
         for (ChiTietGiay x : items) {
             if (x.getIdCTGOld() == null) {
