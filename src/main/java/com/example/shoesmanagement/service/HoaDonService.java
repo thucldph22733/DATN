@@ -1,5 +1,6 @@
 package com.example.shoesmanagement.service;
 
+import com.example.shoesmanagement.model.ChatLieu;
 import com.example.shoesmanagement.model.HoaDon;
 import com.example.shoesmanagement.model.KhachHang;
 import com.example.shoesmanagement.model.NhanVien;
@@ -10,6 +11,7 @@ import java.util.UUID;
 public interface HoaDonService {
     List<HoaDon> getListHoaDonChuaThanhToan();
     void add(HoaDon hoaDon);
+    public void save(HoaDon hoaDon);
     HoaDon getOne(UUID id);
     List<HoaDon> listHoaDonKhachHangAndTrangThaiOnline(KhachHang khachHang, int trangThai);
     List<HoaDon> findHoaDonByKhachHang(KhachHang khachHang);

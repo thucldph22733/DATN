@@ -136,29 +136,6 @@
     }
 </style>
 <style>
-    .product-table {
-        width: 100%;
-        margin-top: 20px;
-        font-size: 14px;
-    }
-    .product-table th, .product-table td {
-        text-align: center;
-        vertical-align: middle;
-        padding: 10px;
-    }
-    .product-table img {
-        max-width: 100px;
-        height: auto;
-    }
-    .product-table h6, .product-table h3, .product-table h4 {
-        margin: 0;
-    }
-    .product-table .btn {
-        font-size: 12px;
-        padding: 5px 10px;
-    }
-</style>
-<style>
     #video {
         display: none;
     }
@@ -320,7 +297,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane show active" id="solid-rounded-justified-tab1">
                                         <div class="row">
-                                            <div class="col-lg-7 col-sm-12 tabs_wrapper">
+                                            <div class="col-lg-6 col-sm-12 tabs_wrapper">
                                                 <div class="card">
                                                     <div class="card-body">
                                                         <div class="table-top">
@@ -368,7 +345,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div class="tabs_container">
                                                     <div class="row">
                                                         <div th:if="${nullHoaDon}"
@@ -389,7 +365,6 @@
                                                         </thead>
                                                         <tbody>
                                                         <th:block th:each="product : ${listSanPham}">
-
                                                             <tr>
                                                                 <td>
                                                                     <img th:src="@{'/images/imgsProducts/'+ ${product.hinhAnh}}" alt="img">
@@ -410,7 +385,6 @@
                                                                     <a th:href="@{'/ban-hang/chon-size/' + ${product.idGiay}+'/'+${product.mauSac} }" class="btn btn-outline-warning">Chọn</a>
                                                                 </td>
                                                             </tr>
-
                                                         </th:block>
                                                         </tbody>
                                                     </table>
@@ -418,7 +392,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-5 col-sm-12 ">
+                                            <div class="col-lg-6 col-sm-12 ">
                                                 <div class="order-list">
                                                     <div class="orderid">
                                                         <nav class="navbar navbar-expand-lg">
@@ -494,31 +468,25 @@
                                                                     <li>
                                                                         <div class="productimg">
                                                                             <div class="productimgs">
-                                                                                <img th:src="@{'/images/imgsProducts/'+ ${gioHang.chiTietGiay.hinhAnh.url1}}"
-                                                                                     alt="img">
+                                                                                <img th:src="@{'/images/imgsProducts/'+ ${gioHang.chiTietGiay.hinhAnh.url1}}" alt="img">
                                                                             </div>
                                                                             <div class="productcontet">
                                                                                 <h4 th:text="${gioHang.chiTietGiay.giay.tenGiay}">
-                                                                                    <a href="javascript:void(0);"
-                                                                                       class="ms-2"
-                                                                                       data-bs-toggle="modal"
-                                                                                       data-bs-target="#edit"><img
-                                                                                            src="/images/img/icons/edit-5.svg"
-                                                                                            alt="img"></a>
+                                                                                    <a href="javascript:void(0);" class="ms-2" data-bs-toggle="modal" data-bs-target="#edit">
+                                                                                        <img src="/images/img/icons/edit-5.svg" alt="img">
+                                                                                    </a>
                                                                                 </h4>
                                                                                 <div class="row">
                                                                                     <div class="productlinkset col-6">
                                                                                         <h5 th:text="${gioHang.chiTietGiay.size.soSize}"></h5>
                                                                                     </div>
                                                                                     <div class="col-6">
-                                                                                        <!--                                                            <label class="color-box" th:style="'background-color: ' + ${gioHang.chiTietGiay.mauSac.maMau}"></label>-->
-                                                                                        <span class="color-box"
-                                                                                              th:style="'background-color:' +${gioHang.chiTietGiay.mauSac.maMau}"></span>
+                                                                                        <span class="color-box" th:style="'background-color:' +${gioHang.chiTietGiay.mauSac.maMau}"></span>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="increment-decrement">
                                                                                     <div class="input-groups">
-                                                                                        <input style=" margin-top: 3px;border: none; font-weight: 700; font-size: 18pt; background-color: white;"
+                                                                                        <input style="margin-top: 3px; border: none; font-weight: 700; font-size: 18pt; background-color: white;"
                                                                                                type="button" value="-"
                                                                                                class="button-minus dec button"
                                                                                                onclick="decrementQuantity(this)">
@@ -529,7 +497,6 @@
                                                                                                type="text"
                                                                                                th:name="${gioHang.chiTietGiay.idCTG}"
                                                                                                min="1">
-
                                                                                         <input style="border: none; font-weight: 700; font-size: 14pt; background-color: white;"
                                                                                                type="button" value="+"
                                                                                                class="button-plus inc button a3 a5 a1 a-1"
@@ -544,17 +511,14 @@
                                                                              th:text=" ${#numbers.formatDecimal(gioHang.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
                                                                     </li>
                                                                     <li>
-                                                                        <!--                                            <div th:text="${gioHang.donGia * gioHang.soLuong}"></div>-->
                                                                         <div class="cart__price totalAmount"
                                                                              id="thanhTien"
                                                                              th:text=" ${#numbers.formatDecimal(gioHang.chiTietGiay.giaBan * gioHang.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
                                                                     </li>
                                                                     <li>
-                                                                        <a class="btn"
-                                                                           th:href="@{'/ban-hang/xoa-gio-hang/'+ ${gioHang.chiTietGiay.idCTG}}"
+                                                                        <a class="btn" th:href="@{'/ban-hang/xoa-gio-hang/'+ ${gioHang.chiTietGiay.idCTG}}"
                                                                            onclick="return confirm('Bạn có muốn xóa sản phẩm không')">
-                                                                            <img src="/images/img/icons/delete-2.svg"
-                                                                                 alt="img">
+                                                                            <img src="/images/img/icons/delete-2.svg" alt="img">
                                                                         </a>
                                                                     </li>
                                                                 </ul>
@@ -563,11 +527,9 @@
                                                         <div class="setvalue">
                                                             <ul>
                                                                 <li>
-                                                                    <h5>Tổng tiền </h5>
+                                                                    <h5>Tổng tiền</h5>
                                                                     <div class="grandTotal" id="tongTienSanPham"
-
                                                                          th:text=" ${#numbers.formatDecimal(tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
-
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -616,25 +578,21 @@
                                                                 <ul>
                                                                     <li style="margin-bottom: 20px;">
                                                                         <h5>Tạm tính :</h5>
-                                                                        <h5 class="grandTotal" style="font-size: 13pt;"
+                                                                        <h5 class="grandTotal" style="font-size: 13pt;" id="tongTienSanPham"
                                                                             th:text=" ${#numbers.formatDecimal(tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h5>
                                                                     </li>
                                                                     <li style="margin-bottom: 20px;">
                                                                         <h5>
-
                                                                             <a type="button" class="btn btn-primary"
                                                                                data-bs-toggle="modal"
                                                                                data-bs-target="#staticBackdrop">Chọn
                                                                                 khuyến mãi</a>
-
                                                                         </h5>
 
                                                                     <li style="margin-bottom: 20px;">
-
+                                                                        <h5>Giá tiền giảm:</h5>
                                                                         <h5 class="grandTotal" style="font-size: 13pt;"
                                                                             th:text=" ${giaTienGiam} + ' đ'"></h5>
-<!--                                                                    <h5 class="grandTotal" style="font-size: 13pt;"-->
-<!--                                                                            th:text=" ${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h5>-->
                                                                         <input type="text" th:value="${giaTienGiam}"
                                                                                id="tienGiam" style="display: none">
                                                                     </li>
@@ -652,22 +610,20 @@
                                                                                             for="promotion-select">
                                                                                             Danh sách Khuyễn mãi
                                                                                         </h5>
-<!--                                                                                        <button type="button"-->
-<!--                                                                                                class="btn-close"-->
-<!--                                                                                                data-bs-dismiss="modal"-->
-<!--                                                                                                aria-label="Close">-->
-<!--                                                                                        </button>-->
+                                                                                        <button type="button"
+                                                                                                class="btn-close"
+                                                                                                data-bs-dismiss="modal"
+                                                                                                aria-label="Close">
+                                                                                        </button>
                                                                                     </div>
-
                                                                                     <div>
                                                                                         <div class="table-responsive">
                                                                                             <table class="table datanew"
                                                                                                    id="data-table">
                                                                                                 <tbody>
                                                                                                 <tr th:each="items : ${dieuKienKhuyenMai}">
-<!--                                                                                                    <td th:text="${items.maKM}"></td>-->
+                                                                                                    <td th:text="${items.maKM}"></td>
                                                                                                     <td th:text="${items.tenKM}"></td>
-                                                                                                    <td th:text="'Điều kiện: Hóa đơn tối thiểu ' + ${items.dieuKienKMBill}"></td>
                                                                                                     <td>
                                                                                                         <button type="submit"
                                                                                                                 class="btn btn-primary"
@@ -680,23 +636,6 @@
                                                                                             </table>
                                                                                         </div>
                                                                                     </div>
-
-<!--                                                                                    <div>-->
-<!--                                                                                        <div class="row row-cols-1 row-cols-md-3 g-4">-->
-<!--                                                                                            <div class="col" th:each="items : ${dieuKienKhuyenMai}">-->
-<!--                                                                                                <div class="card">-->
-<!--                                                                                                    <div class="card-body">-->
-<!--                                                                                                        <h5 class="card-title" th:text="${items.maKM}"></h5>-->
-<!--                                                                                                        <p class="card-text" th:text="${items.tenKM}"></p>-->
-<!--                                                                                                        <button type="submit" class="btn btn-primary" th:formaction="@{'/ban-hang/chon-khuyen-mai/' + ${items.idKM}}">-->
-<!--                                                                                                            Áp dụng-->
-<!--                                                                                                        </button>-->
-<!--                                                                                                    </div>-->
-<!--                                                                                                </div>-->
-<!--                                                                                            </div>-->
-<!--                                                                                        </div>-->
-<!--                                                                                 z   </div>-->
-
                                                                                     <div class="modal-footer">
                                                                                         <button type="button"
                                                                                                 class="btn btn-secondary"
@@ -720,7 +659,6 @@
                                                                         <input class="text-danger" id="tongTienSP"
                                                                                th:value="${tongTien}"
                                                                                style="font-size: 13pt; display: none">
-
 
                                                                     </li>
 
@@ -1204,78 +1142,78 @@
     });
 </script>
 
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    function updateTotalAmountAndGrandTotal(inputElement) {
+<!--<script th:inline="javascript">-->
+<!--    /*<![CDATA[*/-->
+<!--    function updateTotalAmountAndGrandTotal(inputElement) {-->
 
-        // Lấy giá trị số lượng từ input
-        var quantity = parseInt(inputElement.value);
-        var idCTG = inputElement.getAttribute('name');
-        fetch('/ban-hang/updateQuantity', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'idCTG=' + encodeURIComponent(idCTG) + '&quantity=' + encodeURIComponent(quantity),
-        })
-            .then(response => response.text())
-            .then(data => {
-            })
-            .catch(error => {
-            });
+<!--        // Lấy giá trị số lượng từ input-->
+<!--        var quantity = parseInt(inputElement.value);-->
+<!--        var idCTG = inputElement.getAttribute('name');-->
+<!--        fetch('/ban-hang/updateQuantity', {-->
+<!--            method: 'POST',-->
+<!--            headers: {-->
+<!--                'Content-Type': 'application/x-www-form-urlencoded',-->
+<!--            },-->
+<!--            body: 'idCTG=' + encodeURIComponent(idCTG) + '&quantity=' + encodeURIComponent(quantity),-->
+<!--        })-->
+<!--            .then(response => response.text())-->
+<!--            .then(data => {-->
+<!--            })-->
+<!--            .catch(error => {-->
+<!--            });-->
 
-        // Lấy giá trị giá bán từ phần tử cha
-        var giaBan = parseInt(inputElement.closest('.product-lists').querySelector('.product-lists li:nth-child(2) div').innerText.replace(/[^0-9]/g, ''));
+<!--        // Lấy giá trị giá bán từ phần tử cha-->
+<!--        var giaBan = parseInt(inputElement.closest('.product-lists').querySelector('.product-lists li:nth-child(2) div').innerText.replace(/[^0-9]/g, ''));-->
 
-        // Tính tổng tiền và cập nhật vào phần tử hiển thị tổng tiền
-        var totalAmountElement = inputElement.closest('.product-lists').querySelector('.product-lists li:nth-child(3) div');
-        var totalAmount = giaBan * quantity;
-        var tongTienSanPham = giaBan * quantity;
-        totalAmountElement.innerText = formatCurrency(totalAmount) + ' đ';
-        totalAmountElement.innerText = formatCurrency(tongTienSanPham) + ' đ';
+<!--        // Tính tổng tiền và cập nhật vào phần tử hiển thị tổng tiền-->
+<!--        var totalAmountElement = inputElement.closest('.product-lists').querySelector('.product-lists li:nth-child(3) div');-->
+<!--        var totalAmount = giaBan * quantity;-->
+<!--        var tongTienSanPham = giaBan * quantity;-->
+<!--        totalAmountElement.innerText = formatCurrency(totalAmount) + ' đ';-->
+<!--        totalAmountElement.innerText = formatCurrency(tongTienSanPham) + ' đ';-->
 
-        // Cập nhật tổng tiền bên dưới
-        updateGrandTotal();
+<!--        // Cập nhật tổng tiền bên dưới-->
+<!--        updateGrandTotal();-->
 
 
-        // Hàm cập nhật tổng tiền bên dưới
-        function updateGrandTotal() {
-            var totalElements = document.querySelectorAll('.product-lists li:nth-child(3) div');
-            var grandTotalElement = document.querySelector('.setvalue h6');
+<!--        // Hàm cập nhật tổng tiền bên dưới-->
+<!--        function updateGrandTotal() {-->
+<!--            var totalElements = document.querySelectorAll('.product-lists li:nth-child(3) div');-->
+<!--            var grandTotalElement = document.querySelector('.setvalue h6');-->
 
-            var grandTotal = 0;
-            totalElements.forEach(function (element) {
-                grandTotal += parseInt(element.innerText.replace(/[^0-9]/g, ''));
-            });
-            console.log(grandTotal);
-            grandTotalElement.innerText = formatCurrency(grandTotal) + ' đ';
-        }
+<!--            var grandTotal = 0;-->
+<!--            totalElements.forEach(function (element) {-->
+<!--                grandTotal += parseInt(element.innerText.replace(/[^0-9]/g, ''));-->
+<!--            });-->
+<!--            console.log(grandTotal);-->
+<!--            grandTotalElement.innerText = formatCurrency(grandTotal) + ' đ';-->
+<!--        }-->
 
-        // Hàm định dạng số tiền thành chuỗi có định dạng
-        function formatCurrency(amount) {
-            return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').replace(/\.00/g, '');
-        }
-    }
+<!--        // Hàm định dạng số tiền thành chuỗi có định dạng-->
+<!--        function formatCurrency(amount) {-->
+<!--            return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').replace(/\.00/g, '');-->
+<!--        }-->
+<!--    }-->
 
-    /*]]>*/
-</script>
-<script>
-    function incrementQuantity(input) {
-        var quantityInput = input.parentNode.querySelector('.quantityInput');
-        var currentQuantity = parseInt(quantityInput.value);
-        quantityInput.value = currentQuantity + 1;
-        updateTotalAmountAndGrandTotal(quantityInput);
-    }
+<!--    /*]]>*/-->
+<!--</script>-->
+<!--<script>-->
+<!--    function incrementQuantity(input) {-->
+<!--        var quantityInput = input.parentNode.querySelector('.quantityInput');-->
+<!--        var currentQuantity = parseInt(quantityInput.value);-->
+<!--        quantityInput.value = currentQuantity + 1;-->
+<!--        updateTotalAmountAndGrandTotal(quantityInput);-->
+<!--    }-->
 
-    function decrementQuantity(input) {
-        var quantityInput = input.parentNode.querySelector('.quantityInput');
-        var currentQuantity = parseInt(quantityInput.value);
-        if (currentQuantity > 0) {
-            quantityInput.value = currentQuantity - 1;
-            updateTotalAmountAndGrandTotal(quantityInput);
-        }
-    }
-</script>
+<!--    function decrementQuantity(input) {-->
+<!--        var quantityInput = input.parentNode.querySelector('.quantityInput');-->
+<!--        var currentQuantity = parseInt(quantityInput.value);-->
+<!--        if (currentQuantity > 0) {-->
+<!--            quantityInput.value = currentQuantity - 1;-->
+<!--            updateTotalAmountAndGrandTotal(quantityInput);-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
 
 <script>
     var counter = 1;
@@ -1331,10 +1269,55 @@
         });
     }
 </script>
+<script>
+    function updateTotalAmountAndGrandTotal(element) {
+        const quantity = parseInt(element.value);
+        const parent = element.closest('.product-lists');
+        const priceElement = parent.querySelector('.cart__price');
+        const totalAmountElement = parent.querySelector('.totalAmount');
+        const price = parseFloat(priceElement.textContent.replace(/[^0-9.-]+/g, ""));
+        const totalAmount = price * quantity;
 
+        // Định dạng số tiền thành chuỗi đúng đơn vị
+        totalAmountElement.textContent = formatDecimal(totalAmount) + ' đ';
+
+        // Update grand total
+        updateGrandTotal();
+    }
+
+    function formatDecimal(amount) {
+        return amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Định dạng số tiền thành kiểu chuỗi với dấu phân cách hàng nghìn
+    }
+
+    function updateGrandTotal() {
+        let grandTotal = 0;
+        const totalAmountElements = document.querySelectorAll('.totalAmount');
+
+        totalAmountElements.forEach(element => {
+            const amount = parseFloat(element.textContent.replace(/[^0-9.-]+/g, ""));
+            grandTotal += amount;
+        });
+
+        const grandTotalElement = document.getElementById('tongTienSanPham');
+        grandTotalElement.textContent = formatDecimal(grandTotal) + ' đ';
+    }
+
+    function incrementQuantity(button) {
+        const input = button.previousElementSibling;
+        input.value = parseInt(input.value) + 1;
+        input.dispatchEvent(new Event('input'));
+    }
+
+    function decrementQuantity(button) {
+        const input = button.nextElementSibling;
+        if (parseInt(input.value) > 1) {
+            input.value = parseInt(input.value) - 1;
+            input.dispatchEvent(new Event('input'));
+        }
+    }
+</script>
 
 <!--ngọc-->
-
 <!--<script>-->
 <!--    function tienSauKhuyenMai() {-->
 <!--        var tongTienSanPham = parseFloat(document.getElementById('tongTienSP').value);-->
