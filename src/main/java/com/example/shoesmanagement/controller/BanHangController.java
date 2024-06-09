@@ -166,7 +166,7 @@ public class BanHangController {
         List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
         
         model.addAttribute("khuyenMai", khuyenMai);
-        model.addAttribute("giaTienGiam", giaTienGiam);
+
 
 
         HoaDon hd = hoaDonService.getOne(idHoaDon);
@@ -176,6 +176,7 @@ public class BanHangController {
         }
         List<KhuyenMai> listKM = hoaDonRepository.listDieuKienKhuyenMai(tongTienSP);
         model.addAttribute("dieuKienKhuyenMai", listKM);
+        model.addAttribute("giaTienGiam", giaTienGiam);
 
         httpSession.removeAttribute("idHoaDon");
         httpSession.setAttribute("idHoaDon", idHoaDon);
@@ -475,7 +476,7 @@ public class BanHangController {
         HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
         if(listG.isEmpty()){
             redirectAttributes.addFlashAttribute("messageError", true);
-            redirectAttributes.addFlashAttribute("tbaoError", "Không co sản phẩm");
+            redirectAttributes.addFlashAttribute("tbaoError", "Không có sản phẩm");
             return "redirect:/ban-hang/cart/hoadon/" + this.idHoaDon;
         }
         hoaDon.setTrangThai(1);
@@ -489,6 +490,14 @@ public class BanHangController {
 
         hoaDonService.add(hoaDon);
 
+        KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
+        khuyenMai.setSoLuong(khuyenMai.getSoLuong() - hoaDon.getTongSP());
+        khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() + hoaDon.getTongSP());
+
+//        khuyenMai.setSoLuong(khuyenMai.getSoLuong() - 1);
+//        khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() + 1);
+        khuyenMaiRepository.save(khuyenMai);
+
         this.tongTienSanPham = 0;
         this.tongTien = 0;
         this.tongSanPham = 0;
@@ -496,6 +505,7 @@ public class BanHangController {
         httpSession.removeAttribute("khachHang");
         redirectAttributes.addFlashAttribute("messageSuccess", true);
         redirectAttributes.addFlashAttribute("tb", "Thanh toán thành công");
+
         return "redirect:/ban-hang/hien-thi";
     }
 
@@ -528,10 +538,10 @@ public class BanHangController {
 
         UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
         HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
-        httpSession.removeAttribute("idHoaDon");
+//        httpSession.removeAttribute("idHoaDon");
         hoaDon.setKhuyenMai(khuyenMai);
-        hoaDonService.add(hoaDon);
         httpSession.setAttribute("khuyenMai", khuyenMai);
+        hoaDonService.add(hoaDon);
         redirectAttributes.addFlashAttribute("messageSuccess", true);
 //        redirectAttributes.addFlashAttribute("tb", "Thêm khách hàng thành công");
 

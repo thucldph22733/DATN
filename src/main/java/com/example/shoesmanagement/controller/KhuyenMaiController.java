@@ -1,11 +1,14 @@
 package com.example.shoesmanagement.controller;
 
+import com.example.shoesmanagement.model.HoaDon;
 import com.example.shoesmanagement.model.KhachHang;
 import com.example.shoesmanagement.model.KhuyenMai;
+import com.example.shoesmanagement.service.HoaDonService;
 import com.example.shoesmanagement.service.KhachHangService;
 import com.example.shoesmanagement.service.KhuyenMaiService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +29,9 @@ public class KhuyenMaiController {
 
     @Autowired
     private HttpSession session;
+
+    @Autowired
+    private HoaDonService hoaDonService;
 
     @GetMapping("/khuyen-mai")
     public String hienThi(Model model) {
@@ -74,4 +80,13 @@ return "redirect:/login";
         }
     }
 
+    @PutMapping("khuyen-mai")
+    public void capNhatSoLuong(HoaDon hoaDon){
+        List<KhuyenMai> khuyenMai = (List<KhuyenMai>) hoaDon.getKhuyenMai();
+        for (KhuyenMai km : khuyenMai){
+            km.setSoLuong(km.getSoLuong() - hoaDon.getTongSP());
+            km.setSoLuongDaDung(km.getSoLuongDaDung() + hoaDon.getTongSP());
+            khuyenMaiService.save(km);
+        }
+    }
 }
