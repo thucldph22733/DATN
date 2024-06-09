@@ -81,9 +81,9 @@ public class BanHangController {
 
 //    private double tienKhuyenMai = 0;
 
-    private double giaTienGiam = 0;
+//    private double giaTienGiam = 0;
 
-    private double tongTien = tongTienSanPham - giaTienGiam;
+
 
     private UUID idHoaDon = null;
 
@@ -164,6 +164,7 @@ public class BanHangController {
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
         List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
+        
         model.addAttribute("khuyenMai", khuyenMai);
         model.addAttribute("giaTienGiam", giaTienGiam);
 
