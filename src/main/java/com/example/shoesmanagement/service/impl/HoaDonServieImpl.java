@@ -43,7 +43,7 @@ public class HoaDonServieImpl implements HoaDonService {
 
     @Override
     public List<HoaDon> listHoaDonOnline() {
-        return hoaDonRepository.findByLoaiHDOrderByTgTaoDesc(1);
+        return hoaDonRepository.findByLoaiHDOrderByTgTaoDesc(0);
     }
 
     @Override
