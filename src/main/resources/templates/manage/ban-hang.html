@@ -984,22 +984,32 @@
                                     </div>
                                     <div class="text-left fs-3 fw-normal">
                                         <label th:text="${'Hãng : '+ giay.hang.tenHang}"></label>
+                                        <div id="sizeQuantity" th:if="${not #lists.isEmpty(listChiTietGiay)}">
+                                            Số lượng
+<!--                                            <span th:text="${listChiTietGiay.get(0).size.soSize}">-->
+
+                                            </span>: <span th:text="${listChiTietGiay.get(0).soLuong}"></span>  đôi
+                                        </div>
                                     </div>
                                     <div class="text-left fs-4">
                                         <form action="/ban-hang/add-to-cart" method="get">
                                             <div class="">
-                                                <h3>Số lượng</h3>
+<!--                                                <h3>Số lượng</h3>-->
                                                 <input type="number" name="soLuong" value="1" min="1"
                                                        class="form-control"/>
                                             </div>
                                             <div class="row">
-                                                <div th:each="listChiTietGiay : ${listChiTietGiay}"
+                                                <div th:each="chiTiet : ${listChiTietGiay}"
                                                      class="col-md-3">
-                                                    <input style="height: 15px; width: 15px;margin-right: 10px;"
-                                                           type="radio" th:name="idChiTietGiay"
-                                                           th:value="${listChiTietGiay.idCTG}"
-                                                           th:text="${listChiTietGiay.size.soSize}"
-                                                           checked="true"/>
+                                                    <label>
+                                                        <input type="radio" th:name="idChiTietGiay"
+                                                               th:data-size="${chiTiet.size.soSize}"
+                                                               th:value="${chiTiet.idCTG}"
+                                                               th:data-quantity="${chiTiet.soLuong}"
+                                                               th:onclick="'displaySizeQuantity(this)'"
+                                                               th:checked="${chiTiet == listChiTietGiay.get(0)}"/>
+                                                        <span th:text="${chiTiet.size.soSize}"></span>
+                                                    </label>
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn btn-secondary btn-center mt-3">
@@ -1171,6 +1181,24 @@
     $(document).ready(function () {
         $('#addKhachHang').modal('show');
     });
+</script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function displaySizeQuantity(radioInput) {
+        var quantity = radioInput.getAttribute('data-quantity');
+        var size = radioInput.getAttribute('data-size');
+        document.getElementById('sizeQuantity').textContent = 'Số lượng  '+ ': ' + quantity +' '+ 'đôi' ;
+    }
+
+    // Gọi hàm này ngay lập tức khi tài liệu được tải để hiển thị số lượng cho size mặc định
+    window.onload = function() {
+        var defaultRadioButton = document.querySelector('input[th\\:name="idChiTietGiay"][checked]');
+        if(defaultRadioButton) {
+            displaySizeQuantity(defaultRadioButton);
+        }
+    };
+    /*]]>*/
 </script>
 
 <script th:inline="javascript">
