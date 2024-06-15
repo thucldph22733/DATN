@@ -335,12 +335,10 @@
                                 <div class="product__details__option__size" style="margin-left: 50px">
                                     <div class="label-container" style="display: flex; flex-wrap: wrap; justify-content: center;width: 127%;margin-top: 12px;margin-left: -68px">
                                         <th:block th:each="x : ${listSizeCTG}">
-                                            <label th:unless="${x[2]}" th:name="${x[1]}" class="label" style="width: 200px; margin: 5px; font-weight: unset; font-size: small; height: 40px   ;"
-                                                   onclick="capNhatGia(event)" th:text="${x[0]}"></label>
+                                            <label th:unless="${x[2]}" th:name="${x[1]}" class="label" style="width: 200px; margin: 5px; font-weight: unset; font-size: small; height: 40px;"
+                                                   onclick="capNhatGia(event)" th:text="${x[0]} + ' (Số lượng: ' + ${x[3]} + ')'"></label>
                                         </th:block>
-
                                     </div>
-
                                 </div>
                                 <br>
                                 <br>
@@ -349,7 +347,7 @@
                             <div class="product__details__cart__option">
                                 <div class="quantity">
                                     <p style="display: inline-block; margin: 0;">Số lượng :</p>
-                                    <div  style="display: inline-block; ">
+                                    <div style="display: inline-block;">
                                         <input oninput="validateInput()" id="quantityInput" style="width: 80px;" type="number" class="form-control" aria-label="Quantity" min="1" max="10" value="1">
                                     </div>
                                     <p class="sum-remind" id="quantityProductMax" style="display: inline-block; margin: 0;" th:text="${sunProductAvaible}"></p>
@@ -357,6 +355,7 @@
                                     <p style="display: inline-block; margin: 0;">Sản phẩm có sẵn</p>
                                 </div>
                             </div>
+
 
                             <div th:if="${buyNowAddCartLogged}" class="product__details__cart__option">
                                 <a  style="color: white; cursor: pointer;" class="primary-btn" id="buyNowButton" >Mua ngay</a>

@@ -29,33 +29,44 @@ public class ShippingFeeServiceImpl implements ShippingFeeService {
 
         String diaChiChiTiet = hoaDon.getGiaoHang().getDiaChiNguoiNhan();
 
-        String[] parts = diaChiChiTiet.split(",");
-        String thanhPho = parts[parts.length - 1].trim();
+        if (diaChiChiTiet != null && !diaChiChiTiet.isEmpty()) {
+            String[] parts = diaChiChiTiet.split(",");
+            String thanhPho = parts[parts.length - 1].trim();
 
-        int tongSP = 0;
-        int trongLuong = 0;
+            int tongSP = 0;
+            int trongLuong = 0;
 
-        Province province = thanhPhoService.findByNameProvince(thanhPho);
+            Province province = thanhPhoService.findByNameProvince(thanhPho);
 
-        if(province == null){
-            List<Province> provinceList =  thanhPhoService.getAll();
-            for (Province xxxx: provinceList) {
-                if(thanhPho.contains(xxxx.getNameProvince())){
-                    province = xxxx;
+            if (province == null) {
+                List<Province> provinceList = thanhPhoService.getAll();
+                for (Province xxxx : provinceList) {
+                    if (thanhPho.contains(xxxx.getNameProvince())) {
+                        province = xxxx;
+                        break;
+                    }
                 }
             }
+
+            List<ChiTietGiay> chiTietGiayList = new ArrayList<>();
+
+            for (HoaDonChiTiet hoaDonChiTiet : hoaDonChiTietList) {
+                chiTietGiayList.add(hoaDonChiTiet.getChiTietGiay());
+                ChiTietGiay chiTietGiay = hoaDonChiTiet.getChiTietGiay();
+                trongLuong += chiTietGiay.getTrongLuong() * hoaDonChiTiet.getSoLuong();
+                tongSP += hoaDonChiTiet.getSoLuong();
+            }
+
+            if (province != null) {
+                shippingFee = giaTriMacDinh * province.getTransportCoefficient();
+            } else {
+                // Xử lý khi không tìm thấy province
+                System.out.println("Không tìm thấy province phù hợp.");
+            }
+        } else {
+            // Xử lý khi diaChiChiTiet là null hoặc rỗng
+            System.out.println("diaChiChiTiet is null or empty");
         }
-
-        List<ChiTietGiay> chiTietGiayList = new ArrayList<>();
-
-        for (HoaDonChiTiet hoaDonChiTiet: hoaDonChiTietList) {
-            chiTietGiayList.add(hoaDonChiTiet.getChiTietGiay());
-            ChiTietGiay chiTietGiay = hoaDonChiTiet.getChiTietGiay();
-            trongLuong = trongLuong + chiTietGiay.getTrongLuong()*hoaDonChiTiet.getSoLuong();
-            tongSP = tongSP + hoaDonChiTiet.getSoLuong();
-        }
-
-        shippingFee = giaTriMacDinh*province.getTransportCoefficient();
 
         return shippingFee;
     }

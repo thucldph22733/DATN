@@ -14,7 +14,7 @@ import java.util.UUID;
 @Repository
 public interface CTGViewModelRepository extends JpaRepository< CTGViewModel,UUID> {
     @Query("SELECT NEW com.example.shoesmanagement.viewModel.CTGViewModel(" +
-            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.soTienTruocKhiGiam), MIN(ctg.giaBan) , g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
+            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.giaBan) , g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
             "FROM ChiTietGiay ctg " +
             "JOIN Giay g ON g.idGiay = ctg.giay.idGiay\n" +
             "JOIN HinhAnh a ON a.idHinhAnh = ctg.hinhAnh.idHinhAnh\n" +
@@ -28,7 +28,7 @@ public interface CTGViewModelRepository extends JpaRepository< CTGViewModel,UUID
     List<CTGViewModel> getAll();
 
     @Query("SELECT NEW com.example.shoesmanagement.viewModel.CTGViewModel(" +
-            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.soTienTruocKhiGiam), MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
+            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
             "FROM ChiTietGiay ctg " +
             "JOIN Giay g ON g.idGiay = ctg.giay.idGiay\n" +
             "JOIN HinhAnh a ON a.idHinhAnh = ctg.hinhAnh.idHinhAnh\n" +
@@ -42,7 +42,7 @@ public interface CTGViewModelRepository extends JpaRepository< CTGViewModel,UUID
     Page<CTGViewModel> getAllPageable(Pageable pageable);
 
     @Query("SELECT NEW com.example.shoesmanagement.viewModel.CTGViewModel(" +
-            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.soTienTruocKhiGiam), MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0),  g.namNhapHang)" +
+            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0),  g.namNhapHang)" +
             "FROM ChiTietGiay ctg " +
             "JOIN Giay g ON g.idGiay = ctg.giay.idGiay\n" +
             "JOIN HinhAnh a ON a.idHinhAnh = ctg.hinhAnh.idHinhAnh\n" +
@@ -54,7 +54,7 @@ public interface CTGViewModelRepository extends JpaRepository< CTGViewModel,UUID
             "GROUP BY ctg.giay.idGiay, g.tenGiay, ctg.mauSac.tenMau, a.url1, g.namNhapHang")
     List<CTGViewModel> getAllInActive();
     @Query("SELECT NEW com.example.shoesmanagement.viewModel.CTGViewModel(" +
-            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.soTienTruocKhiGiam), MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
+            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
             "FROM ChiTietGiay ctg " +
             "JOIN Giay g ON g.idGiay = ctg.giay.idGiay\n" +
             "JOIN HinhAnh a ON a.idHinhAnh = ctg.hinhAnh.idHinhAnh\n" +
@@ -68,7 +68,7 @@ public interface CTGViewModelRepository extends JpaRepository< CTGViewModel,UUID
     List<CTGViewModel> getAllOutOfStock();
 
     @Query(value = "SELECT NEW com.example.shoesmanagement.viewModel.CTGViewModel(" +
-            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.soTienTruocKhiGiam), MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
+            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
             "FROM ChiTietGiay ctg " +
             "JOIN Giay g ON g.idGiay = ctg.giay.idGiay\n" +
             "JOIN HinhAnh a ON a.idHinhAnh = ctg.hinhAnh.idHinhAnh\n" +
@@ -82,7 +82,7 @@ public interface CTGViewModelRepository extends JpaRepository< CTGViewModel,UUID
     CTGViewModel findByGiay(UUID idGiay, UUID idMau);
 
     @Query("SELECT NEW com.example.shoesmanagement.viewModel.CTGViewModel(" +
-            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.soTienTruocKhiGiam), MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
+            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
             "FROM ChiTietGiay ctg " +
             "JOIN Giay g ON g.idGiay = ctg.giay.idGiay\n" +
             "JOIN HinhAnh a ON a.idHinhAnh = ctg.hinhAnh.idHinhAnh\n" +
@@ -97,7 +97,7 @@ public interface CTGViewModelRepository extends JpaRepository< CTGViewModel,UUID
     List<CTGViewModel> findByHang(UUID idHang);
 
     @Query("SELECT NEW com.example.shoesmanagement.viewModel.CTGViewModel(" +
-            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.soTienTruocKhiGiam), MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
+            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
             "FROM ChiTietGiay ctg " +
             "JOIN Giay g ON g.idGiay = ctg.giay.idGiay\n" +
             "JOIN HinhAnh a ON a.idHinhAnh = ctg.hinhAnh.idHinhAnh\n" +
@@ -112,7 +112,7 @@ public interface CTGViewModelRepository extends JpaRepository< CTGViewModel,UUID
     Page<CTGViewModel> listCTGVMHTL(Pageable pageable);
 
     @Query("SELECT NEW com.example.shoesmanagement.viewModel.CTGViewModel(" +
-            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.soTienTruocKhiGiam), MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
+            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
             "FROM ChiTietGiay ctg " +
             "JOIN Giay g ON g.idGiay = ctg.giay.idGiay\n" +
             "JOIN HinhAnh a ON a.idHinhAnh = ctg.hinhAnh.idHinhAnh\n" +
@@ -127,7 +127,7 @@ public interface CTGViewModelRepository extends JpaRepository< CTGViewModel,UUID
     Page<CTGViewModel> listCTGVMLTH(Pageable pageable);
 
     @Query("SELECT NEW com.example.shoesmanagement.viewModel.CTGViewModel(" +
-            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.soTienTruocKhiGiam), MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
+            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
             "FROM ChiTietGiay ctg " +
             "JOIN Giay g ON g.idGiay = ctg.giay.idGiay\n" +
             "JOIN HinhAnh a ON a.idHinhAnh = ctg.hinhAnh.idHinhAnh\n" +
@@ -142,7 +142,7 @@ public interface CTGViewModelRepository extends JpaRepository< CTGViewModel,UUID
     List<CTGViewModel> getAllOrderTgNhap();
 
     @Query("SELECT NEW com.example.shoesmanagement.viewModel.CTGViewModel(" +
-            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.soTienTruocKhiGiam), MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
+            "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
             "FROM ChiTietGiay ctg " +
             "JOIN Giay g ON g.idGiay = ctg.giay.idGiay\n" +
             "JOIN HinhAnh a ON a.idHinhAnh = ctg.hinhAnh.idHinhAnh\n" +

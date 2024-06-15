@@ -271,7 +271,7 @@ public class BanHangController {
 
     @GetMapping("/chon-size/{idGiay}/{mauSac}")
     public String chonSize(@PathVariable(value = "idGiay") UUID idGiay,
-                           @PathVariable(value = "mauSac") String mauSac, Model model) {
+                           @PathVariable(value = "mauSac") String mauSac, Model model ) {
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
         Giay giay = giayService.getByIdGiay(idGiay);
