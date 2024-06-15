@@ -441,14 +441,13 @@
                             <div class="col-sm-4" style="display: block;">
                                 <p>Tổng tiền hàng</p>
                                 <p>Phí vận chuyển</p>
-                                <p>Giảm giá phí vận chuyển</p>
                                 <p>Giảm giá hóa đơn</p>
                                 <p style="font-size: 13pt; font-weight: 600;">Thành tiền</p>
                             </div>
                             <div class="col-sm-2" style="display: block;">
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billDetailPay.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p th:text="'+ ₫' + ${#numbers.formatDecimal(billDetailPay.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-
+                                <p class="grandTotal" th:text="'₫' + ${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}">
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billDetailPay.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 13pt; font-weight: 600;"></p>
                             </div>
                         </div>
@@ -612,12 +611,13 @@
                             <div class="col-sm-4" style="display: block;">
                                 <p>Tổng tiền hàng</p>
                                 <p>Phí vận chuyển</p>
+                                <p>Giảm giá</p>
                                 <p style="font-size: 13pt; font-weight: 600;">Thành tiền</p>
                             </div>
                             <div class="col-sm-2" style="display: block;">
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billDetailShip.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p th:text="'+ ₫' + ${#numbers.formatDecimal(billDetailShip.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-
+                                <p class="grandTotal" th:text="'₫' + ${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billDetailShip.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 13pt; font-weight: 600;"></p>
                             </div>
                         </div>
@@ -786,11 +786,13 @@
                             <div class="col-sm-4" style="display: block;">
                                 <p>Tổng tiền hàng</p>
                                 <p>Phí vận chuyển</p>
+                                <p>Giảm giá</p>
                                 <p style="font-size: 13pt; font-weight: 600;">Thành tiền</p>
                             </div>
                             <div class="col-sm-2" style="display: block;">
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billDetailRecieve.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billDetailRecieve.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                <p class="grandTotal" th:text="'₫' + ${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}">
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billDetailRecieve.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 13pt; font-weight: 600;"></p>
                             </div>
                         </div>
@@ -920,11 +922,13 @@
                                 <div class="col-sm-4" style="display: block;">
                                     <p>Tổng tiền hàng</p>
                                     <p>Phí vận chuyển</p>
+                                    <p>Giảm giá</p>
                                     <p style="font-size: 13pt; font-weight: 600;">Thành tiền</p>
                                 </div>
                                 <div class="col-sm-2" style="display: block;">
                                     <p th:text="'₫' + ${#numbers.formatDecimal(billDetailCancel.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                     <p th:text="'₫' + ${#numbers.formatDecimal(billDetailCancel.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                    <p class="grandTotal" th:text="'₫' + ${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}">
                                     <p th:text="'₫' + ${#numbers.formatDecimal(billDetailCancel.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 13pt; font-weight: 600;"></p>
                                 </div>
                             </div>
@@ -1071,11 +1075,13 @@
                             <div class="col-sm-4" style="display: block;">
                                 <p>Tổng tiền hàng</p>
                                 <p>Phí vận chuyển</p>
+                                <p>Giảm giá</p>
                                 <p style="font-size: 13pt; font-weight: 600;">Thành tiền</p>
                             </div>
                             <div class="col-sm-2" style="display: block;">
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billDetailCompleted.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billDetailCompleted.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                <p class="grandTotal" th:text="'₫' + ${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}">
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billDetailCompleted.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 13pt; font-weight: 600;"></p>
                             </div>
                         </div>
