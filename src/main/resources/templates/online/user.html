@@ -1193,7 +1193,6 @@
                                                 <p style="margin: 0 0 0 15px; color: #637381; font-size: 10pt;" th:text="'Phân loại: ' + ${product.chiTietGiay.mauSac.tenMau} +' | ' + ${product.chiTietGiay.size.soSize} "></p>
                                                 <p style="margin: 0 0 0 15px; color: #637381; font-size: 10pt;" th:text="'Số lượng: ' + ${product.soLuong}"></p>
                                             </div>
-                                            <p style="color: #b7b7b7;text-decoration: line-through;margin:10px 20px 0 150px;" th:text="'₫' + ${#numbers.formatDecimal(product.chiTietGiay.soTienTruocKhiGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                             <p style="margin:10px 10px 0 0; font-size: 12pt; color: black;" th:text="'₫' + ${#numbers.formatDecimal(product.donGia, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                         </div>
 
