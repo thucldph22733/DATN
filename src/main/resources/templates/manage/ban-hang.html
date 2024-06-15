@@ -618,16 +618,13 @@
 
                                                                     <li style="margin-bottom: 20px;">
                                                                         <h5>
-                                                                            <a type="button" class="btn btn-primary"
-                                                                               data-bs-toggle="modal"
-                                                                               data-bs-target="#staticBackdrop">Chọn khuyến mãi
-                                                                            </a>
+                                                                            <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Chọn khuyến mãi</a>
                                                                         </h5>
 
                                                                         <li style="margin-bottom: 20px;">
                                                                             <h5>Mã khuyến mãi:</h5>
-                                                                            <h5 class="grandTotal" style="font-size: 13pt;"
-                                                                                th:text=" ${giaTienGiam} + ' đ'"></h5>
+<!--                                                                            <h5 class="grandTotal" style="font-size: 13pt;" th:text=" ${giaTienGiam} + ' đ'"></h5>-->
+                                                                            <h5 th:text="${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 0, 'POINT')} + '₫'"></h5>
                                                                             <input type="text" th:value="${giaTienGiam}" id="tienGiam" style="display: none">
                                                                         </li>
 
@@ -684,7 +681,6 @@
                                                                                style="font-size: 13pt; display: none">
 
                                                                     </li>
-
                                                                     <li style="margin-bottom: 20px;">
                                                                         <h5>Tiền khách đưa : </h5>
                                                                         <input type="number" name="tienKhachDua" min="1"
