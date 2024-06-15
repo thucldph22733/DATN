@@ -152,7 +152,6 @@ public class CartController {
         if (!listGHCTActive.isEmpty()) {
             for (GioHangChiTiet gioHangChiTiet : listGHCTActive) {
                 gioHangChiTiet.setDonGia(gioHangChiTiet.getChiTietGiay().getGiaBan() * gioHangChiTiet.getSoLuong());
-                gioHangChiTiet.setDonGiaTruocKhiGiam(gioHangChiTiet.getChiTietGiay().getSoTienTruocKhiGiam() * gioHangChiTiet.getSoLuong());
                 ghctService.addNewGHCT(gioHangChiTiet);
             }
         }
