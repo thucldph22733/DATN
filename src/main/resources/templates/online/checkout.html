@@ -451,7 +451,7 @@
                             <div class="col-lg-2">
                                 <input type="text" th:value="${giaTienGiam}" id="tienGiam" style="display: none">
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billPlaceOrder.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                <p class="grandTotal" th:text="'₫' + ${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                <p th:text="${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 0, 'POINT')} + '₫'"></p>
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billPlaceOrder.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billPlaceOrder.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                             </div>

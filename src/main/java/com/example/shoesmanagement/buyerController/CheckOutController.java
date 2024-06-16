@@ -503,7 +503,6 @@ public class CheckOutController {
         }
 
         DiaChiKH diaChiKHDefault = diaChiKHService.findDCKHDefaulByKhachHang(khachHang);
-        System.out.println(diaChiKHDefault.getDiaChiChiTiet());
         List<DiaChiKH> diaChiKHList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, false, 1);
 
         Date date = new Date();

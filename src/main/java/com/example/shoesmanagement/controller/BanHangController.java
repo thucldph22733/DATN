@@ -161,16 +161,16 @@ public class BanHangController {
         model.addAttribute("khuyenMai", khuyenMai);
 
         HoaDon hd = hoaDonService.getOne(idHoaDon);
-        double tongTienSP = hd.getTongTienSanPham() != null ? hd.getTongTienSanPham() :  0;
+        double tongTienSP = hd.getTongTienSanPham() != null ? hd.getTongTienSanPham() : 0;
         List<KhuyenMai> listKM = hoaDonRepository.listDieuKienKhuyenMai(tongTienSP);
         model.addAttribute("dieuKienKhuyenMai", listKM);
 
-        double giaTienGiam = 0.0;
-        if(idKM.isPresent()){
-            KhuyenMai voucher = khuyenMaiRepository.findById(idKM.get()).get();
-            giaTienGiam = voucher.getGiaTienGiam();
-            hd.setKhuyenMai(voucher);
-        }
+//        double giaTienGiam = 0.0;
+//        if (idKM.isPresent()) {
+//            KhuyenMai voucher = khuyenMaiRepository.findById(idKM.get()).get();
+//            giaTienGiam = voucher.getGiaTienGiam();
+//            hd.setKhuyenMai(voucher);
+//        }
         model.addAttribute("giaTienGiam", giaTienGiam);
 
         httpSession.removeAttribute("idHoaDon");
@@ -190,6 +190,7 @@ public class BanHangController {
         model.addAttribute("tongSanPham", findByIdHoaDon.size());
         httpSession.setAttribute("tongSP", findByIdHoaDon.size());
         httpSession.setAttribute("tongTienSanPham", hd.getTongTienSanPham());
+        httpSession.setAttribute("giaTienGiam", hd.getKhuyenMai());
         httpSession.setAttribute("tongTien", hd.getTongTien());
 
         // add tong tièn
@@ -271,7 +272,7 @@ public class BanHangController {
 
     @GetMapping("/chon-size/{idGiay}/{mauSac}")
     public String chonSize(@PathVariable(value = "idGiay") UUID idGiay,
-                           @PathVariable(value = "mauSac") String mauSac, Model model ) {
+                           @PathVariable(value = "mauSac") String mauSac, Model model) {
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
         Giay giay = giayService.getByIdGiay(idGiay);
@@ -349,6 +350,8 @@ public class BanHangController {
         hoaDon.setTongTien(hoaDon.getTongTien() - hoaDonChiTiet.getDonGia());
         hoaDon.setTongTienSanPham(hoaDon.getTongTienSanPham() - hoaDonChiTiet.getDonGia());
         hoaDonService.add(hoaDon);
+
+        giaTienGiam = 0;
 
         chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + hoaDonChiTiet.getSoLuong());
         chiTietGiay.setTrangThai(1);
@@ -546,8 +549,9 @@ public class BanHangController {
         if (khuyenMai != null) {
             UUID idHoaDon1 = (UUID) httpSession.getAttribute("idHoaDon");
             HoaDon hoaDon = hoaDonService.getOne(idHoaDon1);
-            hoaDon.setTongTien(hoaDon.getTongTienSanPham() - khuyenMai.getGiaTienGiam());
+            giaTienGiam = khuyenMai.getGiaTienGiam();
             hoaDon.setKhuyenMai(khuyenMai);
+            hoaDon.setTongTien(hoaDon.getTongTienSanPham() - khuyenMai.getGiaTienGiam());
             hoaDonService.add(hoaDon);
         }
         redirectAttributes.addFlashAttribute("messageSuccess", true);
