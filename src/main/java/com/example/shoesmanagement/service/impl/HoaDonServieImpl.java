@@ -1,5 +1,6 @@
 package com.example.shoesmanagement.service.impl;
 
+import com.example.shoesmanagement.model.ChatLieu;
 import com.example.shoesmanagement.model.HoaDon;
 import com.example.shoesmanagement.model.KhachHang;
 import com.example.shoesmanagement.model.NhanVien;
@@ -21,9 +22,18 @@ public class HoaDonServieImpl implements HoaDonService {
     }
 
     @Override
+    public List<HoaDon> getListHoaDonDaThanhToan() {
+        return hoaDonRepository.listDaThanhToan();
+    }
+
+    @Override
     public void add(HoaDon hoaDon) {
         hoaDonRepository.save(hoaDon);
 
+    }
+    @Override
+    public void save(HoaDon hoaDon) {
+        hoaDonRepository.save(hoaDon);
     }
 
     @Override

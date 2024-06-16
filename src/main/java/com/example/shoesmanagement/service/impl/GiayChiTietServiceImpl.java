@@ -5,11 +5,11 @@ import com.example.shoesmanagement.repository.*;
 import com.example.shoesmanagement.service.GHCTService;
 import com.example.shoesmanagement.service.GiayChiTietService;
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -130,6 +130,18 @@ public class GiayChiTietServiceImpl implements GiayChiTietService {
     public ChiTietGiay findByMa(String ma) {
         return giayChiTietRepository.findByMaCTG(ma);
     }
+
+//    @Override
+//    public Boolean updateQuantityV2(UUID id, Integer quantity) {
+//        Boolean isUpdateQuantity = false;
+//        ChiTietGiay chiTietGiay = this.getByIdChiTietGiay(id);
+//        if (!Objects.isNull(chiTietGiay)) {
+//            chiTietGiay.setSoLuong(quantity);
+//            giayChiTietRepository.save(chiTietGiay);
+//            isUpdateQuantity= true;
+//        }
+//        return isUpdateQuantity;
+//    }
 
 
 }

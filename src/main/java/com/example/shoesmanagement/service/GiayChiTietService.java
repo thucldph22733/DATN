@@ -46,4 +46,6 @@ public interface GiayChiTietService {
     void updateQuantity(UUID id, int soLuong);
 
     ChiTietGiay findByMa(String ma);
+
+//    Boolean updateQuantityV2(UUID id, Integer quantity);
 }
