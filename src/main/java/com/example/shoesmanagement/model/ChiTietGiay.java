@@ -2,10 +2,7 @@ package com.example.shoesmanagement.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.text.DecimalFormat;
 import java.util.Date;
@@ -89,6 +86,9 @@ public class ChiTietGiay {
 
     @Column(name = "id_chi_tiet_giay_old")
     private UUID idCTGOld;
+
+//    @Column(name = "quantity_update")
+//    private Integer quantityUpdate = 0;
 
     public String getFormattedGiaBan() {
         DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");

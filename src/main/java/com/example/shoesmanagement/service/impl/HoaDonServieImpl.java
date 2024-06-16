@@ -22,6 +22,11 @@ public class HoaDonServieImpl implements HoaDonService {
     }
 
     @Override
+    public List<HoaDon> getListHoaDonDaThanhToan() {
+        return hoaDonRepository.listDaThanhToan();
+    }
+
+    @Override
     public void add(HoaDon hoaDon) {
         hoaDonRepository.save(hoaDon);
 

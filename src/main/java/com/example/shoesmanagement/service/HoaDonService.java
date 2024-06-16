@@ -10,6 +10,7 @@ import java.util.UUID;
 
 public interface HoaDonService {
     List<HoaDon> getListHoaDonChuaThanhToan();
+    List<HoaDon> getListHoaDonDaThanhToan();
     void add(HoaDon hoaDon);
     public void save(HoaDon hoaDon);
     HoaDon getOne(UUID id);
