@@ -1,6 +1,8 @@
 package com.example.shoesmanagement.buyerController;
 
 import com.example.shoesmanagement.model.*;
+import com.example.shoesmanagement.repository.HoaDonRepository;
+import com.example.shoesmanagement.repository.KhuyenMaiRepository;
 import com.example.shoesmanagement.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -8,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,8 +57,19 @@ public class CheckOutController {
     @Autowired
     private KhuyenMaiService khuyenMaiService;
 
-    @PostMapping("/buyer/checkout")
-    private String checkOutCart(Model model, @RequestParam("selectedProducts") List<UUID> selectedProductIds) {
+    @Autowired
+    private KhuyenMaiRepository khuyenMaiRepository;
+
+    @Autowired
+    private HoaDonRepository hoaDonRepository;
+
+    @Autowired
+    private HttpSession httpSession;
+
+    private double giaTienGiam = 0;
+
+    @GetMapping("/buyer/checkout")
+    private String checkOutCart(Model model, @RequestParam("selectedProducts") List<UUID> selectedProductIds, Optional<UUID> idKM) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
@@ -70,7 +85,7 @@ public class CheckOutController {
         model.addAttribute("khuyenMai", khuyenMai);
 
         String maHD = "HD_" + khachHang.getMaKH() + "_" + date.getDate() + generateRandomNumbers();
-
+        session.setAttribute(String.valueOf(khachHang.getIdKH()), selectedProductIds);
         hoaDon.setKhachHang(khachHang);
         hoaDon.setMaHD(maHD);
         hoaDon.setLoaiHD(0);
@@ -115,24 +130,29 @@ public class CheckOutController {
             listHDCTCheckOut.add(hoaDonChiTiet);
         }
 
+        double giaTienGiam = 0.0;
+        if(idKM.isPresent()){
+            KhuyenMai voucher = khuyenMaiRepository.findById(idKM.get()).get();
+            giaTienGiam = voucher.getGiaTienGiam();
+            hoaDon.setKhuyenMai(voucher);
+        }
+
         int sumQuantity = listHDCTCheckOut.stream()
                 .mapToInt(HoaDonChiTiet::getSoLuong)
                 .sum();
 
-        double total = listHDCTCheckOut.stream()
-                .mapToDouble(HoaDonChiTiet::getDonGia)
+        double tongTienSP = listHDCTCheckOut.stream()
+                .mapToDouble(e -> e.getDonGia() * e.getSoLuong())
                 .sum();
 
-//        List<KhuyenMai> danhSachKhuyenMai = hoaDon.getKhuyenMai();
-//        double tongSoTienGiam = 0;
-//        for (KhuyenMai km : danhSachKhuyenMai) {
-//            tongSoTienGiam += km.getGiaTienGiam();
-//        }
-//
-//        double soTienConLai = total - tongSoTienGiam;
+        double total = tongTienSP - giaTienGiam;
+
+        List<KhuyenMai> listKM = hoaDonRepository.listDieuKienKhuyenMai(tongTienSP);
+        model.addAttribute("giaTienGiam", giaTienGiam);
+        model.addAttribute("dieuKienKhuyenMai", listKM);
 
         hoaDon.setTongSP(sumQuantity);
-        hoaDon.setTongTienSanPham(total);
+        hoaDon.setTongTienSanPham(tongTienSP);
 
         hoaDonService.add(hoaDon);
 
@@ -359,7 +379,7 @@ public class CheckOutController {
         Date ngayKetThuc = calendar.getTime();
 
         GiaoHang giaoHang = hoaDon.getGiaoHang();
-        ;
+
         hoaDon.setLoiNhan(loiNhan);
         hoaDon.setTgNhanDK(ngayKetThuc);
         hoaDonService.add(hoaDon);
@@ -459,6 +479,10 @@ public class CheckOutController {
 
         GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(ctg, gioHang);
 
+//        KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
+//        khuyenMai.setSoLuong(khuyenMai.getSoLuong() - hoaDon.getTongSP());
+//        khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() + hoaDon.getTongSP());
+
         if (gioHangChiTiet == null) {
             gioHangChiTiet = new GioHangChiTiet();
             gioHangChiTiet.setChiTietGiay(ctg);
@@ -479,7 +503,7 @@ public class CheckOutController {
         }
 
         DiaChiKH diaChiKHDefault = diaChiKHService.findDCKHDefaulByKhachHang(khachHang);
-
+        System.out.println(diaChiKHDefault.getDiaChiChiTiet());
         List<DiaChiKH> diaChiKHList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, false, 1);
 
         Date date = new Date();
@@ -672,5 +696,35 @@ public class CheckOutController {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         model.addAttribute("fullNameLogin", khachHang.getHoTenKH());
+    }
+
+    @PostMapping("/buyer/checkout/chon-khuyen-mai/{idKM}")
+    public String chonKM(Model model, @PathVariable("idKM") UUID idKM, HttpSession session, RedirectAttributes redirectAttributes) {
+        KhuyenMai khuyenMai = khuyenMaiRepository.findById(idKM).orElse(null);
+        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+
+        if (khuyenMai != null){
+            GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
+
+            Date date = new Date();
+            HoaDon hoaDon = new HoaDon();
+
+            String maHD = "HD_" + khachHang.getMaKH() + "_" + date.getDate() + generateRandomNumbers();
+
+            hoaDon.setKhachHang(khachHang);
+            hoaDon.setMaHD(maHD);
+            hoaDon.setLoaiHD(0);
+            hoaDon.setTgTao(date);
+            hoaDon.setTrangThai(6);
+            hoaDonService.add(hoaDon);
+
+            hoaDon.setKhuyenMai(khuyenMai);
+            hoaDonService.add(hoaDon);
+
+        }
+        redirectAttributes.addFlashAttribute("messageSuccess", true);
+        redirectAttributes.addAttribute("selectedProducts", session.getAttribute(String.valueOf(khachHang.getIdKH())));
+        redirectAttributes.addAttribute("idKM", idKM);
+        return "redirect:/buyer/checkout";
     }
 }

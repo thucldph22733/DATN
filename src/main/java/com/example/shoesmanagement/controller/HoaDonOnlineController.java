@@ -44,7 +44,7 @@ public class HoaDonOnlineController {
         model.addAttribute("reLoadPage", true);
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
-return "redirect:/login";
+            return "redirect:/login";
         }
         showData(model);
         showTab1(model);
@@ -55,9 +55,13 @@ return "redirect:/login";
 
     private void showTab1(Model model){
         model.addAttribute("activeAll", "nav-link active");
-
+        model.addAttribute("xac_nhan_tt", "nav-link");
+        model.addAttribute("van_chuyen", "nav-link");
 
         model.addAttribute("tabpane1", "tab-pane show active");
+        model.addAttribute("tabpane2", "tab-pane");
+        model.addAttribute("tabpane3", "tab-pane");
+        model.addAttribute("tabpane4", "tab-pane");
 
     }
     private void showData(Model model){
@@ -65,12 +69,11 @@ return "redirect:/login";
         List<HoaDon> listAllHoaDonOnline = hoaDonService.listHoaDonOnline();
 
 
-        List<HoaDon> listHoaDonHoan = new ArrayList<>();
-        List<HoaDon> listAllHoaDonDangGiao = new ArrayList<>();
+            List<HoaDon> listAllHoaDonDangGiao = new ArrayList<>();
         List<HoaDon> listHoaDonOnlineQRCode = new ArrayList<>();
 
 
-        int soLuongHoaDonHoan = 0;
+
         int soLuongHoaDonOnline = 0;
         int soLuongHoaDonHuy = 0;
         int soLuongHoaDonDaThanhToan = 0 ;
@@ -100,24 +103,19 @@ return "redirect:/login";
                     if(x.getTrangThai() == 4){
                         soLuongHoaDonHuy ++;
                     }
-                    if (x.getHinhThucThanhToan() != null) {
-                        if (x.getHinhThucThanhToan() == 1) {
-                            soLuongHoaDonBanking++;
-                            listHoaDonOnlineQRCode.add(x);
-                        }
-                        if (x.getHinhThucThanhToan() == 0) {
-                            soLuongHoaDonThanhToanKhiNhanHang++;
-                        }
+                    if (x.getHinhThucThanhToan() == 1 ){
+                        soLuongHoaDonBanking ++;
+                        listHoaDonOnlineQRCode.add(x);
+                    }
+                    if (x.getHinhThucThanhToan() == 0){
+                        soLuongHoaDonThanhToanKhiNhanHang ++;
+                    }
 
-                        if (x.getTrangThai() == 1 && x.getHinhThucThanhToan() == 1) {
-                            soLuongHoaDonDaThanhToan++;
-                        }
-                        if (x.getTrangThai() == 3 && x.getHinhThucThanhToan() == 0) {
-                            soLuongHoaDonDaThanhToan++;
-                        }
-                    } else {
-                        // Xử lý trường hợp giá trị của getHinhThucThanhToan() là null nếu cần thiết
-                        System.out.println("HinhThucThanhToan là null cho hóa đơn: " + x);
+                    if (x.getTrangThai() == 1 && x.getHinhThucThanhToan() == 1 ){
+                        soLuongHoaDonDaThanhToan ++;
+                    }
+                    if (x.getTrangThai() == 3 && x.getHinhThucThanhToan() == 0 ){
+                        soLuongHoaDonDaThanhToan ++;
                     }
                     if (x.getTrangThai() == 2 ){
                         soLuongHoaDonDangGiao ++;
@@ -139,11 +137,9 @@ return "redirect:/login";
 
         int soLuongHoaDonChuaThanhToan =  soLuongHoaDonChuaThanhToanNhanHang +  soLuongHoaDonBanking ;
 
-        double tongTienHoan = 0.0;
-        int soLuongSPHoan = 0;
+
         int soLuongHdHoanChoXacNhan = 0;
         int soLuongHdHoanKhachHuy = 0;
-        int soLuongHdHoanDangHoan = 0;
         int soLuongHdHoanChuaHoanTien = 0;
         int soLuongHdHoanDaHoanTien = 0;
         int soLuongHdHoanTuChoi = 0;
@@ -151,26 +147,19 @@ return "redirect:/login";
 
         model.addAttribute("sumBillOnline", soLuongHoaDonOnline);
         model.addAttribute("totalAmount", tongTienHoaDon);
+        model.addAttribute("sumQuantityBaking", soLuongHoaDonBanking);
         model.addAttribute("sumQuantityDelivery", soLuongHoaDonThanhToanKhiNhanHang);
         model.addAttribute("hoaDonChuaThanhToan", soLuongHoaDonChuaThanhToan);
         model.addAttribute("hoaDonDaThanhToan", soLuongHoaDonDaThanhToan);
         model.addAttribute("hoaDonDangGiao", soLuongHoaDonDangGiao);
         model.addAttribute("hoaDonHuy", soLuongHoaDonHuy);
         model.addAttribute("hoaDonDaNhan", soLuongHoaDonDaNhan);
-        model.addAttribute("hoaDonDaHoan", soLuongHoaDonHoan);
 
-        model.addAttribute("tongTienHoan", tongTienHoan);
-        model.addAttribute("soLuongSPHoan", soLuongSPHoan);
         model.addAttribute("soLuongHdHoanChoXacNhan", soLuongHdHoanChoXacNhan);
         model.addAttribute("soLuongHdHoanKhachHuy", soLuongHdHoanKhachHuy);
-        model.addAttribute("soLuongHdHoanDangHoan", soLuongHdHoanDangHoan);
-        model.addAttribute("soLuongHdHoanChuaHoanTien", soLuongHdHoanChuaHoanTien);
         model.addAttribute("soLuongHdHoanDaHoanTien", soLuongHdHoanDaHoanTien);
         model.addAttribute("soLuongHdHoanTuChoi", soLuongHdHoanTuChoi);
-
-        model.addAttribute("listBillRefund", listHoaDonHoan);
         model.addAttribute("listHoaDonOnline", listAllHoaDonOnline);
-        model.addAttribute("listHoaDonOnlineQRCode", listHoaDonOnlineQRCode);
         model.addAttribute("listHoaDonOnlineGiaoHang", listAllHoaDonDangGiao);
     }
 

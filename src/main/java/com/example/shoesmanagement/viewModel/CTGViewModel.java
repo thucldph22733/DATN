@@ -22,8 +22,7 @@ import java.util.UUID;
     @Column(name = "id_mau")
     private UUID idMau;
 
-    @Column(name = "min_price_truoc_giam")
-    private Double minPriceTruocGiam;
+
 
     @Column(name = "min_price")
     private Double minPrice;

@@ -113,6 +113,7 @@ public class DetailProductController {
     }
 
 
+
     @GetMapping("/shop/addProductCart")
     public String handleAddToCart(@RequestParam("idDetailProduct") UUID idDProduct, @RequestParam("quantity") int quantity, Model model, RedirectAttributes redirectAttribute) {
 
@@ -126,7 +127,6 @@ public class DetailProductController {
             gioHangChiTiet.setSoLuong(gioHangChiTiet.getSoLuong() + quantity);
             gioHangChiTiet.setTgThem(new Date());
             gioHangChiTiet.setDonGia(quantity*ctg.getGiaBan());
-            gioHangChiTiet.setDonGiaTruocKhiGiam(quantity*ctg.getSoTienTruocKhiGiam());
             ghctService.addNewGHCT(gioHangChiTiet);
         }else {
             GioHangChiTiet gioHangChiTietNew = new GioHangChiTiet();
@@ -136,7 +136,6 @@ public class DetailProductController {
             gioHangChiTietNew.setSoLuong(quantity);
             gioHangChiTietNew.setTgThem(new Date());
             gioHangChiTietNew.setDonGia(quantity * ctg.getGiaBan());
-            System.out.println(quantity*ctg.getSoTienTruocKhiGiam());
 //            gioHangChiTiet.setDonGiaTruocKhiGiam(quantity*ctg.getSoTienTruocKhiGiam());
             gioHangChiTietNew.setTrangThai(1);
 
