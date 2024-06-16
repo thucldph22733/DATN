@@ -565,7 +565,6 @@
 
                                                                         <li style="margin-bottom: 20px;">
                                                                             <h5>Mã khuyến mãi:</h5>
-<!--                                                                            <h5 class="grandTotal" style="font-size: 13pt;" th:text=" ${giaTienGiam} + ' đ'"></h5>-->
                                                                             <h5 th:text="${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 0, 'POINT')} + '₫'"></h5>
                                                                             <input type="text" th:value="${giaTienGiam}" id="tienGiam" style="display: none">
                                                                         </li>

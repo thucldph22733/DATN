@@ -1,6 +1,5 @@
 package com.example.shoesmanagement.controller;
 
-import com.example.shoesmanagement.dtos.requests.UpdateQuantityRequest;
 import com.example.shoesmanagement.model.*;
 import com.example.shoesmanagement.repository.*;
 import com.example.shoesmanagement.service.*;
@@ -8,7 +7,6 @@ import com.example.shoesmanagement.viewModel.GiayViewModel;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -67,25 +65,19 @@ public class BanHangController {
 
     private double tongTienSanPham = tongSanPham * giaBan;
 
-//    private double tienKhuyenMai = 0;
-
-//    private double giaTienGiam = 0;
-
-
     private UUID idHoaDon = null;
     private double tongTien = 0;
 
 
-
     @Autowired
     private HoaDonChiTietRepository hoaDonChiTietRepository;
+
     @Autowired
     private HoaDonRepository hoaDonRepository;
 
     private final double dieuKienKhuyenMai = 0;
 
     private double giaTienGiam = 0;
-
 
     @GetMapping("/hien-thi")
     public String hienThi(Model model
@@ -160,18 +152,17 @@ public class BanHangController {
         List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
         model.addAttribute("khuyenMai", khuyenMai);
         HoaDon hd = hoaDonService.getOne(idHoaDon);
-        double tongTienSP = hd.getTongTienSanPham() != null ? hd.getTongTienSanPham() :  0;
+        double tongTienSP = hd.getTongTienSanPham() != null ? hd.getTongTienSanPham() : 0;
         List<KhuyenMai> listKM = hoaDonRepository.listDieuKienKhuyenMai(tongTienSP);
         model.addAttribute("dieuKienKhuyenMai", listKM);
 
 //        double giaTienGiam = 0.0;
-//        if(idKM.isPresent()){
+//        if (idKM.isPresent()) {
 //            KhuyenMai voucher = khuyenMaiRepository.findById(idKM.get()).get();
 //            giaTienGiam = voucher.getGiaTienGiam();
 //            hd.setKhuyenMai(voucher);
 //        }
         model.addAttribute("giaTienGiam", giaTienGiam);
-
 
         httpSession.removeAttribute("idHoaDon");
         httpSession.setAttribute("idHoaDon", idHoaDon);
@@ -193,17 +184,15 @@ public class BanHangController {
         model.addAttribute("tongSanPham", findByIdHoaDon.size());
         httpSession.setAttribute("tongSP", findByIdHoaDon.size());
 
-         httpSession.setAttribute("tongTienSanPham", hoaDonChiTietService.tongTienSanPham(findByIdHoaDon));
+        httpSession.setAttribute("tongTienSanPham", hd.getTongTienSanPham());
+        httpSession.setAttribute("giaTienGiam", hd.getKhuyenMai());
+
+        httpSession.setAttribute("tongTienSanPham", hoaDonChiTietService.tongTienSanPham(findByIdHoaDon));
         httpSession.setAttribute("tongTien", hd.getTongTien());
 
 //         httpSession.setAttribute("tongTien", hoaDonChiTietService.tongTien(findByIdHoaDon) - giaTienGiam);
-//
 
-//
-//        httpSession.setAttribute("tongTienSanPham", hd.getTongTienSanPham());
 //        httpSession.setAttribute("tongTien", hd.getTongTien());
-
-
 
         // add tổng tiền và cập nhật hóa đơn
         HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
@@ -257,7 +246,6 @@ public class BanHangController {
         return "/manage/ban-hang";
     }
 
-
     @PostMapping("/updateQuantity")
     @ResponseBody
     public void updateQuantity(@RequestParam UUID idCTG, @RequestParam int quantity) {
@@ -286,8 +274,6 @@ public class BanHangController {
         System.out.println("Updated HoaDonChiTiet: " + hoaDonChiTiet);
         System.out.println("Updated ChiTietGiay: " + chiTietGiay);
     }
-
-
 
     @GetMapping("/add-to-cart")
     public String addToCart(@RequestParam("idChiTietGiay") UUID idChiTietGiay,
@@ -428,8 +414,7 @@ public class BanHangController {
                 redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
                 model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
                 return "redirect:/ban-hang/hien-thi";
-            }
-            else {
+            } else {
                 ChiTietGiay chiTietGiay = giayChiTietService.findByMa(keyword);
                 if (chiTietGiay == null) {
                     redirectAttributes.addFlashAttribute("messageError", true);
@@ -462,9 +447,76 @@ public class BanHangController {
         return "/manage/ban-hang";
     }
 
+//    @GetMapping("/chon-size/{idGiay}/{mauSac}")
+//    public String chonSize(@PathVariable(value = "idGiay") UUID idGiay,
+//                           @PathVariable(value = "mauSac") String mauSac, Model model) {
+//        List<GiayViewModel> listG = giayViewModelService.getAllVm();
+//        model.addAttribute("listSanPham", listG);
+//        Giay giay = giayService.getByIdGiay(idGiay);
+//        List<ChiTietGiay> sizeList = sizeRepository.findByIdGiayAndMauSac2(idGiay, mauSac);
+//        model.addAttribute("giay", giay);
+//        model.addAttribute("listChiTietGiay", sizeList);
+//        model.addAttribute("idHoaDon", idHoaDon);
+//        model.addAttribute("showModal", true);
+//
+//        model.addAttribute("tongTienSanPham", tongTienSanPham);
+//        model.addAttribute("tongTien", tongTien);
+//        return "/manage/ban-hang";
+//    }
+
+//    @GetMapping("/add-to-cart")
+//    public String addToCart(@RequestParam("idChiTietGiay") UUID idChiTietGiay,
+//                            @RequestParam("soLuong") int soLuong, Model model,
+//                            RedirectAttributes redirectAttributes) {
+//        List<GiayViewModel> listG = giayViewModelService.getAllVm();
+//        model.addAttribute("listSanPham", listG);
+//        UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
+//        if (idHoaDon == null) {
+//            redirectAttributes.addFlashAttribute("messageError", true);
+//            redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
+//            model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
+//            return "redirect:/ban-hang/hien-thi";
+//        }
+//        ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idChiTietGiay);
+//        if (soLuong > chiTietGiay.getSoLuong()) {
+//            redirectAttributes.addFlashAttribute("messageError", true);
+//            redirectAttributes.addFlashAttribute("tbaoError", "Số lượng trong kho không đủ");
+//            model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
+//            return "redirect:/ban-hang/cart/hoadon/" + this.idHoaDon;
+//        }
+//        HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
+//        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHoaDon, idChiTietGiay);
+//        if (hoaDonChiTiet != null) {
+//            hoaDonChiTiet.setDonGia(chiTietGiay.getGiaBan() * (hoaDonChiTiet.getSoLuong() + soLuong));
+//            hoaDonChiTiet.setSoLuong(hoaDonChiTiet.getSoLuong() + soLuong);
+//            hoaDon.setTongTienSanPham(chiTietGiay.getGiaBan() * soLuong);
+//            hoaDonChiTiet.setTrangThai(1);
+//            hoaDonChiTietService.add(hoaDonChiTiet);
+//        } else {
+//            HoaDonChiTiet hdct = new HoaDonChiTiet();
+//            hdct.setChiTietGiay(chiTietGiay);
+//            hdct.setHoaDon(hoaDon);
+//            hdct.setDonGia(chiTietGiay.getGiaBan() * soLuong);
+//            hdct.setSoLuong(soLuong);
+//            hdct.setTrangThai(1);
+//            hdct.setTgThem(new Date());
+//            tongSanPham++;
+//            hoaDon.setTongTienSanPham(chiTietGiay.getGiaBan() * soLuong);
+//            httpSession.setAttribute("tongSP", tongSanPham);
+//            hoaDonChiTietService.add(hdct);
+//        }
+//        if (soLuong == chiTietGiay.getSoLuong()) {
+//            chiTietGiay.setTrangThai(0);
+//        }
+//        chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - soLuong);
+//        giayChiTietService.save(chiTietGiay);
+//        redirectAttributes.addFlashAttribute("messageSuccess", true);
+//        redirectAttributes.addFlashAttribute("tb", "Thêm vào giỏ hàng thành công");
+//        return "redirect:/ban-hang/cart/hoadon/" + this.idHoaDon;
+//    }
 
     @GetMapping("/xoa-gio-hang/{idChiTietGiay}")
-    public String xoaSanPham(@PathVariable("idChiTietGiay") UUID idChiTietGiay, RedirectAttributes redirectAttributes,Model model) {
+    public String xoaSanPham(@PathVariable("idChiTietGiay") UUID idChiTietGiay, RedirectAttributes redirectAttributes, Model model) {
         model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
@@ -476,6 +528,8 @@ public class BanHangController {
         hoaDon.setTongTien(hoaDon.getTongTien() - hoaDonChiTiet.getDonGia());
         hoaDon.setTongTienSanPham(hoaDon.getTongTienSanPham() - hoaDonChiTiet.getDonGia());
         hoaDonService.add(hoaDon);
+
+        giaTienGiam = 0;
 
         chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + hoaDonChiTiet.getSoLuong());
         chiTietGiay.setTrangThai(1);
@@ -597,11 +651,6 @@ public class BanHangController {
         }
     }
 
-
-
-
-
-
     public String generateRandomNumbers() {
         Random random = new Random();
         StringBuilder sb = new StringBuilder();
@@ -634,4 +683,3 @@ public class BanHangController {
         return "redirect:/ban-hang/cart/hoadon/" + idHoaDon;
     }
 }
-
