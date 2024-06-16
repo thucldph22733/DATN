@@ -486,9 +486,7 @@
                                                                                     <div class="productlinkset col-6">
                                                                                         <h5 th:text="${gioHang.chiTietGiay.size.soSize}"></h5>
                                                                                     </div>
-                                                                                    <div class="col-6">
-                                                                                        <span class="color-box" th:style="'background-color:' + ${gioHang.chiTietGiay.mauSac.maMau}"></span>
-                                                                                    </div>
+
                                                                                 </div>
                                                                                 <div class="increment-decrement">
                                                                                     <div class="input-groups">
@@ -510,6 +508,9 @@
                                                                     <li>
                                                                         <div class="cart__price"
                                                                              th:text="${#numbers.formatDecimal(gioHang.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <h5 style="font-size:12px " th:text="${gioHang.chiTietGiay.mauSac.tenMau}"></h5>
                                                                     </li>
                                                                     <li>
                                                                         <div class="cart__price totalAmount"
