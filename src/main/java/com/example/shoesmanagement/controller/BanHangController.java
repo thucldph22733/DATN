@@ -111,6 +111,10 @@ public class BanHangController {
             // Nếu managerLogged bằng null, quay về trang login
             return "/login";
         }
+
+        List<HoaDon> listHoaDonHomNay = hoaDonService.listAllHoaDonByNhanVienHienTai(nhanVien);
+        model.addAttribute("listHoaDonHomNay", listHoaDonHomNay);
+
         return "/manage/ban-hang";
     }
 
@@ -178,9 +182,9 @@ public class BanHangController {
 
         model.addAttribute("tongSanPham", findByIdHoaDon.size());
         httpSession.setAttribute("tongSP", findByIdHoaDon.size());
+
         httpSession.setAttribute("tongTienSanPham", hoaDonChiTietService.tongTienSanPham(findByIdHoaDon));
         httpSession.setAttribute("tongTien", hoaDonChiTietService.tongTien(findByIdHoaDon) - giaTienGiam);
-
 
         // add tổng tiền và cập nhật hóa đơn
         HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
@@ -581,7 +585,7 @@ public class BanHangController {
         hoaDonService.add(hoaDon);
         httpSession.setAttribute("khuyenMai", khuyenMai);
         redirectAttributes.addFlashAttribute("messageSuccess", true);
-//        redirectAttributes.addFlashAttribute("tb", "Thêm khách hàng thành công");
+//        redirectAttributes.axddFlashAttribute("tb", "Thêm khách hàng thành công");
         return "redirect:/ban-hang/cart/hoadon/" + idHoaDon;
     }
 

@@ -60,6 +60,11 @@ public class HoaDonServieImpl implements HoaDonService {
     public List<HoaDon> listHoaDonByNhanVienAndTrangThai(NhanVien nhanVien, int trangThai) {
         return hoaDonRepository.findByNhanVienAndLoaiHDAndTrangThaiOrderByTgTaoDesc(nhanVien,0,trangThai);
     }
+//
+//    @Override
+//    public void delteHoaDonCho(UUID id,int trangThai,Integer loaiHD) {
+//        HoaDon hoaDon = hoaDonRepository.getById(id,)
+//    }
 
     @Override
     public List<HoaDon> listHoaDonHuyAndThanhCongByNhanVien(NhanVien nhanVien) {

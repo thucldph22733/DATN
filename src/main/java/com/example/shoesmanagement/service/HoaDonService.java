@@ -18,7 +18,7 @@ public interface HoaDonService {
     List<HoaDon> findHoaDonByKhachHang(KhachHang khachHang);
     List<HoaDon>  listHoaDonOnline();
     List<HoaDon> listHoaDonByNhanVienAndTrangThai(NhanVien nhanVien, int trangThai);
-
+//    public void delteHoaDonCho(UUID id,int trangThai,Integer loaiHD);
     List<HoaDon> listHoaDonHuyAndThanhCongByNhanVien(NhanVien nhanVien);
 
     List<HoaDon> listAllHoaDonByNhanVien(NhanVien nhanVien);
