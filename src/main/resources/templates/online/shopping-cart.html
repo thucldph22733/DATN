@@ -258,7 +258,7 @@
 <section class="shopping-cart spad" style="margin-top: -80px">
     <div class="container">
 
-        <form action="/buyer/checkout" method="post" id="purchaseForm">
+        <form action="/buyer/checkout" method="get" id="purchaseForm">
             <div style="z-index: 100; width: 1170px;  position: fixed;margin-bottom: 50px">
                 <div class="row" style="background-color: #f3f2ee; height: 80px; width: 1170px;  ">
                     <div class="col-lg-8">
@@ -336,12 +336,7 @@
                                                 <h6 style="margin-top: -22px;"
                                                     th:text="${x.chiTietGiay.giay.tenGiay}"></h6>
                                             </a>
-                                            <h5 class="cart__price"
-                                                th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
-                                            <h5 th:if="${x.chiTietGiay.giaBan} != ${x.chiTietGiay.soTienTruocKhiGiam}"
-                                                style="color: #b7b7b7; font-size: 15px; font-weight: 400; text-decoration: line-through;"
-                                                th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.soTienTruocKhiGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
-                                        </div>
+                                                  </div>
 
                                     </td>
                                     <td style="width: 175px;" class="quantity__item">
@@ -425,12 +420,7 @@
                                                 <h6 style="margin-top: -22px;"
                                                     th:text="${x.chiTietGiay.giay.tenGiay}"></h6>
                                             </a>
-                                            <h5 class="cart__price"
-                                                th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
-                                            <h5 th:if="${x.chiTietGiay.giaBan} != ${x.chiTietGiay.soTienTruocKhiGiam}"
-                                                style="color: #b7b7b7; font-size: 15px; font-weight: 400; text-decoration: line-through;"
-                                                th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.soTienTruocKhiGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
-                                        </div>
+                                             </div>
 
                                     </td>
                                     <td style="width: 175px;" class="quantity__item">

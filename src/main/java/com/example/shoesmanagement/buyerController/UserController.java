@@ -1,6 +1,7 @@
 package com.example.shoesmanagement.buyerController;
 
 import com.example.shoesmanagement.model.*;
+import com.example.shoesmanagement.repository.KhuyenMaiRepository;
 import com.example.shoesmanagement.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -57,6 +58,11 @@ public class UserController {
     @Autowired
     private VNPayService vnPayService;
 
+    @Autowired
+    private KhuyenMaiService khuyenMaiService;
+
+    @Autowired
+    private KhuyenMaiRepository khuyenMaiRepository;
 
     @ModelAttribute("dsTrangThai")
     public Map<Integer, String> getDsTrangThai() {
@@ -330,12 +336,19 @@ public class UserController {
     private String getDetailForm(Model model, @PathVariable UUID idHD){
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        if(khachHang == null) return "redirect:/buyer/login";
+
         List<DiaChiKH> diaChiKHList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, false, 1);
         DiaChiKH diaChiKHDefault = diaChiKHService.findDCKHDefaulByKhachHang(khachHang);
+
+        List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
+        model.addAttribute("khuyenMai", khuyenMai);
 
         UserForm(model, khachHang);
 
         HoaDon hoaDon= hoaDonService.getOne(idHD);
+
+        model.addAttribute("giaTienGiam", hoaDon.getKhuyenMai().getGiaTienGiam());
 
         int trangThai = hoaDon.getTrangThai();
         if (trangThai == 0){
@@ -357,7 +370,6 @@ public class UserController {
             model.addAttribute("detailBillPay",true);
             model.addAttribute("modalThayDoiPhuongThucThanhToan",true);
             model.addAttribute("billDetailPay", hoaDon);
-
             session.removeAttribute("hoaDonPayDetail");
             session.setAttribute("hoaDonPayDetail", hoaDon);
 
@@ -369,7 +381,6 @@ public class UserController {
 
             model.addAttribute("detailBillShip",true);
             model.addAttribute("billDetailShip", hoaDon);
-
             List<ViTriDonHang> viTriDonHangList = viTriDonHangServices.findByGiaoHang(giaoHangListActive);
             model.addAttribute("listViTriDonHang", viTriDonHangList);
 
@@ -384,7 +395,6 @@ public class UserController {
             model.addAttribute("listViTriDonHang", viTriDonHangList);
             model.addAttribute("detailBillRecieve",true);
             model.addAttribute("billDetailRecieve", hoaDon);
-
         }else if (trangThai == 3){
             GiaoHang giaoHangListActive = hoaDon.getGiaoHang();
 
@@ -407,19 +417,16 @@ public class UserController {
             model.addAttribute("listViTriDonHang", viTriDonHangList);
             model.addAttribute("detailBillCancel",true);
             model.addAttribute("billDetailCancel", hoaDon);
-
         }else if (trangThai == 5){
             GiaoHang giaoHangListActive = hoaDon.getGiaoHang();
             model.addAttribute("giaoHangListActive", giaoHangListActive);
 
             model.addAttribute("detailBillRefund",true);
             model.addAttribute("billDetailRefund", hoaDon);
-
         }
 
         model.addAttribute("listAddressKH", diaChiKHList);
         model.addAttribute("diaChiKHDefault", diaChiKHDefault);
-
         return "online/user";
     }
 

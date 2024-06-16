@@ -588,7 +588,6 @@ public class GiayChiTietController {
             chiTietGiay1.setNamBH(chiTietGiay.getNamBH());
             chiTietGiay1.setTrongLuong(chiTietGiay.getTrongLuong());
             chiTietGiay1.setGiaBan(chiTietGiay.getGiaBan());
-            chiTietGiay1.setSoTienTruocKhiGiam(chiTietGiay.getGiaBan());
             chiTietGiay1.setSoLuong(chiTietGiay.getSoLuong());
             chiTietGiay1.setTrangThai(1);
             chiTietGiay1.setMauSac(chiTietGiay.getMauSac());
@@ -691,7 +690,7 @@ public class GiayChiTietController {
             chiTietGiay2.setNamBH(chiTietGiay.getNamBH());
             chiTietGiay2.setTrongLuong(chiTietGiay.getTrongLuong());
             chiTietGiay2.setGiaBan(chiTietGiay.getGiaBan());
-            chiTietGiay2.setSoTienTruocKhiGiam(chiTietGiay.getGiaBan());
+
             chiTietGiay2.setSoLuong(chiTietGiay.getSoLuong());
             chiTietGiay2.setTrangThai(1);
             chiTietGiay2.setMauSac(chiTietGiay.getMauSac());
