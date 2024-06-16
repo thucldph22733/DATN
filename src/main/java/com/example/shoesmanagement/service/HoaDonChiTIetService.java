@@ -1,5 +1,6 @@
 package com.example.shoesmanagement.service;
 
+import com.example.shoesmanagement.model.ChiTietGiay;
 import com.example.shoesmanagement.model.HoaDon;
 import com.example.shoesmanagement.model.HoaDonChiTiet;
 
@@ -11,6 +12,8 @@ public interface HoaDonChiTIetService {
 
     void add(HoaDonChiTiet hoaDonChiTiet);
 
+    void save(HoaDonChiTiet hoaDonChiTiet);
+
     List<HoaDonChiTiet> findByIdHoaDon(UUID id);
 
     Double tongTien(List<HoaDonChiTiet> list);
@@ -18,4 +21,10 @@ public interface HoaDonChiTIetService {
     Double tongTienSanPham(List<HoaDonChiTiet> list);
 
     List<HoaDonChiTiet> findByHoaDon(HoaDon hoaDon);
+
+    void updateQuantity(UUID idHDCT, int newQuantity);
+
+    void updateQuantityGiay(UUID idHDCT, int newQuantity);
+
+    HoaDonChiTiet findByCTGActiveAndKhachHagAndTrangThai(ChiTietGiay chiTietGiay , HoaDon hoaDon);
 }
