@@ -35,13 +35,11 @@ public class CartController {
     @Autowired
     private GiayChiTietService gctService;
 
-
     @Autowired
     private MauSacService mauSacService;
 
     @Autowired
     private GiayService giayService;
-
 
     @RestController
     public class LoginApiController {
@@ -53,6 +51,7 @@ public class CartController {
             status.put("loggedIn", khachHang != null);
             return status;
         }
+
     }
 
 
@@ -64,12 +63,12 @@ public class CartController {
             model.addAttribute("error", "Bạn cần đăng nhập để xem giỏ hàng");
             return "redirect:/buyer/login"; // Sử dụng redirect ở đây
         }
-
         model.addAttribute("reLoadPageCart", true);
         showDataBuyer(model);
-
         return "/online/shopping-cart";
     }
+
+
     @PostMapping("/cart/updateQuantity")
     @ResponseBody
     public void updateQuantity(@RequestParam UUID idCTG, @RequestParam int quantity) {
@@ -78,13 +77,12 @@ public class CartController {
         ChiTietGiay chiTietGiay = gctService.getByIdChiTietGiay(idCTG);
 
         GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(chiTietGiay, gioHang);
+
         gioHangChiTiet.setSoLuong(quantity);
         gioHangChiTiet.setDonGia(quantity*chiTietGiay.getGiaBan());
         ghctService.addNewGHCT(gioHangChiTiet);
 
     }
-
-
 
 //    @GetMapping("/cart/delete/{idCTG}")
 //    private String deleteInCard(Model model, @PathVariable UUID idCTG, RedirectAttributes redirectAttribute){
@@ -114,7 +112,6 @@ public class CartController {
     }
 
 
-
     //    private void showDataBuyer(Model model){
 //        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
 //        GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
@@ -138,6 +135,7 @@ public class CartController {
 //        model.addAttribute("listCartDetail", listGHCTActive);
 //        model.addAttribute("totalPrice", sumAllProduct);
 //    }
+
     private void showDataBuyer(Model model) {
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
@@ -152,7 +150,6 @@ public class CartController {
         if (!listGHCTActive.isEmpty()) {
             for (GioHangChiTiet gioHangChiTiet : listGHCTActive) {
                 gioHangChiTiet.setDonGia(gioHangChiTiet.getChiTietGiay().getGiaBan() * gioHangChiTiet.getSoLuong());
-                gioHangChiTiet.setDonGiaTruocKhiGiam(gioHangChiTiet.getChiTietGiay().getSoTienTruocKhiGiam() * gioHangChiTiet.getSoLuong());
                 ghctService.addNewGHCT(gioHangChiTiet);
             }
         }

@@ -1,6 +1,7 @@
 package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.ChiTietGiay;
+import com.example.shoesmanagement.model.MauSac;
 import com.example.shoesmanagement.model.Size;
 import com.example.shoesmanagement.repository.SizeRepository;
 import com.example.shoesmanagement.service.GiayChiTietService;
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -68,7 +70,7 @@ public class SizeController {
 
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
-            return "redirect:/login";
+return "redirect:/login";
         }
         if (message == null || !"true".equals(message)) {
             model.addAttribute("message", false);
@@ -254,5 +256,22 @@ public class SizeController {
         return "manage/size-giay"; // Trả về mẫu HTML chứa bảng dữ liệu sau khi lọc
     }
 
+    @PutMapping("/size/{idSize}")
+    public ResponseEntity<String> capNhatTrangThai(@RequestParam String trangThai,
+                                                   @PathVariable UUID idSize) {
+        int trangThaiInt = Integer.valueOf(trangThai);
+        System.out.println(trangThai);
 
+        int trangThaiUpdate;
+        if (trangThaiInt == 1) {
+            trangThaiUpdate = 0;
+        } else {
+            trangThaiUpdate = 1;
+        }
+        Size size = sizeService.getByIdSize(idSize);
+        size.setTrangThai(trangThaiUpdate);
+        size.setTgSua(new Date());
+        sizeService.save(size);
+        return ResponseEntity.ok("ok");
+    }
 }

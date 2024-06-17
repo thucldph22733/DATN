@@ -1,11 +1,14 @@
 package com.example.shoesmanagement.controller;
 
+import com.example.shoesmanagement.model.HoaDon;
 import com.example.shoesmanagement.model.KhachHang;
 import com.example.shoesmanagement.model.KhuyenMai;
+import com.example.shoesmanagement.service.HoaDonService;
 import com.example.shoesmanagement.service.KhachHangService;
 import com.example.shoesmanagement.service.KhuyenMaiService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +30,9 @@ public class KhuyenMaiController {
     @Autowired
     private HttpSession session;
 
+    @Autowired
+    private HoaDonService hoaDonService;
+
     @GetMapping("/khuyen-mai")
     public String hienThi(Model model) {
         List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
@@ -43,18 +49,6 @@ public class KhuyenMaiController {
 
     @PostMapping("/khuyen-mai/add")
     public String addKhuyenMai(@ModelAttribute("addKhuyenMai") KhuyenMai km, Model model) throws ParseException {
-//        KhuyenMai khuyenMai = new KhuyenMai();
-//        khuyenMai.setIdKM(km.getIdKM());
-//        khuyenMai.setMaKM(km.getMaKM());
-//        khuyenMai.setTenKM(km.getTenKM());
-//        khuyenMai.setTgBatDau(km.getTgBatDau());
-//        khuyenMai.setTgKetThuc(km.getTgKetThuc());
-
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        khuyenMai.setTgBatDau(sdf.parse(String.valueOf(km.getTgBatDau())));
-//
-//        khuyenMai.setTgKetThuc(sdf.parse(String.valueOf(km.getTgKetThuc())));
-//        khuyenMai.setSoLuong(km.getSoLuong());
         soSanh(km);
         khuyenMaiService.save(km);
         return "redirect:/manage/khuyen-mai";
@@ -86,4 +80,13 @@ public class KhuyenMaiController {
         }
     }
 
+    @PutMapping("khuyen-mai")
+    public void capNhatSoLuong(HoaDon hoaDon){
+        List<KhuyenMai> khuyenMai = (List<KhuyenMai>) hoaDon.getKhuyenMai();
+        for (KhuyenMai km : khuyenMai){
+            km.setSoLuong(km.getSoLuong() - hoaDon.getTongSP());
+            km.setSoLuongDaDung(km.getSoLuongDaDung() + hoaDon.getTongSP());
+            khuyenMaiService.save(km);
+        }
+    }
 }

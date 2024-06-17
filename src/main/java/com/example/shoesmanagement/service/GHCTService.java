@@ -22,7 +22,4 @@ public interface GHCTService {
 
     GioHangChiTiet findByCTGActiveAndKhachHangAndTrangThai(ChiTietGiay chiTietGiay, GioHang gioHang);
 
-
-
-
 }

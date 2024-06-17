@@ -87,42 +87,72 @@
             <div class="card">
                 <div class="card-body">
                     <div class="hidden-form" style="display: none">
-                        <form method="post" th:object="${addKhuyenMai}" th:action="@{/manage/khuyen-mai/add}">
+                        <form method="post" th:object="${addKhuyenMai}" th:action="@{/manage/khuyen-mai/add}"
+                              onsubmit="return validateKhuyenMaiForm()" name="khuyenMaiForm">
                             <div class="row">
-                                <div class="col-lg-5 col-12">
+                                <div class="col-lg-4 col-12">
                                     <div class="form-group">
                                         <label>Mã khuyễn mãi</label>
-                                        <input type="text" id="maKM" th:field="*{maKM}" class="form-control">
+                                        <input type="text" id="maKM" name="maKM" th:field="*{maKM}"
+                                               class="form-control">
                                     </div>
                                 </div>
 
-                                <div class="col-lg-5 col-12">
+                                <div class="col-lg-4 col-12">
                                     <div class="form-group">
-                                        <label>Tên khuyễn mãi</label>
-                                        <input type="text" id="tenKM" th:field="*{tenKM}" class="form-control">
+                                        <label>Tên khuyến mãi</label>
+                                        <input type="text" id="tenKM" name="tenKM" th:field="*{tenKM}"
+                                               class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-12">
+                                    <div class="form-group">
+                                        <label>Giảm</label>
+                                        <input type="text" id="giaTienGiam" name="giaTienGiam" th:field="*{giaTienGiam}" class="form-control">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-lg-5 col-12">
+                                <div class="col-lg-4 col-12">
                                     <div class="form-group">
                                         <label>Ngày bắt đầu</label>
-                                        <input type="date" id="ngayBatDau" th:field="*{tgBatDau}" class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-5 col-12">
-                                    <div class="form-group">
-                                        <label>Ngày kết thúc</label>
-                                        <input type="date" id="ngayKetThuc" th:field="*{tgKetThuc}"
+                                        <input type="date" id="ngayBatDau" name="ngayBatDau" th:field="*{tgBatDau}"
                                                class="form-control">
                                     </div>
                                 </div>
 
-                                <div class="collg-12">
-                                    <button type="submit" class="btn btn-submit me-2">Thêm</button>
+                                <div class="col-lg-4 col-12">
+                                    <div class="form-group">
+                                        <label>Ngày kết thúc</label>
+                                        <input type="date" id="ngayKetThuc" name="ngayKetThuc" th:field="*{tgKetThuc}"
+                                               class="form-control">
+                                    </div>
                                 </div>
+
+                                <div class="col-lg-4 col-12">
+                                    <div class="form-group">
+                                        <label>Điều kiện giảm</label>
+                                        <input type="text" id="dieuKienKMBill" name="dieuKienKMBill"
+                                               th:field="*{dieuKienKMBill}"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4 col-12">
+                                    <div class="form-group">
+                                        <label>Số lượng</label>
+                                        <input type="text" id="soLuong" name="soLuong" th:field="*{soLuong}"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="collg-12">
+                                <button type="submit" class="btn btn-submit me-2">Thêm</button>
                             </div>
                         </form>
                     </div>
@@ -307,6 +337,87 @@
             moForm.style.display = "none"; //ẩn form
         }
     });
+</script>
+
+<script>
+    // Validate
+    function validateKhuyenMaiForm() {
+        var maKM = document.forms["khuyenMaiForm"]["maKM"].value;
+        var tenKM = document.forms["khuyenMaiForm"]["tenKM"].value;
+        var giaTienGiam = document.forms["khuyenMaiForm"]["giaTienGiam"].value;
+        var thoiGianBatDau = document.forms["khuyenMaiForm"]["tgBatDau"].value;
+        var thoiGianKetThuc = document.forms["khuyenMaiForm"]["tgKetThuc"].value;
+        var dieuKienKM = document.forms["khuyenMaiForm"]["dieuKienKMBill"].value;
+        var soLuong = document.forms["khuyenMaiForm"]["soLuong"].value;
+
+        if (maKM === "") {
+            Swal.fire("Không để trống Mã Khuyến Mãi");
+            return false;
+        }
+
+        if (!maKM.match(/^[a-zA-Z0-9]+$/)) {
+            Swal.fire("Mã Khuyến Mãi chỉ chứa chữ cái và số")
+            return false;
+        }
+
+        if (tenKM === "") {
+            Swal.fire("Không để trống Tên Khuyến Mãi");
+            return false;
+        }
+
+        if (giaTienGiam === "") {
+            Swal.fire("Không để trống Giá Tiền Giảm");
+            return false;
+        }
+
+        if (!giaTienGiam.match(/^[0-9]+$/)) {
+            Swal.fire("Giá Tiền Giảm chỉ chứa số")
+            return false;
+        }
+
+        const ngayBD = document.getElementById('ngayBatDau').value;
+        const ngayKT = document.getElementById('ngayKetThuc').value;
+
+        if (ngayBD > ngayKT){
+            Swal.fire("Thời Gian Bắt Đầu phải nhỏ hơn Thời Gian Kết Thúc")
+            return false;
+        }
+
+        if (thoiGianBatDau === "") {
+            Swal.fire("Không để trống Thời Gian Bắt Đầu");
+            return false;
+        }
+
+        if (thoiGianKetThuc === "") {
+            Swal.fire("Không để trống Thời Gian Kết Thúc");
+            return false;
+        }
+
+        if (thoiGianBatDau > thoiGianKetThuc){
+            Swal.fire("Thời Gian Bắt Đầu phải nhỏ hơn Thời Gian Kết Thúc")
+        }
+
+        if (dieuKienKM === "") {
+            Swal.fire("Không để trống Điều Kiện Khuyến Mãi");
+            return false;
+        }
+
+        if (!dieuKienKM.match(/^[0-9]+$/)) {
+            Swal.fire("Điều Kiện Khuyến Mãi chỉ chứa số")
+            return false;
+        }
+        if (soLuong === "") {
+            Swal.fire("Không để trống Số lượng");
+            return false;
+        }
+
+        if (!soLuong.match(/^[0-9]+$/)) {
+            Swal.fire("Số lượng chỉ chứa số")
+            return false;
+        }
+
+        return true
+    }
 </script>
 </body>
 </html>

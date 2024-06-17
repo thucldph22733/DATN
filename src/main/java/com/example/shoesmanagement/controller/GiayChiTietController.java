@@ -7,6 +7,7 @@ import com.example.shoesmanagement.service.impl.GiayChiTietServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -68,7 +69,9 @@ public class GiayChiTietController {
         List<ChiTietGiay> chiTietGiayList = new ArrayList<>();
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
+
             return "redirect:/login";
+
         }
         for (ChiTietGiay x : items) {
             if (x.getIdCTGOld() == null) {
@@ -585,7 +588,6 @@ public class GiayChiTietController {
             chiTietGiay1.setNamBH(chiTietGiay.getNamBH());
             chiTietGiay1.setTrongLuong(chiTietGiay.getTrongLuong());
             chiTietGiay1.setGiaBan(chiTietGiay.getGiaBan());
-            chiTietGiay1.setSoTienTruocKhiGiam(chiTietGiay.getGiaBan());
             chiTietGiay1.setSoLuong(chiTietGiay.getSoLuong());
             chiTietGiay1.setTrangThai(1);
             chiTietGiay1.setMauSac(chiTietGiay.getMauSac());
@@ -688,7 +690,7 @@ public class GiayChiTietController {
             chiTietGiay2.setNamBH(chiTietGiay.getNamBH());
             chiTietGiay2.setTrongLuong(chiTietGiay.getTrongLuong());
             chiTietGiay2.setGiaBan(chiTietGiay.getGiaBan());
-            chiTietGiay2.setSoTienTruocKhiGiam(chiTietGiay.getGiaBan());
+
             chiTietGiay2.setSoLuong(chiTietGiay.getSoLuong());
             chiTietGiay2.setTrangThai(1);
             chiTietGiay2.setMauSac(chiTietGiay.getMauSac());
@@ -1402,6 +1404,24 @@ public class GiayChiTietController {
             redirectAttributes.addFlashAttribute("message", true);
         }
         return link1;
+    }
+    @PutMapping("/giay-chi-tiet/{idCTG}")
+    public ResponseEntity<String> capNhatTrangThai(@RequestParam String trangThai,
+                                                   @PathVariable UUID idCTG) {
+        int trangThaiInt = Integer.valueOf(trangThai);
+        System.out.println(trangThai);
+
+        int trangThaiUpdate;
+        if (trangThaiInt == 1) {
+            trangThaiUpdate = 0;
+        } else {
+            trangThaiUpdate = 1;
+        }
+        System.out.println(trangThaiUpdate);
+        ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idCTG);
+        chiTietGiay.setTrangThai(trangThaiUpdate);
+        giayChiTietService.save(chiTietGiay);
+        return ResponseEntity.ok("ok");
     }
 
 }
