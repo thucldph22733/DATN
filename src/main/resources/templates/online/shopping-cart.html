@@ -33,12 +33,23 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <!-- Include Bootstrap JS -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
         <style>
             header {
                 position: fixed;
                 width: 100%;
                 z-index: 100;
+            }
+        </style>
+        <style>
+            .error-message {
+                color: white;
+                background-color: #f44336; /* Màu đỏ */
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             }
         </style>
         <style>
@@ -154,6 +165,20 @@
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
+
+                        <div th:if="${errorMessage}" class="alert alert-danger" role="alert" th:text="${errorMessage}">
+                            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="7000">
+                                <div class="toast-header">
+                                    <strong class="mr-auto">Thông báo</strong>
+                                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="toast-body" th:text="${errorMessage}">
+                                </div>
+                            </div>
+                        </div>
 
 
                         <div th:if="${successMessage}" th:attr="data-message=${successMessage}" id="success-toast"
@@ -1231,6 +1256,19 @@
         });
     }
 
+</script>
+<script>
+    // Hàm sẽ được gọi ngay khi trang được tải xong
+    window.onload = function() {
+        // Tìm ô thông báo bằng ID hoặc lớp
+        var errorMessageElement = document.querySelector('.alert') || document.querySelector('.error-message');
+        if (errorMessageElement) {
+            // Đặt hẹn giờ ẩn ô thông báo sau 5 giây (5000 milliseconds)
+            setTimeout(function() {
+                errorMessageElement.style.display = 'none';
+            }, 5000);
+        }
+    };
 </script>
 
 <!--Receive mail end-->

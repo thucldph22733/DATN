@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -54,7 +55,8 @@ public class CheckOutController {
     private KhuyenMaiService khuyenMaiService;
 
     @PostMapping("/buyer/checkout")
-    private String checkOutCart(Model model, @RequestParam("selectedProducts") List<UUID> selectedProductIds) {
+    private String checkOutCart(Model model, @RequestParam("selectedProducts") List<UUID> selectedProductIds, RedirectAttributes redirectAttribute) {
+
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
@@ -102,17 +104,29 @@ public class CheckOutController {
         for (UUID x : selectedProductIds) {
             HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
             GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(giayChiTietService.getByIdChiTietGiay(x), gioHang);
+            ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(x);
 
-            hoaDonChiTiet.setHoaDon(hoaDon);
-            hoaDonChiTiet.setChiTietGiay(giayChiTietService.getByIdChiTietGiay(x));
-            hoaDonChiTiet.setDonGia(gioHangChiTiet.getDonGia());
-            hoaDonChiTiet.setSoLuong(gioHangChiTiet.getSoLuong());
-            hoaDonChiTiet.setTgThem(new Date());
-            hoaDonChiTiet.setTrangThai(1);
+            // Thêm kiểm tra số lượng ở đây
+            if (gioHangChiTiet.getSoLuong() > chiTietGiay.getSoLuong()) {
+                redirectAttribute.addFlashAttribute("successMessage", "Số lượng sản phẩm không đủ. Vui lòng giảm số lượng.");
+                String idGiay = String.valueOf(chiTietGiay.getGiay().getIdGiay());
+                String idMau = String.valueOf(chiTietGiay.getMauSac().getIdMau());
+                String linkBack = idGiay + "/" +idMau;
+                return "redirect:/buyer/cart" ;
+            } else {
+                // Xử lý trường hợp số lượng trong giỏ hàng lớn hơn số lượng tồn
+                // Có thể bắn lỗi, thông báo cho người dùng hoặc xử lý theo cách khác
+                hoaDonChiTiet.setHoaDon(hoaDon);
+                hoaDonChiTiet.setChiTietGiay(chiTietGiay);
+                hoaDonChiTiet.setDonGia(gioHangChiTiet.getDonGia());
+                hoaDonChiTiet.setSoLuong(gioHangChiTiet.getSoLuong());
+                hoaDonChiTiet.setTgThem(new Date());
+                hoaDonChiTiet.setTrangThai(1);
 
-            hoaDonChiTietService.add(hoaDonChiTiet);
+                hoaDonChiTietService.add(hoaDonChiTiet);
 
-            listHDCTCheckOut.add(hoaDonChiTiet);
+                listHDCTCheckOut.add(hoaDonChiTiet);
+            }
         }
 
         int sumQuantity = listHDCTCheckOut.stream()

@@ -116,6 +116,33 @@
         border-radius: 3px;
     }
 </style>
+<STYLE>
+    .flex-container {
+        display: flex;
+        align-items: center; /* Căn giữa các items theo chiều dọc */
+    }
+
+    .flex-container > div {
+        margin-right: 15px; /* Thêm khoảng cách giữa các item, nếu cần */
+    }
+
+    .form-control-sm {
+        display: flex;
+        align-items: center; /* Đảm bảo label và select được căn giữa với nhau */
+    }
+
+    .form-control-sm label {
+        margin-right: 10px; /* Thêm khoảng cách giữa label và combobox, nếu cần */
+    }
+    .flex-container {
+        display: flex;
+        align-items: center; /* Đảm bảo các elements được căn giữa */
+    }
+
+    .flex-container > div {
+        margin-right: 10px; /* Thêm khoảng cách giữa input và select, nếu cần */
+    }
+</STYLE>
 
 <style>
     .alertify .ajs-message {
@@ -332,15 +359,11 @@
                                                                                     src="/images/img/icons/search-white.svg"
                                                                                     alt="img"></button>
                                                                     </div>
-                                                                    <div>
+                                                                    <div class="flex-container">
                                                                         <div>
-                                                                            <input
-                                                                                    type="search"
-                                                                                    class="form-control form-control-sm"
-                                                                                    name="keyword"
-                                                                                    placeholder="Tìm kiếm..."
-                                                                                    aria-controls="DataTables_Table_0">
+                                                                            <input type="search" class="form-control form-control-sm" name="keyword" placeholder="Tìm kiếm..." aria-controls="DataTables_Table_0">
                                                                         </div>
+
                                                                     </div>
                                                                 </div>
                                                             </form>
@@ -440,7 +463,7 @@
                                                                                 </a>
                                                                             </label>
                                                                         </li>
-                                                                    </div>
+                                                                   </div>
                                                                 </ul>
                                                             </div>
                                                             <div class="row">
@@ -959,7 +982,7 @@
                                     <div class="text-left fs-3 fw-normal">
                                         <label th:text="${'Hãng : '+ giay.hang.tenHang}"></label>
                                         <div id="sizeQuantity" th:if="${not #lists.isEmpty(listChiTietGiay)}">
-                                            Số lượng
+                                            Còn hàng
 <!--                                            <span th:text="${listChiTietGiay.get(0).size.soSize}">-->
 
                                             </span>: <span th:text="${listChiTietGiay.get(0).soLuong}"></span>  đôi
@@ -1146,7 +1169,7 @@
     function displaySizeQuantity(radioInput) {
         var quantity = radioInput.getAttribute('data-quantity');
         var size = radioInput.getAttribute('data-size');
-        document.getElementById('sizeQuantity').textContent = 'Số lượng  '+ ': ' + quantity +' '+ 'đôi' ;
+        document.getElementById('sizeQuantity').textContent = 'Còn hàng'+ ': ' + quantity +' '+ 'đôi' ;
     }
 
     // Gọi hàm này ngay lập tức khi tài liệu được tải để hiển thị số lượng cho size mặc định
@@ -1177,6 +1200,19 @@
             .then(data => {
             })
             .catch(error => {
+            })
+           .then(response => {
+            if (response.ok) {
+                return response.text(); // Hoặc response.json() nếu bạn trả về JSON
+            } else {
+                throw new Error('Something went wrong on api server!');
+            }
+        })
+            .then(data => {
+                console.log(data); // Hoặc xử lý kết quả từ server
+            })
+            .catch(error => {
+                console.error(error);
             });
 
         // Lấy giá trị giá bán từ phần tử cha
