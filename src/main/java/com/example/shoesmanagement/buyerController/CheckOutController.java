@@ -84,6 +84,7 @@ public class CheckOutController {
         List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
         model.addAttribute("khuyenMai", khuyenMai);
 
+
         String maHD = "HD_" + khachHang.getMaKH() + "_" + date.getDate() + generateRandomNumbers();
         session.setAttribute(String.valueOf(khachHang.getIdKH()), selectedProductIds);
         hoaDon.setKhachHang(khachHang);
@@ -142,7 +143,7 @@ public class CheckOutController {
                 .sum();
 
         double tongTienSP = listHDCTCheckOut.stream()
-                .mapToDouble(e -> e.getDonGia() * e.getSoLuong())
+                .mapToDouble(e -> e.getDonGia() )
                 .sum();
 
         double total = tongTienSP - giaTienGiam;
@@ -157,6 +158,7 @@ public class CheckOutController {
         hoaDonService.add(hoaDon);
 
         model.addAttribute("sumQuantity", sumQuantity);
+        model.addAttribute("tongTienSP", tongTienSP);
         model.addAttribute("total", total);
         model.addAttribute("listProductCheckOut", listHDCTCheckOut);
         model.addAttribute("toTalOder", total);
@@ -193,6 +195,7 @@ public class CheckOutController {
             model.addAttribute("addNewAddressNulll", true);
             model.addAttribute("addNewAddressNull", true);
         }
+
 
         session.removeAttribute("hoaDonTaoMoi");
 
@@ -418,6 +421,9 @@ public class CheckOutController {
 
             hoaDon.setHinhThucThanhToan(1);
             hoaDon.setTrangThai(0);
+            KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
+            khuyenMai.setSoLuong(khuyenMai.getSoLuong() - hoaDon.getTongSP());
+            khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() + hoaDon.getTongSP());
             hoaDonService.add(hoaDon);
 
             LichSuThanhToan lichSuThanhToan = new LichSuThanhToan();

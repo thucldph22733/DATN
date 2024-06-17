@@ -353,6 +353,8 @@ public class BanHangController {
             model.addAttribute("chiTietGiay", chiTietGiay);
         }
 
+
+
         this.tongSanPham = (int) session.getAttribute("tongSP");
         this.tongTien = (double) session.getAttribute("tongTien");
         this.tongTienSanPham = (double) session.getAttribute("tongTienSanPham");
@@ -372,6 +374,9 @@ public class BanHangController {
         hoaDon.setTongSP(tongSanPham);
         hoaDon.setHinhThucThanhToan(0);
 
+        KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
+        khuyenMai.setSoLuong(khuyenMai.getSoLuong() - hoaDon.getTongSP());
+        khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() + hoaDon.getTongSP());
         hoaDonService.add(hoaDon);
 
         this.tongTienSanPham = 0;

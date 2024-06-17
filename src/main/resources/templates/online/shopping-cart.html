@@ -446,6 +446,7 @@
                                     </td>
                                     <td style="width: 140px;" class="cart__price totalAmount"
                                         th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+
                                     <td class="cart__close"><a
                                             th:href="@{'/buyer/cart/delete/' + ${x.chiTietGiay.idCTG}}"
                                             id="deleteToCartButton" style="border-radius: 20% ; "><i
