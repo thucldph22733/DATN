@@ -641,12 +641,8 @@
                                                                         <h5 class="grandTotal" style="font-size: 13pt;"
                                                                             th:text=" ${#numbers.formatDecimal(tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"
                                                                             id="tongTienSauKhuyenMai"></h5>
-                                                                        <input id="tongtienKM" th:value="${tongTien}"
-                                                                               style="display: none">
-                                                                        <input class="text-danger" id="tongTienSP"
-                                                                               th:value="${tongTien}"
-                                                                               style="font-size: 13pt; display: none">
-
+                                                                        <input id="tongtienKM" th:value="${tongTien}" style="display: none">
+                                                                        <input class="text-danger" id="tongTienSP" th:value="${tongTien}" style="font-size: 13pt; display: none">
                                                                     </li>
 
                                                                     <li style="margin-bottom: 20px;">
