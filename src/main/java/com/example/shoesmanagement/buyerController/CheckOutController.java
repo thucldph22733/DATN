@@ -141,8 +141,12 @@ public class CheckOutController {
                 .mapToInt(HoaDonChiTiet::getSoLuong)
                 .sum();
 
+//        double tongTienSP = listHDCTCheckOut.stream()
+//                .mapToDouble(e -> e.getDonGia() * e.getSoLuong())
+//                .sum();
+
         double tongTienSP = listHDCTCheckOut.stream()
-                .mapToDouble(e -> e.getDonGia() * e.getSoLuong())
+                .mapToDouble(e -> e.getDonGia())
                 .sum();
 
         double total = tongTienSP - giaTienGiam;
@@ -157,6 +161,7 @@ public class CheckOutController {
         hoaDonService.add(hoaDon);
 
         model.addAttribute("sumQuantity", sumQuantity);
+        model.addAttribute("tongTienSP", tongTienSP);
         model.addAttribute("total", total);
         model.addAttribute("listProductCheckOut", listHDCTCheckOut);
         model.addAttribute("toTalOder", total);
@@ -189,7 +194,7 @@ public class CheckOutController {
 //            model.addAttribute("estimatedDeliveryDate", estimatedDeliveryDate);
 
         } else {
-            model.addAttribute("tongTienDaGiamVoucherShip", total);
+//            model.addAttribute("tongTienDaGiamVoucherShip", total);
             model.addAttribute("addNewAddressNulll", true);
             model.addAttribute("addNewAddressNull", true);
         }
