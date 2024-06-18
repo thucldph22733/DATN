@@ -122,6 +122,15 @@ public class DetailProductController {
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
 
         GioHangChiTiet gioHangChiTiet = ghctService.findByCTSPActive(ctg);
+        if(quantity > ctg.getSoLuong()) { // Giả sử ctg.getSoLuong() là phương thức lấy số lượng hiện có của sản phẩm
+            // Thêm thông báo lỗi vào redirectAttributes
+            redirectAttribute.addFlashAttribute("successMessage", "Số lượng sản phẩm không đủ. Vui lòng giảm số lượng.");
+            // Chuyển hướng người dùng trở lại trang chi tiết sản phẩm hoặc có thể là trang trước đó
+            String idGiay = String.valueOf(ctg.getGiay().getIdGiay());
+            String idMau = String.valueOf(ctg.getMauSac().getIdMau());
+            String linkBack = idGiay + "/" +idMau;
+            return "redirect:/buyer/shop-details/" + linkBack;
+        }
 
         if (gioHangChiTiet != null){
             gioHangChiTiet.setSoLuong(gioHangChiTiet.getSoLuong() + quantity);
