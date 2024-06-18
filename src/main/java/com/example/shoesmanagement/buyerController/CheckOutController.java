@@ -203,7 +203,7 @@ public class CheckOutController {
 
             model.addAttribute("shippingFee", shippingFee);
             model.addAttribute("billPlaceOrder", hoaDon);
-            model.addAttribute("toTalOder", total + shippingFee);
+            model.addAttribute("    toTalOder", total + shippingFee);
             model.addAttribute("tongTienDaGiamVoucherShip", total + shippingFee);
             model.addAttribute("diaChiKHDefault", diaChiKHDefault);
             model.addAttribute("addNewAddressNotNull", true);
@@ -581,7 +581,9 @@ public class CheckOutController {
 
         List<HoaDonChiTiet> listHDCTCheckOut = new ArrayList<>();
         listHDCTCheckOut.add(hoaDonChiTiet);
-
+        double tongTienSP = listHDCTCheckOut.stream()
+                .mapToDouble(HoaDonChiTiet::getDonGia )
+                .sum();
         int sumQuantity = quantity;
 
         double total = quantity * ctg.getGiaBan();
@@ -590,7 +592,7 @@ public class CheckOutController {
         hoaDon.setTongTienSanPham(total);
 
         hoaDonService.add(hoaDon);
-
+        model.addAttribute("tongTienSP", tongTienSP);
         model.addAttribute("sumQuantity", sumQuantity);
         model.addAttribute("total", total);
         model.addAttribute("listProductCheckOut", listHDCTCheckOut);
