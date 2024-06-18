@@ -356,6 +356,7 @@ public class UserController {
         }
         model.addAttribute("giaTienGiam", giaTienGiam);
 
+
         int trangThai = hoaDon.getTrangThai();
         if (trangThai == 0){
 

@@ -17,12 +17,8 @@ public class AdminController {
     public String hienThi(Model model) {
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
-
-
             return "redirect:/login";
-
         }
-        System.out.println("aaaaa");
         return "manage/activities";
     }
 
