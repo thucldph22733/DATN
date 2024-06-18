@@ -33,6 +33,14 @@
                 width: 100%;
                 z-index: 100;
             }
+            .primary-btn {
+                background-color: #007bff;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                cursor: pointer;
+                font-size: 16px;
+            }
         </style>
     </head>
 
@@ -203,9 +211,10 @@
 <section class="checkout spad">
     <div class="container">
 
-        <form action="/buyer/checkout/placeoder" method="post">
+        <form action="/buyer/checkout/placeoder" method="post" id="orderForm" onsubmit="return confirmOrder()">
 
-            <div class="checkout__form">
+
+        <div class="checkout__form">
 
                 <!--Show Dia Chi Khach Hang Begin-->
                 <div th:if="${addNewAddressNotNull}" class="row">
@@ -314,7 +323,7 @@
                             </div>
                             <div class="col-lg-3" style="text-align: center;">
                                 <p style="font-size: 13pt; font-weight: 700;"
-                                   th:text="'₫' + ${#numbers.formatDecimal(total, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                   th:text="'₫' + ${#numbers.formatDecimal(tongTienSP, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                             </div>
 
                         </div>
@@ -463,7 +472,7 @@
                             <div class="col-lg-9"></div>
                             <div class="col-lg-3">
                                 <div class="product__details__cart__option">
-                                    <button type="submit" href="#" class="primary-btn">Đặt hàng</button>
+                                    <button type="submit" class="primary-btn" id="submitBtn">Đặt hàng</button>
                                 </div>
                             </div>
                         </div>
@@ -827,7 +836,27 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.getElementById('submitBtn').addEventListener('click', function(event) {
+        event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu ngay lập tức
 
+        Swal.fire({
+            title: 'Bạn có chắc chắn muốn đặt hàng?',
+            text: "Bạn sẽ không thể hoàn tác thao tác này!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Có, đặt hàng!',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('orderForm').submit(); // Gửi biểu mẫu nếu người dùng xác nhận
+            }
+        });
+    });
+</script>
 <script>
     const host = "https://esgoo.net/";
     var callAPI = (api) => {
