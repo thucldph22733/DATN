@@ -160,6 +160,7 @@
                     </a>
                 </div>
             </div>
+
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
@@ -176,6 +177,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div th:if="${successMessage}" th:attr="data-message=${successMessage}" id="success-toast"
                              style="position: fixed; top: 1rem; right: 1rem; z-index: 1050;">
                             <!-- Toast container, ẩn mặc định và sẽ được hiển thị bằng JavaScript -->
@@ -354,7 +356,9 @@
                                                 <h6 style="margin-top: -22px;"
                                                     th:text="${x.chiTietGiay.giay.tenGiay}"></h6>
                                             </a>
-                                                  </div>
+                                            <h5 class="cart__price"
+                                                th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
+                                        </div>
 
                                     </td>
                                     <td style="width: 175px;" class="quantity__item">
@@ -438,7 +442,7 @@
                                                 <h6 style="margin-top: -22px;"
                                                     th:text="${x.chiTietGiay.giay.tenGiay}"></h6>
                                             </a>
-                                             </div>
+                                        </div>
 
                                     </td>
                                     <td style="width: 175px;" class="quantity__item">
@@ -992,7 +996,7 @@
                 </div>
                 <div class="modal-footer">
                     <p>Nhấp vào chỗ trống để đóng</p>
-<!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>-->
+
                 </div>
             </div>
         </div>
@@ -1048,7 +1052,7 @@
                 inputElement.value = 1;
             }else
 
-                 inputElement.value = 10
+                inputElement.value = 10
         }
 
         // Gọi hàm updateTotalAmount để cập nhật tổng tiền
