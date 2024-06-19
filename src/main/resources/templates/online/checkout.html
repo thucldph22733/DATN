@@ -118,6 +118,16 @@ a<!DOCTYPE html>
                     </ul>
                 </nav>
             </div>
+
+            <div class="col-lg-3 col-md-3">
+                <div class="header__nav__option" style="display: flex;justify-content: end;">
+                    <a th:href="@{'/buyer/cart'}" style="position: relative; display: inline-block; ">
+                        <img src="/images/img/icon/cart.png" alt="">
+                        <span class="cart-count" style="position: absolute; height:20px; width: 25px; top: -13px; left: 3px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;" th:text="${sumProductInCart}"></span>
+                    </a>
+                </div>
+            </div>
+
         </div>
         <div class="canvas__open"><i class="fa fa-bars"></i></div>
     </div>
@@ -154,7 +164,7 @@ a<!DOCTYPE html>
         <form action="/buyer/checkout/placeoder" method="post" id="orderForm" onsubmit="return confirmOrder()">
 
 
-            <div class="checkout__form">
+        <div class="checkout__form">
 
                 <!--Show Dia Chi Khach Hang Begin-->
                 <div th:if="${addNewAddressNotNull}" class="row">
@@ -264,12 +274,14 @@ a<!DOCTYPE html>
                             </div>
 
                             <div class="col-lg-3" style="text-align: center;">
-                                <!--                                <p style="font-size: 13pt; font-weight: 700;"-->
-                                <!--                                   th:text="'₫' + ${#numbers.formatDecimal(tongTienSP, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}">-->
-                                <!--                                </p> -->
+
+<!--                                <p style="font-size: 13pt; font-weight: 700;"-->
+<!--                                   th:text="'₫' + ${#numbers.formatDecimal(tongTienSP, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}">-->
+<!--                                </p> -->
                                 <p style="font-size: 13pt; font-weight: 700;"
 
-                                   th:text="'₫' + ${#numbers.formatDecimal(tongTienSP, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                   th:text="'₫' + ${#numbers.formatDecimal(total, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+
 
                             </div>
 
@@ -409,7 +421,7 @@ a<!DOCTYPE html>
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billPlaceOrder.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p th:text="'₫' + ${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 0, 'POINT')}"></p>
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billPlaceOrder.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                <p th:text="'₫' + ${#numbers.formatDecimal(billPlaceOrder.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                <p style="font-size: 18pt; font-weight: 700;" th:text="'₫' + ${#numbers.formatDecimal(toTalOder, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                             </div>
                         </div>
 
@@ -785,24 +797,26 @@ a<!DOCTYPE html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    <script>
-        document.getElementById('submitBtn').addEventListener('click', function(event) {
+
+<script>
+    document.getElementById('submitBtn').addEventListener('click', function(event) {
         event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu ngay lập tức
 
         Swal.fire({
-        title: 'Bạn có chắc chắn muốn đặt hàng?',
-        text: "Bạn sẽ không thể hoàn tác thao tác này!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Có, đặt hàng!',
-        cancelButtonText: 'Hủy'
-    }).then((result) => {
-        if (result.isConfirmed) {
-        document.getElementById('orderForm').submit(); // Gửi biểu mẫu nếu người dùng xác nhận
-    }
-    });
+            title: 'Bạn có chắc chắn muốn đặt hàng?',
+            text: "Bạn sẽ không thể hoàn tác thao tác này!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Có, đặt hàng!',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('orderForm').submit(); // Gửi biểu mẫu nếu người dùng xác nhận
+            }
+        });
+
     });
 </script>
 <script>

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 @Service
 public class HoaDonServieImpl implements HoaDonService {
+
     @Autowired
     private HoaDonRepository hoaDonRepository;
 
@@ -60,6 +61,21 @@ public class HoaDonServieImpl implements HoaDonService {
     public List<HoaDon> listHoaDonByNhanVienAndTrangThai(NhanVien nhanVien, int trangThai) {
         return hoaDonRepository.findByNhanVienAndLoaiHDAndTrangThaiOrderByTgTaoDesc(nhanVien,0,trangThai);
     }
+
+    public double getTongTienSanPham(UUID idHoaDon) {
+        // Lấy hóa đơn từ repository
+        HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).orElseThrow(() -> new IllegalArgumentException("Không tìm thấy hóa đơn"));
+
+        // Tính tổng tiền sản phẩm
+        return hoaDon.getHoaDonChiTiets().stream()
+                .mapToDouble(hdc -> hdc.getDonGia() * hdc.getSoLuong())
+                .sum();
+    }
+//
+//    @Override
+//    public void delteHoaDonCho(UUID id,int trangThai,Integer loaiHD) {
+//        HoaDon hoaDon = hoaDonRepository.getById(id,)
+//    }
 
     @Override
     public List<HoaDon> listHoaDonHuyAndThanhCongByNhanVien(NhanVien nhanVien) {

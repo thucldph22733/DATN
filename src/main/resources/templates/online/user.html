@@ -179,51 +179,6 @@
             </div>
             <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option" style="display: flex;justify-content: end;">
-
-
-                    <!--                    <div class="nav user-menu" style="height: 30px;">-->
-                    <!--                        <li class="nav-item dropdown" style="height: 30px;">-->
-                    <!--                            <a data-bs-toggle="dropdown" href="#" >-->
-                    <!--                                <img style="margin-bottom: 42px; width: 18px; height: 18px;"   src="/images/img/icon/notification.png" >-->
-                    <!--                            </a>-->
-                    <!--                            <span style="position: absolute; height:20px; width: 25px; top: -13px; left: 7px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;" th:text="${soThongBao}"></span>-->
-                    <!--                            <div class="dropdown-menu notifications" style="width:300px; top: -80px; position: absolute;">-->
-                    <!--                                <div class="topnav-dropdown-header">-->
-                    <!--                                    <span class="notification-title">Thông báo</span>-->
-                    <!--                                    <a class="clear-noti"> Xóa sạch </a>-->
-                    <!--                                </div>-->
-                    <!--                                <div class="vertical-scroll scroll-demo" >-->
-                    <!--                                    <th:block th:if="${x.trangThai != 3}" th:each="x : ${listThongBao}">-->
-                    <!--                                        <a href="#" class="items-noticafitions">-->
-                    <!--                                            <div class="items-notica">-->
-                    <!--                                        <span class="avatar">-->
-                    <!--                                            <img alt="" src="/images/img/blog/blog-1.jpg">-->
-                    <!--                                        </span>-->
-                    <!--                                                <div class="text-notica">-->
-                    <!--                                                    <span class="notica-title" th:text="${fullNameLogin}"></span>-->
-                    <!--                                                    <p class="notica-times">1 phút trước</p>-->
-                    <!--                                                    <input th:if="x.trangThai == 1" checked class="notica-read" type="radio" name="" id="">-->
-                    <!--                                                    <input th:if="x.trangThai == 0">-->
-                    <!--                                                </div>-->
-                    <!--                                                <p class="notica-status">-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</p>-->
-                    <!--                                                <div class="text-contents">-->
-                    <!--                                                    <p class="notica-contents" th:text="${x.noiDungTB}"></p>-->
-                    <!--                                                </div>-->
-
-
-                    <!--                                            </div>-->
-                    <!--                                        </a>-->
-                    <!--                                    </th:block>-->
-                    <!--                                </div>-->
-                    <!--                                <div class="topnav-dropdown-footer">-->
-                    <!--                                    <a href="activities.html">Xem tất cả thông báo</a>-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-
-                    <!--                        </li>-->
-                    <!--                    </div>-->
-                    <!--                    <a th:href="@{'/buyer/fa&recently'}"><img src="/images/img/icon/heart2.png" alt=""></a>-->
-
                     <a th:href="@{'/buyer/cart'}" style="position: relative; display: inline-block; ">
                         <img src="/images/img/icon/cart.png" alt="">
                         <span class="cart-count" style="position: absolute; height:20px; width: 25px; top: -13px; left: 3px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;" th:text="${sumProductInCart}"></span>
@@ -308,6 +263,7 @@
                             <p style="margin: 0 10px 0 10px;">|</p>
                             <p style="color: red;">CHỜ THANH TOÁN</p>
                             </p>
+
                         </div>
 
                         <div class="row" style="display: flex; margin: 30px 0 0 30px; width: 100%;">
@@ -468,7 +424,7 @@
                             </a>
                             <p style="float: right; display: flex; " th:text="'MÃ ĐƠN HÀNG : ' + ${billDetailShip.maHD}">
                             <p style="margin: 0 10px 0 10px;">|</p>
-                            <p style="color: red;">CHỜ GIAO HÀNG</p>
+                            <p style="color: red;">CHỜ XÁC NHẬN</p>
                             </p>
                         </div>
 
@@ -1160,7 +1116,7 @@
                                     <ul>
                                         <li th:class="${type1}" style="margin-left: 50px; margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase'}" >Tất cả</a></li>
                                         <li th:class="${type2}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/pay'}" >Chờ thanh toán</a></li>
-                                        <li th:class="${type3}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/ship'}" >Chờ giao hàng</a></li>
+                                        <li th:class="${type3}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/ship'}" >Chờ xác nhận</a></li>
                                         <li th:class="${type4}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/receive'}">Giao hàng</a></li>
                                         <li th:class="${type5}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/completed'}">Thành công</a></li>
                                         <li th:class="${type6}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/cancel'}">Đã hủy</a></li>
@@ -1182,7 +1138,7 @@
                                         <p style="float: right; display: flex; " th:text="${x.maHD}"></p>
                                         <p style="margin: 0 10px 0 10px;">|</p>
                                         <p th:if="${x.trangThai == 0}" style="color: red; margin-right: 20px;">CHỜ THANH TOÁN</p>
-                                        <p th:if="${x.trangThai == 1}" style="color: red; margin-right: 20px;">CHỜ GIAO HÀNG</p>
+                                        <p th:if="${x.trangThai == 1}" style="color: red; margin-right: 20px;">CHỜ XÁC NHẬN</p>
                                         <p th:if="${x.trangThai == 2}" style="color: red; margin-right: 20px;">ĐANG GIAO</p>
                                         <p th:if="${x.trangThai == 3}" style="color: red; margin-right: 20px;">GIAO THÀNH CÔNG</p>
                                         <p th:if="${x.trangThai == 4}" style="color: red; margin-right: 20px;">ĐÃ HỦY</p>
@@ -1289,7 +1245,7 @@
 
                                     <div style="float: right; display: flex; padding: 10px 0 0 0;">
                                         <a style="color: black;" href="#" th:text="${x.maHD}"></a>
-                                        <span style="margin: 0 10px 0 10px;">  | </span> <p style="margin-right: 20px; color: red;">CHỜ GIAO HÀNG</p>
+                                        <span style="margin: 0 10px 0 10px;">  | </span> <p style="margin-right: 20px; color: red;">CHỜ XÁC NHẬN</p>
                                     </div>
 
                                     <div style="width: 90%; margin: 40px 0 20px 40px ; background-color: black; height: 0.5px;"></div>
@@ -1590,7 +1546,7 @@
         </div>
     </div>
     <!--    Modal thong bao thanh toan end-->
-
+`
 
     <!--    Thêm địa chỉ  begin-->
     <div th:if="${addNewAddressSetting}" class="modal fade" id="modalThemDiaChi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
