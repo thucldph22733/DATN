@@ -155,17 +155,14 @@
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
-
-                    <a th:href="@{'/buyer/home'}"><img src="/images/img/logo.png"
-                                                       style="width: 240px; height: 240px; margin-top: -84px"
-                                                       alt=""></a>
-
+                    <a th:href="@{'/buyer/home'}">
+                        <img src="/images/img/logo.png" style="width: 240px; height: 240px; margin-top: -84px" alt="">
+                    </a>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-
                         <div th:if="${errorMessage}" class="alert alert-danger" role="alert" th:text="${errorMessage}">
                             <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="7000">
                                 <div class="toast-header">
@@ -179,8 +176,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                         <div th:if="${successMessage}" th:attr="data-message=${successMessage}" id="success-toast"
                              style="position: fixed; top: 1rem; right: 1rem; z-index: 1050;">
                             <!-- Toast container, ẩn mặc định và sẽ được hiển thị bằng JavaScript -->
@@ -212,8 +207,6 @@
             </div>
             <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option" style="display: flex;justify-content: end;">
-
-
                     <div class="nav user-menu" style="height: 30px;">
                         <li class="nav-item dropdown" style="height: 30px;">
                             <a data-bs-toggle="dropdown" href="#">
@@ -713,8 +706,7 @@
                         <span class="label">New</span>
                         <ul class="product__hover">
                             <li><a href="#"><img src="/images/img/icon/heart.png" alt=""></a></li>
-                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a>
-                            </li>
+                            <li><a href="#"><img src="/images/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
                             <li><a href="#"><img src="/images/img/icon/search.png" alt=""></a></li>
                         </ul>
                     </div>
@@ -999,7 +991,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <p>Nhấp vào chỗ trống để đóng</p>
+<!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>-->
                 </div>
             </div>
         </div>

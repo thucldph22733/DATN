@@ -348,7 +348,14 @@ public class UserController {
 
         HoaDon hoaDon= hoaDonService.getOne(idHD);
 
-        model.addAttribute("giaTienGiam", hoaDon.getKhuyenMai().getGiaTienGiam());
+        Double giaTienGiam = null;
+        if (hoaDon.getKhuyenMai() != null && hoaDon.getKhuyenMai().getGiaTienGiam() != null) {
+            giaTienGiam = hoaDon.getKhuyenMai().getGiaTienGiam();
+        } else {
+            giaTienGiam = 0.0;
+        }
+        model.addAttribute("giaTienGiam", giaTienGiam);
+
 
         int trangThai = hoaDon.getTrangThai();
         if (trangThai == 0){
