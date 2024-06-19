@@ -70,7 +70,9 @@ public class CheckOutController {
     private double giaTienGiam = 0;
 
     @GetMapping("/buyer/checkout")
-    private String checkOutCart(Model model, @RequestParam("selectedProducts") List<UUID> selectedProductIds, Optional<UUID> idKM) {
+    private String checkOutCart(Model model, @RequestParam("selectedProducts") List<UUID> selectedProductIds, Optional<UUID> idKM,RedirectAttributes redirectAttribute) {
+
+
 
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
@@ -124,7 +126,9 @@ public class CheckOutController {
 
             // Thêm kiểm tra số lượng ở đây
             if (gioHangChiTiet.getSoLuong() > chiTietGiay.getSoLuong()) {
+
 //                redirectAttribute.addFlashAttribute("successMessage", "Số lượng sản phẩm không đủ. Vui lòng giảm số lượng.");
+
                 String idGiay = String.valueOf(chiTietGiay.getGiay().getIdGiay());
                 String idMau = String.valueOf(chiTietGiay.getMauSac().getIdMau());
                 String linkBack = idGiay + "/" +idMau;
@@ -165,7 +169,9 @@ public class CheckOutController {
 //                .sum();
 
         double tongTienSP = listHDCTCheckOut.stream()
+
                 .mapToDouble(HoaDonChiTiet ::getDonGia)
+
                 .sum();
 
         double total = tongTienSP - giaTienGiam;
