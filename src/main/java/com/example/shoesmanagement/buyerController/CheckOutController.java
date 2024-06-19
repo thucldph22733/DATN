@@ -70,7 +70,9 @@ public class CheckOutController {
     private double giaTienGiam = 0;
 
     @GetMapping("/buyer/checkout")
-    private String checkOutCart(Model model, @RequestParam("selectedProducts") List<UUID> selectedProductIds, Optional<UUID> idKM) {
+    private String checkOutCart(Model model, @RequestParam("selectedProducts") List<UUID> selectedProductIds, Optional<UUID> idKM,RedirectAttributes redirectAttribute) {
+
+
 
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
@@ -123,8 +125,11 @@ public class CheckOutController {
             ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(x);
 
             // Thêm kiểm tra số lượng ở đây
+
             if (gioHangChiTiet.getSoLuong() > chiTietGiay.getSoLuong()) {
+
 //                redirectAttribute.addFlashAttribute("successMessage", "Số lượng sản phẩm không đủ. Vui lòng giảm số lượng.");
+
                 String idGiay = String.valueOf(chiTietGiay.getGiay().getIdGiay());
                 String idMau = String.valueOf(chiTietGiay.getMauSac().getIdMau());
                 String linkBack = idGiay + "/" +idMau;
@@ -156,31 +161,25 @@ public class CheckOutController {
                 .mapToInt(HoaDonChiTiet::getSoLuong)
                 .sum();
 
-//        double tongTienSP = listHDCTCheckOut.stream()
-//                .mapToDouble(e -> e.getDonGia() * e.getSoLuong())
-//                .sum();
 
-//        double tongTienSP = listHDCTCheckOut.stream()
-//                .mapToDouble(e -> e.getDonGia())
-//                .sum();
-
-        double tongTienSP = listHDCTCheckOut.stream()
+        double total = listHDCTCheckOut.stream()
                 .mapToDouble(HoaDonChiTiet ::getDonGia)
                 .sum();
 
-        double total = tongTienSP - giaTienGiam;
 
-        List<KhuyenMai> listKM = hoaDonRepository.listDieuKienKhuyenMai(tongTienSP);
+
+
+
+        List<KhuyenMai> listKM = hoaDonRepository.listDieuKienKhuyenMai(total);
         model.addAttribute("giaTienGiam", giaTienGiam);
         model.addAttribute("dieuKienKhuyenMai", listKM);
 
         hoaDon.setTongSP(sumQuantity);
-        hoaDon.setTongTienSanPham(tongTienSP);
+        hoaDon.setTongTienSanPham(total);
 
         hoaDonService.add(hoaDon);
 
         model.addAttribute("sumQuantity", sumQuantity);
-        model.addAttribute("tongTienSP", tongTienSP);
         model.addAttribute("total", total);
         model.addAttribute("listProductCheckOut", listHDCTCheckOut);
         model.addAttribute("toTalOder", total);
@@ -587,37 +586,23 @@ public class CheckOutController {
 
         hoaDonChiTietService.add(hoaDonChiTiet);
 
+
         List<HoaDonChiTiet> listHDCTCheckOut = new ArrayList<>();
         listHDCTCheckOut.add(hoaDonChiTiet);
-//        double tongTienSP = listHDCTCheckOut.stream()
-//                .mapToDouble(HoaDonChiTiet::getDonGia )
-//                .sum();
-//        int sumQuantity = quantity;
 
-//        double total = quantity * ctg.getGiaBan();
+        int sumQuantity = quantity;
 
-        int sumQuantity = listHDCTCheckOut.stream()
-                .mapToInt(HoaDonChiTiet::getSoLuong)
-                .sum();
+        double total = quantity * ctg.getGiaBan();
 
-        double tongTienSP = listHDCTCheckOut.stream()
-                .mapToDouble(HoaDonChiTiet ::getDonGia)
-                .sum();
-
-        double total = tongTienSP - giaTienGiam;
-
-        List<KhuyenMai> listKM = hoaDonRepository.listDieuKienKhuyenMai(tongTienSP);
+        List<KhuyenMai> listKM = hoaDonRepository.listDieuKienKhuyenMai(total);
         model.addAttribute("giaTienGiam", giaTienGiam);
         model.addAttribute("dieuKienKhuyenMai", listKM);
-
-        hoaDon.setTongSP(sumQuantity);
-        hoaDon.setTongTienSanPham(tongTienSP);
 
         hoaDon.setTongSP(sumQuantity);
         hoaDon.setTongTienSanPham(total);
 
         hoaDonService.add(hoaDon);
-        model.addAttribute("tongTienSP", tongTienSP);
+
         model.addAttribute("sumQuantity", sumQuantity);
         model.addAttribute("total", total);
         model.addAttribute("listProductCheckOut", listHDCTCheckOut);
@@ -640,8 +625,7 @@ public class CheckOutController {
             model.addAttribute("ngayDuKien", ngayDuKien);
             model.addAttribute("shippingFee", shippingFee);
             model.addAttribute("billPlaceOrder", hoaDon);
-            model.addAttribute("toTalOder", total + shippingFee);
-            model.addAttribute("tongTienDaGiamVoucherShip", total + shippingFee);
+            model.addAttribute("toTalOder", total + shippingFee - giaTienGiam);
             model.addAttribute("diaChiKHDefault", diaChiKHDefault);
             model.addAttribute("addNewAddressNotNull", true);
             model.addAttribute("listAddressKH", diaChiKHList);
