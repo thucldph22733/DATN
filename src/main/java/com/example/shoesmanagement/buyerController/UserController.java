@@ -732,7 +732,7 @@ public class UserController {
 
         for (HoaDonChiTiet x:hoaDonChiTietList) {
 
-            GioHangChiTiet gioHangChiTietExist = ghctService.findByCTSPActive(x.getChiTietGiay());
+            GioHangChiTiet gioHangChiTietExist = ghctService.findByCTSPActiveAndTrangThai(x.getChiTietGiay(),1);
 
             if (gioHangChiTietExist != null){
 
