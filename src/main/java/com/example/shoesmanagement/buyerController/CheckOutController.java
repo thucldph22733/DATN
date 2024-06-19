@@ -546,6 +546,14 @@ public class CheckOutController {
         hoaDon.setTgTao(date);
         hoaDon.setTrangThai(6);
         hoaDon.setLoiNhan(hoaDon.getLoiNhan());
+
+        KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
+        if(khuyenMai != null){
+            khuyenMai.setSoLuong(khuyenMai.getSoLuong() - 1);
+            khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() + 1);
+            khuyenMaiRepository.saveAndFlush(khuyenMai);
+        }
+
         hoaDonService.add(hoaDon);
 
         GiaoHang giaoHang = new GiaoHang();
@@ -581,12 +589,29 @@ public class CheckOutController {
 
         List<HoaDonChiTiet> listHDCTCheckOut = new ArrayList<>();
         listHDCTCheckOut.add(hoaDonChiTiet);
-        double tongTienSP = listHDCTCheckOut.stream()
-                .mapToDouble(HoaDonChiTiet::getDonGia )
-                .sum();
-        int sumQuantity = quantity;
+//        double tongTienSP = listHDCTCheckOut.stream()
+//                .mapToDouble(HoaDonChiTiet::getDonGia )
+//                .sum();
+//        int sumQuantity = quantity;
 
-        double total = quantity * ctg.getGiaBan();
+//        double total = quantity * ctg.getGiaBan();
+
+        int sumQuantity = listHDCTCheckOut.stream()
+                .mapToInt(HoaDonChiTiet::getSoLuong)
+                .sum();
+
+        double tongTienSP = listHDCTCheckOut.stream()
+                .mapToDouble(HoaDonChiTiet ::getDonGia)
+                .sum();
+
+        double total = tongTienSP - giaTienGiam;
+
+        List<KhuyenMai> listKM = hoaDonRepository.listDieuKienKhuyenMai(tongTienSP);
+        model.addAttribute("giaTienGiam", giaTienGiam);
+        model.addAttribute("dieuKienKhuyenMai", listKM);
+
+        hoaDon.setTongSP(sumQuantity);
+        hoaDon.setTongTienSanPham(tongTienSP);
 
         hoaDon.setTongSP(sumQuantity);
         hoaDon.setTongTienSanPham(total);
