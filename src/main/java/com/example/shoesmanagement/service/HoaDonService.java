@@ -23,6 +23,8 @@ public interface HoaDonService {
 
     List<HoaDon> listAllHoaDonByNhanVien(NhanVien nhanVien);
 
+    double getTongTienSanPham(UUID idHoaDon);
+
     List<HoaDon> listAllHoaDonByNhanVienHienTai(NhanVien nhanVien);
 
 //    List<HoaDon> hienThiDieuKien();

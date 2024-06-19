@@ -116,6 +116,34 @@
         border-radius: 3px;
     }
 </style>
+<STYLE>
+    .flex-container {
+        display: flex;
+        align-items: center; /* Căn giữa các items theo chiều dọc */
+    }
+
+    .flex-container > div {
+        margin-right: 15px; /* Thêm khoảng cách giữa các item, nếu cần */
+    }
+
+    .form-control-sm {
+        display: flex;
+        align-items: center; /* Đảm bảo label và select được căn giữa với nhau */
+    }
+
+    .form-control-sm label {
+        margin-right: 10px; /* Thêm khoảng cách giữa label và combobox, nếu cần */
+    }
+
+    .flex-container {
+        display: flex;
+        align-items: center; /* Đảm bảo các elements được căn giữa */
+    }
+
+    .flex-container > div {
+        margin-right: 10px; /* Thêm khoảng cách giữa input và select, nếu cần */
+    }
+</STYLE>
 
 <style>
     .alertify .ajs-message {
@@ -309,15 +337,15 @@
                                                                                     src="/images/img/icons/search-white.svg"
                                                                                     alt="img"></button>
                                                                     </div>
-                                                                    <div>
+                                                                    <div class="flex-container">
                                                                         <div>
-                                                                            <input
-                                                                                    type="search"
-                                                                                    class="form-control form-control-sm"
-                                                                                    name="keyword"
-                                                                                    placeholder="Tìm kiếm..."
-                                                                                    aria-controls="DataTables_Table_0">
+                                                                            <input type="search"
+                                                                                   class="form-control form-control-sm"
+                                                                                   name="keyword"
+                                                                                   placeholder="Tìm kiếm..."
+                                                                                   aria-controls="DataTables_Table_0">
                                                                         </div>
+
                                                                     </div>
                                                                 </div>
                                                             </form>
@@ -367,23 +395,28 @@
                                                         <th:block th:each="product : ${listSanPham}">
                                                             <tr>
                                                                 <td>
-                                                                    <img style="height: 90px;width: 90px" th:src="@{'/images/imgsProducts/'+ ${product.hinhAnh}}"
+                                                                    <img style="height: 90px;width: 90px"
+                                                                         th:src="@{'/images/imgsProducts/'+ ${product.hinhAnh}}"
                                                                          alt="img">
                                                                 </td>
                                                                 <td>
                                                                     <h6>[[${product.soLuong}]]</h6>
                                                                 </td>
                                                                 <td>
-                                                                    <h3 style="font-size: 12pt">[[${product.tenGiay}]]</h3>
+                                                                    <h3 style="font-size: 12pt">
+                                                                        [[${product.tenGiay}]]</h3>
                                                                 </td>
                                                                 <td>
-                                                                    <h3 style="font-size: 12pt" th:text=" ${#numbers.formatDecimal(product.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h3>
+                                                                    <h3 style="font-size: 12pt"
+                                                                        th:text=" ${#numbers.formatDecimal(product.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h3>
                                                                 </td>
                                                                 <td>
-                                                                    <h4 style="font-size: 12pt" th:text="${product.mauSac}"></h4>
+                                                                    <h4 style="font-size: 12pt"
+                                                                        th:text="${product.mauSac}"></h4>
                                                                 </td>
                                                                 <td>
-                                                                    <a style="font-size: 11pt" th:href="@{'/ban-hang/chon-size/' + ${product.idGiay}+'/'+${product.mauSac} }"
+                                                                    <a style="font-size: 11pt"
+                                                                       th:href="@{'/ban-hang/chon-size/' + ${product.idGiay}+'/'+${product.mauSac} }"
                                                                        class="btn btn-outline-warning">Chọn</a>
                                                                 </td>
                                                             </tr>
@@ -434,7 +467,9 @@
                                                     <div class="card-body pt-0 mt-3">
                                                         <div class="totalitem">
                                                             <label class="fw-semibold fs-3 ">Giỏ hàng</label>
-                                                            <button onclick="reloadPage()" class="btn btn-primary">Reload Hóa Đơn</button>
+                                                            <button onclick="updateAndReload()" class="btn btn-primary">
+                                                                Reload Hóa Đơn
+                                                            </button>
                                                             <h4 th:text="'Số sản phẩm: '+${tongSanPham}"></h4>
                                                             <a href="javascript:void(0);">Clear all</a>
                                                         </div>
@@ -474,12 +509,17 @@
                                                                     <li>
                                                                         <div class="productimg">
                                                                             <div class="productimgs">
-                                                                                <img th:src="@{'/images/imgsProducts/' + ${gioHang.chiTietGiay.hinhAnh.url1}}" alt="img">
+                                                                                <img th:src="@{'/images/imgsProducts/' + ${gioHang.chiTietGiay.hinhAnh.url1}}"
+                                                                                     alt="img">
                                                                             </div>
                                                                             <div class="productcontet">
                                                                                 <h4 th:text="${gioHang.chiTietGiay.giay.tenGiay}">
-                                                                                    <a href="javascript:void(0);" class="ms-2" data-bs-toggle="modal" data-bs-target="#edit">
-                                                                                        <img src="/images/img/icons/edit-5.svg" alt="img">
+                                                                                    <a href="javascript:void(0);"
+                                                                                       class="ms-2"
+                                                                                       data-bs-toggle="modal"
+                                                                                       data-bs-target="#edit">
+                                                                                        <img src="/images/img/icons/edit-5.svg"
+                                                                                             alt="img">
                                                                                     </a>
                                                                                 </h4>
                                                                                 <div class="row">
@@ -491,14 +531,19 @@
                                                                                 <div class="increment-decrement">
                                                                                     <div class="input-groups">
                                                                                         <input style="margin-top: 3px; border: none; font-weight: 700; font-size: 18pt; background-color: white;"
-                                                                                               type="button" value="-" class="button-minus dec button" onclick="decrementQuantity(this)">
+                                                                                               type="button" value="-"
+                                                                                               class="button-minus dec button"
+                                                                                               onclick="decrementQuantity(this)">
                                                                                         <input class="quantityInput"
                                                                                                oninput="updateTotalAmountAndGrandTotal(this)"
                                                                                                th:value="${gioHang.soLuong}"
                                                                                                style="width: 30px; text-align: center; border: none;"
-                                                                                               type="text" th:data-id="${gioHang.chiTietGiay.idCTG}" min="1">
+                                                                                               type="text"
+                                                                                               th:data-id="${gioHang.chiTietGiay.idCTG}"
+                                                                                               min="1">
                                                                                         <input style="border: none; font-weight: 700; font-size: 14pt; background-color: white;"
-                                                                                               type="button" value="+" class="button-plus inc button a3 a5 a1 a-1"
+                                                                                               type="button" value="+"
+                                                                                               class="button-plus inc button a3 a5 a1 a-1"
                                                                                                onclick="incrementQuantity(this)">
                                                                                     </div>
                                                                                 </div>
@@ -510,7 +555,8 @@
                                                                              th:text="${#numbers.formatDecimal(gioHang.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
                                                                     </li>
                                                                     <li>
-                                                                        <h5 style="font-size:12px " th:text="${gioHang.chiTietGiay.mauSac.tenMau}"></h5>
+                                                                        <h5 style="font-size:12px "
+                                                                            th:text="${gioHang.chiTietGiay.mauSac.tenMau}"></h5>
                                                                     </li>
                                                                     <li>
                                                                         <div class="cart__price totalAmount"
@@ -518,9 +564,11 @@
                                                                              th:text="${#numbers.formatDecimal(gioHang.chiTietGiay.giaBan * gioHang.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
                                                                     </li>
                                                                     <li>
-                                                                        <a class="btn" th:href="@{'/ban-hang/xoa-gio-hang/' + ${gioHang.chiTietGiay.idCTG}}"
+                                                                        <a class="btn"
+                                                                           th:href="@{'/ban-hang/xoa-gio-hang/' + ${gioHang.chiTietGiay.idCTG}}"
                                                                            onclick="return confirm('Bạn có muốn xóa sản phẩm không')">
-                                                                            <img src="/images/img/icons/delete-2.svg" alt="img">
+                                                                            <img src="/images/img/icons/delete-2.svg"
+                                                                                 alt="img">
                                                                         </a>
                                                                     </li>
                                                                 </ul>
@@ -550,64 +598,80 @@
 
                                                                     <li style="margin-bottom: 20px;">
                                                                         <div>Tạm tính</div>
-                                                                        <div class="grandTotal" id="tongTienSanPham2"
+                                                                        <div class="grandTotal" id="tienTamTinh"
                                                                              th:text=" ${#numbers.formatDecimal(tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
                                                                     </li>
 
                                                                     <li style="margin-bottom: 20px;">
                                                                         <h5>
 
-                                                                            <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Chọn khuyến mãi</a>
+                                                                            <a type="button" class="btn btn-primary"
+                                                                               data-bs-toggle="modal"
+                                                                               data-bs-target="#staticBackdrop">Chọn
+                                                                                khuyến mãi</a>
                                                                         </h5>
 
-                                                                        <li style="margin-bottom: 20px;">
-                                                                            <h5>Mã khuyến mãi:</h5>
-                                                                            <h5 th:text="${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 0, 'POINT')} + '₫'"></h5>
-                                                                            <input type="text" th:value="${giaTienGiam}" id="tienGiam" style="display: none">
-                                                                        </li>
+                                                                    <li style="margin-bottom: 20px;">
+                                                                        <h5>Mã khuyến mãi:</h5>
+                                                                        <h5 th:text="${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 0, 'POINT')} + '₫'"></h5>
+                                                                        <input type="text" th:value="${giaTienGiam}"
+                                                                               id="tienGiam" style="display: none">
+                                                                    </li>
 
-                                                                        <form method="get">
-                                                                            <div class="modal fade" id="staticBackdrop"
+                                                                    <form method="get">
+                                                                        <div class="modal fade" id="staticBackdrop"
 
                                                                              data-bs-backdrop="static"
                                                                              data-bs-keyboard="false"
                                                                              aria-labelledby="staticBackdropLabel"
                                                                              aria-hidden="true">
 
-                                                                                <div class="modal-dialog modal-lg">
-                                                                                    <div class="modal-content">
-                                                                                        <div class="modal-header">
-                                                                                            <h5 class="modal-title"
-                                                                                                id="staticBackdropLabel"
-                                                                                                for="promotion-select">
-                                                                                                Danh sách Khuyễn mãi
-                                                                                            </h5>
-                                                                                        </div>
+                                                                            <div class="modal-dialog modal-lg">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title"
+                                                                                            id="staticBackdropLabel"
+                                                                                            for="promotion-select">
+                                                                                            Danh sách Khuyễn mãi
+                                                                                        </h5>
+                                                                                    </div>
 
-                                                                                        <div class="modal-body">
-                                                                                            <div class="card" th:each="items : ${dieuKienKhuyenMai}">
-                                                                                                <div class="card-body">
-                                                                                                    <div class="grid gap-3">
-                                                                                                        <div class="p-2 g-col-4">
-                                                                                                            <h5 class="card-title" th:text="${items.tenKM}"></h5>
-                                                                                                            <p class="card-text" th:text="'Điều kiện: Hóa đơn tối thiểu ' + ${items.dieuKienKMBill}"></p>
-                                                                                                            <p class="card-text" th:text="'Số lượng: ' + ${items.soLuong}"></p>
-                                                                                                            <button type="submit" class="btn btn-primary" th:formaction="@{'/ban-hang/chon-khuyen-mai/' + ${items.idKM}}">Áp dụng</button>
-                                                                                                            <br>
-                                                                                                        </div>
+                                                                                    <div class="modal-body">
+                                                                                        <div class="card"
+                                                                                             th:each="items : ${dieuKienKhuyenMai}">
+                                                                                            <div class="card-body">
+                                                                                                <div class="grid gap-3">
+                                                                                                    <div class="p-2 g-col-4">
+                                                                                                        <h5 class="card-title"
+                                                                                                            th:text="${items.tenKM}"></h5>
+                                                                                                        <p class="card-text"
+                                                                                                           th:text="'Điều kiện: Hóa đơn tối thiểu ' + ${items.dieuKienKMBill}"></p>
+                                                                                                        <p class="card-text"
+                                                                                                           th:text="'Số lượng: ' + ${items.soLuong}"></p>
+                                                                                                        <button type="submit"
+                                                                                                                class="btn btn-primary"
+                                                                                                                th:formaction="@{'/ban-hang/chon-khuyen-mai/' + ${items.idKM}}">
+                                                                                                            Áp dụng
+                                                                                                        </button>
+                                                                                                        <br>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
-
-                                                                                        <div class="modal-footer">
-                                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                                                                        </div>
-
                                                                                     </div>
+
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button"
+                                                                                                class="btn btn-secondary"
+                                                                                                data-bs-dismiss="modal">
+                                                                                            Đóng
+                                                                                        </button>
+                                                                                    </div>
+
                                                                                 </div>
                                                                             </div>
-                                                                        </form>
+                                                                        </div>
+                                                                    </form>
                                                                     </li>
 
                                                                     <li style="margin-bottom: 20px;">
@@ -630,7 +694,8 @@
                                                                                class="form-control"
                                                                                oninput="tinhTienThua()"
                                                                                style="width: 300px "
-                                                                        >
+                                                                               disabled>
+
                                                                     </li>
                                                                     <li style="margin-bottom: 20px;">
                                                                         <h5><b>Tiền thừa:</b></h5>
@@ -764,14 +829,15 @@
                                                                                 th:text="${bill.khachHang.hoTenKH}"></td>
 
                                                                             <td th:text="${bill.tongSP}"></td>
-                                                                            <td class="grandTotal" th:text=" ${#numbers.formatDecimal(tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"  >
+                                                                            <td class="grandTotal"
+                                                                                th:text=" ${#numbers.formatDecimal(tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'">
 
                                                                             </td>
 
-<!--                                                                            <td th:if="${bill.tongtienKM != null}"-->
-<!--                                                                                th:text="'₫'+${#numbers.formatDecimal(bill.tongtienKM, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>-->
-<!--                                                                            <td th:if="${bill.tongtienKM == null}">₫ 0-->
-<!--                                                                            </td>-->
+                                                                            <!--                                                                            <td th:if="${bill.tongtienKM != null}"-->
+                                                                            <!--                                                                                th:text="'₫'+${#numbers.formatDecimal(bill.tongtienKM, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>-->
+                                                                            <!--                                                                            <td th:if="${bill.tongtienKM == null}">₫ 0-->
+                                                                            <!--                                                                            </td>-->
 
                                                                             <th>
                                                                                 <i data-bs-toggle="tooltip"
@@ -913,16 +979,16 @@
                                     <div class="text-left fs-3 fw-normal">
                                         <label th:text="${'Hãng : '+ giay.hang.tenHang}"></label>
                                         <div id="sizeQuantity" th:if="${not #lists.isEmpty(listChiTietGiay)}">
-                                            Số lượng
-<!--                                            <span th:text="${listChiTietGiay.get(0).size.soSize}">-->
+                                            Còn hàng
+                                            <!--                                            <span th:text="${listChiTietGiay.get(0).size.soSize}">-->
 
-                                            </span>: <span th:text="${listChiTietGiay.get(0).soLuong}"></span>  đôi
+                                            </span>: <span th:text="${listChiTietGiay.get(0).soLuong}"></span> đôi
                                         </div>
                                     </div>
                                     <div class="text-left fs-4">
                                         <form action="/ban-hang/add-to-cart" method="get">
                                             <div class="">
-<!--                                                <h3>Số lượng</h3>-->
+                                                <!--                                                <h3>Số lượng</h3>-->
                                                 <input type="number" name="soLuong" value="1" min="1"
                                                        class="form-control"/>
                                             </div>
@@ -1002,6 +1068,7 @@
         <div class="toast-message" th:text="${tb}"></div>
     </div>
 </div>
+
 <div th:if="${messageError}" id="error" class="toast-container toast-top-right">
     <div class="toast toast-error" aria-live="assertive" style="display: block;">
         <button type="button" class="toast-close-button" role="button"></button>
@@ -1009,6 +1076,7 @@
         <div class="toast-message" th:text="${tbaoError}"></div>
     </div>
 </div>
+
 <!--Modal end-->
 <script src="/js/jquery-3.6.0.min.js"></script>
 <script src="/js/feather.min.js"></script>
@@ -1098,6 +1166,17 @@
 </script>
 
 
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function displaySizeQuantity(radioInput) {
+        var quantity = radioInput.getAttribute('data-quantity');
+        var size = radioInput.getAttribute('data-size');
+        document.getElementById('sizeQuantity').textContent = 'Còn hàng' + ': ' + quantity + ' ' + 'đôi';
+    }
+
+</script>
+
+
 
 <script>
     var counter = 1;
@@ -1155,15 +1234,34 @@
         });
     }
 
-    function reloadPage() {
+    function updateAndReload() {
         window.location.reload();
     }
 
 </script>
+
 <script th:inline="javascript">
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        updateInputState();
+    });
+
+
+    function updateInputState() {
+        var tongSanPham = /*[[${tongSanPham}]]*/ 0; // Lấy giá trị tongSanPham từ Thymeleaf
+        var tienKhachDuaInput = document.getElementById('tienKhachDua');
+
+        if (tongSanPham > 0) {
+            tienKhachDuaInput.removeAttribute('disabled');
+        } else {
+            tienKhachDuaInput.setAttribute('disabled', 'true');
+        }
+    }
+
+
     /*<![CDATA[*/
     function updateTotalAmountAndGrandTotal(inputElement) {
-        // Lấy giá trị số lượng từ input
         var quantity = parseInt(inputElement.value);
         var idCTG = inputElement.getAttribute('data-id');
 
@@ -1174,48 +1272,64 @@
             },
             body: 'idCTG=' + encodeURIComponent(idCTG) + '&quantity=' + encodeURIComponent(quantity),
         })
-            .then(response => response.text())
+            .then(response => response.json().then(data => ({status: response.status, body: data})))
             .then(data => {
-                // Cập nhật giao diện sau khi cập nhật số lượng thành công
-                var productElement = inputElement.closest('.product-lists');
-                var giaBan = parseInt(productElement.querySelector('.cart__price').innerText.replace(/[^0-9]/g, ''));
-                var totalAmountElement = productElement.querySelector('.totalAmount');
-                var totalAmount = giaBan * quantity;
-                totalAmountElement.innerText = formatCurrency(totalAmount) + ' đ';
-                updateGrandTotal();
+                if (data.status === 200) {
+                    var productElement = inputElement.closest('.product-lists');
+                    var giaBan = parseInt(productElement.querySelector('.cart__price').innerText.replace(/[^0-9]/g, ''));
+                    var totalAmountElement = productElement.querySelector('.totalAmount');
+                    var totalAmount = giaBan * quantity;
+                    totalAmountElement.innerText = formatCurrency(totalAmount) + ' đ';
+                    var totalElements = document.querySelectorAll('.totalAmount');
+                    var grandTotalElement = document.querySelector('#tongTienSanPham');
+                    var grandTotalElement2 = document.querySelector('#tienTamTinh');
+                    var grandTotalElement3 = document.querySelector('#tongTienSauKhuyenMai');
+                    var grandTotal = 0;
+
+                    totalElements.forEach(function (element) {
+                        grandTotal += parseInt(element.innerText.replace(/[^0-9]/g, ''));
+                    });
+
+                    grandTotalElement.innerText = formatCurrency(grandTotal) + ' đ';
+                    grandTotalElement2.innerText = formatCurrency(grandTotal) + ' đ';
+                    grandTotalElement3.innerText = formatCurrency(grandTotal) + ' đ';
+                } else {
+                    alert(data.body.error);
+                }
             })
             .catch(error => {
                 console.error('Error updating quantity:', error);
             });
     }
 
-    function updateGrandTotal() {
-        var totalElements = document.querySelectorAll('.totalAmount');
-        var grandTotalElement = document.querySelector('#tongTienSanPham');
-        var grandTotalElement2 = document.querySelector('#tongTienSanPham2');
-        var grandTotalElement3 = document.querySelector('#tongTienSauKhuyenMai');
-        var grandTotal = 0;
 
-        totalElements.forEach(function (element) {
-            grandTotal += parseInt(element.innerText.replace(/[^0-9]/g, ''));
-        });
-
-        grandTotalElement.innerText = formatCurrency(grandTotal) + ' đ';
-        grandTotalElement2.innerText = formatCurrency(grandTotal) + ' đ';
-        grandTotalElement3.innerText = formatCurrency(grandTotal) + ' đ';
-    }
+    // function updateGrandTotal() {
+    //     var totalElements = document.querySelectorAll('.totalAmount');
+    //     var grandTotalElement = document.querySelector('#tongTienSanPham');
+    //     var grandTotalElement2 = document.querySelector('#tienTamTinh');
+    //     var grandTotalElement3 = document.querySelector('#tongTienSauKhuyenMai');
+    //     var grandTotal = 0;
+    //
+    //     totalElements.forEach(function (element) {
+    //         grandTotal += parseInt(element.innerText.replace(/[^0-9]/g, ''));
+    //     });
+    //
+    //     grandTotalElement.innerText = formatCurrency(grandTotal) + ' đ';
+    //     grandTotalElement2.innerText = formatCurrency(grandTotal) + ' đ';
+    //     grandTotalElement3.innerText = formatCurrency(grandTotal) + ' đ';
+    // }
 
     function formatCurrency(amount) {
-        return amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }).replace('₫', 'đ');
+        return amount.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'}).replace('₫', 'đ');
     }
 
     function incrementQuantity(input) {
         var quantityInput = input.parentNode.querySelector('.quantityInput');
         var currentQuantity = parseInt(quantityInput.value);
-        if(currentQuantity < 10){
-            quantityInput.value = currentQuantity + 1;
-            updateTotalAmountAndGrandTotal(quantityInput);
-        }
+
+        quantityInput.value = currentQuantity + 1;
+        updateTotalAmountAndGrandTotal(quantityInput);
+
     }
 
     function decrementQuantity(input) {
@@ -1226,6 +1340,7 @@
             updateTotalAmountAndGrandTotal(quantityInput);
         }
     }
+
     /*]]>*/
 </script>
 
