@@ -67,7 +67,7 @@ public class LoginController {
                     return "/login";
                 }
             } else {
-                model.addAttribute("messageLogin", "Username or Password incorrect");
+                model.addAttribute("messageLogin", "Email hoặc mật khẩu không chính xác");
                 return "/login";
             }
         } else {
@@ -87,7 +87,7 @@ public class LoginController {
                     return "/login";
                 }
             } else {
-                model.addAttribute("messageLogin", "Username or Password incorrect");
+                model.addAttribute("messageLogin", "Email hoặc mật khẩu không chính xác");
                 return "/login";
             }
         }

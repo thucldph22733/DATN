@@ -77,7 +77,6 @@ public class CartController {
         ChiTietGiay chiTietGiay = gctService.getByIdChiTietGiay(idCTG);
 
         GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(chiTietGiay, gioHang);
-
         gioHangChiTiet.setSoLuong(quantity);
         gioHangChiTiet.setDonGia(quantity*chiTietGiay.getGiaBan());
         ghctService.addNewGHCT(gioHangChiTiet);

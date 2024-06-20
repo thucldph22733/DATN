@@ -103,7 +103,6 @@ public class BanHangController {
         model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
         model.addAttribute("tongTienSanPham", 0);
         model.addAttribute("tongTien", 0);
-//        model.addAttribute("danhSachMau", danhSachMau);
         model.addAttribute("tongSanPham", 0);
         model.addAttribute("khachHang", null);
         model.addAttribute("listKhachHang", khachHangService.findKhachHangByTrangThai());
@@ -622,87 +621,6 @@ public class BanHangController {
         }
     }
 
-//    @GetMapping("/thanh-toan")
-//    public String thanhToan(@RequestParam(value = "idCTG", required = false) UUID idCTG, RedirectAttributes redirectAttributes, Model model, HttpSession session) {
-//
-//        List<GiayViewModel> listG = giayViewModelService.getAllVm();
-//        model.addAttribute("listSanPham", listG);
-//        if (idCTG != null) {
-//            ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idCTG);
-//            model.addAttribute("chiTietGiay", chiTietGiay);
-//        }
-//
-//
-//        this.tongSanPham = (int) session.getAttribute("tongSP");
-//        this.tongTien = (double) session.getAttribute("tongTien");
-//        this.tongTienSanPham = (double) session.getAttribute("tongTienSanPham");
-//        UUID idHoaDon = (UUID) session.getAttribute("idHoaDon");
-//        HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
-//
-//        if (listG == null || listG.isEmpty()) {
-//            redirectAttributes.addFlashAttribute("messageSuccess", true);
-//            redirectAttributes.addFlashAttribute("tb", "Chưa có sản phẩm trong giỏ hàng");
-//            return "redirect:/ban-hang/hien-thi";
-//        }
-//
-//        hoaDon.setTrangThai(1);
-//        hoaDon.setTgThanhToan(new Date());
-//        hoaDon.setTongTienSanPham(tongTienSanPham);
-//        hoaDon.setTongTien(tongTien);
-//        hoaDon.setTongSP(tongSanPham);
-//        hoaDon.setHinhThucThanhToan(0);
-//
-//        KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
-//        khuyenMai.setSoLuong(khuyenMai.getSoLuong() - hoaDon.getTongSP());
-//        khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() + hoaDon.getTongSP());
-//        hoaDonService.add(hoaDon);
-//
-//        this.tongTienSanPham = 0;
-//        this.tongTien = 0;
-//        this.tongSanPham = 0;
-//
-//        session.removeAttribute("idHoaDon");
-//        session.removeAttribute("khachHang");
-//        session.removeAttribute("tongSP");
-//        session.removeAttribute("tongTien");
-//        session.removeAttribute("tongTienSanPham");
-//        session.removeAttribute("cart");
-//
-//        redirectAttributes.addFlashAttribute("messageSuccess", true);
-//        redirectAttributes.addFlashAttribute("tb", "Thanh toán thành công");
-//
-//        model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
-//        return "redirect:/ban-hang/hien-thi";
-//    }
-
-//    @PostMapping("/updateQuantity")
-//    @ResponseBody
-//    public void updateQuantity(@RequestParam UUID idCTG, @RequestParam int quantity) {
-//        UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
-//        ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idCTG);
-//        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHoaDon, idCTG);
-//
-//        if (chiTietGiay == null || hoaDonChiTiet == null) {
-//            // Log lỗi nếu không tìm thấy thông tin
-//            System.err.println("ChiTietGiay or HoaDonChiTiet not found");
-//            return;
-//        }
-//
-//        // Cập nhật số lượng và đơn giá trong hóa đơn chi tiết
-//        int previousQuantity = hoaDonChiTiet.getSoLuong();
-//        hoaDonChiTiet.setSoLuong(quantity);
-//        hoaDonChiTiet.setDonGia(chiTietGiay.getGiaBan() * quantity);
-//        hoaDonChiTietService.add(hoaDonChiTiet);
-//
-//        // Cập nhật số lượng trong kho sản phẩm
-//        int quantityDifference = quantity - previousQuantity;
-//        chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - quantityDifference);
-//        giayChiTietService.update(chiTietGiay);  // Giả sử phương thức update đã được định nghĩa trong giayChiTietService
-//
-//        // Log để kiểm tra
-//        System.out.println("Updated HoaDonChiTiet: " + hoaDonChiTiet);
-//        System.out.println("Updated ChiTietGiay: " + chiTietGiay);
-//    }
 
     public String generateRandomNumbers() {
         Random random = new Random();

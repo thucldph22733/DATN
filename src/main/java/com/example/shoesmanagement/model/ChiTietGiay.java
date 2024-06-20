@@ -57,6 +57,7 @@ public class ChiTietGiay {
     @Column(name = "gia_Ban")
     private double giaBan;
 
+
     @Column(name = "so_Luong")
     private int soLuong;
 
