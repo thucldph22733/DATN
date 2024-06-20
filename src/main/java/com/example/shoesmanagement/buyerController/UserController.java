@@ -235,7 +235,10 @@ public class UserController {
     private String getPurchasePay(Model model){
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-
+        if (session.getAttribute("KhachHangLogin") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "redirect:/buyer/login";
+        }
         UserForm(model, khachHang);
 
         List<HoaDon> listHoaDonByKhachHang = hoaDonService.listHoaDonKhachHangAndTrangThaiOnline(khachHang, 0);
@@ -348,7 +351,14 @@ public class UserController {
 
         HoaDon hoaDon= hoaDonService.getOne(idHD);
 
-        model.addAttribute("giaTienGiam", hoaDon.getKhuyenMai().getGiaTienGiam());
+        Double giaTienGiam = null;
+        if (hoaDon.getKhuyenMai() != null && hoaDon.getKhuyenMai().getGiaTienGiam() != null) {
+            giaTienGiam = hoaDon.getKhuyenMai().getGiaTienGiam();
+        } else {
+            giaTienGiam = 0.0;
+        }
+        model.addAttribute("giaTienGiam", giaTienGiam);
+
 
         int trangThai = hoaDon.getTrangThai();
         if (trangThai == 0){
@@ -885,13 +895,17 @@ public class UserController {
         return "online/user";
     }
 
-    private void UserForm(Model model, KhachHang khachHang) {
+    private String UserForm(Model model, KhachHang khachHang) {
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
         model.addAttribute("fullNameLogin", khachHang.getHoTenKH());
-
+        if (session.getAttribute("fullNameLogin") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "redirect:/login";
+        }
         List<GioHangChiTiet> listGHCTActive = ghctService.findByGHActive(gioHang);
         Integer sumProductInCart = listGHCTActive.size();
         model.addAttribute("sumProductInCart", sumProductInCart);
+        return null;
     }
 
     public String generateRandomNumbers() {
