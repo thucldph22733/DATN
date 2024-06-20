@@ -422,7 +422,7 @@ public class CheckOutController {
         List<HoaDonChiTiet> hoaDonChiTietList = hoaDonChiTietService.findByHoaDon(hoaDon);
 
         for (HoaDonChiTiet xx : hoaDonChiTietList) {
-            GioHangChiTiet gioHangChiTiet = ghctService.findByCTSPActive(xx.getChiTietGiay());
+            GioHangChiTiet gioHangChiTiet = ghctService.findByCTSPActiveAndTrangThai(xx.getChiTietGiay(),1);
             if (gioHangChiTiet != null) {
                 gioHangChiTiet.setTrangThai(0);
                 ghctService.addNewGHCT(gioHangChiTiet);
@@ -508,6 +508,10 @@ public class CheckOutController {
         ChiTietGiay ctg = giayChiTietService.getByIdChiTietGiay(idDProduct);
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        if (session.getAttribute("KhachHangLogin") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "redirect:/buyer/login";
+        }
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
 
         GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(ctg, gioHang);

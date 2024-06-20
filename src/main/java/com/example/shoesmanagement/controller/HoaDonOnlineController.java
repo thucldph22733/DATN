@@ -140,9 +140,7 @@ public class HoaDonOnlineController {
 
         int soLuongHdHoanChoXacNhan = 0;
         int soLuongHdHoanKhachHuy = 0;
-        int soLuongHdHoanChuaHoanTien = 0;
-        int soLuongHdHoanDaHoanTien = 0;
-        int soLuongHdHoanTuChoi = 0;
+
 
 
         model.addAttribute("sumBillOnline", soLuongHoaDonOnline);
@@ -157,8 +155,7 @@ public class HoaDonOnlineController {
 
         model.addAttribute("soLuongHdHoanChoXacNhan", soLuongHdHoanChoXacNhan);
         model.addAttribute("soLuongHdHoanKhachHuy", soLuongHdHoanKhachHuy);
-        model.addAttribute("soLuongHdHoanDaHoanTien", soLuongHdHoanDaHoanTien);
-        model.addAttribute("soLuongHdHoanTuChoi", soLuongHdHoanTuChoi);
+
         model.addAttribute("listHoaDonOnline", listAllHoaDonOnline);
         model.addAttribute("listHoaDonOnlineGiaoHang", listAllHoaDonDangGiao);
     }

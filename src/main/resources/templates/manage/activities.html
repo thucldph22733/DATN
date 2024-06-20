@@ -40,7 +40,7 @@
                     <img src="/images/img/logo.png" alt="">
                 </a>
                 <a href="/manage" class="logo-small">
-                    <img src="/images/img/logo-small.png" alt="">
+                    <img src="/images/img/logo.png" alt="">
                 </a>
                 <a id="toggle_btn" href="javascript:void(0);">
                 </a>
@@ -56,55 +56,9 @@
 
             <ul class="nav user-menu">
 
-                <li class="nav-item dropdown has-arrow flag-nav">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button">
-                        <i class="flag flag-vn"></i>
-                    </a>
-                </li>
 
-                <li class="nav-item dropdown">
-                    <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-                        <img src="/images/img/icons/notification-bing.svg" alt="img"> <span
-                            class="badge rounded-pill" th:text="${soThongBao}"></span>
-                    </a>
-                    <div class="dropdown-menu notifications">
-                        <div class="topnav-dropdown-header">
-                            <span class="notification-title">Notifications</span>
-                            <a href="javascript:void(0)" class="clear-noti"> Clear All </a>
-                        </div>
-                        <div class="noti-content">
-                            <ul class="notification-list">
-                                <th:block th:each="x : ${listThongBao}">
-                                    <li th:if="${x.trangThai == 3}" class="notification-message">
-                                        <a href="/manage/bill/online">
-                                            <div class="media d-flex">
-                                                <span class="avatar flex-shrink-0">
-                                                    <img alt="" src="/images/img/profiles/avatar-02.jpg">
-                                                </span>
-                                                <div class="media-body flex-grow-1">
-                                                    <p class="noti-details">
-                                                        <span class="noti-title"
-                                                              th:text="${x.khachHang.hoTenKH}"></span>
-                                                        <span th:text="${x.noiDungTB}"></span>
-                                                        <span class="noti-title" th:text="${x.hoaDon.maHD}"></span>
-                                                    </p>
-                                                    <p class="noti-time">
-                                                    <span class="notification-time"
-                                                          th:text="${#dates.format(x.tgTB, 'HH:mm yyyy-MM-dd')}">
-                                                    </span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </th:block>
-                            </ul>
-                        </div>
-                        <div class="topnav-dropdown-footer">
-                            <a href="activities.html">View all Notifications</a>
-                        </div>
-                    </div>
-                </li>
+
+
 
                 <li class="nav-item dropdown has-arrow main-drop">
                     <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
