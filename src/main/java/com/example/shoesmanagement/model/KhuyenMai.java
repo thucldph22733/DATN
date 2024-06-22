@@ -13,7 +13,7 @@ import java.util.UUID;
 @Table(name= "Khuyen_Mai")
 @Data
 
-public class KhuyenMai implements java.io.Serializable {
+public class KhuyenMai {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,13 +27,13 @@ public class KhuyenMai implements java.io.Serializable {
     @Column(name = "ten_KM")
     private String tenKM;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     @Column(name = "tg_Bat_Dau")
     private Date tgBatDau;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     @Column(name = "tg_Ket_Thuc")
     private Date tgKetThuc;
 
