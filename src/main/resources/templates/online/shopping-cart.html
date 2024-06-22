@@ -160,6 +160,7 @@
                     </a>
                 </div>
             </div>
+
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
@@ -176,6 +177,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div th:if="${successMessage}" th:attr="data-message=${successMessage}" id="success-toast"
                              style="position: fixed; top: 1rem; right: 1rem; z-index: 1050;">
                             <!-- Toast container, ẩn mặc định và sẽ được hiển thị bằng JavaScript -->
@@ -354,7 +356,9 @@
                                                 <h6 style="margin-top: -22px;"
                                                     th:text="${x.chiTietGiay.giay.tenGiay}"></h6>
                                             </a>
-                                                  </div>
+                                            <h5 class="cart__price"
+                                                th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
+                                        </div>
 
                                     </td>
                                     <td style="width: 175px;" class="quantity__item">
@@ -419,63 +423,10 @@
 
                             </th:block>
 
-                            <th:block th:each="x : ${listCartDetail}">
 
-                                <tr th:if="${x.chiTietGiay.trangThai == 0 or x.soLuong > x.chiTietGiay.soLuong }"
-                                    id="productId" th:value="${x.chiTietGiay.idCTG}">
-
-                                    <td>
-                                        <p>Hết hàng</p>
-                                    </td>
-                                    <td style="width: 400px;" class="product__cart__item">
-                                        <div class="product__cart__item__pic">
-                                            <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' +  ${x.chiTietGiay.mauSac.idMau}}">
-                                                <img style="width:90px; height:90px;"
-                                                     th:src="@{'/images/imgsProducts/' + ${x.chiTietGiay.hinhAnh.url1}}"></a>
-                                        </div>
-                                        <div class="product__cart__item__text">
-                                            <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' +  ${x.chiTietGiay.mauSac.idMau}}">
-                                                <h6 style="margin-top: -22px;"
-                                                    th:text="${x.chiTietGiay.giay.tenGiay}"></h6>
-                                            </a>
-                                             </div>
-
-                                    </td>
-                                    <td style="width: 175px;" class="quantity__item">
-                                        <div style="margin-top: -20px; display: block;">
-                                            <span id="showButton" style="font-weight: normal; font-size: medium;">Phân loại :</span>
-                                            <a th:href="@{'/buyer/cart/option/' + ${x.chiTietGiay.giay.idGiay} + '/' + ${x.chiTietGiay.mauSac.idMau}+ '/' + ${x.chiTietGiay.idCTG}}">
-                                                <img style="height: 10px; width: 10px;"
-                                                     src="/images/img/icon/dropdown.png" alt="">
-                                            </a>
-                                        </div>
-                                        <div style="padding-right: 20px;">
-                                            <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);"
-                                                  th:text="'Colors : ' + ${x.chiTietGiay.mauSac.tenMau}"></span>
-                                            <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);"
-                                                  th:text="'Size : ' + ${x.chiTietGiay.size.soSize}"></span>
-                                        </div>
-                                    </td>
-                                    <td style="width: 175px;" class="quantity__item">
-                                        <div class="quantity">
+                      
 
 
-                                        </div>
-                                    </td>
-                                    <td style="width: 140px;" class="cart__price totalAmount"
-                                        th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
-
-                                    <td class="cart__close"><a
-                                            th:href="@{'/buyer/cart/delete/' + ${x.chiTietGiay.idCTG}}"
-                                            id="deleteToCartButton" style="border-radius: 20% ; "><i
-                                            class="fa fa-close"></i></a></td>
-                                    <!--                                    <button onclick="confirmDelete('{{idCTG}}')">Xóa sản phẩm</button>-->
-
-
-                                </tr>
-
-
-                            </th:block>
                             <div class="alert alert-warning container mt-3 text-center"
                                  th:if="*{listCartDetail.isEmpty()}"
                                  style="background-color: transparent; border: none;">
@@ -992,7 +943,7 @@
                 </div>
                 <div class="modal-footer">
                     <p>Nhấp vào chỗ trống để đóng</p>
-<!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>-->
+
                 </div>
             </div>
         </div>
@@ -1048,7 +999,7 @@
                 inputElement.value = 1;
             }else
 
-                 inputElement.value = 10
+                inputElement.value = 10
         }
 
         // Gọi hàm updateTotalAmount để cập nhật tổng tiền

@@ -42,6 +42,7 @@ public class CheckOutController {
     @Autowired
     private HttpServletRequest request;
 
+
     @Autowired
     private ShippingFeeService shippingFeeService;
 
@@ -74,8 +75,11 @@ public class CheckOutController {
 
 
 
-
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        if (session.getAttribute("KhachHangLogin") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "redirect:/buyer/login";
+        }
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
 
         DiaChiKH diaChiKHDefault = diaChiKHService.findDCKHDefaulByKhachHang(khachHang);
@@ -127,9 +131,8 @@ public class CheckOutController {
             // Thêm kiểm tra số lượng ở đây
 
             if (gioHangChiTiet.getSoLuong() > chiTietGiay.getSoLuong()) {
-
-//                redirectAttribute.addFlashAttribute("successMessage", "Số lượng sản phẩm không đủ. Vui lòng giảm số lượng.");
-
+                redirectAttribute.addFlashAttribute("successMessage",
+                        "Số lượng sản phẩm hiện còn: " + chiTietGiay.getSoLuong() + " đôi. Vui lòng giảm số lượng");
                 String idGiay = String.valueOf(chiTietGiay.getGiay().getIdGiay());
                 String idMau = String.valueOf(chiTietGiay.getMauSac().getIdMau());
                 String linkBack = idGiay + "/" +idMau;
@@ -160,6 +163,7 @@ public class CheckOutController {
         int sumQuantity = listHDCTCheckOut.stream()
                 .mapToInt(HoaDonChiTiet::getSoLuong)
                 .sum();
+
 
 
         double total = listHDCTCheckOut.stream()
@@ -202,7 +206,9 @@ public class CheckOutController {
 
             model.addAttribute("shippingFee", shippingFee);
             model.addAttribute("billPlaceOrder", hoaDon);
+
             model.addAttribute("toTalOder", total + shippingFee - giaTienGiam);
+
             model.addAttribute("tongTienDaGiamVoucherShip", total + shippingFee);
             model.addAttribute("diaChiKHDefault", diaChiKHDefault);
             model.addAttribute("addNewAddressNotNull", true);
@@ -422,7 +428,7 @@ public class CheckOutController {
         List<HoaDonChiTiet> hoaDonChiTietList = hoaDonChiTietService.findByHoaDon(hoaDon);
 
         for (HoaDonChiTiet xx : hoaDonChiTietList) {
-            GioHangChiTiet gioHangChiTiet = ghctService.findByCTSPActive(xx.getChiTietGiay());
+            GioHangChiTiet gioHangChiTiet = ghctService.findByCTSPActiveAndTrangThai(xx.getChiTietGiay(),1);
             if (gioHangChiTiet != null) {
                 gioHangChiTiet.setTrangThai(0);
                 ghctService.addNewGHCT(gioHangChiTiet);
@@ -503,14 +509,29 @@ public class CheckOutController {
     }
 
     @GetMapping("/buyer/shop/buyNowButton")
-    private String buyNow(@RequestParam("idDetailProduct") UUID idDProduct, @RequestParam("quantity") int quantity, Model model) {
+    private String buyNow(@RequestParam("idDetailProduct") UUID idDProduct, @RequestParam("quantity") int quantity, Model model,RedirectAttributes redirectAttribute) {
 
         ChiTietGiay ctg = giayChiTietService.getByIdChiTietGiay(idDProduct);
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        if (session.getAttribute("KhachHangLogin") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "redirect:/buyer/login";
+        }
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
 
         GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(ctg, gioHang);
+
+        if(quantity > ctg.getSoLuong()){
+            String idGiay = String.valueOf(ctg.getGiay().getIdGiay());
+            String idMau = String.valueOf(ctg.getMauSac().getIdMau());
+            String linkBack = idGiay + "/" +idMau;
+            redirectAttribute.addFlashAttribute("successMessage",
+                    "Số lượng sản phẩm hiện còn: " + ctg.getSoLuong() + " đôi. Vui lòng giảm số lượng");
+            return "redirect:/buyer/shop-details/" + linkBack;
+        }
+
+
 
         if (gioHangChiTiet == null) {
             gioHangChiTiet = new GioHangChiTiet();
@@ -581,16 +602,20 @@ public class CheckOutController {
 
         List<HoaDonChiTiet> listHDCTCheckOut = new ArrayList<>();
         listHDCTCheckOut.add(hoaDonChiTiet);
-
+        double tongTienSP = listHDCTCheckOut.stream()
+                .mapToDouble(HoaDonChiTiet::getDonGia )
+                .sum();
         int sumQuantity = quantity;
 
+
         double  total   = quantity * ctg.getGiaBan();
+
 
         hoaDon.setTongSP(sumQuantity);
         hoaDon.setTongTienSanPham(total);
 
         hoaDonService.add(hoaDon);
-
+        model.addAttribute("tongTienSP", tongTienSP);
         model.addAttribute("sumQuantity", sumQuantity);
         model.addAttribute("total", total);
         model.addAttribute("listProductCheckOut", listHDCTCheckOut);

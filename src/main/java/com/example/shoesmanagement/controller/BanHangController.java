@@ -107,7 +107,6 @@ public class BanHangController {
         model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
         model.addAttribute("tongTienSanPham", 0);
         model.addAttribute("tongTien", 0);
-//        model.addAttribute("danhSachMau", danhSachMau);
         model.addAttribute("tongSanPham", 0);
         model.addAttribute("khachHang", null);
         model.addAttribute("listKhachHang", khachHangService.findKhachHangByTrangThai());
@@ -627,6 +626,7 @@ public class BanHangController {
             return "redirect:/ban-hang/cart/hoadon/" + idHoaDon;
         }
     }
+
 
     public String generateRandomNumbers() {
         Random random = new Random();
