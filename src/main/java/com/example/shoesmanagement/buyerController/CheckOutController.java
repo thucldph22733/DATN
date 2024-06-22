@@ -76,6 +76,10 @@ public class CheckOutController {
 
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        if (session.getAttribute("KhachHangLogin") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "redirect:/buyer/login";
+        }
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
 
         DiaChiKH diaChiKHDefault = diaChiKHService.findDCKHDefaulByKhachHang(khachHang);
@@ -127,8 +131,8 @@ public class CheckOutController {
             // Thêm kiểm tra số lượng ở đây
 
             if (gioHangChiTiet.getSoLuong() > chiTietGiay.getSoLuong()) {
-                redirectAttribute.addFlashAttribute("successMessage", "Số lượng sản phẩm không đủ. Vui lòng giảm số lượng.");
-
+                redirectAttribute.addFlashAttribute("successMessage",
+                        "Số lượng sản phẩm hiện còn: " + chiTietGiay.getSoLuong() + " đôi. Vui lòng giảm số lượng");
                 String idGiay = String.valueOf(chiTietGiay.getGiay().getIdGiay());
                 String idMau = String.valueOf(chiTietGiay.getMauSac().getIdMau());
                 String linkBack = idGiay + "/" +idMau;
@@ -522,7 +526,8 @@ public class CheckOutController {
             String idGiay = String.valueOf(ctg.getGiay().getIdGiay());
             String idMau = String.valueOf(ctg.getMauSac().getIdMau());
             String linkBack = idGiay + "/" +idMau;
-            redirectAttribute.addFlashAttribute("successMessage", "Số lượng sản phẩm không đủ. Vui lòng giảm số lượng.");
+            redirectAttribute.addFlashAttribute("successMessage",
+                    "Số lượng sản phẩm hiện còn: " + ctg.getSoLuong() + " đôi. Vui lòng giảm số lượng");
             return "redirect:/buyer/shop-details/" + linkBack;
         }
 

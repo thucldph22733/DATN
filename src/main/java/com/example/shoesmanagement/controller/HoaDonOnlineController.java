@@ -1,21 +1,21 @@
 package com.example.shoesmanagement.controller;
 
+import com.example.shoesmanagement.model.ChucVu;
+import com.example.shoesmanagement.model.GiaoHang;
 import com.example.shoesmanagement.model.HoaDon;
-import com.example.shoesmanagement.service.ChucVuService;
-import com.example.shoesmanagement.service.HoaDonService;
-import com.example.shoesmanagement.service.LSThanhToanService;
-import com.example.shoesmanagement.service.NhanVienService;
+import com.example.shoesmanagement.model.NhanVien;
+import com.example.shoesmanagement.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @RequestMapping("/manage/bill/")
 @Controller
@@ -25,6 +25,8 @@ public class HoaDonOnlineController {
 
     @Autowired
     private NhanVienService nhanVienService;
+    @Autowired
+    private GiaoHangService giaoHangService;
 
 
     @Autowired
@@ -52,6 +54,67 @@ public class HoaDonOnlineController {
 
         return "manage/manage-bill-online";
     }
+    @GetMapping("online/delivery/{idHD}")
+    private String editBillOnline(Model model, @PathVariable UUID idHD) {
+
+        HoaDon billDelivery = hoaDonService.getOne(idHD);
+        List<NhanVien> listNhanVienGiao = new ArrayList<>();
+
+        ChucVu nvgh = chucVuService.findByMaCV("GH01");
+
+        List<NhanVien> listNVGH = nhanVienService.findByChucVu(nvgh);
+
+        if (listNVGH != null) {
+            for (NhanVien x : listNVGH) {
+                listNhanVienGiao.add(x);
+            }
+        }
+
+        model.addAttribute("listNhanVienGiao", listNhanVienGiao);
+        model.addAttribute("billDelivery", billDelivery);
+        model.addAttribute("showEditBillDelivery", true);
+
+        showTab3(model);
+
+        showData(model);
+
+
+        return "manage/manage-bill-online";
+    }
+    @PostMapping("online/delivery/confirm/{idHD}")
+    private String confirmNVGH(Model model, @PathVariable UUID idHD) {
+
+        UUID idNV = UUID.fromString(request.getParameter("idNhanVien"));
+
+        Date date = new Date();
+        NhanVien nhanVien = nhanVienService.getByIdNhanVien(idNV);
+        HoaDon hoaDon = hoaDonService.getOne(idHD);
+
+        hoaDon.setNhanVien(nhanVien);
+        hoaDon.setTrangThai(2);
+
+        hoaDonService.add(hoaDon);
+
+        GiaoHang giaoHang = hoaDon.getGiaoHang();
+        giaoHang.setNoiDung("Xác nhận nhân viên giao hàng");
+        giaoHang.setTgShip(date);
+        giaoHangService.saveGiaoHang(giaoHang);
+
+        hoaDon.setGiaoHang(giaoHang);
+        hoaDonService.add(hoaDon);
+
+
+
+        showData(model);
+
+        model.addAttribute("showMessThanhCong", true);
+        model.addAttribute("reLoadPage", true);
+        showData(model);
+        showTab3(model);
+
+
+        return "manage/manage-bill-online";
+    }
 
     private void showTab1(Model model){
         model.addAttribute("activeAll", "nav-link active");
@@ -63,6 +126,18 @@ public class HoaDonOnlineController {
         model.addAttribute("tabpane3", "tab-pane");
         model.addAttribute("tabpane4", "tab-pane");
 
+    }
+    private void showTab3(Model model){
+
+        model.addAttribute("activeAll", "nav-link");
+        model.addAttribute("xac_nhan_tt", "nav-link");
+        model.addAttribute("van_chuyen", "nav-link active");
+
+
+        model.addAttribute("tabpane1", "tab-pane");
+        model.addAttribute("tabpane2", "tab-pane");
+        model.addAttribute("tabpane3", "tab-pane show active");
+        model.addAttribute("tabpane4", "tab-pane");
     }
     private void showData(Model model){
 
