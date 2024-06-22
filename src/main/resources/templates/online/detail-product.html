@@ -647,7 +647,7 @@
         if (selectedLabel) {
             var labelName = selectedLabel.getAttribute("name");
 
-            window.location.href = '/buyer/shop/buyNowButton?idDetailProduct=' + labelName + '&quantity=' + quantity;
+            window.location.href = '/buyer/checkout?selectedProducts=true&productIds=' + labelName + '&quantities=' + quantity;
 
         } else {
             $('#noticaAddVoucher').modal('show');

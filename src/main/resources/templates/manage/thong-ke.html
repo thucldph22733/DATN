@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="description" content="POS - Bootstrap Admin Template">
+    <meta name="keywords"
+          content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
+    <meta name="author" content="Dreamguys - Bootstrap Admin Template">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Sneaker Shop - Admin</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
+    <link rel="stylesheet" href="/plugins/icons/flags/flags.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/css/animate.css">
+
+    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+
+    <link rel="stylesheet" href="/css/dataTables.bootstrap4.min.css">
+
+    <link rel="stylesheet" href="/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/plugins/fontawesome/css/all.min.css">
+
+    <link rel="stylesheet" href="/plugins/toastr/toatr.css"/>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Thêm link thư viện Alertify -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/themes/default.min.css"/>
+    <style>
+        .alertify .ajs-message {
+            background-color: black;
+            color: #ffffff;
+        }
+
+        /* Thay đổi màu nền của tiêu đề */
+        .alertify .ajs-header {
+            background-color: coral;
+            color: #ffffff;
+        }
+
+        /* Thay đổi màu nền của các nút */
+        .alertify .ajs-buttons .ajs-ok {
+            background-color: #2ecc71;
+            color: #ffffff;
+        }
+    </style>
+    <style>
+        .color-box {
+            width: 40px; /* Độ rộng của hộp màu */
+            height: 40px; /* Chiều cao của hộp màu */
+            display: inline-block; /* Hiển thị như một hộp chữ nằm cạnh nhau */
+            border: 1px solid #000; /* Viền xung quanh hộp màu */
+            margin: 0 5px; /* Khoảng cách giữa các hộp màu */
+            border-radius: 50%;
+        }
+    </style>
+    <style>
+        /* Định dạng lớp CSS để làm cho input to hơn */
+        .large-input {
+            /*width: 230px; !* Điều chỉnh kích thước theo nhu cầu của bạn *!*/
+            /*height: 40px; !* Điều chỉnh kích thước theo nhu cầu của bạn *!*/
+            border: none;
+        }
+    </style>
+
+    <style>
+        .box {
+            background-color: #f2eaca;
+            color: #f2b745;
+            padding: 20px;
+        }
+
+        .box-title {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="mini-sidebar">
+<div th:replace="~{manage/activities :: main}"></div>
+<div class="main-wrapper">
+    <div class="page-wrapper">
+        <div class="content">
+            <div class="page-header">
+                <div class="page-title">
+                    <h4>Thống kê</h4>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <!--                doanh thu-->
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-12">
+                        <div class="box">
+                            <h3 class="box-title" style="text-transform: capitalize">tổng doanh thu</h3>
+                            <div class="text-center">
+                                <span>&#128151;</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-12">
+                        <div class="box">
+                            <h3 class="box-title" style="text-transform: capitalize">số lượng giày đã bán</h3>
+                            <ul>
+                                <li class="ms-auto">
+                                    <span class="">a</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-12">
+                        <div class="box">
+                            <h3 class="box-title" style="text-transform: capitalize">c</h3>
+                            <ul>
+                                <li class="ms-auto">
+                                    <span class="">a</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!--                biểu đồ-->
+                <div id="curve_chart" style="width: 950px; height: 850px"></div>
+
+                <!--                bán chạy-->
+                <div>
+                    <div class="table-top">
+                        <div class="search-set">
+                            <div class="search-path">
+                                <a class="btn btn-filter" id="filter_search">
+                                    <img src="/images/img/icons/filter.svg" alt="img">
+                                    <span><img src="/images/img/icons/closes.svg" alt="img"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form method="get" th:action="@{/manage/thongKe/filter}">
+                        <div class="card" id="filter_inputs">
+                            <div class="card-body pb-0">
+                                <div class="row">
+                                    <div class="col-lg-2 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <select class="select" name="dieuKienLocSanPham">
+                                                <option value=""> </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-1 col-sm-6 col-12 ms-auto">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-filters ms-auto">
+                                                <img src="/images/img/icons/search-whites.svg" alt="img">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="table-responsive">
+                        <table class="table datanew" id="data-table">
+                            <thead>
+                            <tr>
+                                <td style="background-color: #f2a51d; color: whitesmoke">Số lượng</td>
+                                <td style="background-color: #f2a51d; color: whitesmoke">Số lượng đã dùng</td>
+                                <td style="background-color: #f2a51d; color: whitesmoke">Trạng thái</td>
+                                <td style="background-color: #f2a51d; color: whitesmoke">Ngày bắt đầu</td>
+                                <td style="background-color: #f2a51d; color: whitesmoke">Ngày kết thúc</td>
+                                <td style="background-color: #f2a51d; color: whitesmoke">Action</td>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr th:each="items : ${thongKe}">
+                                <td th:text="">a</td>
+                                <td th:text="">b</td>
+                                <td th:text="">c</td>
+                                <td th:text="">d</td>
+                                <td th:text="">e</td>
+                                <td th:text="">f</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery-3.6.0.min.js"></script>
+
+<script src="/js/feather.min.js"></script>
+
+<script src="/js/jquery.slimscroll.min.js"></script>
+
+<script src="/js/jquery.dataTables.min.js"></script>
+<script src="/js/dataTables.bootstrap4.min.js"></script>
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+
+<script src="/plugins/select2/js/select2.min.js"></script>
+
+<script src="/plugins/sweetalert/sweetalert2.all.min.js"></script>
+<script src="/plugins/sweetalert/sweetalerts.min.js"></script>
+
+<script src="/js/script.js"></script>
+<script src="/plugins/alertify/custom-alertify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
+
+<script
+        type="text/javascript"
+        src="https://www.gstatic.com/charts/loader.js"
+></script>
+<script type="text/javascript">
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ["Year", "Tại quầy", "Web"],
+            ["2004", 20000000, 10000000],
+            ["2005", 40000000, 50000000],
+            ["2006", 15000000, 20000000],
+            ["2007", 50000000, 30000000],
+        ]);
+
+        var options = {
+            title: "Company Performance",
+            curveType: "function",
+            legend: { position: "bottom" },
+        };
+
+        var chart = new google.visualization.LineChart(
+            document.getElementById("curve_chart")
+        );
+
+        chart.draw(data, options);
+    }
+</script>
+</body>
+</html>

@@ -8,7 +8,6 @@ import com.example.shoesmanagement.service.KhachHangService;
 import com.example.shoesmanagement.service.KhuyenMaiService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -81,9 +80,9 @@ public class KhuyenMaiController {
     }
 
     @PutMapping("khuyen-mai")
-    public void capNhatSoLuong(HoaDon hoaDon){
+    public void capNhatSoLuong(HoaDon hoaDon) {
         List<KhuyenMai> khuyenMai = (List<KhuyenMai>) hoaDon.getKhuyenMai();
-        for (KhuyenMai km : khuyenMai){
+        for (KhuyenMai km : khuyenMai) {
             km.setSoLuong(km.getSoLuong() - hoaDon.getTongSP());
             km.setSoLuongDaDung(km.getSoLuongDaDung() + hoaDon.getTongSP());
             khuyenMaiService.save(km);

@@ -1,6 +1,5 @@
 package com.example.shoesmanagement.controller;
 
-import com.example.shoesmanagement.dtos.requests.UpdateQuantityRequest;
 import com.example.shoesmanagement.model.*;
 import com.example.shoesmanagement.repository.*;
 import com.example.shoesmanagement.service.*;
@@ -409,7 +408,7 @@ public class BanHangController {
         hoaDon.setHinhThucThanhToan(0);
 
         KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
-        if(khuyenMai != null){
+        if (khuyenMai != null) {
             khuyenMai.setSoLuong(khuyenMai.getSoLuong() - 1);
             khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() + 1);
             khuyenMaiRepository.saveAndFlush(khuyenMai);
@@ -637,11 +636,14 @@ public class BanHangController {
     public String chonKM(Model model, @PathVariable("idKM") UUID idKM, RedirectAttributes redirectAttributes) {
         UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
 
-        if (idHoaDon == null) {
-            redirectAttributes.addFlashAttribute("messageError", true);
-            redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
-            return "redirect:/ban-hang/hien-thi";
-        }
+//        if (idHoaDon == null) {
+//            redirectAttributes.addFlashAttribute("messageError", true);
+//            redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
+//            return "redirect:/ban-hang/hien-thi";
+//        }
+
+        if (idHoaDon == null) return "redirect:/ban-hang/hien-thi";
+
         KhuyenMai khuyenMai = khuyenMaiRepository.findById(idKM).orElse(null);
         if (khuyenMai != null) {
             UUID idHoaDon1 = (UUID) httpSession.getAttribute("idHoaDon");
@@ -657,4 +659,3 @@ public class BanHangController {
 
 
 }
-
