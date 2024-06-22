@@ -70,8 +70,15 @@ public class CheckOutController {
     private double giaTienGiam = 0;
 
     @GetMapping("/buyer/checkout")
-    private String checkOutCart(Model model, @RequestParam("selectedProducts") List<UUID> selectedProductIds, Optional<UUID> idKM, RedirectAttributes redirectAttribute) {
-
+    private String checkOutCart(Model model, HttpServletRequest request,
+                                @RequestParam("selectedProducts") List<String> selectedProducts,
+                                @RequestParam(name = "productIds") List<UUID> productIds,
+                                @RequestParam(name = "quantities") List<Integer> quantities,
+                                Optional<UUID> idKM) {
+        Map<UUID, Integer> selectedProduct = new HashMap<>();
+        for (int i = 0; i < selectedProducts.size(); i++) {
+            if (!selectedProducts.get(i).equals("none")) selectedProduct.put(productIds.get(i), quantities.get(i));
+        }
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
@@ -88,7 +95,7 @@ public class CheckOutController {
 
 
         String maHD = "HD_" + khachHang.getMaKH() + "_" + date.getDate() + generateRandomNumbers();
-        session.setAttribute(String.valueOf(khachHang.getIdKH()), selectedProductIds);
+        session.setAttribute("checkoutParams" + khachHang.getIdKH(), request.getQueryString());
         hoaDon.setKhachHang(khachHang);
         hoaDon.setMaHD(maHD);
         hoaDon.setLoaiHD(0);
@@ -117,34 +124,26 @@ public class CheckOutController {
             giaoHangService.saveGiaoHang(giaoHang);
             hoaDonService.add(hoaDon);
         }
-        for (UUID x : selectedProductIds) {
+
+        double total = 0.0;
+        for (Map.Entry<UUID, Integer> entry : selectedProduct.entrySet()) {
             HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
-            GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(giayChiTietService.getByIdChiTietGiay(x), gioHang);
-            ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(x);
+//            GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(giayChiTietService.getByIdChiTietGiay(x), gioHang);
+            ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(entry.getKey());
 
-            // Thêm kiểm tra số lượng ở đây
-
-            if (gioHangChiTiet.getSoLuong() > chiTietGiay.getSoLuong()) {
-
-//                redirectAttribute.addFlashAttribute("successMessage", "Số lượng sản phẩm không đủ. Vui lòng giảm số lượng.");
-
-                String idGiay = String.valueOf(chiTietGiay.getGiay().getIdGiay());
-                String idMau = String.valueOf(chiTietGiay.getMauSac().getIdMau());
-                String linkBack = idGiay + "/" + idMau;
-                return "redirect:/buyer/cart";
-            } else {
+            if (entry.getValue() > chiTietGiay.getSoLuong()) return "redirect:/buyer/cart";
+            else {
                 // Xử lý trường hợp số lượng trong giỏ hàng lớn hơn số lượng tồn
                 // Có thể bắn lỗi, thông báo cho người dùng hoặc xử lý theo cách khác
                 hoaDonChiTiet.setHoaDon(hoaDon);
                 hoaDonChiTiet.setChiTietGiay(chiTietGiay);
-                hoaDonChiTiet.setDonGia(gioHangChiTiet.getDonGia());
-                hoaDonChiTiet.setSoLuong(gioHangChiTiet.getSoLuong());
+                hoaDonChiTiet.setDonGia(chiTietGiay.getGiaBan());
+                hoaDonChiTiet.setSoLuong(entry.getValue());
                 hoaDonChiTiet.setTgThem(new Date());
                 hoaDonChiTiet.setTrangThai(1);
-
                 hoaDonChiTietService.add(hoaDonChiTiet);
-
                 listHDCTCheckOut.add(hoaDonChiTiet);
+                total += (entry.getValue() * chiTietGiay.getGiaBan());
             }
         }
 
@@ -158,12 +157,6 @@ public class CheckOutController {
         int sumQuantity = listHDCTCheckOut.stream()
                 .mapToInt(HoaDonChiTiet::getSoLuong)
                 .sum();
-
-
-        double total = listHDCTCheckOut.stream()
-                .mapToDouble(HoaDonChiTiet::getDonGia)
-                .sum();
-
 
         List<KhuyenMai> listKM = hoaDonRepository.listDieuKienKhuyenMai(total);
         model.addAttribute("giaTienGiam", giaTienGiam);
@@ -197,7 +190,9 @@ public class CheckOutController {
 
             model.addAttribute("shippingFee", shippingFee);
             model.addAttribute("billPlaceOrder", hoaDon);
+
             model.addAttribute("toTalOder", total + shippingFee - giaTienGiam);
+
             model.addAttribute("tongTienDaGiamVoucherShip", total + shippingFee);
             model.addAttribute("diaChiKHDefault", diaChiKHDefault);
             model.addAttribute("addNewAddressNotNull", true);
@@ -417,7 +412,7 @@ public class CheckOutController {
         List<HoaDonChiTiet> hoaDonChiTietList = hoaDonChiTietService.findByHoaDon(hoaDon);
 
         for (HoaDonChiTiet xx : hoaDonChiTietList) {
-            GioHangChiTiet gioHangChiTiet = ghctService.findByCTSPActive(xx.getChiTietGiay());
+            GioHangChiTiet gioHangChiTiet = ghctService.findByCTSPActiveAndTrangThai(xx.getChiTietGiay(), 1);
             if (gioHangChiTiet != null) {
                 gioHangChiTiet.setTrangThai(0);
                 ghctService.addNewGHCT(gioHangChiTiet);
@@ -497,12 +492,17 @@ public class CheckOutController {
         }
     }
 
+//    Delete
     @GetMapping("/buyer/shop/buyNowButton")
     private String buyNow(@RequestParam("idDetailProduct") UUID idDProduct, @RequestParam("quantity") int quantity, Model model) {
 
         ChiTietGiay ctg = giayChiTietService.getByIdChiTietGiay(idDProduct);
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        if (session.getAttribute("KhachHangLogin") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "redirect:/buyer/login";
+        }
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
 
         GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(ctg, gioHang);
@@ -584,9 +584,10 @@ public class CheckOutController {
 
         List<HoaDonChiTiet> listHDCTCheckOut = new ArrayList<>();
         listHDCTCheckOut.add(hoaDonChiTiet);
-
+        double tongTienSP = listHDCTCheckOut.stream()
+                .mapToDouble(HoaDonChiTiet::getDonGia)
+                .sum();
         int sumQuantity = quantity;
-
         double total = quantity * ctg.getGiaBan();
 
         List<KhuyenMai> listKM = hoaDonRepository.listDieuKienKhuyenMai(total);
@@ -597,7 +598,7 @@ public class CheckOutController {
         hoaDon.setTongTienSanPham(total);
 
         hoaDonService.add(hoaDon);
-
+        model.addAttribute("tongTienSP", tongTienSP);
         model.addAttribute("sumQuantity", sumQuantity);
         model.addAttribute("total", total);
         model.addAttribute("listProductCheckOut", listHDCTCheckOut);
@@ -758,9 +759,7 @@ public class CheckOutController {
             hoaDonService.add(hoaDon);
 
         }
-        redirectAttributes.addFlashAttribute("messageSuccess", true);
-        redirectAttributes.addAttribute("selectedProducts", session.getAttribute(String.valueOf(khachHang.getIdKH())));
-        redirectAttributes.addAttribute("idKM", idKM);
-        return "redirect:/buyer/checkout";
+
+        return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString() + "&idKM="+idKM;
     }
 }

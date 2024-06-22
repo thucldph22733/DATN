@@ -77,7 +77,6 @@ public class CartController {
         ChiTietGiay chiTietGiay = gctService.getByIdChiTietGiay(idCTG);
 
         GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(chiTietGiay, gioHang);
-
         gioHangChiTiet.setSoLuong(quantity);
         gioHangChiTiet.setDonGia(quantity*chiTietGiay.getGiaBan());
         ghctService.addNewGHCT(gioHangChiTiet);
@@ -101,7 +100,7 @@ public class CartController {
     @GetMapping("/cart/delete/{idCTG}")
     private String deleteInCard(Model model, @PathVariable UUID idCTG, RedirectAttributes redirectAttribute) {
         ChiTietGiay chiTietGiay = gctService.getByIdChiTietGiay(idCTG);
-        GioHangChiTiet gioHangChiTiet = ghctService.findByCTSPActive(chiTietGiay);
+        GioHangChiTiet gioHangChiTiet = ghctService.findByCTSPActiveAndTrangThai(chiTietGiay,1);
         gioHangChiTiet.setTrangThai(0);
         ghctService.addNewGHCT(gioHangChiTiet);
 
