@@ -10,15 +10,25 @@ import java.util.UUID;
 
 public interface HoaDonService {
     List<HoaDon> getListHoaDonChuaThanhToan();
+
     List<HoaDon> getListHoaDonDaThanhToan();
+
     void add(HoaDon hoaDon);
+
     public void save(HoaDon hoaDon);
+
     HoaDon getOne(UUID id);
+
     List<HoaDon> listHoaDonKhachHangAndTrangThaiOnline(KhachHang khachHang, int trangThai);
+
     List<HoaDon> findHoaDonByKhachHang(KhachHang khachHang);
-    List<HoaDon>  listHoaDonOnline();
+
+    List<HoaDon> listHoaDonOnline();
+
     List<HoaDon> listHoaDonByNhanVienAndTrangThai(NhanVien nhanVien, int trangThai);
-//    public void delteHoaDonCho(UUID id,int trangThai,Integer loaiHD);
+
+    public void deleteHoaDonCho(UUID id);
+
     List<HoaDon> listHoaDonHuyAndThanhCongByNhanVien(NhanVien nhanVien);
 
     List<HoaDon> listAllHoaDonByNhanVien(NhanVien nhanVien);
@@ -27,5 +37,5 @@ public interface HoaDonService {
 
     List<HoaDon> listAllHoaDonByNhanVienHienTai(NhanVien nhanVien);
 
-//    List<HoaDon> hienThiDieuKien();
+    List<HoaDon> getAllHoaDonOffLine();
 }

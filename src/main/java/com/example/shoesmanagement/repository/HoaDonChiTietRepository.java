@@ -10,6 +10,8 @@ import java.util.UUID;
 @Controller
 public interface HoaDonChiTietRepository  extends JpaRepository<HoaDonChiTiet, UUID> {
 
+    void deleteById(UUID id);
+
     @Query(value = "select hdct from HoaDonChiTiet hdct where hdct.hoaDon.idHD = ?1 and hdct.chiTietGiay.idCTG =?2")
     HoaDonChiTiet findByIdHoaDonAndIdChiTietGiay(UUID idHoaDon, UUID idChiTietGiay);
 
