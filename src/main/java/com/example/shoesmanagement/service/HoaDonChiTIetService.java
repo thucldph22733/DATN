@@ -10,6 +10,8 @@ import java.util.UUID;
 public interface HoaDonChiTIetService {
     HoaDonChiTiet getOne(UUID idHoaDon, UUID idChiTietGiay);
 
+    public void delete(HoaDonChiTiet hoaDonChiTiet);
+
     void add(HoaDonChiTiet hoaDonChiTiet);
 
     void save(HoaDonChiTiet hoaDonChiTiet);

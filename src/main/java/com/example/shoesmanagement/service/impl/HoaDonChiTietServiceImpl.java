@@ -33,6 +33,11 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTIetService {
     }
 
     @Override
+    public void delete(HoaDonChiTiet hoaDonChiTiet) {
+        hoaDonChiTietRepository.delete(hoaDonChiTiet);
+    }
+
+    @Override
     public void save(HoaDonChiTiet hoaDonChiTiet) {
         hoaDonChiTietRepository.save(hoaDonChiTiet);
 
