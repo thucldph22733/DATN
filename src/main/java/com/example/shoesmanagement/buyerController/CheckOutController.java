@@ -42,6 +42,7 @@ public class CheckOutController {
     @Autowired
     private HttpServletRequest request;
 
+
     @Autowired
     private ShippingFeeService shippingFeeService;
 
@@ -70,6 +71,7 @@ public class CheckOutController {
     private double giaTienGiam = 0;
 
     @GetMapping("/buyer/checkout")
+
     private String checkOutCart(Model model, HttpServletRequest request,
                                 @RequestParam("selectedProducts") List<String> selectedProducts,
                                 @RequestParam(name = "productIds") List<UUID> productIds,
@@ -80,7 +82,16 @@ public class CheckOutController {
             if (!selectedProducts.get(i).equals("none")) selectedProduct.put(productIds.get(i), quantities.get(i));
         }
 
+ 
+
+
+
+
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        if (session.getAttribute("KhachHangLogin") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "redirect:/buyer/login";
+        }
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
 
         DiaChiKH diaChiKHDefault = diaChiKHService.findDCKHDefaulByKhachHang(khachHang);
@@ -126,13 +137,24 @@ public class CheckOutController {
         }
 
         double total = 0.0;
-        for (Map.Entry<UUID, Integer> entry : selectedProduct.entrySet()) {
-            HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
-//            GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(giayChiTietService.getByIdChiTietGiay(x), gioHang);
-            ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(entry.getKey());
+//         for (Map.Entry<UUID, Integer> entry : selectedProduct.entrySet()) {
+//             HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
+// //            GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(giayChiTietService.getByIdChiTietGiay(x), gioHang);
+//             ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(entry.getKey());
 
-            if (entry.getValue() > chiTietGiay.getSoLuong()) return "redirect:/buyer/cart";
-            else {
+// <<<<<<< ngocnm
+//             if (entry.getValue() > chiTietGiay.getSoLuong()) return "redirect:/buyer/cart";
+//             else {
+
+            if (gioHangChiTiet.getSoLuong() > chiTietGiay.getSoLuong()) {
+                redirectAttribute.addFlashAttribute("successMessage",
+                        "Số lượng sản phẩm hiện còn: " + chiTietGiay.getSoLuong() + " đôi. Vui lòng giảm số lượng");
+                String idGiay = String.valueOf(chiTietGiay.getGiay().getIdGiay());
+                String idMau = String.valueOf(chiTietGiay.getMauSac().getIdMau());
+                String linkBack = idGiay + "/" +idMau;
+                return "redirect:/buyer/cart" ;
+            } else {
+
                 // Xử lý trường hợp số lượng trong giỏ hàng lớn hơn số lượng tồn
                 // Có thể bắn lỗi, thông báo cho người dùng hoặc xử lý theo cách khác
                 hoaDonChiTiet.setHoaDon(hoaDon);
@@ -494,7 +516,7 @@ public class CheckOutController {
 
 //    Delete
     @GetMapping("/buyer/shop/buyNowButton")
-    private String buyNow(@RequestParam("idDetailProduct") UUID idDProduct, @RequestParam("quantity") int quantity, Model model) {
+    private String buyNow(@RequestParam("idDetailProduct") UUID idDProduct, @RequestParam("quantity") int quantity, Model model,RedirectAttributes redirectAttribute) {
 
         ChiTietGiay ctg = giayChiTietService.getByIdChiTietGiay(idDProduct);
 
@@ -506,6 +528,17 @@ public class CheckOutController {
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
 
         GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(ctg, gioHang);
+
+        if(quantity > ctg.getSoLuong()){
+            String idGiay = String.valueOf(ctg.getGiay().getIdGiay());
+            String idMau = String.valueOf(ctg.getMauSac().getIdMau());
+            String linkBack = idGiay + "/" +idMau;
+            redirectAttribute.addFlashAttribute("successMessage",
+                    "Số lượng sản phẩm hiện còn: " + ctg.getSoLuong() + " đôi. Vui lòng giảm số lượng");
+            return "redirect:/buyer/shop-details/" + linkBack;
+        }
+
+
 
         if (gioHangChiTiet == null) {
             gioHangChiTiet = new GioHangChiTiet();
