@@ -138,23 +138,19 @@ public class CheckOutController {
         }
 
         double total = 0.0;
-//         for (Map.Entry<UUID, Integer> entry : selectedProduct.entrySet()) {
-//             HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
-// //            GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(giayChiTietService.getByIdChiTietGiay(x), gioHang);
-//             ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(entry.getKey());
+         for (Map.Entry<UUID, Integer> entry : selectedProduct.entrySet()) {
+             HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
+             GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(giayChiTietService.getByIdChiTietGiay(entry.getKey()), gioHang);
+             ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(entry.getKey());
 
-// <<<<<<< ngocnm
-//             if (entry.getValue() > chiTietGiay.getSoLuong()) return "redirect:/buyer/cart";
-//             else {
-
-            if (gioHangChiTiet.getSoLuong() > chiTietGiay.getSoLuong()) {
-                redirectAttribute.addFlashAttribute("successMessage",
-                        "Số lượng sản phẩm hiện còn: " + chiTietGiay.getSoLuong() + " đôi. Vui lòng giảm số lượng");
-                String idGiay = String.valueOf(chiTietGiay.getGiay().getIdGiay());
-                String idMau = String.valueOf(chiTietGiay.getMauSac().getIdMau());
-                String linkBack = idGiay + "/" +idMau;
-                return "redirect:/buyer/cart" ;
-            } else {
+//            if (gioHangChiTiet.getSoLuong() > chiTietGiay.getSoLuong()) {
+//                redirectAttribute.addFlashAttribute("successMessage",
+//                        "Số lượng sản phẩm hiện còn: " + chiTietGiay.getSoLuong() + " đôi. Vui lòng giảm số lượng");
+//                String idGiay = String.valueOf(chiTietGiay.getGiay().getIdGiay());
+//                String idMau = String.valueOf(chiTietGiay.getMauSac().getIdMau());
+//                String linkBack = idGiay + "/" +idMau;
+//                return "redirect:/buyer/cart" ;
+//            }
 
             if (entry.getValue() > chiTietGiay.getSoLuong()) {
                 redirectAttribute.addFlashAttribute("successMessage", "Số lượng sản phẩm không đủ. Vui lòng giảm số lượng.");
@@ -162,7 +158,6 @@ public class CheckOutController {
                 String idMau = String.valueOf(chiTietGiay.getMauSac().getIdMau());
                 String linkBack = idGiay + "/" + idMau;
                 return "redirect:/buyer/shop-details/" + linkBack;
-//                return "redirect:/buyer/cart";
             }
             else {
                 // Xử lý trường hợp số lượng trong giỏ hàng lớn hơn số lượng tồn
