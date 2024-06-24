@@ -83,10 +83,6 @@ public class CheckOutController {
             if (!selectedProducts.get(i).equals("none")) selectedProduct.put(productIds.get(i), quantities.get(i));
         }
 
- 
-
-
-
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         if (session.getAttribute("KhachHangLogin") == null) {
@@ -138,10 +134,10 @@ public class CheckOutController {
         }
 
         double total = 0.0;
-         for (Map.Entry<UUID, Integer> entry : selectedProduct.entrySet()) {
-             HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
-             GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(giayChiTietService.getByIdChiTietGiay(entry.getKey()), gioHang);
-             ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(entry.getKey());
+        for (Map.Entry<UUID, Integer> entry : selectedProduct.entrySet()) {
+            HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
+            GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(giayChiTietService.getByIdChiTietGiay(entry.getKey()), gioHang);
+            ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(entry.getKey());
 
 //            if (gioHangChiTiet.getSoLuong() > chiTietGiay.getSoLuong()) {
 //                redirectAttribute.addFlashAttribute("successMessage",
@@ -153,13 +149,12 @@ public class CheckOutController {
 //            }
 
             if (entry.getValue() > chiTietGiay.getSoLuong()) {
-                redirectAttribute.addFlashAttribute("successMessage", "Số lượng sản phẩm không đủ. Vui lòng giảm số lượng.");
+                redirectAttribute.addFlashAttribute("successMessage", "Số lượng sản phẩm hiện còn: " + chiTietGiay.getSoLuong() + " đôi. Vui lòng giảm số lượng");
                 String idGiay = String.valueOf(chiTietGiay.getGiay().getIdGiay());
                 String idMau = String.valueOf(chiTietGiay.getMauSac().getIdMau());
                 String linkBack = idGiay + "/" + idMau;
                 return "redirect:/buyer/shop-details/" + linkBack;
-            }
-            else {
+            } else {
                 // Xử lý trường hợp số lượng trong giỏ hàng lớn hơn số lượng tồn
                 // Có thể bắn lỗi, thông báo cho người dùng hoặc xử lý theo cách khác
                 hoaDonChiTiet.setHoaDon(hoaDon);
@@ -519,9 +514,9 @@ public class CheckOutController {
         }
     }
 
-//    Delete
+    //    Delete
     @GetMapping("/buyer/shop/buyNowButton")
-    private String buyNow(@RequestParam("idDetailProduct") UUID idDProduct, @RequestParam("quantity") int quantity, Model model,RedirectAttributes redirectAttribute) {
+    private String buyNow(@RequestParam("idDetailProduct") UUID idDProduct, @RequestParam("quantity") int quantity, Model model, RedirectAttributes redirectAttribute) {
 
         ChiTietGiay ctg = giayChiTietService.getByIdChiTietGiay(idDProduct);
 
@@ -534,15 +529,14 @@ public class CheckOutController {
 
         GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(ctg, gioHang);
 
-        if(quantity > ctg.getSoLuong()){
+        if (quantity > ctg.getSoLuong()) {
             String idGiay = String.valueOf(ctg.getGiay().getIdGiay());
             String idMau = String.valueOf(ctg.getMauSac().getIdMau());
-            String linkBack = idGiay + "/" +idMau;
+            String linkBack = idGiay + "/" + idMau;
             redirectAttribute.addFlashAttribute("successMessage",
                     "Số lượng sản phẩm hiện còn: " + ctg.getSoLuong() + " đôi. Vui lòng giảm số lượng");
             return "redirect:/buyer/shop-details/" + linkBack;
         }
-
 
 
         if (gioHangChiTiet == null) {
@@ -798,6 +792,6 @@ public class CheckOutController {
 
         }
 
-        return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString() + "&idKM="+idKM;
+        return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString() + "&idKM=" + idKM;
     }
 }
