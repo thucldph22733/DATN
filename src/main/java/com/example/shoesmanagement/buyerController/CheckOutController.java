@@ -74,7 +74,8 @@ public class CheckOutController {
                                 @RequestParam("selectedProducts") List<String> selectedProducts,
                                 @RequestParam(name = "productIds") List<UUID> productIds,
                                 @RequestParam(name = "quantities") List<Integer> quantities,
-                                Optional<UUID> idKM) {
+                                Optional<UUID> idKM,
+                                RedirectAttributes redirectAttribute) {
         Map<UUID, Integer> selectedProduct = new HashMap<>();
         for (int i = 0; i < selectedProducts.size(); i++) {
             if (!selectedProducts.get(i).equals("none")) selectedProduct.put(productIds.get(i), quantities.get(i));
@@ -131,7 +132,14 @@ public class CheckOutController {
 //            GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(giayChiTietService.getByIdChiTietGiay(x), gioHang);
             ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(entry.getKey());
 
-            if (entry.getValue() > chiTietGiay.getSoLuong()) return "redirect:/buyer/cart";
+            if (entry.getValue() > chiTietGiay.getSoLuong()) {
+                redirectAttribute.addFlashAttribute("successMessage", "Số lượng sản phẩm không đủ. Vui lòng giảm số lượng.");
+                String idGiay = String.valueOf(chiTietGiay.getGiay().getIdGiay());
+                String idMau = String.valueOf(chiTietGiay.getMauSac().getIdMau());
+                String linkBack = idGiay + "/" + idMau;
+                return "redirect:/buyer/shop-details/" + linkBack;
+//                return "redirect:/buyer/cart";
+            }
             else {
                 // Xử lý trường hợp số lượng trong giỏ hàng lớn hơn số lượng tồn
                 // Có thể bắn lỗi, thông báo cho người dùng hoặc xử lý theo cách khác
