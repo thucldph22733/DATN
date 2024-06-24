@@ -134,6 +134,7 @@
     .form-control-sm label {
         margin-right: 10px; /* Thêm khoảng cách giữa label và combobox, nếu cần */
     }
+
     .flex-container {
         display: flex;
         align-items: center; /* Đảm bảo các elements được căn giữa */
@@ -339,7 +340,11 @@
                                                                     <div class="flex-container">
                                                                         <div>
 
-                                                                            <input type="search" class="form-control form-control-sm" name="keyword" placeholder="Tìm kiếm..." aria-controls="DataTables_Table_0">
+                                                                            <input type="search"
+                                                                                   class="form-control form-control-sm"
+                                                                                   name="keyword"
+                                                                                   placeholder="Tìm kiếm..."
+                                                                                   aria-controls="DataTables_Table_0">
 
                                                                         </div>
 
@@ -448,7 +453,7 @@
                                                                                 </a>
                                                                             </label>
                                                                         </li>
-                                                                   </div>
+                                                                    </div>
                                                                 </ul>
                                                             </div>
                                                             <div class="row">
@@ -610,7 +615,8 @@
 
                                                                     <li style="margin-bottom: 20px;">
                                                                         <h5>Mã khuyến mãi:</h5>
-                                                                        <h5 th:text="${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 0, 'POINT')} + '₫'"></h5>
+                                                                        <h5 id="apDungMaGiamGia"
+                                                                            th:text="${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 0, 'POINT')} + '₫'"></h5>
                                                                         <input type="text" th:value="${giaTienGiam}"
                                                                                id="tienGiam" style="display: none">
                                                                     </li>
@@ -676,8 +682,11 @@
                                                                         <h5 class="grandTotal" style="font-size: 13pt;"
                                                                             th:text=" ${#numbers.formatDecimal(tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"
                                                                             id="tongTienSauKhuyenMai"></h5>
-                                                                        <input id="tongtienKM" th:value="${tongTien}" style="display: none">
-                                                                        <input class="text-danger" id="tongTienSP" th:value="${tongTien}" style="font-size: 13pt; display: none">
+                                                                        <input id="tongtienKM" th:value="${tongTien}"
+                                                                               style="display: none">
+                                                                        <input class="text-danger" id="tongTienSP"
+                                                                               th:value="${tongTien}"
+                                                                               style="font-size: 13pt; display: none">
                                                                     </li>
 
                                                                     <li style="margin-bottom: 20px;">
@@ -973,7 +982,7 @@
                                         <label th:text="${'Hãng : '+ giay.hang.tenHang}"></label>
                                         <div id="sizeQuantity" th:if="${not #lists.isEmpty(listChiTietGiay)}">
                                             Còn hàng
-                                             <span th:text="${listChiTietGiay.get(0).soLuong}"></span> đôi
+                                            <span th:text="${listChiTietGiay.get(0).soLuong}"></span> đôi
                                         </div>
                                     </div>
                                     <div class="text-left fs-4">
@@ -1157,7 +1166,6 @@
 </script>
 
 
-
 <script th:inline="javascript">
     /*<![CDATA[*/
     function displaySizeQuantity(radioInput) {
@@ -1189,13 +1197,13 @@
             })
             .catch(error => {
             })
-           .then(response => {
-            if (response.ok) {
-                return response.text(); // Hoặc response.json() nếu bạn trả về JSON
-            } else {
-                throw new Error('Something went wrong on api server!');
-            }
-        })
+            .then(response => {
+                if (response.ok) {
+                    return response.text(); // Hoặc response.json() nếu bạn trả về JSON
+                } else {
+                    throw new Error('Something went wrong on api server!');
+                }
+            })
             .then(data => {
                 console.log(data); // Hoặc xử lý kết quả từ server
             })
@@ -1237,7 +1245,6 @@
     }
 
 </script>
-
 
 
 <script>
@@ -1355,6 +1362,7 @@
                     grandTotalElement.innerText = formatCurrency(grandTotal) + ' đ';
                     grandTotalElement2.innerText = formatCurrency(grandTotal) + ' đ';
                     grandTotalElement3.innerText = formatCurrency(grandTotal) + ' đ';
+                    document.getElementById('apDungMaGiamGia').innerHTML = '0 đ';
                 } else {
                     alert(data.body.error);
                 }
