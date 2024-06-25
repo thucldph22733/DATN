@@ -135,22 +135,19 @@
                         </div>
                     </div>
 
-                    <div th:if="${errorMessage}" th:attr="data-message=${errorMessage}" id="success-toast" style="position: fixed; top: 1rem; right: 1rem; z-index: 1050;">
-                        <!-- Toast container, ẩn mặc định và sẽ được hiển thị bằng JavaScript -->
-                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="7000">
-                            <div class="toast-header">
-                                <strong class="mr-auto">Lỗi</strong>
-                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="toast-body" th:text="${errorMessage}">
-                            </div>
-                        </div>
-                    </div>
-
-
-
+<!--                    <div th:if="${errorMessage}" th:attr="data-message=${errorMessage}" id="success-toast" style="position: fixed; top: 1rem; right: 1rem; z-index: 1050;">-->
+<!--                        &lt;!&ndash; Toast container, ẩn mặc định và sẽ được hiển thị bằng JavaScript &ndash;&gt;-->
+<!--                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="7000">-->
+<!--                            <div class="toast-header">-->
+<!--                                <strong class="mr-auto">Lỗi</strong>-->
+<!--                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">-->
+<!--                                    <span aria-hidden="true">&times;</span>-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <div class="toast-body" th:text="${errorMessage}">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
 
                     <div>
@@ -509,10 +506,10 @@
 </section>
 <!--Section giá và size end-->
 
-<!--Modal Begin-->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#noticaAddVoucher" id="openModalBtn">
-    Mở thông báo
-</button>
+<!--&lt;!&ndash;Modal Begin&ndash;&gt;-->
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#noticaAddVoucher" id="openModalBtn">-->
+<!--    Mở thông báo-->
+<!--</button>-->
 
 <!-- Modal -->
 <div class="modal fade" id="noticaAddVoucher" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
