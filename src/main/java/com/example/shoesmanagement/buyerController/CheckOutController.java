@@ -71,30 +71,36 @@ public class CheckOutController {
     private double giaTienGiam = 0;
 
     @GetMapping("/buyer/checkout")
-    private String checkOutCart(Model model, @RequestParam("selectedProducts") List<UUID> selectedProductIds, Optional<UUID> idKM,RedirectAttributes redirectAttribute) {
-
-
-
+    private String checkOutCart(Model model, @RequestParam("selectedProducts") List<UUID> selectedProductIds, Optional<UUID> idKM, RedirectAttributes redirectAttribute, HttpSession session) {
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-        if (session.getAttribute("KhachHangLogin") == null) {
-            // Nếu managerLogged bằng null, quay về trang login
+        if (khachHang == null) {
             return "redirect:/buyer/login";
         }
-        GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
 
+        GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
         DiaChiKH diaChiKHDefault = diaChiKHService.findDCKHDefaulByKhachHang(khachHang);
         List<DiaChiKH> diaChiKHList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, false, 1);
-
         List<HoaDonChiTiet> listHDCTCheckOut = new ArrayList<>();
         Date date = new Date();
         HoaDon hoaDon = new HoaDon();
-
         List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
         model.addAttribute("khuyenMai", khuyenMai);
 
+        // Lấy số thứ tự từ session
+        Integer sequenceNumber = (Integer) session.getAttribute("sequenceNumber");
+        if (sequenceNumber == null) {
+            sequenceNumber = 1; // Khởi tạo nếu chưa có trong session
+        }
 
-        String maHD = "HD_" + khachHang.getMaKH() + "_" + date.getDate() + generateRandomNumbers();
-        session.setAttribute(String.valueOf(khachHang.getIdKH()), selectedProductIds);
+        // Tạo mã hóa đơn với ngày hôm nay và số thứ tự
+        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+        String strDate = formatter.format(date);
+        String maHD = "HD_" + strDate + "_" + sequenceNumber;
+
+        // Tăng số thứ tự và lưu lại trong session
+        sequenceNumber++;
+        session.setAttribute("sequenceNumber", sequenceNumber);
+
         hoaDon.setKhachHang(khachHang);
         hoaDon.setMaHD(maHD);
         hoaDon.setLoaiHD(0);
@@ -112,7 +118,6 @@ public class CheckOutController {
             hoaDon.setDiaChiNguoiNhan(diaChiKHDefault.getDiaChiChiTiet());
             hoaDon.setSdtNguoiNhan(diaChiKHDefault.getSdtNguoiNhan());
             hoaDon.setTenNguoiNhan(diaChiKHDefault.getTenNguoiNhan());
-            session.removeAttribute("diaChiGiaoHang");
             session.setAttribute("diaChiGiaoHang", diaChiKHDefault);
 
             giaoHang.setTenNguoiNhan(diaChiKHDefault.getTenNguoiNhan());
@@ -123,23 +128,19 @@ public class CheckOutController {
             giaoHangService.saveGiaoHang(giaoHang);
             hoaDonService.add(hoaDon);
         }
+
         for (UUID x : selectedProductIds) {
             HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
             GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(giayChiTietService.getByIdChiTietGiay(x), gioHang);
             ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(x);
 
-            // Thêm kiểm tra số lượng ở đây
-
             if (gioHangChiTiet.getSoLuong() > chiTietGiay.getSoLuong()) {
-                redirectAttribute.addFlashAttribute("successMessage",
-                        "Số lượng sản phẩm hiện còn: " + chiTietGiay.getSoLuong() + " đôi. Vui lòng giảm số lượng");
+                redirectAttribute.addFlashAttribute("successMessage", "Số lượng sản phẩm hiện còn: " + chiTietGiay.getSoLuong() + " đôi. Vui lòng giảm số lượng");
                 String idGiay = String.valueOf(chiTietGiay.getGiay().getIdGiay());
                 String idMau = String.valueOf(chiTietGiay.getMauSac().getIdMau());
-                String linkBack = idGiay + "/" +idMau;
-                return "redirect:/buyer/cart" ;
+                String linkBack = idGiay + "/" + idMau;
+                return "redirect:/buyer/cart";
             } else {
-                // Xử lý trường hợp số lượng trong giỏ hàng lớn hơn số lượng tồn
-                // Có thể bắn lỗi, thông báo cho người dùng hoặc xử lý theo cách khác
                 hoaDonChiTiet.setHoaDon(hoaDon);
                 hoaDonChiTiet.setChiTietGiay(chiTietGiay);
                 hoaDonChiTiet.setDonGia(gioHangChiTiet.getDonGia());
@@ -148,31 +149,19 @@ public class CheckOutController {
                 hoaDonChiTiet.setTrangThai(1);
 
                 hoaDonChiTietService.add(hoaDonChiTiet);
-
                 listHDCTCheckOut.add(hoaDonChiTiet);
             }
         }
 
         double giaTienGiam = 0.0;
-        if(idKM.isPresent()){
+        if (idKM.isPresent()) {
             KhuyenMai voucher = khuyenMaiRepository.findById(idKM.get()).get();
             giaTienGiam = voucher.getGiaTienGiam();
             hoaDon.setKhuyenMai(voucher);
         }
 
-        int sumQuantity = listHDCTCheckOut.stream()
-                .mapToInt(HoaDonChiTiet::getSoLuong)
-                .sum();
-
-
-
-        double total = listHDCTCheckOut.stream()
-                .mapToDouble(HoaDonChiTiet ::getDonGia)
-                .sum();
-
-
-
-
+        int sumQuantity = listHDCTCheckOut.stream().mapToInt(HoaDonChiTiet::getSoLuong).sum();
+        double total = listHDCTCheckOut.stream().mapToDouble(HoaDonChiTiet::getDonGia).sum();
 
         List<KhuyenMai> listKM = hoaDonRepository.listDieuKienKhuyenMai(total);
         model.addAttribute("giaTienGiam", giaTienGiam);
@@ -180,7 +169,6 @@ public class CheckOutController {
 
         hoaDon.setTongSP(sumQuantity);
         hoaDon.setTongTienSanPham(total);
-
         hoaDonService.add(hoaDon);
 
         model.addAttribute("sumQuantity", sumQuantity);
@@ -198,36 +186,26 @@ public class CheckOutController {
             giaoHang.setSdtNguoiNhan(diaChiKHDefault.getSdtNguoiNhan());
             giaoHang.setTenNguoiNhan(diaChiKHDefault.getTenNguoiNhan());
             giaoHangService.saveGiaoHang(giaoHang);
+
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(new Date());
             calendar.add(Calendar.DATE, shippingFeeService.tinhNgayNhanDuKien(diaChiKHDefault.getDiaChiChiTiet()));
             Date ngayDuKien = calendar.getTime();
             model.addAttribute("ngayDuKien", ngayDuKien);
-
             model.addAttribute("shippingFee", shippingFee);
             model.addAttribute("billPlaceOrder", hoaDon);
-
             model.addAttribute("toTalOder", total + shippingFee - giaTienGiam);
-
             model.addAttribute("tongTienDaGiamVoucherShip", total + shippingFee);
             model.addAttribute("diaChiKHDefault", diaChiKHDefault);
             model.addAttribute("addNewAddressNotNull", true);
             model.addAttribute("listAddressKH", diaChiKHList);
-            // Tính toán ngày giao hàng dự kiến
-//            LocalDate estimatedDeliveryDate = deliveryTimeService.calculateDeliveryDate(diaChiKHDefault.getDiaChiChiTiet());
-//            model.addAttribute("estimatedDeliveryDate", estimatedDeliveryDate);
-
         } else {
-//            model.addAttribute("tongTienDaGiamVoucherShip", total);
             model.addAttribute("addNewAddressNulll", true);
             model.addAttribute("addNewAddressNull", true);
         }
 
-
         session.removeAttribute("hoaDonTaoMoi");
-
         session.setAttribute("hoaDonTaoMoi", hoaDon);
-
         showData(model);
         return "online/checkout";
     }
@@ -392,6 +370,10 @@ public class CheckOutController {
     public String placeOrder(Model model) {
 
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi");
+        if (session.getAttribute("hoaDonTaoMoi") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "redirect:/login";
+        }
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
 
         String hinhThucThanhToan = request.getParameter("hinhThucThanhToan");
@@ -558,7 +540,19 @@ public class CheckOutController {
         Date date = new Date();
         HoaDon hoaDon = new HoaDon();
 
-        String maHD = "HD_" + khachHang.getMaKH() + "_" + date.getDate() + generateRandomNumbers();
+        Integer sequenceNumber = (Integer) session.getAttribute("sequenceNumber");
+        if (sequenceNumber == null) {
+            sequenceNumber = 1; // Khởi tạo nếu chưa có trong session
+        }
+
+        // Tạo mã hóa đơn với ngày hôm nay và số thứ tự
+        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+        String strDate = formatter.format(date);
+        String maHD = "HD_" + strDate + "_" + sequenceNumber;
+
+        // Tăng số thứ tự và lưu lại trong session
+        sequenceNumber++;
+        session.setAttribute("sequenceNumber", sequenceNumber);
 
         hoaDon.setKhachHang(khachHang);
         hoaDon.setMaHD(maHD);
@@ -764,7 +758,19 @@ public class CheckOutController {
             Date date = new Date();
             HoaDon hoaDon = new HoaDon();
 
-            String maHD = "HD_" + khachHang.getMaKH() + "_" + date.getDate() + generateRandomNumbers();
+            Integer sequenceNumber = (Integer) session.getAttribute("sequenceNumber");
+            if (sequenceNumber == null) {
+                sequenceNumber = 1; // Khởi tạo nếu chưa có trong session
+            }
+
+            // Tạo mã hóa đơn với ngày hôm nay và số thứ tự
+            SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+            String strDate = formatter.format(date);
+            String maHD = "HD_" + strDate + "_" + sequenceNumber;
+
+            // Tăng số thứ tự và lưu lại trong session
+            sequenceNumber++;
+            session.setAttribute("sequenceNumber", sequenceNumber);
 
             hoaDon.setKhachHang(khachHang);
             hoaDon.setMaHD(maHD);
