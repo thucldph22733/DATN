@@ -290,6 +290,11 @@ public class BanHangController {
             response.put("error", "Số lượng trong kho không đủ");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } else {
+            // xóa khuyến mãi
+            HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).get();
+            hoaDon.setKhuyenMai(null);
+            hoaDonRepository.saveAndFlush(hoaDon);
+
             // Cập nhật số lượng và đơn giá trong hóa đơn chi tiết
             int previousQuantity = hoaDonChiTiet.getSoLuong();
             hoaDonChiTiet.setSoLuong(quantity);
