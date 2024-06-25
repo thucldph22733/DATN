@@ -100,7 +100,7 @@ public class CheckOutController {
         // Tăng số thứ tự và lưu lại trong session
         sequenceNumber++;
         session.setAttribute("sequenceNumber", sequenceNumber);
-
+        session.setAttribute(String.valueOf(khachHang.getIdKH()), selectedProductIds);
         hoaDon.setKhachHang(khachHang);
         hoaDon.setMaHD(maHD);
         hoaDon.setLoaiHD(0);
