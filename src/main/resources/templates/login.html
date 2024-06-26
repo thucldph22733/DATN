@@ -31,7 +31,7 @@
         line-height: 1.75rem;
         font-weight: 600;
         text-align: center;
-        color: #834F36;
+        color: red;
     }
 
     .input-container {
@@ -81,7 +81,7 @@
         padding-bottom: 0.75rem;
         padding-left: 1.25rem;
         padding-right: 1.25rem;
-        background-color: #834F36;
+        background-color: red;
         color: #ffffff;
         font-size: 0.875rem;
         line-height: 1.25rem;
@@ -137,19 +137,19 @@
 
     <form th:action="@{/login}" class="form" method="post">
 
-        <p class="form-title">Log in </p>
+        <p class="form-title">Đăng nhập vào hệ thống! </p>
 
         <span th:text="${messageLogin}" style="color: red;"></span>
         <div class="input-container">
-            <input placeholder="Email or Phone" name="username" type="text" id="username">
+            <input placeholder="Vui lòng nhập email" name="username" type="text" id="username">
         </div>
 
         <div class="input-container">
-            <input placeholder="Password" name="password" type="password" class="form-control" id="password">
+            <input placeholder="Vui lòng nhập mật khẩu " name="password" type="password" class="form-control" id="password">
         </div>
 
         <button class="submit" type="submit" id="loginButton">
-            Login
+            Đăng nhập
         </button>
 
         <p class="signup-link">

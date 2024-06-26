@@ -16,7 +16,7 @@ public interface GHCTService {
 
     void addNewGHCT(GioHangChiTiet gioHangChiTiet);
 
-    GioHangChiTiet findByCTSPActive(ChiTietGiay chiTietGiay);
+    GioHangChiTiet findByCTSPActiveAndTrangThai(ChiTietGiay chiTietGiay, int trangThai);
 
     GioHangChiTiet findByCTSP(ChiTietGiay chiTietGiay);
 

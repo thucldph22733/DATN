@@ -184,6 +184,8 @@ img {
 }
 
 svg {
+    width: 74px;
+
     overflow: hidden;
     vertical-align: middle
 }
