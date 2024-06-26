@@ -341,9 +341,9 @@
                                     th:value="${x.chiTietGiay.idCTG}">
 
                                     <td>
-                                        <input style="height: 20px; width: 20px;" class="itemsCart"
-                                               onclick="updateTotalAmount(this)" name="selectedProducts" type="checkbox"
-                                               th:value="${x.chiTietGiay.idCTG}">
+                                        <input type="hidden" name="selectedProducts" value="none"/>
+                                        <input type="hidden" name="productIds" th:value="${x.chiTietGiay.idCTG}"/>
+                                        <input style="height: 20px; width: 20px;" class="itemsCart" onclick="updateTotalAmount(this)" type="checkbox" th:name="${x.chiTietGiay.idCTG}">
                                     </td>
                                     <td style="width: 400px;" class="product__cart__item">
                                         <div class="product__cart__item__pic">
@@ -382,7 +382,7 @@
                                             <input class="quantityInput" oninput="validateQuantity(this)"
                                                    th:value="${x.soLuong}"
                                                    style="width: 50px; text-align: center; border: 1px solid black;"
-                                                   type="number" th:name="${x.chiTietGiay.idCTG}">
+                                                   type="number" name="quantities">
                                         </div>
                                     </td>
 
@@ -424,7 +424,7 @@
                             </th:block>
 
 
-                      
+
 
 
                             <div class="alert alert-warning container mt-3 text-center"
@@ -921,9 +921,9 @@
 
     <!-- Button trigger modal -->
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#messAddThanhCong">
-        Mở thông báo
-    </button>
+<!--    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#messAddThanhCong">-->
+<!--        Mở thông báo-->
+<!--    </button>-->
 
     <!-- Modal -->
     <div class="modal fade" id="messAddThanhCong" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle"
@@ -1029,9 +1029,18 @@
 
 
     function updateTotalAmount(input) {
-        var quantity = input.value;
+        var quantity = input.parentElement.parentElement.querySelector('input[name="quantities"]').value;
         var idCTG = input.getAttribute('name'); // Đảm bảo rằng đây là thuộc tính chứa idCTG
 
+        // if(input.type == 'checkbox') {
+        //     const selectProduct = input.parentElement.querySelector('input[name="selectedProducts"]');
+        //     selectProduct.value = input.checked ? idCTG : "none";
+        // }
+
+
+        const selectProduct = input.parentElement.querySelector('input[name="selectedProducts"]');
+        if(input.checked) selectProduct.value = idCTG;
+        else selectProduct.value = "none"
         fetch('/buyer/cart/updateQuantity', {
             method: 'POST',
             headers: {
@@ -1069,7 +1078,7 @@
         if ($(checkbox).prop("checked")) {
             // Nếu tất cả sản phẩm được chọn, cập nhật tổng tiền cho mỗi sản phẩm
             $(".itemsCart:checked").each(function () {
-                updateTotalAmount($(this).closest("tr").find(".quantityInput")[0]);
+                updateTotalAmount(this);
             });
         } else {
             // Nếu không có sản phẩm nào được chọn, đặt tổng tiền về 0

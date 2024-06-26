@@ -62,8 +62,11 @@ public class LoginController {
                 } else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("CV02")) {
                     session.setAttribute("staffLogged", nhanVien);
                     return "redirect:/ban-hang/hien-thi";
+                }else if  (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("GH01")){
+                    session.setAttribute("shipperLogged", nhanVien);
+                    return "redirect:/order/";
                 }else{
-                    model.addAttribute("messageLogin", "Not Access");
+                    model.addAttribute("messageLogin", "Email hoặc mật khẩu không chính xác");
                     return "/login";
                 }
             } else {
@@ -82,8 +85,11 @@ public class LoginController {
                 }else if (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("NV02")) {
                     session.setAttribute("staffLogged", nhanVien);
                     return "redirect:/ban-hang/hien-thi";
-                } else{
-                    model.addAttribute("messageLogin", "Not Access");
+                } else if  (nhanVien.getChucVu().getMaCV().equalsIgnoreCase("GH01")){
+                    session.setAttribute("shipperLogged", nhanVien);
+                    return "redirect:/order/";
+                }else{
+                    model.addAttribute("messageLogin", "Email hoặc mật khẩu không chính xác");
                     return "/login";
                 }
             } else {

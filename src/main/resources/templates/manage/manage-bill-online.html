@@ -55,79 +55,35 @@
 
             <ul class="nav user-menu">
 
-                <li class="nav-item dropdown has-arrow flag-nav">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button">
-                        <i class="flag flag-vn"></i>
+                <li class="nav-item dropdown has-arrow flag-nav " style="margin-right: 30px;">
+                    <a href="/manage/bill/online"
+                       style="height: 30px; width: 30px; background-color: #ff9f43; border-radius: 5px; margin-top: 13px;">
+                        <i class="si si-refresh" style="color: #ffffff; margin-left: -10px;"></i>
                     </a>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-                        <img src="/images/img/icons/notification-bing.svg" alt="img"> <span
-                            class="badge rounded-pill" th:text="${soThongBao}"></span>
-                    </a>
-                    <div class="dropdown-menu notifications">
-                        <div class="topnav-dropdown-header">
-                            <span class="notification-title">Notifications</span>
-                            <a href="javascript:void(0)" class="clear-noti"> Clear All </a>
-                        </div>
-                        <div class="noti-content">
-                            <ul class="notification-list">
-                                <th:block th:each="x : ${listThongBao}">
-                                    <li th:if="${x.trangThai == 3}" class="notification-message">
-                                        <a href="/manage/bill/online">
-                                            <div class="media d-flex">
-                                                <span class="avatar flex-shrink-0">
-                                                    <img alt="" src="/images/img/profiles/avatar-02.jpg">
-                                                </span>
-                                                <div class="media-body flex-grow-1">
-                                                    <p class="noti-details">
-                                                        <span class="noti-title"
-                                                              th:text="${x.khachHang.hoTenKH}"></span>
-                                                        <span th:text="${x.noiDungTB}"></span>
-                                                        <span class="noti-title" th:text="${x.hoaDon.maHD}"></span>
-                                                    </p>
-                                                    <p class="noti-time">
-                                                    <span class="notification-time"
-                                                          th:text="${#dates.format(x.tgTB, 'HH:mm yyyy-MM-dd')}">
-                                                    </span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </th:block>
-                            </ul>
-                        </div>
-                        <div class="topnav-dropdown-footer">
-                            <a href="activities.html">View all Notifications</a>
-                        </div>
-                    </div>
-                </li>
+
+
 
                 <li class="nav-item dropdown has-arrow main-drop">
                     <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
-                        <!--                                            <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">-->
+                                                                    <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">
                         <span class="status online"></span></span>
                     </a>
                     <div class="dropdown-menu menu-drop-user">
                         <div class="profilename">
-                            <!--                                                    <div class="profileset">-->
-                            <!--                                                        <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">-->
-                            <!--                                                        <span class="status online"></span></span>-->
-                            <!--                                                        <div class="profilesets">-->
-                            <!--                                                            <h6 th:text="${session.managerLogged.hoTenNV}"></h6>-->
-                            <!--                                                            <h5 th:text="${session.managerLogged.chucVu.tenCV}"></h5>-->
-                            <!--                                                        </div>-->
-                            <!--                                                    </div>-->
+                                                                                <div class="profileset">
+                                                                                    <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">
+                                                                                    <span class="status online"></span></span>
+                                                                                    <div class="profilesets">
+                                                                                        <h6 th:text="${session.managerLogged.hoTenNV}"></h6>
+                                                                                        <h5 th:text="${session.managerLogged.chucVu.tenCV}"></h5>
+                                                                                    </div>
+                                                                                </div>
                             <hr class="m-0">
                             <a class="dropdown-item" href="/ban-hang/hien-thi">Bán hàng tại quầy</a>
                             <a class="dropdown-item" href="/order/">Vận chuyển</a>
-                            <a class="dropdown-item" href="profile.html">
-                                <i class="me-2" data-feather="user"></i> My Profile
-                            </a>
-                            <a class="dropdown-item" href="/manage/change-password"><i class="me-2"
-                                                                                       data-feather="settings"></i>Change passwoord</a>
+                            <a class="dropdown-item" href="/manage/change-password"><i class="me-2" data-feather="settings"></i>Change passwoord</a>
                             <hr class="m-0">
                             <a class="dropdown-item logout pb-0" href="/logout"><img src="/images/img/icons/log-out.svg"
                                                                                      class="me-2" alt="img">Logout</a>
@@ -157,12 +113,6 @@
                                 <span>Trang chủ nè</span>
                             </a>
                         </li>
-                        <!--                        <li>-->
-                        <!--                            <a href="/manage/ban-hang" data-link="link2" onclick="setActiveLink()">-->
-                        <!--                                <img src="/images/iconBanHang.png" alt="img">-->
-                        <!--                                <span>Bán hàng</span>-->
-                        <!--                            </a>-->
-                        <!--                        </li>-->
                         <li>
                             <a href="/manage/thongke">
                                 <img src="/images/img/icons/dashboard.svg" alt="img">
@@ -447,7 +397,7 @@
 
                                                                                 <td th:if="${bill.trangThai == 0 }"> Chờ thanh toán </td>
                                                                                 <td th:if="${bill.trangThai == 1 }"> Chờ xác nhận</td>
-                                                                                <td th:if="${bill.trangThai == 2 }">Giao hàng</td>
+                                                                                <td th:if="${bill.trangThai == 2 }"> Chờ giao hàng</td>
                                                                                 <td th:if="${bill.trangThai == 3 }">Giao thành công</td>
                                                                                 <td th:if="${bill.trangThai == 4 }">Đã Hủy</td>
                                                                                 <td th:if="${bill.trangThai == 5 }">Hoàn Hàng</td>
@@ -797,7 +747,7 @@
                                     <label style="border: none; font-size: 12pt; font-weight: 600;">Trạng thái hóa đơn</label>
                                     <p th:if="${bill.trangThai == 0 }">Chờ thanh toán</p>
                                     <p th:if="${bill.trangThai == 1 }">Chờ giao hàng</p>
-                                    <p th:if="${bill.trangThai == 2 }">Giao hàng</p>
+                                    <p th:if="${bill.trangThai == 2 }">Chờ giao hàng</p>
                                     <p th:if="${bill.trangThai == 3 }">Giao thành công</p>
                                     <p th:if="${bill.trangThai == 4 }">Đã Hủy</p>
                                     <p th:if="${bill.trangThai == 5 }">Hoàn Hàng</p>
@@ -838,8 +788,8 @@
                                 </div>
                                 <div class="col-lg-2 col-sm-12 col-12">
                                     <div class="form-group">
-                                        <!--                                <p  th:text="'₫'+${#numbers.formatDecimal(x.soTienThanhToan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>-->
-                                        <p  th:text="'₫'+${#numbers.formatDecimal((x.soTienThanhToan ?: 0), 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                        <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-sm-12 col-12">
@@ -929,7 +879,7 @@
                                     <label style="border: none; font-size: 12pt; font-weight: 600;">Trạng thái hóa đơn</label>
                                     <p th:if="${bill.trangThai == 0 }">Chờ thanh toán</p>
                                     <p th:if="${bill.trangThai == 1 }">Chờ giao hàng</p>
-                                    <p th:if="${bill.trangThai == 2 }">Giao hàng</p>
+                                    <p th:if="${bill.trangThai == 2 }">Chờ giao hàng</p>
                                     <p th:if="${bill.trangThai == 3 }">Giao thành công</p>
                                     <p th:if="${bill.trangThai == 4 }">Đã Hủy</p>
                                     <p th:if="${bill.trangThai == 5 }">Hoàn Hàng</p>
