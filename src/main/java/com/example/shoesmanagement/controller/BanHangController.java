@@ -192,12 +192,6 @@ public class BanHangController {
             model.addAttribute("messageGioHang", "Trong giỏ hàng chưa có sản phẩm");
         }
 
-//         model.addAttribute("tongTienSanPham", hd.getTongTienSanPham());
-//         model.addAttribute("tongTien", hd.getTongTien());
-//         hd.setTongTien(tongTienSanPham-giaTienGiam);
-//         model.addAttribute("listKhachHang", khachHangService.findKhachHangByTrangThai());
-
-
         double tongTienSanPham = hoaDonChiTietService.tongTienSanPham(findByIdHoaDon);
         double tongTien = hoaDonChiTietService.tongTien(findByIdHoaDon);
 
