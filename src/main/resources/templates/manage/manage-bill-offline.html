@@ -54,7 +54,7 @@
 
         <ul class="nav user-menu">
             <li class="nav-item dropdown has-arrow flag-nav " style="margin-right: 30px;">
-                <a href="/manage/bill/online"
+                <a href="/manage/bill/offline"
                    style="height: 30px; width: 30px; background-color: #ff9f43; border-radius: 5px; margin-top: 13px;">
                     <i class="si si-refresh" style="color: #ffffff; margin-left: -10px;"></i>
                 </a>
@@ -90,7 +90,8 @@
                             <i class="me-2" data-feather="user"></i> My Profile
                         </a>
                         <a class="dropdown-item" href="/manage/change-password"><i class="me-2"
-                                                                                   data-feather="settings"></i>Change passwoord</a>
+                                                                                   data-feather="settings"></i>Change
+                            passwoord</a>
                         <hr class="m-0">
                         <a class="dropdown-item logout pb-0" href="/logout"><img src="/images/img/icons/log-out.svg"
                                                                                  class="me-2" alt="img">Logout</a>
@@ -308,12 +309,13 @@
                                                                             th:text="${bill.khachHang.hoTenKH}"></td>
 
                                                                         <td th:text="${bill.tongSP}"></td>
-                                                                        <td th:text="${bill.getTongTien()}"></td>
+                                                                        <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
                                                                         <th>
-                                                                            <i class="fe fe-eye"
-                                                                               data-bs-toggle="modal"
-                                                                               data-bs-target="#modalAll"
-                                                                               style="cursor: pointer; margin: 0 25px 0 20px; color: #ff9f43;"></i>
+                                                                            <i class="si si-eye"
+                                                                               th:data-bs-toggle="modal"
+                                                                               th:data-bs-target="'#modalDetailHD' + ${bill.idHD}"
+                                                                               style="cursor: pointer; margin: 0 20px 0 20px; color: #ff9f43;"></i>
+
                                                                             <a th:href="@{'http://localhost:8081/manage/bill/offline/print/' + ${bill.idHD}}"
                                                                                onclick="window.open(this.href, '_blank'); return false;">
                                                                                 <i class="fe fe-printer"
@@ -386,12 +388,12 @@
                                                                             th:text="${bill.khachHang.hoTenKH}"></td>
 
                                                                         <td th:text="${bill.tongSP}"></td>
-                                                                        <td th:text="${bill.tongTien}"></td>
+                                                                        <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
                                                                         <th>
-                                                                            <i data-bs-toggle="tooltip"
-                                                                               title="Chỉnh sửa"
-                                                                               style="cursor: pointer; margin: 0 10px 0 20px;"
-                                                                               class="fe fe-edit-3"></i>
+                                                                            <i class="si si-eye"
+                                                                               th:data-bs-toggle="modal"
+                                                                               th:data-bs-target="'#modalDetailHD' + ${bill.idHD}"
+                                                                               style="cursor: pointer; margin: 0 20px 0 20px; color: #ff9f43;"></i>
                                                                             <i th:if="${bill.tgThanhToan == null}"
                                                                                th:data-bs-toggle="modal"
                                                                                th:data-bs-target="'#modalCofirmTT'+${bill.idHD}"
@@ -450,6 +452,7 @@
                                                                     </th>
                                                                 </tr>
                                                                 </thead>
+
                                                                 <tbody>
 
                                                                 <th:block th:each="bill: ${listHoaDonThanhCong}">
@@ -471,28 +474,19 @@
 
                                                                         <td th:text="${bill.tongSP}"></td>
 
-                                                                        <td th:text="${bill.tongTienSanPham}"></td>
+                                                                        <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
                                                                         <th>
                                                                         <th>
-                                                                            <i data-bs-toggle="tooltip"
-                                                                               title="Chỉnh sửa"
-                                                                               style="cursor: pointer; margin: 0 10px 0 20px;"
-                                                                               class="fe fe-edit-3"></i>
-                                                                            <i th:if="${bill.tgThanhToan == null}"
+                                                                            <i class="si si-eye"
                                                                                th:data-bs-toggle="modal"
-                                                                               th:data-bs-target="'#modalCofirmTT'+${bill.idHD}"
-                                                                               style="cursor: pointer; color: #ff9f43;"
-                                                                               class="fe fe-check-square"></i>
-                                                                        </th>
-                                                                        <th>
-                                                                            <i class="fe fe-eye"
-                                                                               th:data-bs-toggle="modal"
-                                                                               th:data-bs-target="'#viewBillGH' + ${bill.idHD}"
-                                                                               style="cursor: pointer; margin: 0 10px 0 20px;"></i>
+                                                                               th:data-bs-target="'#modalDetailHD' + ${bill.idHD}"
+                                                                               style="cursor: pointer; margin: 0 20px 0 20px; color: #ff9f43;"></i>
                                                                         </th>
                                                                     </tr>
                                                                 </th:block>
+
                                                                 </tbody>
+
                                                             </table>
                                                         </div>
                                                     </div>
@@ -501,7 +495,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -510,6 +503,159 @@
         </section>
     </div>
 </div>
+
+<section>
+    <th:block th:each="bill: ${hoaDonList}">
+        <div th:unless="${bill.trangThai == 6}" class="modal fade" th:id="'modalDetailHD' + ${bill.idHD}" tabindex="-1"
+             aria-labelledby="create" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered" role="document" style="width: 900px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chi tiết hóa đơn</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label style="border: none; font-size: 12pt; font-weight: 600;">Mã Hóa Đơn :</label>
+                                    <p th:text="${bill.maHD}"></p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label style="border: none; font-size: 12pt; font-weight: 600;">Thời gian tạo hóa
+                                        đơn</label>
+                                    <p th:text="${#dates.format(bill.tgTao, 'HH:mm yyyy-MM-dd')}"></p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label style="border: none; font-size: 12pt; font-weight: 600;">Trạng thái hóa đơn</label>
+                                    <td th:if="${bill.getTrangThai() == 0}">HD Chờ
+                                    </td>
+                                    <td th:if="${bill.getTrangThai() == 1}">HD Thành
+                                        công
+                                    </td>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-sm-12 col-12" th:if="${bill.nhanVien != null}">
+                                <div class="form-group">
+                                    <label style="border: none; font-size: 12pt; font-weight: 600;">Nhân viên thanh toán</label>
+                                    <p th:text="${bill.nhanVien.getHoTenNV()}"></p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-12 col-12" >
+                                <div class="form-group">
+                                    <label style="border: none; font-size: 12pt; font-weight: 600;">Tổng tiền sản phẩm</label>
+                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-12 col-12" th:if="${bill.khuyenMai != null}">
+                                <div class="form-group">
+                                    <label style="border: none; font-size: 12pt; font-weight: 600;">Tổng tiền đã
+                                        giảm</label>
+                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.khuyenMai.giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label style="border: none; font-size: 12pt; font-weight: 600;">Tổng tiền thanh toán</label>
+                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label style="border: none; font-size: 12pt; font-weight: 600;">Chi tiết hóa
+                                        đơn</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label style="border: none; font-size: 12pt; font-weight: 600;">Ảnh</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label style="border: none; font-size: 12pt; font-weight: 600;">Tên</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label style="border: none; font-size: 12pt; font-weight: 600;">Phân loại</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label style="border: none; font-size: 12pt; font-weight: 600;">Số lượng</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label style="border: none; font-size: 12pt; font-weight: 600;">Thành tiền</label>
+                                </div>
+                            </div >
+
+                            <div class="col-lg-12 col-sm-12 col-12" th:if="${#lists.isEmpty(bill.hoaDonChiTiets)}">
+                                <div class="form-group">
+                                    <p style="border: none; font-size: 12pt; font-weight: 600; color: red;text-align: center" >Hóa đơn này hiện chưa có sản phẩm nào!</p>
+                                </div>
+                            </div>
+
+                            <!-- So lan thay doi -->
+                            <th:block th:each="x: ${bill.hoaDonChiTiets}">
+
+                                <div class="col-lg-2 col-sm-12 col-12">
+                                    <div class="form-group">
+                                        <img th:src="@{'/images/imgsProducts/'+ ${x.chiTietGiay.hinhAnh.url1}}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-sm-12 col-12">
+                                    <div class="form-group">
+                                        <p th:text="${x.chiTietGiay.giay.tenGiay}"></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-12 col-12">
+                                    <div class="form-group">
+                                        <p th:text="'Size : ' + ${x.chiTietGiay.size.soSize}"></p>
+                                        <p th:text="'Màu sắc : ' + ${x.chiTietGiay.mauSac.tenMau}"></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-sm-12 col-12">
+                                    <div class="form-group">
+                                        <p th:text="${x.soLuong}"></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-12 col-12">
+                                    <div class="form-group">
+                                        <p th:text="'₫'+${#numbers.formatDecimal(x.donGia, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                    </div>
+                                </div>
+
+                            </th:block>
+
+
+                            <!-- So lan thay doi -->
+
+                        </div>
+                        <div class="col-lg-12">
+                            <a class="btn btn-cancel" data-bs-dismiss="modal" style="margin-right: 30px;">OK</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</section>
 <script src="/js/jquery-3.6.0.min.js"></script>
 <script src="/js/feather.min.js"></script>
 <script src="/js/jquery.slimscroll.min.js"></script>

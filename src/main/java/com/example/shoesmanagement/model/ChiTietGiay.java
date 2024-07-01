@@ -73,8 +73,6 @@ public class ChiTietGiay {
     @Column(name = "ma_NV_Sua")
     private String maNVSua;
 
-
-
     @Column(name = "LD_Sua")
     private String lyDoSua; 
     
@@ -94,4 +92,5 @@ public class ChiTietGiay {
         DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
         return decimalFormat.format(giaBan);
     }
+
 }

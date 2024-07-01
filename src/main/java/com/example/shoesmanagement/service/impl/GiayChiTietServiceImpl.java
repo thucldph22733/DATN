@@ -76,8 +76,8 @@ public class GiayChiTietServiceImpl implements GiayChiTietService {
     }
 
     @Override
-    public ChiTietGiay getByIdChiTietGiay(UUID id) {
-        return giayChiTietRepository.findById(id).orElse(null);
+    public ChiTietGiay getByIdChiTietGiay(UUID idChiTietGiay) {
+        return giayChiTietRepository.findById(idChiTietGiay).orElse(null);
     }
 
     @Override
