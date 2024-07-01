@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -136,7 +137,20 @@ public class BanHangController {
 
             HoaDon hd = new HoaDon();
             Date date = new Date();
-            hd.setMaHD("HD" + date.getDate() + generateRandomNumbers());
+            Integer sequenceNumber = (Integer) session.getAttribute("sequenceNumber");
+            if (sequenceNumber == null) {
+                sequenceNumber = 1; // Khởi tạo nếu chưa có trong session
+            }
+
+            // Tạo mã hóa đơn với ngày hôm nay và số thứ tự
+            SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+            String strDate = formatter.format(date);
+
+
+            // Tăng số thứ tự và lưu lại trong session
+            sequenceNumber++;
+            session.setAttribute("sequenceNumber", sequenceNumber);
+            hd.setMaHD("HD_" + strDate + "_" + sequenceNumber);
             hd.setTgTao(new Date());
             hd.setTrangThai(0);
             hd.setLoaiHD(1);
