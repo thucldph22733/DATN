@@ -1,8 +1,10 @@
 package com.example.shoesmanagement.service.impl;
 
 import com.example.shoesmanagement.model.*;
+import com.example.shoesmanagement.repository.GiayChiTietRepository;
 import com.example.shoesmanagement.repository.HoaDonChiTietRepository;
 import com.example.shoesmanagement.repository.HoaDonRepository;
+import com.example.shoesmanagement.service.GiayChiTietService;
 import com.example.shoesmanagement.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ public class HoaDonServieImpl implements HoaDonService {
     private HoaDonRepository hoaDonRepository;
     @Autowired
     private HoaDonChiTietRepository hoaDonChiTietRepository;
+    @Autowired
+    private GiayChiTietService chiTietGiayService;
 
     @Override
     public List<HoaDon> getListHoaDonChuaThanhToan() {
@@ -70,13 +74,21 @@ public class HoaDonServieImpl implements HoaDonService {
         if (optionalHoaDon.isPresent()) {
             HoaDon hoaDon = optionalHoaDon.get();
             if (hoaDon.getTrangThai() == 0 && hoaDon.getLoaiHD() == 1) {
-                // Kiểm tra và xóa tất cả sản phẩm trong hóa đơn
+                // Lấy tất cả chi tiết hóa đơn liên quan đến hóa đơn
                 List<HoaDonChiTiet> chiTietList = hoaDonChiTietRepository.findByIdHoaDon(id);
-                if (chiTietList.isEmpty()) {
-                    hoaDonRepository.delete(hoaDon);
-                } else {
-                    throw new IllegalArgumentException("Hóa đơn có sản phẩm, không thể xóa!");
+                for (HoaDonChiTiet chiTiet : chiTietList) {
+                    // Lấy chi tiết giày liên quan đến chi tiết hóa đơn
+                    ChiTietGiay chiTietGiay = chiTiet.getChiTietGiay();
+                    if (chiTietGiay != null) {
+                        // Cập nhật số lượng sản phẩm trong chi tiết giày
+                        chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + chiTiet.getSoLuong());
+                        chiTietGiayService.save(chiTietGiay);
+                    }
+                    // Xóa chi tiết hóa đơn
+                    hoaDonChiTietRepository.delete(chiTiet);
                 }
+                // Xóa hóa đơn
+                hoaDonRepository.delete(hoaDon);
             } else {
                 throw new IllegalArgumentException("Hóa đơn không ở trạng thái chờ hoặc không phải loại hóa đơn chờ");
             }
@@ -84,6 +96,7 @@ public class HoaDonServieImpl implements HoaDonService {
             throw new NoSuchElementException("Không tìm thấy hóa đơn với ID: " + id);
         }
     }
+
 
 
     public double getTongTienSanPham(UUID idHoaDon) {

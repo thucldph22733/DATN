@@ -13,6 +13,7 @@ public interface GiayChiTietService {
 
     public List<ChiTietGiay> getTop4ChiTietGiay();
 
+    public ChiTietGiay getByIdChiTietGiay(UUID idChiTietGiay) ;
 
     public List<ChiTietGiay> getCTGByGIayActive(Giay giay);
 
@@ -22,7 +23,6 @@ public interface GiayChiTietService {
 
     public void deleteByIdChiTietGiay(UUID id);
 
-    public ChiTietGiay getByIdChiTietGiay(UUID id);
 
     public List<ChiTietGiay> findByGiay(Giay giay);
 

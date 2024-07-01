@@ -3,6 +3,7 @@ package com.example.shoesmanagement.controller;
 import com.example.shoesmanagement.model.HoaDon;
 import com.example.shoesmanagement.model.HoaDonChiTiet;
 //import com.example.shoesmanagement.model.KhuyenMaiChiTietHoaDon;
+import com.example.shoesmanagement.model.KhuyenMai;
 import com.example.shoesmanagement.repository.KhuyenMaiRepository;
 import com.example.shoesmanagement.service.*;
 //import com.example.shoesmanagement.service.KhuyenMaiChiTietHoaDonService;
@@ -66,12 +67,20 @@ public class HoaDonTaiQuayController {
         int soLuongHoaDonCho = 0;
         int soLuongHoaDonThanhCong = 0;
         int soLuongSanPhamDaBan = 0;
+        double tongSoTienGiam = 0;
 
         for (HoaDon x: hoaDonList) {
             if (x.getTrangThai() == 0){
                 soLuongHoaDonCho++;
                 listHoaDonCho.add(x);
             }
+
+            // Tính tổng số tiền giảm từ khuyến mãi
+            KhuyenMai khuyenMai = x.getKhuyenMai();
+            if (khuyenMai != null) {
+                tongSoTienGiam += khuyenMai.getGiaTienGiam();
+            }
+
             if (x.getTrangThai() == 1){
                 soLuongHoaDonThanhCong++;
                 soTienDaThanhToan += x.getTongTien();
@@ -93,6 +102,7 @@ public class HoaDonTaiQuayController {
         model.addAttribute("tongSoLuongSanPham", tongSanPham);  // Tổng số lượng chi tiết sản phẩm
         model.addAttribute("hoaDonThanhCong", soLuongHoaDonThanhCong);
         model.addAttribute("hoaDonChoTaiQuay", soLuongHoaDonCho);
+        model.addAttribute("soTienGiam", tongSoTienGiam);
 
         model.addAttribute("listHoaDonThanhCong", listHoaDonThanhCong);
         model.addAttribute("listHoaDonCho", listHoaDonCho);

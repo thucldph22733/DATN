@@ -1,6 +1,4 @@
 package com.example.shoesmanagement.controller;
-
-import com.example.shoesmanagement.dtos.requests.UpdateQuantityRequest;
 import com.example.shoesmanagement.model.*;
 import com.example.shoesmanagement.repository.*;
 import com.example.shoesmanagement.service.*;
@@ -62,10 +60,14 @@ public class BanHangController {
     @Autowired
     private KhuyenMaiRepository khuyenMaiRepository;
 
-
     @Autowired
     private MauSacService mauSacService;
 
+    @Autowired
+    private HoaDonChiTietRepository hoaDonChiTietRepository;
+
+    @Autowired
+    private HoaDonRepository hoaDonRepository;
 
     private int tongSanPham = 0;
 
@@ -79,16 +81,7 @@ public class BanHangController {
 
     private UUID idHoaDon = null;
 
-
     private double dieuKienKhuyenMai = 0;
-
-
-    @Autowired
-    private HoaDonChiTietRepository hoaDonChiTietRepository;
-
-    @Autowired
-    private HoaDonRepository hoaDonRepository;
-
 
     @GetMapping("/hien-thi")
     public String hienThi(Model model
@@ -659,18 +652,17 @@ public class BanHangController {
         redirectAttributes.addFlashAttribute("messageSuccess", true);
         return "redirect:/ban-hang/cart/hoadon/" + idHoaDon;
     }
-
     @GetMapping("/delete-hoa-don-cho/{idHD}")
     public String deleteHoaDonChoByIdHD(@PathVariable UUID idHD, RedirectAttributes redirectAttributes) {
         try {
             hoaDonService.deleteHoaDonCho(idHD);
             session.removeAttribute("idHoaDon");
-            session.removeAttribute("khachHang");
             session.removeAttribute("tongSP");
             session.removeAttribute("tongTien");
             session.removeAttribute("tongTienSanPham");
             session.removeAttribute("cart");
             session.removeAttribute("khuyenMai");
+            session.removeAttribute("idChiTietGiay");
             redirectAttributes.addFlashAttribute("messageSuccess", true);
             redirectAttributes.addFlashAttribute("tb", "Hóa đơn đã được xóa thành công.");
         } catch (NoSuchElementException e) {
@@ -685,6 +677,8 @@ public class BanHangController {
         }
         return "redirect:/ban-hang/hien-thi";
     }
+
+
 
 
 
