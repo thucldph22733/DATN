@@ -135,14 +135,18 @@ public class HomeOrder {
             }
             ViTriDonHang viTriDonHang = new ViTriDonHang();
 
+            Date date = new Date();
             viTriDonHang.setViTri("Đã lấy/gửi hành thành công ");
             viTriDonHang.setTrangThai(1);
             viTriDonHang.setGiaoHang(hoaDon.getGiaoHang());
             viTriDonHang.setThoiGian(new Date());
             viTriDonHang.setNoiDung(moTa);
-
+            viTriDonHang.setThoiGian(date);
             viTriDonHangServices.addViTriDonHang(viTriDonHang);
-
+            hoaDon.setTrangThai(3);
+            giaoHang.setTgThanhToan(date);
+            giaoHang.setTgNhan(date);
+            hoaDonService.add(hoaDon);
             showData(model);
             showDataTab2(model);
             return "transportation/index";
@@ -159,7 +163,7 @@ public class HomeOrder {
             viTriDonHang.setGiaoHang(hoaDon.getGiaoHang());
             viTriDonHangServices.addViTriDonHang(viTriDonHang);
 
-            hoaDon.setTrangThai(3);
+            hoaDon.setTrangThai(4);
             giaoHang.setTgThanhToan(date);
             giaoHang.setTgNhan(date);
             hoaDonService.add(hoaDon);
@@ -191,7 +195,7 @@ public class HomeOrder {
             viTriDonHangServices.addViTriDonHang(viTriDonHang);
 
             if (soLanHuy == 2){
-                hoaDon.setTrangThai(4);
+                hoaDon.setTrangThai(5);
                 giaoHang.setTgHuy(new Date());
                 giaoHang.setLyDoHuy(moTa);
                 giaoHang.setTrangThai(2);
@@ -352,19 +356,20 @@ public class HomeOrder {
 
     private void showData(Model model){
         NhanVien nhanVien = (NhanVien) session.getAttribute("shipperLogged");
+        List<HoaDon> test = hoaDonService.listHoaDonOnline();
+//        List<HoaDon> allHoaDonList = hoaDonService.listAllHoaDonByNhanVien(nhanVien);
+//        List<HoaDon> hoaDonDGList = hoaDonService.listHoaDonByNhanVienAndTrangThai(nhanVien, 2);
+//        List<HoaDon> hoaDonDoneList = hoaDonService.listHoaDonHuyAndThanhCongByNhanVien(nhanVien);
 
-        List<HoaDon> allHoaDonList = hoaDonService.listAllHoaDonByNhanVien(nhanVien);
-        List<HoaDon> hoaDonDGList = hoaDonService.listHoaDonByNhanVienAndTrangThai(nhanVien, 2);
-        List<HoaDon> hoaDonDoneList = hoaDonService.listHoaDonHuyAndThanhCongByNhanVien(nhanVien);
+        model.addAttribute("allHoaDonList",test);
 
-        model.addAttribute("allHoaDonList",allHoaDonList);
+        model.addAttribute("dangGiao", test.size());
+        model.addAttribute("choLayHang", test.size());
+        model.addAttribute("sumDHMuaHang", test.size());
+        model.addAttribute("giaoThanhCong", test.size());
 
-        model.addAttribute("dangGiao", hoaDonDGList.size());
-        model.addAttribute("sumDHMuaHang", hoaDonDGList.size());
-        model.addAttribute("giaoThanhCong", hoaDonDoneList.size());
-
-        model.addAttribute("hoaDonDGList",hoaDonDGList);
-        model.addAttribute("hoaDonDoneList",hoaDonDoneList);
+        model.addAttribute("hoaDonDGList",test);
+        model.addAttribute("hoaDonDoneList",test);
         model.addAttribute("nameNhanVien",nhanVien.getHoTenNV());
     }
     private void showDataTab1(Model model){

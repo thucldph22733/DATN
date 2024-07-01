@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
@@ -117,7 +118,19 @@ public class AuthController {
             return "/online/register";
         }
         Date date = new Date();
-        String maKH = "KH0" + date.getDate() + generateRandomNumbers();
+        Integer sequenceNumber = (Integer) session.getAttribute("sequenceNumber");
+        if (sequenceNumber == null) {
+            sequenceNumber = 1; // Khởi tạo nếu chưa có trong session
+        }
+
+        // Tạo mã hóa đơn với ngày hôm nay và số thứ tự
+        SimpleDateFormat formatter = new SimpleDateFormat("ddMM");
+        String strDate = formatter.format(date);
+        String maKH = "KH_" + strDate + "_" + sequenceNumber;
+
+        // Tăng số thứ tự và lưu lại trong session
+        sequenceNumber++;
+        session.setAttribute("sequenceNumber", sequenceNumber);
 
         KhachHang khachHang = new KhachHang();
         khachHang.setEmailKH(email);
