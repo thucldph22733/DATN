@@ -169,4 +169,31 @@ public interface CTGViewModelRepository extends JpaRepository< CTGViewModel,UUID
             "ORDER BY COALESCE(SUM(cthd.soLuong), 0) DESC")
     List<CTGViewModel> getAllOrderBestSeller();
 
+    @Query(value = "\t\t\tSELECT \n" +
+            "           top 7 g.ten_giay, a.url1 ,COALESCE(SUM(cthd.so_luong), 0)\n" +
+            "            FROM chi_tiet_giay ctg \n" +
+            "            JOIN Giay g ON g.id_giay = ctg.id_giay\n" +
+            "            JOIN hinh_anh a ON a.id_hinh_anh = ctg.id_hinh_anh\n" +
+            "            JOIN mau_sac ms ON ms.id_mau = ctg.id_mau\n" +
+            "\t\t\t\n" +
+            "            LEFT JOIN hoa_don_chi_tiet cthd ON cthd.id_ctg = ctg.id_chi_tiet_giay\n" +
+            "            left JOIN hoa_don hd ON hd.id_hd =cthd.id_hd \n" +
+            "            WHERE\n" +
+            "\t\t\ta.id_hinh_anh IS NOT NULL\n" +
+            "            AND g.trang_thai = 1 \n" +
+//            "\t\t\tAND hd.trang_thai=1\n" +
+            "            AND ctg.trang_thai = 1 \n" +
+            "            GROUP BY  g.ten_giay, a.url1\n" +
+            "            ORDER BY COALESCE(SUM(cthd.so_luong), 0) DESC",nativeQuery = true)
+    List<Object[]> getTop5SPBanChayTrongThang();
+
+    @Query(value = "select a.url1,g.ten_giay,sum (ctg.so_luong)from chi_tiet_giay ctg \n" +
+            "                        JOIN Giay g ON g.id_giay = ctg.id_giay\n" +
+            "                        JOIN hinh_anh a ON a.id_hinh_anh = ctg.id_hinh_anh\n" +
+            "                        JOIN mau_sac ms ON ms.id_mau = ctg.id_mau\n" +
+            "\t\t\t\t\t\twhere ctg.so_luong<10\n" +
+            "\t\t\t\t\t\tgroup by a.url1,g.ten_giay\n" +
+            "\t\t\t\t\t\torder by sum(ctg.so_luong) desc",nativeQuery = true)
+    List<Object[]> spSapHet();
+
 }
