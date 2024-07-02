@@ -1,6 +1,4 @@
 package com.example.shoesmanagement.controller;
-
-import com.example.shoesmanagement.dtos.requests.UpdateQuantityRequest;
 import com.example.shoesmanagement.model.*;
 import com.example.shoesmanagement.repository.*;
 import com.example.shoesmanagement.service.*;
@@ -15,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -62,10 +61,14 @@ public class BanHangController {
     @Autowired
     private KhuyenMaiRepository khuyenMaiRepository;
 
-
     @Autowired
     private MauSacService mauSacService;
 
+    @Autowired
+    private HoaDonChiTietRepository hoaDonChiTietRepository;
+
+    @Autowired
+    private HoaDonRepository hoaDonRepository;
 
     private int tongSanPham = 0;
 
@@ -79,16 +82,7 @@ public class BanHangController {
 
     private UUID idHoaDon = null;
 
-
     private double dieuKienKhuyenMai = 0;
-
-
-    @Autowired
-    private HoaDonChiTietRepository hoaDonChiTietRepository;
-
-    @Autowired
-    private HoaDonRepository hoaDonRepository;
-
 
     @GetMapping("/hien-thi")
     public String hienThi(Model model
@@ -136,7 +130,20 @@ public class BanHangController {
 
             HoaDon hd = new HoaDon();
             Date date = new Date();
-            hd.setMaHD("HD" + date.getDate() + generateRandomNumbers());
+            Integer sequenceNumber = (Integer) session.getAttribute("sequenceNumber");
+            if (sequenceNumber == null) {
+                sequenceNumber = 1; // Khởi tạo nếu chưa có trong session
+            }
+
+            // Tạo mã hóa đơn với ngày hôm nay và số thứ tự
+            SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+            String strDate = formatter.format(date);
+
+
+            // Tăng số thứ tự và lưu lại trong session
+            sequenceNumber++;
+            session.setAttribute("sequenceNumber", sequenceNumber);
+            hd.setMaHD("HD_" + strDate + "_" + sequenceNumber);
             hd.setTgTao(new Date());
             hd.setTrangThai(0);
             hd.setLoaiHD(1);
@@ -191,12 +198,6 @@ public class BanHangController {
         if (findByIdHoaDon.isEmpty()) {
             model.addAttribute("messageGioHang", "Trong giỏ hàng chưa có sản phẩm");
         }
-
-//         model.addAttribute("tongTienSanPham", hd.getTongTienSanPham());
-//         model.addAttribute("tongTien", hd.getTongTien());
-//         hd.setTongTien(tongTienSanPham-giaTienGiam);
-//         model.addAttribute("listKhachHang", khachHangService.findKhachHangByTrangThai());
-
 
         double tongTienSanPham = hoaDonChiTietService.tongTienSanPham(findByIdHoaDon);
         double tongTien = hoaDonChiTietService.tongTien(findByIdHoaDon);
@@ -665,18 +666,17 @@ public class BanHangController {
         redirectAttributes.addFlashAttribute("messageSuccess", true);
         return "redirect:/ban-hang/cart/hoadon/" + idHoaDon;
     }
-
     @GetMapping("/delete-hoa-don-cho/{idHD}")
     public String deleteHoaDonChoByIdHD(@PathVariable UUID idHD, RedirectAttributes redirectAttributes) {
         try {
             hoaDonService.deleteHoaDonCho(idHD);
             session.removeAttribute("idHoaDon");
-            session.removeAttribute("khachHang");
             session.removeAttribute("tongSP");
             session.removeAttribute("tongTien");
             session.removeAttribute("tongTienSanPham");
             session.removeAttribute("cart");
             session.removeAttribute("khuyenMai");
+            session.removeAttribute("idChiTietGiay");
             redirectAttributes.addFlashAttribute("messageSuccess", true);
             redirectAttributes.addFlashAttribute("tb", "Hóa đơn đã được xóa thành công.");
         } catch (NoSuchElementException e) {
@@ -691,6 +691,8 @@ public class BanHangController {
         }
         return "redirect:/ban-hang/hien-thi";
     }
+
+
 
 
 

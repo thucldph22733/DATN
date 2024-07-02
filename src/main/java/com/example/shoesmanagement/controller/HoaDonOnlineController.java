@@ -145,7 +145,7 @@ public class HoaDonOnlineController {
 
 
             List<HoaDon> listAllHoaDonDangGiao = new ArrayList<>();
-        List<HoaDon> listHoaDonOnlineQRCode = new ArrayList<>();
+        List<HoaDon> listHoaDonOnlineBaking = new ArrayList<>();
 
 
 
@@ -175,12 +175,12 @@ public class HoaDonOnlineController {
                 if (x.getTrangThai() == 6 || x.getTrangThai() == 7){
                     System.out.println("abc");
                 }else{
-                    if(x.getTrangThai() == 4){
+                    if(x.getTrangThai() == 5){
                         soLuongHoaDonHuy ++;
                     }
                     if (x.getHinhThucThanhToan() == 1 ){
                         soLuongHoaDonBanking ++;
-                        listHoaDonOnlineQRCode.add(x);
+                        listHoaDonOnlineBaking.add(x);
                     }
                     if (x.getHinhThucThanhToan() == 0){
                         soLuongHoaDonThanhToanKhiNhanHang ++;
@@ -200,10 +200,10 @@ public class HoaDonOnlineController {
                         soLuongHoaDonDangGiao ++;
                         listAllHoaDonDangGiao.add(x);
                     }
-                    if (x.getTrangThai() == 4){
+                    if (x.getTrangThai() == 5){
                         soLuongHoaDonHuy ++;
                     }
-                    if (x.getTrangThai() == 3){
+                    if (x.getTrangThai() == 4){
                         soLuongHoaDonDaNhan ++;
                     }
                 }

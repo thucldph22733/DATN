@@ -118,8 +118,7 @@
         padding: 5px;
         border-radius: 3px;
     }
-</style>
-<STYLE>
+
     .flex-container {
         display: flex;
         align-items: center; /* Căn giữa các items theo chiều dọc */
@@ -146,9 +145,7 @@
     .flex-container > div {
         margin-right: 10px; /* Thêm khoảng cách giữa input và select, nếu cần */
     }
-</STYLE>
 
-<style>
     .alertify .ajs-message {
         background-color: black;
         color: #ffffff;
@@ -165,8 +162,7 @@
         background-color: #2ecc71;
         color: #ffffff;
     }
-</style>
-<style>
+
     #video {
         display: none;
     }
@@ -182,6 +178,22 @@
         border: 1px solid #000;
         margin: 0 5px;
     }
+
+     .btn-danger.btn-sm {
+         padding: 2px 5px;
+         font-size: 12px;
+         line-height: 1;
+     }
+    .position-absolute {
+        position: absolute;
+    }
+    .top-0 {
+        top: 10px;
+    }
+    .end-0 {
+        right: 0;
+    }
+
 </style>
 <body>
 <div class="main-wrapper">
@@ -391,22 +403,66 @@
                                                     <div class="orderid">
                                                         <nav class="navbar navbar-expand-lg">
                                                             <a class="btn" th:href="@{/ban-hang/add-cart}">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="25"
-                                                                     height="25"
-                                                                     fill="currentColor"
-                                                                     class="bi bi-person-add" viewBox="0 0 16 16">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
                                                                     <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
                                                                     <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
                                                                 </svg>
                                                             </a>
                                                             <div class="collapse navbar-collapse shop__sidebar__size">
                                                                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                                                    <div th:each="items : ${listHoaDon}">
+                                                                    <div th:each="items : ${listHoaDon}" class="position-relative mb-3">
+
+                                                                        <button data-bs-toggle="modal"
+                                                                                data-bs-target="#exampleModal2"  class="btn btn-danger btn-sm position-absolute top-minus-10 end-0" aria-label="Delete">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                                                            </svg>
+                                                                        </button>
+
+                                                                        <div class="modal fade"
+                                                                             id="exampleModal2"
+                                                                             tabindex="-1"
+                                                                             aria-labelledby="exampleModalLabel7"
+                                                                             aria-hidden="true">
+                                                                            <div class="modal-dialog modal-md text-center"
+                                                                                 style="width: 550px;">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h1 class="modal-title fs-5"
+                                                                                            id="exampleModalLabel7">
+                                                                                            Xác
+                                                                                            nhận</h1>
+                                                                                        <button type="button"
+                                                                                                class="btn-close"
+                                                                                                data-bs-dismiss="modal"
+                                                                                                aria-label="Close"></button>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <div class="text-center"
+                                                                                             type="">Bạn
+                                                                                            có chắc
+                                                                                            muốn Xóa
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="modal-footer text-center">
+                                                                                        <a type="button"
+                                                                                           class="btn btn-warning"
+                                                                                           th:href="@{'/ban-hang/delete-hoa-don-cho/' + ${items.idHD}}"
+                                                                                           style="background-color: #37517E;height: 50px;cursor: pointer;color: white;padding: 10px 20px;border-radius: 10px;margin: auto; display: inline-block;"
+                                                                                        >Xóa</a>
+                                                                                        <button type="button"
+                                                                                                style="background-color: #bb2d3b;height: 50px;color: white;;cursor: pointer;border: none;border-radius: 10px;margin: auto; display: inline-block"
+                                                                                                class="btn btn-warning"
+                                                                                                data-bs-dismiss="modal">
+                                                                                            Hủy
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                         <li class="nav-item">
                                                                             <label class="text-center ms-2">
-                                                                                <a class="btn btn-outline-dark"
-                                                                                   th:href="@{'/ban-hang/cart/hoadon/'+ ${items.getIdHD()}}"
-                                                                                   th:text="${items.maHD}">
+                                                                                <a class="btn btn-outline-dark" th:href="@{'/ban-hang/cart/hoadon/'+ ${items.getIdHD()}}" th:text="${items.maHD}">
                                                                                 </a>
                                                                             </label>
                                                                         </li>
@@ -414,8 +470,7 @@
                                                                 </ul>
                                                             </div>
                                                             <div class="row">
-                                                                <div th:if="${message}"
-                                                                     class="alert alert-success text-center">
+                                                                <div th:if="${message}" class="alert alert-success text-center">
                                                                     <h3 th:text="${message}"></h3>
                                                                 </div>
                                                             </div>
@@ -762,6 +817,7 @@
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
+
                                                                     <th:block th:each="bill: ${listHoaDonHomNay}">
                                                                         <tr>
                                                                             <td th:text="${bill.maHD}"></td>
@@ -818,47 +874,6 @@
                                                                                            title="Delete hóa đơn"></i>
                                                                                     </button>
 
-                                                                                    <div class="modal fade"
-                                                                                         id="exampleModal2"
-                                                                                         tabindex="-1"
-                                                                                         aria-labelledby="exampleModalLabel7"
-                                                                                         aria-hidden="true">
-                                                                                        <div class="modal-dialog modal-md text-center"
-                                                                                             style="width: 550px;">
-                                                                                            <div class="modal-content">
-                                                                                                <div class="modal-header">
-                                                                                                    <h1 class="modal-title fs-5"
-                                                                                                        id="exampleModalLabel7">
-                                                                                                        Xác
-                                                                                                        nhận</h1>
-                                                                                                    <button type="button"
-                                                                                                            class="btn-close"
-                                                                                                            data-bs-dismiss="modal"
-                                                                                                            aria-label="Close"></button>
-                                                                                                </div>
-                                                                                                <div class="modal-body">
-                                                                                                    <div class="text-center"
-                                                                                                         type="">Bạn
-                                                                                                        có chắc
-                                                                                                        muốn Xóa
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="modal-footer text-center">
-                                                                                                    <a type="button"
-                                                                                                       class="btn btn-warning"
-                                                                                                       th:href="@{'/ban-hang/delete-hoa-don-cho/' + ${bill.idHD}}"
-                                                                                                       style="background-color: #37517E;height: 50px;cursor: pointer;color: white;padding: 10px 20px;border-radius: 10px;margin: auto; display: inline-block;"
-                                                                                                    >Xóa</a>
-                                                                                                    <button type="button"
-                                                                                                            style="background-color: #bb2d3b;height: 50px;color: white;;cursor: pointer;border: none;border-radius: 10px;margin: auto; display: inline-block"
-                                                                                                            class="btn btn-warning"
-                                                                                                            data-bs-dismiss="modal">
-                                                                                                        Hủy
-                                                                                                    </button>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
                                                                                 </a>
 
                                                                             </th>
@@ -883,6 +898,26 @@
         </div>
     </div>
 </div>
+
+<style>
+    .btn-danger.btn-sm {
+        padding: 2px 5px;
+        font-size: 12px;
+        line-height: 1;
+    }
+    .position-absolute {
+        position: absolute;
+    }
+    .top-minus-10 {
+        top: -10px;
+    }
+    .end-0 {
+        right: 0;
+    }
+    .mb-3 {
+        margin-bottom: 1rem;
+    }
+</style>
 
 <div th:if="${showModalKhachHang}" class="modal fade" id="chonTaiKhoan" tabindex="-1"
      aria-labelledby="exampleModalLabel3"
@@ -950,6 +985,7 @@
         </div>
     </div>
 </div>
+
 
 <div th:if="${showModal}" class="modal fade" id="chonSize" tabindex="-1" aria-labelledby="exampleModalLabel"
      aria-hidden="true"
@@ -1058,6 +1094,31 @@
     </div>
 </div>
 
+
+<!-- Modal -->
+<!--<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel7" aria-hidden="true">-->
+<!--    <div class="modal-dialog modal-md text-center" style="width: 550px;">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h1 class="modal-title fs-5" id="exampleModalLabel7">Xác nhận</h1>-->
+<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <div class="text-center">Bạn có chắc muốn Xóa</div>-->
+<!--            </div>-->
+<!--            <div class="modal-footer text-center">-->
+<!--                <a id="confirmDeleteButton" type="button" class="btn btn-warning" style="background-color: #37517E; height: 50px; cursor: pointer; color: white; padding: 10px 20px; border-radius: 10px; margin: auto; display: inline-block;">Xóa</a>-->
+<!--                <button type="button" style="background-color: #bb2d3b; height: 50px; color: white; cursor: pointer; border: none; border-radius: 10px; margin: auto; display: inline-block" class="btn btn-warning" data-bs-dismiss="modal">Hủy</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<script>
+    function setDeleteLink(id) {
+        document.getElementById('confirmDeleteButton').setAttribute('href', '/ban-hang/delete-hoa-don-cho/' + id);
+    }
+</script>
 <div th:if="${messageSuccess}" id="success" class="toast-container toast-top-right">
     <div class="toast toast-success" aria-live="polite" style="display: block;">
         <button type="button" class="toast-close-button" role="button"></button>
@@ -1087,6 +1148,7 @@
 <script src="/plugins/sweetalert/sweetalert2.all.min.js"></script>
 <script src="/plugins/sweetalert/sweetalerts.min.js"></script>
 <script src="/js/script.js"></script>
+
 
 
 <script th:inline="javascript">
