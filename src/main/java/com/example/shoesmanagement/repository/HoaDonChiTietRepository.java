@@ -27,16 +27,16 @@ public interface HoaDonChiTietRepository  extends JpaRepository<HoaDonChiTiet, U
             nativeQuery = true)
     Optional<Double> getLaiThangNay();
 
-    @Query(value = "select sum(tong_tien_san_pham) from hoa_don where ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3) or (loai_hd=0 and trang_thai=3 and hinh_thuc_thanh_toan=1))",nativeQuery = true)
+    @Query(value = "select sum(tong_tien_san_pham) from hoa_don where ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4) or (loai_hd=0 and trang_thai=3 and hinh_thuc_thanh_toan=1))",nativeQuery = true)
     Optional<Double> getTongTienLaiCuaHang();
 
     @Query(value = "select sum(so_luong) from hoa_don_chi_tiet a join hoa_don b on a.id_hd=b.id_hd where month(b.tg_thanh_toan) = month(GETDATE()) \n" +
-            "and year(b.tg_thanh_toan) = year(GETDATE()) and ((b.loai_hd=1 and b.trang_thai=1) or (b.loai_hd=0 and b.trang_thai = 3))\n" +
+            "and year(b.tg_thanh_toan) = year(GETDATE()) and ((b.loai_hd=1 and b.trang_thai=1) or (b.loai_hd=0 and b.trang_thai = 4))\n" +
             "            and day(b.tg_thanh_toan) = day(GETDATE())",nativeQuery = true)
     Optional<Integer> getTongSPBanTrongNgay();
 
     @Query(value = "select sum(so_luong) from hoa_don_chi_tiet a join hoa_don b on a.id_hd=b.id_hd where month(b.tg_thanh_toan) = month(GETDATE())  and year(b.tg_thanh_toan) = year(GETDATE()) and" +
-            "((b.loai_hd=1 and b.trang_thai=1) or (b.loai_hd=0 and b.trang_thai = 3))",nativeQuery = true)
+            "((b.loai_hd=1 and b.trang_thai=1) or (b.loai_hd=0 and b.trang_thai = 4))",nativeQuery = true)
     Optional<Integer> getTongSPBanTrongThang();
 
     @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 1 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 3))",nativeQuery = true)
