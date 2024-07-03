@@ -331,6 +331,31 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div class="col-lg-2 col-sm-6 col-12 d-flex">
+                                                    <div class="dash-count das2">
+                                                        <div class="dash-counts">
+                                                            <h4 th:text="${hoaDonChoXacNhan}"></h4>
+                                                            <h5>Hóa đơn đang chờ xác nhận</h5>
+                                                        </div>
+                                                        <div class="dash-imgs">
+                                                            <i class="fas fa-clock"></i> <!-- Thay đổi lớp biểu tượng ở đây -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-2 col-sm-6 col-12 d-flex">
+                                                    <div class="dash-count das2">
+                                                        <div class="dash-counts">
+                                                            <h4 th:text="${hoaDonChoLayHang}"></h4>
+                                                            <h5>Hóa đơn chờ lấy hàng</h5>
+                                                        </div>
+                                                        <div class="dash-imgs">
+                                                            <i class="fe fe-truck"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <div class="col-lg-2 col-sm-6 col-12 d-flex">
                                                     <div class="dash-count das2">
                                                         <div class="dash-counts">
@@ -338,7 +363,7 @@
                                                             <h5>Hóa đơn đang giao</h5>
                                                         </div>
                                                         <div class="dash-imgs">
-                                                            <i class="fe fe-truck"></i>
+                                                            <i class="fas fa-shipping-fast"></i>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -414,6 +439,11 @@
                                                                                     <i class="si si-speedometer"  th:data-bs-toggle="modal"
                                                                                        th:data-bs-target="'#modalXemLichSuThanhToan' + ${bill.idHD}"
                                                                                        style="cursor: pointer; margin: 0 20px 0 0; color: #ff9f43;"></i>
+                                                                                    <i class="fe fe-x"  th:data-bs-toggle="modal"
+                                                                                       th:data-bs-target="'#modalHuyHoaDon' + ${bill.idHD}"
+                                                                                       style="cursor: pointer; margin: 0 20px 0 0; color: #ff9f43;"></i>
+
+
                                                                                     <a th:href="@{'http://localhost:8081/manage/bill/online/print/' + ${bill.idHD}}"
                                                                                        onclick="window.open(this.href, '_blank'); return false;">
                                                                                         <i class="fe fe-printer"
@@ -525,7 +555,7 @@
                                                                         </thead>
                                                                         <tbody>
                                                                         <th:block th:each="bill, i: ${listHoaDonOnline}">
-                                                                            <tr th:if="${bill.trangThai == 3 or bill.trangThai == 4}">
+                                                                            <tr th:if="${bill.trangThai == 4 or bill.trangThai == 5}">
 
                                                                                 <td th:text="${i.index}"></td>
                                                                                 <td th:text="${bill.maHD}"></td>
@@ -535,12 +565,13 @@
 
                                                                                 <td th:text="${#dates.format(bill.tgTao, 'HH:mm yyyy-MM-dd')}"></td>
 
-                                                                                <td th:if="${bill.trangThai == 3}">Thành công</td>
-                                                                                <td th:if="${bill.trangThai == 4}">Đã hủy</td>
+                                                                                <td th:if="${bill.trangThai == 4}">Thành công</td>
+                                                                                <td th:if="${bill.trangThai == 5}">Đã hủy</td>
 
-                                                                                <td th:if="${bill.giaoHang.tgHuy != null}"
-                                                                                    th:text="${#dates.format(bill.giaoHang.tgHuy, 'HH:mm yyyy-MM-dd')}"></td>
-                                                                                <td th:if="${bill.giaoHang.tgHuy == null}">Chưa có</td>
+                                                                                <td th:if="${bill.tgHuy != null}"
+                                                                                    th:text="${#dates.format(bill.tgHuy, 'HH:mm yyyy-MM-dd')}"></td>
+
+<!--                                                                                <td th:if="${bill.tgHuy == null}">Chưa có</td>-->
 
                                                                                 <td th:if="${bill.giaoHang.tgThanhToan != null}"
                                                                                     th:text="${#dates.format(bill.giaoHang.tgThanhToan, 'HH:mm yyyy-MM-dd')}"></td>
@@ -738,7 +769,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-sm-12 col-12">
+                         <div class="col-lg-3 col-sm-12 col-12">
                                 <div class="form-group">
                                     <label style="border: none; font-size: 12pt; font-weight: 600;">Loại hóa đơn</label>
                                     <p>Hóa đơn mua hàng</p>
@@ -823,6 +854,36 @@
     </th:block>
     <!--    Modal xem lịch sử thanh toán-->
 
+
+    <!--    Modal xem lịch sử thanh toán-->
+    <th:block th:each="bill: ${listHoaDonOnline}">
+        <div class="modal fade" th:id="'modalHuyHoaDon' + ${bill.idHD}" tabindex="-1" aria-labelledby="create" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered" role="document" style="width: 1200px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Hủy hóa đơn </h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form th:action="@{'/manage/bill/online/delete/' + ${bill.idHD}}" method="get">
+                            <div class="form-group">
+                                <label for="lyDoHuy">Lí do hủy hóa đơn: </label>
+                                <input type="text" class="form-control" id="lyDoHuy" th:id="lyDoHuy" name="lyDoHuy" th:name="lyDoHuy" />
+                            </div>
+                            <button type="submit" class="btn btn-danger">Hủy hóa đơn</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+    <!--    Modal xem lịch sử thanh toán-->
+
+
+
+
     <!-- Modal detail Hóa Đơn begin-->
     <th:block th:each="bill: ${listHoaDonOnline}">
         <div th:unless="${bill.trangThai == 6}" class="modal fade" th:id="'modalDetailHD' + ${bill.idHD}" tabindex="-1" aria-labelledby="create" aria-hidden="true">
@@ -888,6 +949,13 @@
                                     <p th:if="${bill.trangThai == 5 }">Đã Hủy</p>
                                     <p th:if="${bill.trangThai == 6 }">Hoàn Hàng</p>
                                 </div>
+
+                            </div>
+                            <div class="col-lg-3 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label style="border: none; font-size: 12pt; font-weight: 600; color: red">Lí do hủy:</label>
+                                    <p th:text="${#strings.isEmpty(bill.getLyDoHuy()) ? 'Không có' : bill.getLyDoHuy()}"></p>
+                                </div>
                             </div>
 
 
@@ -922,6 +990,7 @@
                                     <label style="border: none; font-size: 12pt; font-weight: 600;">Thành tiền</label>
                                 </div>
                             </div>
+
                             <!-- So lan thay doi -->
                             <th:block th:each="x: ${bill.hoaDonChiTiets}">
                                 <div class="col-lg-2 col-sm-12 col-12">
@@ -957,7 +1026,9 @@
                         </div>
                         <div class="col-lg-12">
                             <a class="btn btn-cancel" data-bs-dismiss="modal" style="margin-right: 30px;">OK</a>
-                            <a th:if="${bill.trangThai == 0 or bill.trangThai == 1}" class="btn btn-cancel" data-bs-dismiss="modal">Hủy hóa đơn</a>
+                            <a th:if="${bill.trangThai == 0 or bill.trangThai == 1}"
+                               th:href="@{'/manage/bill/online/delete/' + ${bill.idHD}}"
+                               class="btn btn-cancel">Hủy hóa đơn</a>
                         </div>
                     </div>
                 </div>
@@ -1355,7 +1426,20 @@
     });
 </script>
 <!--Confirm thong bao pay end-->
-
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".btn-cancel").forEach(function(btn) {
+            btn.addEventListener("click", function(event) {
+                if (btn.getAttribute("data-bs-dismiss") !== "modal") {
+                    setTimeout(function() {
+                        window.location.href = btn.getAttribute("href");
+                    }, 500);  // Thời gian chờ để modal đóng hoàn toàn
+                    event.preventDefault();
+                }
+            });
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function () {

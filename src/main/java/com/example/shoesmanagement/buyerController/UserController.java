@@ -728,7 +728,7 @@ public class UserController {
                 lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng chưa thanh toán ");
                 lsThanhToanService.addLSTT(lichSuThanhToan);
             }
-            hoaDonHuy.setTrangThai(4);
+            hoaDonHuy.setTrangThai(5);
             hoaDonHuy.setLyDoHuy(lyDoHuy);
             hoaDonHuy.setTgHuy(new Date());
             hoaDonService.add(hoaDonHuy);
@@ -770,7 +770,7 @@ public class UserController {
                 lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng chưa thanh toán");
                 lsThanhToanService.addLSTT(lichSuThanhToan);
             }
-            hoaDonHuy.setTrangThai(4);
+            hoaDonHuy.setTrangThai(5);
             hoaDonHuy.setLyDoHuy(lyDoHuy);
             hoaDonHuy.setTgHuy(new Date());
             hoaDonService.add(hoaDonHuy);
