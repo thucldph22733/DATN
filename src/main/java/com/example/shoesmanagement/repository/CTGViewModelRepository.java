@@ -181,7 +181,7 @@ public interface CTGViewModelRepository extends JpaRepository< CTGViewModel,UUID
             "            WHERE\n" +
             "\t\t\ta.id_hinh_anh IS NOT NULL\n" +
             "            AND g.trang_thai = 1 \n" +
-//            "\t\t\tAND hd.trang_thai=1\n" +
+            "\t\t\tAND hd.trang_thai=4\n" +
             "            AND ctg.trang_thai = 1 \n" +
             "            GROUP BY  g.ten_giay, a.url1\n" +
             "            ORDER BY COALESCE(SUM(cthd.so_luong), 0) DESC",nativeQuery = true)
