@@ -169,6 +169,7 @@ public class HomeOrder {
             hoaDon.setTrangThai(4);
             giaoHang.setTgThanhToan(date);
             giaoHang.setTgNhan(date);
+            hoaDon.setTgThanhToan(new Date());
             hoaDonService.add(hoaDon);
 
             LichSuThanhToan lichSuThanhToan = new LichSuThanhToan();
@@ -202,6 +203,7 @@ public class HomeOrder {
                 giaoHang.setTgHuy(new Date());
                 giaoHang.setLyDoHuy(moTa);
                 giaoHang.setTrangThai(2);
+                hoaDon.setTgHuy(new Date());
                 hoaDonService.add(hoaDon);
 
                 Date date = new Date();

@@ -439,11 +439,6 @@
                                                                                     <i class="si si-speedometer"  th:data-bs-toggle="modal"
                                                                                        th:data-bs-target="'#modalXemLichSuThanhToan' + ${bill.idHD}"
                                                                                        style="cursor: pointer; margin: 0 20px 0 0; color: #ff9f43;"></i>
-                                                                                    <i class="fe fe-x"  th:data-bs-toggle="modal"
-                                                                                       th:data-bs-target="'#modalHuyHoaDon' + ${bill.idHD}"
-                                                                                       style="cursor: pointer; margin: 0 20px 0 0; color: #ff9f43;"></i>
-
-
                                                                                     <a th:href="@{'http://localhost:8081/manage/bill/online/print/' + ${bill.idHD}}"
                                                                                        onclick="window.open(this.href, '_blank'); return false;">
                                                                                         <i class="fe fe-printer"
@@ -571,11 +566,11 @@
                                                                                 <td th:if="${bill.tgHuy != null}"
                                                                                     th:text="${#dates.format(bill.tgHuy, 'HH:mm yyyy-MM-dd')}"></td>
 
-<!--                                                                                <td th:if="${bill.tgHuy == null}">Chưa có</td>-->
+                                                                                <td th:if="${bill.tgHuy == null}">Chưa có</td>
 
-                                                                                <td th:if="${bill.giaoHang.tgThanhToan != null}"
-                                                                                    th:text="${#dates.format(bill.giaoHang.tgThanhToan, 'HH:mm yyyy-MM-dd')}"></td>
-                                                                                <td th:if="${bill.giaoHang.tgThanhToan == null}">Chưa có</td>
+                                                                                <td th:if="${bill.tgThanhToan != null}"
+                                                                                    th:text="${#dates.format(bill.tgThanhToan, 'HH:mm yyyy-MM-dd')}"></td>
+                                                                                <td th:if="${bill.tgThanhToan == null}">Chưa có</td>
 
                                                                                 <td th:text="${bill.khachHang.hoTenKH}"></td>
                                                                                 <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
