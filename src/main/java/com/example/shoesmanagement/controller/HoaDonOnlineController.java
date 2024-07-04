@@ -206,6 +206,7 @@ public class HoaDonOnlineController {
                     }
                     if(x.getTrangThai() == 1 ){
                         soLuongHoaDonChoXacNhan ++;
+                        listAllHoaDonDangGiao.add(x);
                     } if(x.getTrangThai() == 2 ){
                         soLuongHoaDonChoLayHang ++;
                     }
