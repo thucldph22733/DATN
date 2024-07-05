@@ -874,6 +874,11 @@
     }
 </script>
 <script>
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "F5" || event.keyCode === 116) {
+            event.preventDefault();
+        }
+    });
     function addDays(date, days) {
         var result = new Date(date);
         result.setDate(result.getDate() + days);

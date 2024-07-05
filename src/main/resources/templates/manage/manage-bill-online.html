@@ -459,7 +459,6 @@
                                                                             </td>
                                                                             <td th:if="${bill.trangThai == 5 }">Đã Hủy
                                                                             </td>
-                                                                            <!--                                                                                <td th:if="${bill.trangThai == 6 }">Hoàn Hàng</td>-->
 
                                                                             <td th:text="${bill.khachHang.hoTenKH}"></td>
                                                                             <td th:text="${bill.tongSP}"></td>
@@ -548,8 +547,9 @@
 
                                                                     <th:block
                                                                             th:each="bill, i: ${listHoaDonOnlineGiaoHang}">
-                                                                        <tr>
-                                                                            <td th:text="${i.index}"></td>
+                                                                        <tr th:unless="${bill.trangThai ==2  or bill.trangThai == 3  or bill.trangThai == 6}">
+
+                                                                        <td th:text="${i.index}"></td>
                                                                             <td th:text="${bill.maHD}"></td>
                                                                             <td th:if="${bill.nhanVien != null}"
                                                                                 th:text="${bill.nhanVien.hoTenNV}"></td>
@@ -708,125 +708,7 @@
 <section>
 
     <!-- Modal All Purchase Begin -->
-    <th:block th:each="bill: ${listHoaDonOnline}">
-        <div class="modal fade" th:id="'detailKMM' + ${bill.idHD}" tabindex="-1" aria-labelledby="create"
-             aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="width: 900px;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Hóa đơn online</h5>
-                        <a href="#">Xem thống kê</a>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-lg-4 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label>Mã Voucher :</label>
-                                    <p style="font-size: 13pt; font-weight: 700;">Tự sinh</p>
-                                </div>
-                            </div>
 
-                            <div class="col-lg-3 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label>Tên Voucher :</label>
-                                    <input value="Nhan" style="border: none; font-size: 12pt; font-weight: 600;">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label>Loại Voucher :</label>
-                                    <select class="form-select">
-                                        <option>-- Select --</option>
-                                        <option>Voucher Sản Phẩm</option>
-                                        <option>Voucher Hóa Đơn</option>
-                                        <option>Voucher Jav</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-1 col-sm-12 col-12"></div>
-                            <div class="col-lg-7 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label>Thời gian sử dụng :</label>
-                                    <div style="display: flex;">
-                                        <div style="display: flex;">
-                                            <label> Bắt đầu : </label> <input type="date"
-                                                                              style="border: none; margin: 0 10px 8px 10px;">
-                                        </div>
-
-                                        <span style="margin-right: 10px;">đến</span>
-
-                                        <div style="display: flex;">
-                                            <label> Kết thúc : </label> <input type="date"
-                                                                               style="border: none; margin: 0 10px 8px 10px;">
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="col-lg-5 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label>Trạng thái</label>
-                                    <div style="display: flex;">
-                                        <div style="display: flex;">
-                                            <label> Hoạt động </label> <input name="status" type="radio"
-                                                                              style="border: none; margin: 0 10px 8px 10px;">
-                                        </div>
-                                        <div style="display: flex;">
-                                            <label> Không hoạt động </label> <input name="status" type="radio"
-                                                                                    style="border: none; margin: 0 10px 8px 10px;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-7 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <div style="display: flex;">
-                                        <div style="display: flex;">
-                                            <label style="margin-top: 5px;"> Phần trăm giảm </label> <input type="text"
-                                                                                                            style=" width: 100px; margin: 0 10px 10px 10px;">
-                                        </div>
-                                        <div style="display: flex;">
-                                            <label style="margin-top: 5px;"> Số tiền tối đa </label> <input type="text"
-                                                                                                            style=" width: 100px; margin: 0 10px 10px 10px;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-5 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <div style="display: flex;">
-                                        <div style="display: flex;">
-                                            <label style="margin-top: 5px;"> Số lượng : </label> <input type="text"
-                                                                                                        style=" width: 50px; margin: 0 10px 10px 10px;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label>Mô tả </label>
-                                    <input type="text">
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-lg-12">
-                            <a class="btn btn-submit me-2">Thêm</a>
-                            <a class="btn btn-cancel" data-bs-dismiss="modal">Cancel</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </th:block>
     <!-- Modal All Purchase End -->
 
     <!--    Modal xem lịch sử thanh toán-->
@@ -886,7 +768,6 @@
                                     <p th:if="${bill.trangThai == 3 }">Chờ giao hàng</p>
                                     <p th:if="${bill.trangThai == 4 }">Giao thành công</p>
                                     <p th:if="${bill.trangThai == 5 }">Đã Hủy</p>
-                                    <p th:if="${bill.trangThai == 6 }">Hoàn Hàng</p>
                                 </div>
                             </div>
                             <div class="col-lg-12 col-sm-12 col-12">
@@ -1261,7 +1142,6 @@
                                     <p th:if="${bill.trangThai == 3 }">Chờ giao hàng</p>
                                     <p th:if="${bill.trangThai == 4 }">Giao thành công</p>
                                     <p th:if="${bill.trangThai == 5 }">Đã Hủy</p>
-                                    <p th:if="${bill.trangThai == 6 }">Hoàn Hàng</p>
                                 </div>
 
                             </div>
@@ -1353,66 +1233,7 @@
     </th:block>
     <!-- Modal detail Hóa Đơn end-->
 
-    <th:block th:each="bill: ${listHoaDonOnline}">
 
-        <form th:action="'/manage/bill/online/cancel/refund/' + ${bill.idHD}" method="post">
-            <div class="modal fade" th:id="'xacNhanHoanTienHDHuy' + ${bill.idHD}" tabindex="-1" aria-labelledby="create"
-                 aria-hidden="true">
-                <div th:unless="${bill.trangThai == 6}" class="modal-dialog modal-lg modal-dialog-centered"
-                     role="document" style="width: 500px;">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Xác nhận hoàn tiền</h5>
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row" style="text-align: center; align-items: center; padding: 30px 0 30px 0;">
-                                <div>
-                                    <h3>Xác nhận đã hoàn tiền cho hóa đơn hủy</h3>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <a class="btn btn-submit" style="background: #3088df; margin-right: 30px;"
-                                   data-bs-dismiss="modal">Hủy</a>
-                                <button type="submit" class="btn btn-submit">Xác nhận</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-
-        <form th:action="'/manage/bill/online/refund/refund/' + ${bill.idHD}" method="post">
-            <div class="modal fade" th:id="'xacNhanHoanTienHDHoan'+ ${bill.idHD}" tabindex="-1" aria-labelledby="create"
-                 aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="width: 500px;">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Xác nhận hoàn tiền</h5>
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row" style="text-align: center; align-items: center; padding: 30px 0 30px 0;">
-                                <div>
-                                    <h3>Xác nhận đã hoàn tiền cho hóa đơn hoàn hàng</h3>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <a class="btn btn-submit" style="background: #3088df; margin-right: 30px;"
-                                   data-bs-dismiss="modal">Hủy</a>
-                                <button type="submit" class="btn btn-submit">Xác nhận</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-
-    </th:block>
 
 
     <!-- Modal All giao hàng Begin -->
@@ -1675,7 +1496,7 @@
                             </div>
                             <div class="col-lg-3 col-sm-12 col-12">
                                 <div class="form-group">
-                                    <label>Thời gian giao hàng :</label>
+                                        <label>Thời gian giao hàng :</label>
                                     <p style="font-size: 11pt; font-weight: 600;"
                                        th:if="${billDelivery.giaoHang.tgShip !=null}"
                                        th:text="${#dates.format(billDelivery.giaoHang.tgShip, 'HH:mm yyyy-MM-dd')}"></p>
