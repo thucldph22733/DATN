@@ -244,6 +244,37 @@ public class BanHangController {
         return "/manage/ban-hang";
     }
 
+
+    @GetMapping("/quet-qr/{idChiTietGiay}")
+    public String quetQr(@PathVariable(value = "idChiTietGiay") UUID idChiTietGiay,
+                         Model model, RedirectAttributes redirectAttributes) {
+        ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idChiTietGiay);
+
+        UUID idHoaDon = (UUID) session.getAttribute("idHoaDon");
+        if (idHoaDon == null) {
+            redirectAttributes.addFlashAttribute("messageError", true);
+            redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
+            return "redirect:/ban-hang/hien-thi";
+        }
+        else {
+
+            if (chiTietGiay == null) {
+                redirectAttributes.addFlashAttribute("messageError", true);
+                redirectAttributes.addFlashAttribute("tbaoError", "Ảnh QR không đúng");
+                return "redirect:/ban-hang/cart/hoadon/" + this.idHoaDon;
+            }
+            model.addAttribute("quetQR", chiTietGiay);
+            model.addAttribute("idHoaDon", idHoaDon);
+            model.addAttribute("tongTienSanPham", tongTienSanPham);
+            model.addAttribute("tongTien", tongTienSanPham - giaTienGiam);
+
+            model.addAttribute("showModalQuetQR", true);
+        }
+
+        return "/manage/ban-hang";
+    }
+
+
     @GetMapping("/chon-size/{idGiay}/{mauSac}")
     public String chonSize(@PathVariable(value = "idGiay") UUID idGiay,
                            @PathVariable(value = "mauSac") String mauSac, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
@@ -281,8 +312,7 @@ public class BanHangController {
         Map<String, Object> response = new HashMap<>();
 
         if (chiTietGiay == null || hoaDonChiTiet == null) {
-            // Log lỗi nếu không tìm thấy thông tin
-            System.err.println("ChiTietGiay or HoaDonChiTiet not found");
+            System.err.println("ChiTietGiay hoặc HoaDonChiTiet không tồn tại");
             response.put("error", "Sản phẩm không tồn tại");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
@@ -291,36 +321,29 @@ public class BanHangController {
             response.put("error", "Số lượng trong kho không đủ");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } else {
-            // xóa khuyến mãi
             HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).get();
             hoaDon.setKhuyenMai(null);
             hoaDonRepository.saveAndFlush(hoaDon);
 
-            // Cập nhật số lượng và đơn giá trong hóa đơn chi tiết
             int previousQuantity = hoaDonChiTiet.getSoLuong();
             hoaDonChiTiet.setSoLuong(quantity);
             hoaDonChiTiet.setDonGia(chiTietGiay.getGiaBan() * quantity);
             hoaDonChiTietService.add(hoaDonChiTiet);
 
-            // Cập nhật số lượng trong kho sản phẩm
             int quantityDifference = quantity - previousQuantity;
             chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - quantityDifference);
             giayChiTietService.update(chiTietGiay);
 
-            // Tính toán lại các giá trị tổng tiền
             double tongTienSanPham = hoaDonService.getTongTienSanPham(idHoaDon);
 
-            // Đưa các giá trị vào phản hồi JSON
             response.put("tongTienSanPham", tongTienSanPham);
 
-            // Log để kiểm tra
             System.out.println("Updated HoaDonChiTiet: " + hoaDonChiTiet);
             System.out.println("Updated ChiTietGiay: " + chiTietGiay);
 
             return ResponseEntity.ok(response);
         }
     }
-
 
 
     @GetMapping("/add-to-cart")
@@ -691,8 +714,6 @@ public class BanHangController {
         }
         return "redirect:/ban-hang/hien-thi";
     }
-
-
 
 
 
