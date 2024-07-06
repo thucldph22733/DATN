@@ -76,11 +76,7 @@ public class GiayChiTietController {
             return "redirect:/login";
 
         }
-        for (ChiTietGiay x : items) {
-            if (x.getIdCTGOld() == null) {
-                chiTietGiayList.add(x);
-            }
-        }
+
 
         List<Giay> giayList = giayService.getAllGiay();
         List<Size> sizeList = sizeService.getAllSize();
@@ -1328,7 +1324,7 @@ public class GiayChiTietController {
             chiTietGiayDb.setMauSac(chiTietGiay.getMauSac());
             chiTietGiayDb.setSize(chiTietGiay.getSize());
             chiTietGiayDb.setGiaBan(chiTietGiay.getGiaBan());
-            chiTietGiayDb.setMaNVSua(chiTietGiay.getMaNVSua());
+
             chiTietGiayDb.setNamBH(chiTietGiay.getNamBH());
             chiTietGiayDb.setNamSX(chiTietGiay.getNamSX());
             chiTietGiayDb.setSoLuong(chiTietGiay.getSoLuong());
@@ -1397,7 +1393,7 @@ public class GiayChiTietController {
             chiTietGiayDb.setMauSac(chiTietGiay.getMauSac());
             chiTietGiayDb.setSize(chiTietGiay.getSize());
             chiTietGiayDb.setGiaBan(chiTietGiay.getGiaBan());
-            chiTietGiayDb.setMaNVSua(chiTietGiay.getMaNVSua());
+
             chiTietGiayDb.setNamBH(chiTietGiay.getNamBH());
             chiTietGiayDb.setNamSX(chiTietGiay.getNamSX());
             chiTietGiayDb.setSoLuong(chiTietGiay.getSoLuong());

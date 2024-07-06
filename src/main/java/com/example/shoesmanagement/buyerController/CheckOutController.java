@@ -255,6 +255,10 @@ public class CheckOutController {
     public String addNewAddressPlaceOrder(Model model, @RequestParam(name = "defaultSelected", defaultValue = "false") boolean defaultSelected) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        if (session.getAttribute("KhachHangLogin") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "redirect:/buyer/login";
+        }
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi");
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
         List<GioHangChiTiet> listGHCTActive = ghctService.findByGHActive(gioHang);
@@ -273,7 +277,7 @@ public class CheckOutController {
         }
 
         String nameAddress = request.getParameter("nameAddress");
-        String fullName = request.getParameter("fullName");
+         String fullName = request.getParameter("fullName");
         String phoneAddress = request.getParameter("phoneAddress");
         String city = request.getParameter("city");
         String district = request.getParameter("district");
