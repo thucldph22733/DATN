@@ -39,9 +39,6 @@ public class GioHangChiTiet {
     @Column(name = "don_Gia")
     private double donGia;
 
-    @Column(name = "don_Gia_Khi_Giam")
-    private Double donGiaTruocKhiGiam;
-
     @Column(name = "trang_Thai")
     private int trangThai;
 

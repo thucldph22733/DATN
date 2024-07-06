@@ -286,11 +286,7 @@
                                            href="#solid-rounded-justified-tab1"
                                            data-bs-toggle="tab">Bán hàng tại quầy</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link"
-                                           href="#solid-rounded-justified-tab2"
-                                           data-bs-toggle="tab">Hóa đơn hôm nay</a>
-                                    </li>
+
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane show active" id="solid-rounded-justified-tab1">
@@ -779,116 +775,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane" id="solid-rounded-justified-tab2">
 
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="table-responsive">
-                                                            <div class="vertical-scroll scroll-demo">
-                                                                <table class="table  datanew ">
-                                                                    <thead>
-                                                                    <tr>
-                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                                            Mã Hóa Đơn
-                                                                        </th>
-                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                                            Thời gian tạo
-                                                                        </th>
-                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                                            Thời gian thanh toán
-                                                                        </th>
-                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                                            Trạng thái
-                                                                        </th>
-                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                                            Khách hàng
-                                                                        </th>
-                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                                            Tổng sản phẩm
-                                                                        </th>
-                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                                            Tổng tiền
-                                                                        </th>
-                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                                            Hành động
-                                                                        </th>
-                                                                    </tr>
-                                                                    </thead>
-                                                                    <tbody>
-
-                                                                    <th:block th:each="bill: ${listHoaDonHomNay}">
-                                                                        <tr>
-                                                                            <td th:text="${bill.maHD}"></td>
-                                                                            <td th:text="${#dates.format(bill.tgTao, 'HH:mm yyyy-MM-dd')}"></td>
-
-                                                                            <td th:if="${bill.tgThanhToan != null}"
-                                                                                th:text="${#dates.format(bill.tgThanhToan, 'HH:mm yyyy-MM-dd')}"></td>
-                                                                            <td th:if="${bill.tgThanhToan == null}">Chưa
-                                                                                có
-                                                                            </td>
-
-                                                                            <td th:if="${bill.trangThai == 0}">HD Chờ
-                                                                            </td>
-                                                                            <td th:if="${bill.trangThai == 1}"
-                                                                                style="color: #1536db">HD Thành công
-                                                                            </td>
-                                                                            <td th:if="${bill.trangThai == 2}"
-                                                                                style="color: #db1515">HD Hủy
-                                                                            </td>
-
-                                                                            <td th:if="${bill.khachHang == null}">Khách
-                                                                                vãng lai
-                                                                            </td>
-                                                                            <td th:if="${bill.khachHang != null}"
-                                                                                th:text="${bill.khachHang.hoTenKH}"></td>
-
-                                                                            <td th:text="${bill.getTongSP()}"></td>
-                                                                            <td class="grandTotal"
-                                                                                id="tongTienSauKhuyenMai2"
-                                                                                th:text="${bill.getTongTien()}">
-                                                                            </td>
-                                                                            <th>
-                                                                                <i data-bs-toggle="tooltip"
-                                                                                   title="Chỉnh sửa"
-                                                                                   style="cursor: pointer; margin: 0 10px 0 20px;"
-                                                                                   class="fe fe-edit-3"></i>
-
-                                                                                <a th:if="${bill.trangThai == 1}"
-                                                                                   th:href="@{'http://localhost:8081/ban-hang/bill/print/' + ${bill.idHD}}"
-                                                                                   onclick="window.open(this.href, '_blank'); return false;">
-                                                                                    <i class="fe fe-printer"
-                                                                                       data-bs-toggle="tooltip" title=""
-                                                                                       style="cursor: pointer; color: #ff9f43;"
-                                                                                       data-bs-original-title="In hóa đơn"
-                                                                                       aria-label="fe fe-printer"></i>
-                                                                                </a>
-
-                                                                                <a style="margin-left: 10px;"
-                                                                                   th:if="${bill.trangThai == 0}">
-                                                                                    <button data-bs-toggle="modal"
-                                                                                            data-bs-target="#exampleModal2">
-                                                                                        <i class="si si-close"
-                                                                                           data-bs-toggle="tooltip"
-                                                                                           title="Delete hóa đơn"></i>
-                                                                                    </button>
-
-                                                                                </a>
-
-                                                                            </th>
-
-                                                                        </tr>
-                                                                    </th:block>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
