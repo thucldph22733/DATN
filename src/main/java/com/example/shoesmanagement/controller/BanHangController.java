@@ -1,6 +1,4 @@
 package com.example.shoesmanagement.controller;
-
-import com.example.shoesmanagement.dtos.requests.UpdateQuantityRequest;
 import com.example.shoesmanagement.model.*;
 import com.example.shoesmanagement.repository.*;
 import com.example.shoesmanagement.service.*;
@@ -15,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -62,10 +61,14 @@ public class BanHangController {
     @Autowired
     private KhuyenMaiRepository khuyenMaiRepository;
 
-
     @Autowired
     private MauSacService mauSacService;
 
+    @Autowired
+    private HoaDonChiTietRepository hoaDonChiTietRepository;
+
+    @Autowired
+    private HoaDonRepository hoaDonRepository;
 
     private int tongSanPham = 0;
 
@@ -79,16 +82,7 @@ public class BanHangController {
 
     private UUID idHoaDon = null;
 
-
     private double dieuKienKhuyenMai = 0;
-
-
-    @Autowired
-    private HoaDonChiTietRepository hoaDonChiTietRepository;
-
-    @Autowired
-    private HoaDonRepository hoaDonRepository;
-
 
     @GetMapping("/hien-thi")
     public String hienThi(Model model
@@ -136,7 +130,20 @@ public class BanHangController {
 
             HoaDon hd = new HoaDon();
             Date date = new Date();
-            hd.setMaHD("HD" + date.getDate() + generateRandomNumbers());
+            Integer sequenceNumber = (Integer) session.getAttribute("sequenceNumber");
+            if (sequenceNumber == null) {
+                sequenceNumber = 1; // Khởi tạo nếu chưa có trong session
+            }
+
+            // Tạo mã hóa đơn với ngày hôm nay và số thứ tự
+            SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+            String strDate = formatter.format(date);
+
+
+            // Tăng số thứ tự và lưu lại trong session
+            sequenceNumber++;
+            session.setAttribute("sequenceNumber", sequenceNumber);
+            hd.setMaHD("HD_" + strDate + "_" + sequenceNumber);
             hd.setTgTao(new Date());
             hd.setTrangThai(0);
             hd.setLoaiHD(1);
@@ -192,12 +199,6 @@ public class BanHangController {
             model.addAttribute("messageGioHang", "Trong giỏ hàng chưa có sản phẩm");
         }
 
-//         model.addAttribute("tongTienSanPham", hd.getTongTienSanPham());
-//         model.addAttribute("tongTien", hd.getTongTien());
-//         hd.setTongTien(tongTienSanPham-giaTienGiam);
-//         model.addAttribute("listKhachHang", khachHangService.findKhachHangByTrangThai());
-
-
         double tongTienSanPham = hoaDonChiTietService.tongTienSanPham(findByIdHoaDon);
         double tongTien = hoaDonChiTietService.tongTien(findByIdHoaDon);
 
@@ -243,6 +244,37 @@ public class BanHangController {
         return "/manage/ban-hang";
     }
 
+
+    @GetMapping("/quet-qr/{idChiTietGiay}")
+    public String quetQr(@PathVariable(value = "idChiTietGiay") UUID idChiTietGiay,
+                         Model model, RedirectAttributes redirectAttributes) {
+        ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idChiTietGiay);
+
+        UUID idHoaDon = (UUID) session.getAttribute("idHoaDon");
+        if (idHoaDon == null) {
+            redirectAttributes.addFlashAttribute("messageError", true);
+            redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
+            return "redirect:/ban-hang/hien-thi";
+        }
+        else {
+
+            if (chiTietGiay == null) {
+                redirectAttributes.addFlashAttribute("messageError", true);
+                redirectAttributes.addFlashAttribute("tbaoError", "Ảnh QR không đúng");
+                return "redirect:/ban-hang/cart/hoadon/" + this.idHoaDon;
+            }
+            model.addAttribute("quetQR", chiTietGiay);
+            model.addAttribute("idHoaDon", idHoaDon);
+            model.addAttribute("tongTienSanPham", tongTienSanPham);
+            model.addAttribute("tongTien", tongTienSanPham - giaTienGiam);
+
+            model.addAttribute("showModalQuetQR", true);
+        }
+
+        return "/manage/ban-hang";
+    }
+
+
     @GetMapping("/chon-size/{idGiay}/{mauSac}")
     public String chonSize(@PathVariable(value = "idGiay") UUID idGiay,
                            @PathVariable(value = "mauSac") String mauSac, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
@@ -280,8 +312,7 @@ public class BanHangController {
         Map<String, Object> response = new HashMap<>();
 
         if (chiTietGiay == null || hoaDonChiTiet == null) {
-            // Log lỗi nếu không tìm thấy thông tin
-            System.err.println("ChiTietGiay or HoaDonChiTiet not found");
+            System.err.println("ChiTietGiay hoặc HoaDonChiTiet không tồn tại");
             response.put("error", "Sản phẩm không tồn tại");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
@@ -290,36 +321,29 @@ public class BanHangController {
             response.put("error", "Số lượng trong kho không đủ");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } else {
-            // xóa khuyến mãi
             HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).get();
             hoaDon.setKhuyenMai(null);
             hoaDonRepository.saveAndFlush(hoaDon);
 
-            // Cập nhật số lượng và đơn giá trong hóa đơn chi tiết
             int previousQuantity = hoaDonChiTiet.getSoLuong();
             hoaDonChiTiet.setSoLuong(quantity);
             hoaDonChiTiet.setDonGia(chiTietGiay.getGiaBan() * quantity);
             hoaDonChiTietService.add(hoaDonChiTiet);
 
-            // Cập nhật số lượng trong kho sản phẩm
             int quantityDifference = quantity - previousQuantity;
             chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - quantityDifference);
             giayChiTietService.update(chiTietGiay);
 
-            // Tính toán lại các giá trị tổng tiền
             double tongTienSanPham = hoaDonService.getTongTienSanPham(idHoaDon);
 
-            // Đưa các giá trị vào phản hồi JSON
             response.put("tongTienSanPham", tongTienSanPham);
 
-            // Log để kiểm tra
             System.out.println("Updated HoaDonChiTiet: " + hoaDonChiTiet);
             System.out.println("Updated ChiTietGiay: " + chiTietGiay);
 
             return ResponseEntity.ok(response);
         }
     }
-
 
 
     @GetMapping("/add-to-cart")
@@ -665,18 +689,17 @@ public class BanHangController {
         redirectAttributes.addFlashAttribute("messageSuccess", true);
         return "redirect:/ban-hang/cart/hoadon/" + idHoaDon;
     }
-
     @GetMapping("/delete-hoa-don-cho/{idHD}")
     public String deleteHoaDonChoByIdHD(@PathVariable UUID idHD, RedirectAttributes redirectAttributes) {
         try {
             hoaDonService.deleteHoaDonCho(idHD);
             session.removeAttribute("idHoaDon");
-            session.removeAttribute("khachHang");
             session.removeAttribute("tongSP");
             session.removeAttribute("tongTien");
             session.removeAttribute("tongTienSanPham");
             session.removeAttribute("cart");
             session.removeAttribute("khuyenMai");
+            session.removeAttribute("idChiTietGiay");
             redirectAttributes.addFlashAttribute("messageSuccess", true);
             redirectAttributes.addFlashAttribute("tb", "Hóa đơn đã được xóa thành công.");
         } catch (NoSuchElementException e) {

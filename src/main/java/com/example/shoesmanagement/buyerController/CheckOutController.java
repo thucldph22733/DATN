@@ -103,13 +103,25 @@ public class CheckOutController {
         model.addAttribute("khuyenMai", khuyenMai);
 
 
-        String maHD = "HD_" + khachHang.getMaKH() + "_" + date.getDate() + generateRandomNumbers();
+        Integer sequenceNumber = (Integer) session.getAttribute("sequenceNumber");
+        if (sequenceNumber == null) {
+            sequenceNumber = 1; // Khởi tạo nếu chưa có trong session
+        }
+
+        // Tạo mã hóa đơn với ngày hôm nay và số thứ tự
+        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+        String strDate = formatter.format(date);
+        String maHD = "HD_" + strDate + "_" + sequenceNumber;
+
+        // Tăng số thứ tự và lưu lại trong session
+        sequenceNumber++;
+        session.setAttribute("sequenceNumber", sequenceNumber);
         session.setAttribute("checkoutParams" + khachHang.getIdKH(), request.getQueryString());
         hoaDon.setKhachHang(khachHang);
         hoaDon.setMaHD(maHD);
         hoaDon.setLoaiHD(0);
         hoaDon.setTgTao(date);
-        hoaDon.setTrangThai(6);
+        hoaDon.setTrangThai(7);
         hoaDonService.add(hoaDon);
 
         GiaoHang giaoHang = new GiaoHang();
@@ -243,6 +255,10 @@ public class CheckOutController {
     public String addNewAddressPlaceOrder(Model model, @RequestParam(name = "defaultSelected", defaultValue = "false") boolean defaultSelected) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        if (session.getAttribute("KhachHangLogin") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "redirect:/buyer/login";
+        }
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi");
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
         List<GioHangChiTiet> listGHCTActive = ghctService.findByGHActive(gioHang);
@@ -261,7 +277,7 @@ public class CheckOutController {
         }
 
         String nameAddress = request.getParameter("nameAddress");
-        String fullName = request.getParameter("fullName");
+         String fullName = request.getParameter("fullName");
         String phoneAddress = request.getParameter("phoneAddress");
         String city = request.getParameter("city");
         String district = request.getParameter("district");
@@ -400,7 +416,10 @@ public class CheckOutController {
 
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi");
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-
+        if (session.getAttribute("KhachHangLogin") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "redirect:/buyer/login";
+        }
         String hinhThucThanhToan = request.getParameter("hinhThucThanhToan");
         String loiNhan = request.getParameter("loiNhan");
 
@@ -565,13 +584,25 @@ public class CheckOutController {
         Date date = new Date();
         HoaDon hoaDon = new HoaDon();
 
-        String maHD = "HD_" + khachHang.getMaKH() + "_" + date.getDate() + generateRandomNumbers();
+        Integer sequenceNumber = (Integer) session.getAttribute("sequenceNumber");
+        if (sequenceNumber == null) {
+            sequenceNumber = 1; // Khởi tạo nếu chưa có trong session
+        }
+
+        // Tạo mã hóa đơn với ngày hôm nay và số thứ tự
+        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+        String strDate = formatter.format(date);
+        String maHD = "HD_" + strDate + "_" + sequenceNumber;
+
+        // Tăng số thứ tự và lưu lại trong session
+        sequenceNumber++;
+        session.setAttribute("sequenceNumber", sequenceNumber);
 
         hoaDon.setKhachHang(khachHang);
         hoaDon.setMaHD(maHD);
         hoaDon.setLoaiHD(0);
         hoaDon.setTgTao(date);
-        hoaDon.setTrangThai(6);
+        hoaDon.setTrangThai(7);
         hoaDon.setLoiNhan(hoaDon.getLoiNhan());
 
         KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
@@ -680,7 +711,7 @@ public class CheckOutController {
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi");
 
         if (hoaDon == null) {
-            hoaDon = (HoaDon) session.getAttribute("HoaDonThanhToanNhanNgu");
+            hoaDon = (HoaDon) session.getAttribute("HoaDonThanhToan");
         }
 
         String paymentTime = request.getParameter("vnp_PayDate");
@@ -785,7 +816,7 @@ public class CheckOutController {
             hoaDon.setMaHD(maHD);
             hoaDon.setLoaiHD(0);
             hoaDon.setTgTao(date);
-            hoaDon.setTrangThai(6);
+            hoaDon.setTrangThai(7);
             hoaDonService.add(hoaDon);
 
             hoaDon.setKhuyenMai(khuyenMai);

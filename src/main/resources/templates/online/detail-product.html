@@ -640,7 +640,11 @@
         var quantity = document.getElementById("quantityInput").value;
 
         var selectedLabel = document.querySelector(".label.active");
-
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "F5" || event.keyCode === 116) {
+                event.preventDefault();
+            }
+        });
         if (selectedLabel) {
             var labelName = selectedLabel.getAttribute("name");
 

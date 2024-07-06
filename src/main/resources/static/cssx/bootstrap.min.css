@@ -4704,15 +4704,15 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 
 .card {
     position: relative;
-    display: -ms-flexbox;
+    /*display: -ms-flexbox;*/
     display: flex;
-    -ms-flex-direction: column;
+    /*-ms-flex-direction: column;*/
     flex-direction: column;
     min-width: 0;
     word-wrap: break-word;
     background-color: #fff;
     background-clip: border-box;
-    border: 1px solid rgba(0, 0, 0, .125);
+    /*border: 1px solid rgba(0, 0, 0, .125);*/
     border-radius: .25rem
 }
 

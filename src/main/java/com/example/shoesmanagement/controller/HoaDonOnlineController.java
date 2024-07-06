@@ -1,19 +1,15 @@
 package com.example.shoesmanagement.controller;
 
-import com.example.shoesmanagement.model.ChucVu;
-import com.example.shoesmanagement.model.GiaoHang;
-import com.example.shoesmanagement.model.HoaDon;
-import com.example.shoesmanagement.model.NhanVien;
+import com.example.shoesmanagement.model.*;
 import com.example.shoesmanagement.service.*;
+import com.example.shoesmanagement.viewModel.GiayViewModel;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 
@@ -34,13 +30,18 @@ public class HoaDonOnlineController {
 
     @Autowired
     private HttpSession session;
-
+    @Autowired
+    private GiayViewModelService giayViewModelService;
     @Autowired
     private LSThanhToanService lsThanhToanService;
-
+    @Autowired
+    private GiayChiTietService giayChiTietService;
 
     @Autowired
     private ChucVuService chucVuService;
+    @Autowired
+    private HttpSession httpSession;
+
     @GetMapping("online")
     private String manageBillOnline(Model model) {
         model.addAttribute("reLoadPage", true);
@@ -54,6 +55,7 @@ public class HoaDonOnlineController {
 
         return "manage/manage-bill-online";
     }
+
     @GetMapping("online/delivery/{idHD}")
     private String editBillOnline(Model model, @PathVariable UUID idHD) {
 
@@ -81,6 +83,7 @@ public class HoaDonOnlineController {
 
         return "manage/manage-bill-online";
     }
+
     @PostMapping("online/delivery/confirm/{idHD}")
     private String confirmNVGH(Model model, @PathVariable UUID idHD) {
 
@@ -104,7 +107,6 @@ public class HoaDonOnlineController {
         hoaDonService.add(hoaDon);
 
 
-
         showData(model);
 
         model.addAttribute("showMessThanhCong", true);
@@ -116,7 +118,22 @@ public class HoaDonOnlineController {
         return "manage/manage-bill-online";
     }
 
-    private void showTab1(Model model){
+    @GetMapping("online/delete/{idHD}")
+    public String huyHoaDonOnline(@PathVariable UUID idHD, Model model) {
+        String lyDoHuy = request.getParameter("lyDoHuy");
+        Date date = new Date();
+        HoaDon hoaDon = hoaDonService.getOne(idHD);
+        hoaDon.setLyDoHuy(lyDoHuy);
+        hoaDon.setTgHuy(date);
+        hoaDon.setTrangThai(5);
+
+        hoaDonService.save(hoaDon);
+        showData(model);
+        showTab3(model);
+        return "manage/manage-bill-online";
+    }
+
+    private void showTab1(Model model) {
         model.addAttribute("activeAll", "nav-link active");
         model.addAttribute("xac_nhan_tt", "nav-link");
         model.addAttribute("van_chuyen", "nav-link");
@@ -127,7 +144,8 @@ public class HoaDonOnlineController {
         model.addAttribute("tabpane4", "tab-pane");
 
     }
-    private void showTab3(Model model){
+
+    private void showTab3(Model model) {
 
         model.addAttribute("activeAll", "nav-link");
         model.addAttribute("xac_nhan_tt", "nav-link");
@@ -139,23 +157,26 @@ public class HoaDonOnlineController {
         model.addAttribute("tabpane3", "tab-pane show active");
         model.addAttribute("tabpane4", "tab-pane");
     }
-    private void showData(Model model){
+
+    private void showData(Model model) {
 
         List<HoaDon> listAllHoaDonOnline = hoaDonService.listHoaDonOnline();
 
 
-            List<HoaDon> listAllHoaDonDangGiao = new ArrayList<>();
-        List<HoaDon> listHoaDonOnlineQRCode = new ArrayList<>();
-
+        List<HoaDon> listAllHoaDonDangGiao = new ArrayList<>();
+        List<HoaDon> listHoaDonOnlineBaking = new ArrayList<>();
 
 
         int soLuongHoaDonOnline = 0;
         int soLuongHoaDonHuy = 0;
-        int soLuongHoaDonDaThanhToan = 0 ;
-        int soLuongHoaDonChuaThanhToanNhanHang = 0 ;
+        int soLuongHoaDonDaThanhToan = 0;
+        int soLuongHoaDonChuaThanhToanNhanHang = 0;
         int soLuongHoaDonDangGiao = 0;
         int soLuongHoaDonBanking = 0;
         int soLuongHoaDonDaNhan = 0;
+        int soLuongHoaDonChoXacNhan = 0;
+        int soLuongHoaDonChoLayHang = 0;
+
 
         int soLuongHoaDonThanhToanKhiNhanHang = 0;
 
@@ -170,52 +191,55 @@ public class HoaDonOnlineController {
             }
         }
 
-        if (listAllHoaDonOnline != null){
-            for (HoaDon x: listAllHoaDonOnline) {
-                if (x.getTrangThai() == 6 || x.getTrangThai() == 7){
+        if (listAllHoaDonOnline != null) {
+            for (HoaDon x : listAllHoaDonOnline) {
+                if (x.getTrangThai() == 6 || x.getTrangThai() == 7) {
                     System.out.println("abc");
-                }else{
-                    if(x.getTrangThai() == 4){
-                        soLuongHoaDonHuy ++;
+                } else {
+                    if (x.getHinhThucThanhToan() == 1) {
+                        soLuongHoaDonBanking++;
+                        listHoaDonOnlineBaking.add(x);
                     }
-                    if (x.getHinhThucThanhToan() == 1 ){
-                        soLuongHoaDonBanking ++;
-                        listHoaDonOnlineQRCode.add(x);
-                    }
-                    if (x.getHinhThucThanhToan() == 0){
-                        soLuongHoaDonThanhToanKhiNhanHang ++;
+                    if (x.getHinhThucThanhToan() == 0) {
+                        soLuongHoaDonThanhToanKhiNhanHang++;
                     }
 
-                    if (x.getTrangThai() == 1 && x.getHinhThucThanhToan() == 1 ){
-                        soLuongHoaDonDaThanhToan ++;
+                    if (x.getTrangThai() == 1 && x.getHinhThucThanhToan() == 1) {
+                        soLuongHoaDonDaThanhToan++;
                     }
-                    if (x.getTrangThai() == 3 && x.getHinhThucThanhToan() == 0 ){
-                        soLuongHoaDonDaThanhToan ++;
+                    if (x.getTrangThai() == 4 && x.getHinhThucThanhToan() == 0) {
+                        soLuongHoaDonDaThanhToan++;
                     }
-                    if (x.getTrangThai() == 2 ){
-                        soLuongHoaDonDangGiao ++;
+                    if (x.getTrangThai() == 1) {
+                        soLuongHoaDonChoXacNhan++;
                         listAllHoaDonDangGiao.add(x);
                     }
-                    if (x.getTrangThai() == 1){
-                        soLuongHoaDonDangGiao ++;
+                    if (x.getTrangThai() == 2) {
+                        soLuongHoaDonChoLayHang++;
+                    }
+                    if (x.getTrangThai() == 3) {
+                        soLuongHoaDonDangGiao++;
                         listAllHoaDonDangGiao.add(x);
                     }
-                    if (x.getTrangThai() == 4){
-                        soLuongHoaDonHuy ++;
+                    if (x.getTrangThai() == 3) {
+                        soLuongHoaDonDangGiao++;
+                        listAllHoaDonDangGiao.add(x);
                     }
-                    if (x.getTrangThai() == 3){
-                        soLuongHoaDonDaNhan ++;
+                    if (x.getTrangThai() == 5) {
+                        soLuongHoaDonHuy++;
+                    }
+                    if (x.getTrangThai() == 4) {
+                        soLuongHoaDonDaNhan++;
                     }
                 }
             }
         }
 
-        int soLuongHoaDonChuaThanhToan =  soLuongHoaDonChuaThanhToanNhanHang +  soLuongHoaDonBanking ;
+        int soLuongHoaDonChuaThanhToan = soLuongHoaDonChuaThanhToanNhanHang + soLuongHoaDonBanking;
 
 
         int soLuongHdHoanChoXacNhan = 0;
         int soLuongHdHoanKhachHuy = 0;
-
 
 
         model.addAttribute("sumBillOnline", soLuongHoaDonOnline);
@@ -225,6 +249,8 @@ public class HoaDonOnlineController {
         model.addAttribute("hoaDonChuaThanhToan", soLuongHoaDonChuaThanhToan);
         model.addAttribute("hoaDonDaThanhToan", soLuongHoaDonDaThanhToan);
         model.addAttribute("hoaDonDangGiao", soLuongHoaDonDangGiao);
+        model.addAttribute("hoaDonChoXacNhan", soLuongHoaDonChoXacNhan);
+        model.addAttribute("hoaDonChoLayHang", soLuongHoaDonChoLayHang);
         model.addAttribute("hoaDonHuy", soLuongHoaDonHuy);
         model.addAttribute("hoaDonDaNhan", soLuongHoaDonDaNhan);
 
@@ -233,6 +259,31 @@ public class HoaDonOnlineController {
 
         model.addAttribute("listHoaDonOnline", listAllHoaDonOnline);
         model.addAttribute("listHoaDonOnlineGiaoHang", listAllHoaDonDangGiao);
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam(value = "keyword", required = false)String keyword, Model model,
+                         RedirectAttributes redirectAttributes) {
+        UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
+        if (keyword.length() >= 3 && keyword.substring(0, 3).equals("CTG")) {
+            ChiTietGiay chiTietGiay = giayChiTietService.findByMa(keyword);
+            if (chiTietGiay == null) {
+                redirectAttributes.addFlashAttribute("messageError", true);
+                redirectAttributes.addFlashAttribute("tbaoError", "Không tìm thấy sản mã phẩm ");
+                return "redirect:/manage/bill/online" ;
+            }
+            model.addAttribute("idHoaDon", idHoaDon);
+        } else {
+            List<GiayViewModel> list = giayViewModelService.getAll(keyword);
+            if (list.isEmpty()) {
+                redirectAttributes.addFlashAttribute("messageError", true);
+                redirectAttributes.addFlashAttribute("tbaoError", "Không tìm thấy sản phẩm");
+                return "redirect:/manage/bill/online" ;
+            }
+            model.addAttribute("listSanPham", list);
+        }
+
+        return "manage/manage-bill-online";
     }
 
 }

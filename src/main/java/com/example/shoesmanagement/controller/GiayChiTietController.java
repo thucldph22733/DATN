@@ -1,5 +1,6 @@
 package com.example.shoesmanagement.controller;
 
+import com.example.shoesmanagement.config.ZxingHelperBarCode;
 import com.example.shoesmanagement.model.*;
 import com.example.shoesmanagement.repository.*;
 import com.example.shoesmanagement.service.*;
@@ -45,6 +46,8 @@ public class GiayChiTietController {
     @Autowired
     private GiayRepository giayRepository;
     @Autowired
+    private CreateBarCodeService createBarCodeService;
+    @Autowired
     private MauSacRepository mauSacRepository;
     @Autowired
     private HinhAnhRepository hinhAnhRepository;
@@ -73,11 +76,7 @@ public class GiayChiTietController {
             return "redirect:/login";
 
         }
-        for (ChiTietGiay x : items) {
-            if (x.getIdCTGOld() == null) {
-                chiTietGiayList.add(x);
-            }
-        }
+
 
         List<Giay> giayList = giayService.getAllGiay();
         List<Size> sizeList = sizeService.getAllSize();
@@ -600,6 +599,7 @@ public class GiayChiTietController {
             String barcodeNew = idNew.toString();
             chiTietGiay1.setBarcode(barcodeNew);
             // Cập nhật thông tin sản phẩm giày
+            ZxingHelperBarCode.saveBarcodeImage(idNew, 200, 100); // Tạo và lưu mã vạch
             giayChiTietService.update(chiTietGiay1);
         }
         redirectAttributes.addFlashAttribute("message", true);
@@ -703,6 +703,7 @@ public class GiayChiTietController {
             String barcodeNew = idNew.toString();
             chiTietGiay2.setBarcode(barcodeNew);
             // Cập nhật thông tin sản phẩm giày
+            ZxingHelperBarCode.saveBarcodeImage(idNew, 200, 100); // Tạo và lưu mã vạch
             giayChiTietService.update(chiTietGiay2);
         }
         //
@@ -1323,7 +1324,7 @@ public class GiayChiTietController {
             chiTietGiayDb.setMauSac(chiTietGiay.getMauSac());
             chiTietGiayDb.setSize(chiTietGiay.getSize());
             chiTietGiayDb.setGiaBan(chiTietGiay.getGiaBan());
-            chiTietGiayDb.setMaNVSua(chiTietGiay.getMaNVSua());
+
             chiTietGiayDb.setNamBH(chiTietGiay.getNamBH());
             chiTietGiayDb.setNamSX(chiTietGiay.getNamSX());
             chiTietGiayDb.setSoLuong(chiTietGiay.getSoLuong());
@@ -1392,7 +1393,7 @@ public class GiayChiTietController {
             chiTietGiayDb.setMauSac(chiTietGiay.getMauSac());
             chiTietGiayDb.setSize(chiTietGiay.getSize());
             chiTietGiayDb.setGiaBan(chiTietGiay.getGiaBan());
-            chiTietGiayDb.setMaNVSua(chiTietGiay.getMaNVSua());
+
             chiTietGiayDb.setNamBH(chiTietGiay.getNamBH());
             chiTietGiayDb.setNamSX(chiTietGiay.getNamSX());
             chiTietGiayDb.setSoLuong(chiTietGiay.getSoLuong());
@@ -1423,5 +1424,23 @@ public class GiayChiTietController {
         giayChiTietService.save(chiTietGiay);
         return ResponseEntity.ok("ok");
     }
+
+    @GetMapping("/barCodeTest")
+    public String createBarCode(Model model, RedirectAttributes redirectAttributes) {
+        //Xóa dữ liệu cũ
+        createBarCodeService.deleteQRCode();
+        //
+        List<ChiTietGiay> chiTietGiays = giayChiTietService.getAllChiTietGiay();
+        if (chiTietGiays != null && !chiTietGiays.isEmpty()) {
+            for (ChiTietGiay chiTietGiay : chiTietGiays) {
+                createBarCodeService.saveBarcodeImage(chiTietGiay, 300, 200);
+            }
+        } else {
+            return "redirect:/manage/giay-chi-tiet";
+        }
+        redirectAttributes.addFlashAttribute("message", true);
+        return "redirect:/manage/giay-chi-tiet";
+    }
+
 
 }

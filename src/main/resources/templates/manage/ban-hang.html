@@ -11,8 +11,6 @@
     <meta name="robots" content="noindex, nofollow">
     <title>Sneaker Shop - Admin</title>
 
-
-
     <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/animate.css">
@@ -118,8 +116,7 @@
         padding: 5px;
         border-radius: 3px;
     }
-</style>
-<STYLE>
+
     .flex-container {
         display: flex;
         align-items: center; /* Căn giữa các items theo chiều dọc */
@@ -146,9 +143,7 @@
     .flex-container > div {
         margin-right: 10px; /* Thêm khoảng cách giữa input và select, nếu cần */
     }
-</STYLE>
 
-<style>
     .alertify .ajs-message {
         background-color: black;
         color: #ffffff;
@@ -165,8 +160,7 @@
         background-color: #2ecc71;
         color: #ffffff;
     }
-</style>
-<style>
+
     #video {
         display: none;
     }
@@ -182,6 +176,22 @@
         border: 1px solid #000;
         margin: 0 5px;
     }
+
+     .btn-danger.btn-sm {
+         padding: 2px 5px;
+         font-size: 12px;
+         line-height: 1;
+     }
+    .position-absolute {
+        position: absolute;
+    }
+    .top-0 {
+        top: 10px;
+    }
+    .end-0 {
+        right: 0;
+    }
+
 </style>
 <body>
 <div class="main-wrapper">
@@ -274,11 +284,7 @@
                                            href="#solid-rounded-justified-tab1"
                                            data-bs-toggle="tab">Bán hàng tại quầy</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link"
-                                           href="#solid-rounded-justified-tab2"
-                                           data-bs-toggle="tab">Hóa đơn hôm nay</a>
-                                    </li>
+
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane show active" id="solid-rounded-justified-tab1">
@@ -391,22 +397,66 @@
                                                     <div class="orderid">
                                                         <nav class="navbar navbar-expand-lg">
                                                             <a class="btn" th:href="@{/ban-hang/add-cart}">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="25"
-                                                                     height="25"
-                                                                     fill="currentColor"
-                                                                     class="bi bi-person-add" viewBox="0 0 16 16">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
                                                                     <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
                                                                     <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
                                                                 </svg>
                                                             </a>
                                                             <div class="collapse navbar-collapse shop__sidebar__size">
                                                                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                                                    <div th:each="items : ${listHoaDon}">
+                                                                    <div th:each="items : ${listHoaDon}" class="position-relative mb-3">
+
+                                                                        <button data-bs-toggle="modal"
+                                                                                data-bs-target="#exampleModal2"  class="btn btn-danger btn-sm position-absolute top-minus-10 end-0" aria-label="Delete">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                                                            </svg>
+                                                                        </button>
+
+                                                                        <div class="modal fade"
+                                                                             id="exampleModal2"
+                                                                             tabindex="-1"
+                                                                             aria-labelledby="exampleModalLabel7"
+                                                                             aria-hidden="true">
+                                                                            <div class="modal-dialog modal-md text-center"
+                                                                                 style="width: 550px;">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h1 class="modal-title fs-5"
+                                                                                            id="exampleModalLabel7">
+                                                                                            Xác
+                                                                                            nhận</h1>
+                                                                                        <button type="button"
+                                                                                                class="btn-close"
+                                                                                                data-bs-dismiss="modal"
+                                                                                                aria-label="Close"></button>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <div class="text-center"
+                                                                                             type="">Bạn
+                                                                                            có chắc
+                                                                                            muốn Xóa
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="modal-footer text-center">
+                                                                                        <a type="button"
+                                                                                           class="btn btn-warning"
+                                                                                           th:href="@{'/ban-hang/delete-hoa-don-cho/' + ${items.idHD}}"
+                                                                                           style="background-color: #37517E;height: 50px;cursor: pointer;color: white;padding: 10px 20px;border-radius: 10px;margin: auto; display: inline-block;"
+                                                                                        >Xóa</a>
+                                                                                        <button type="button"
+                                                                                                style="background-color: #bb2d3b;height: 50px;color: white;;cursor: pointer;border: none;border-radius: 10px;margin: auto; display: inline-block"
+                                                                                                class="btn btn-warning"
+                                                                                                data-bs-dismiss="modal">
+                                                                                            Hủy
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                         <li class="nav-item">
                                                                             <label class="text-center ms-2">
-                                                                                <a class="btn btn-outline-dark"
-                                                                                   th:href="@{'/ban-hang/cart/hoadon/'+ ${items.getIdHD()}}"
-                                                                                   th:text="${items.maHD}">
+                                                                                <a class="btn btn-outline-dark" th:href="@{'/ban-hang/cart/hoadon/'+ ${items.getIdHD()}}" th:text="${items.maHD}">
                                                                                 </a>
                                                                             </label>
                                                                         </li>
@@ -414,8 +464,7 @@
                                                                 </ul>
                                                             </div>
                                                             <div class="row">
-                                                                <div th:if="${message}"
-                                                                     class="alert alert-success text-center">
+                                                                <div th:if="${message}" class="alert alert-success text-center">
                                                                     <h3 th:text="${message}"></h3>
                                                                 </div>
                                                             </div>
@@ -468,24 +517,18 @@
                                                                     <li>
                                                                         <div class="productimg">
                                                                             <div class="productimgs">
-                                                                                <img th:src="@{'/images/imgsProducts/' + ${gioHang.chiTietGiay.hinhAnh.url1}}"
-                                                                                     alt="img">
+                                                                                <img th:src="@{'/images/imgsProducts/' + ${gioHang.chiTietGiay.hinhAnh.url1}}" alt="img">
                                                                             </div>
                                                                             <div class="productcontet">
                                                                                 <h4 th:text="${gioHang.chiTietGiay.giay.tenGiay}">
-                                                                                    <a href="javascript:void(0);"
-                                                                                       class="ms-2"
-                                                                                       data-bs-toggle="modal"
-                                                                                       data-bs-target="#edit">
-                                                                                        <img src="/images/img/icons/edit-5.svg"
-                                                                                             alt="img">
+                                                                                    <a href="javascript:void(0);" class="ms-2" data-bs-toggle="modal" data-bs-target="#edit">
+                                                                                        <img src="/images/img/icons/edit-5.svg" alt="img">
                                                                                     </a>
                                                                                 </h4>
                                                                                 <div class="row">
                                                                                     <div class="productlinkset col-6">
                                                                                         <h5 th:text="${gioHang.chiTietGiay.size.soSize}"></h5>
                                                                                     </div>
-
                                                                                 </div>
                                                                                 <div class="increment-decrement">
                                                                                     <div class="input-groups">
@@ -494,7 +537,9 @@
                                                                                                class="button-minus dec button"
                                                                                                onclick="decrementQuantity(this)">
                                                                                         <input class="quantityInput"
-                                                                                               oninput="updateTotalAmountAndGrandTotal(this)"
+                                                                                               onfocus="clearQuantity(this)"
+                                                                                               onblur="restoreQuantity(this)"
+                                                                                               onchange="markQuantityChanged(this)"
                                                                                                th:value="${gioHang.soLuong}"
                                                                                                style="width: 30px; text-align: center; border: none;"
                                                                                                type="text"
@@ -502,7 +547,7 @@
                                                                                                min="1">
                                                                                         <input style="border: none; font-weight: 700; font-size: 14pt; background-color: white;"
                                                                                                type="button" value="+"
-                                                                                               class="button-plus inc button a3 a5 a1 a-1"
+                                                                                               class="button-plus inc button"
                                                                                                onclick="incrementQuantity(this)">
                                                                                     </div>
                                                                                 </div>
@@ -514,7 +559,7 @@
                                                                              th:text="${#numbers.formatDecimal(gioHang.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
                                                                     </li>
                                                                     <li>
-                                                                        <h5 style="font-size:12px "
+                                                                        <h5 style="font-size:12px"
                                                                             th:text="${gioHang.chiTietGiay.mauSac.tenMau}"></h5>
                                                                     </li>
                                                                     <li>
@@ -526,12 +571,12 @@
                                                                         <a class="btn"
                                                                            th:href="@{'/ban-hang/xoa-gio-hang/' + ${gioHang.chiTietGiay.idCTG}}"
                                                                            onclick="return confirm('Bạn có muốn xóa sản phẩm không')">
-                                                                            <img src="/images/img/icons/delete-2.svg"
-                                                                                 alt="img">
+                                                                            <img src="/images/img/icons/delete-2.svg" alt="img">
                                                                         </a>
                                                                     </li>
                                                                 </ul>
                                                             </th:block>
+
                                                         </div>
                                                         <div class="setvalue">
                                                             <ul>
@@ -724,156 +769,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane" id="solid-rounded-justified-tab2">
 
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="table-responsive">
-                                                            <div class="vertical-scroll scroll-demo">
-                                                                <table class="table  datanew ">
-                                                                    <thead>
-                                                                    <tr>
-                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                                            Mã Hóa Đơn
-                                                                        </th>
-                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                                            Thời gian tạo
-                                                                        </th>
-                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                                            Thời gian thanh toán
-                                                                        </th>
-                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                                            Trạng thái
-                                                                        </th>
-                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                                            Khách hàng
-                                                                        </th>
-                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                                            Tổng sản phẩm
-                                                                        </th>
-                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                                            Tổng tiền
-                                                                        </th>
-                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                                            Hành động
-                                                                        </th>
-                                                                    </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                    <th:block th:each="bill: ${listHoaDonHomNay}">
-                                                                        <tr>
-                                                                            <td th:text="${bill.maHD}"></td>
-                                                                            <td th:text="${#dates.format(bill.tgTao, 'HH:mm yyyy-MM-dd')}"></td>
-
-                                                                            <td th:if="${bill.tgThanhToan != null}"
-                                                                                th:text="${#dates.format(bill.tgThanhToan, 'HH:mm yyyy-MM-dd')}"></td>
-                                                                            <td th:if="${bill.tgThanhToan == null}">Chưa
-                                                                                có
-                                                                            </td>
-
-                                                                            <td th:if="${bill.trangThai == 0}">HD Chờ
-                                                                            </td>
-                                                                            <td th:if="${bill.trangThai == 1}"
-                                                                                style="color: #1536db">HD Thành công
-                                                                            </td>
-                                                                            <td th:if="${bill.trangThai == 2}"
-                                                                                style="color: #db1515">HD Hủy
-                                                                            </td>
-
-                                                                            <td th:if="${bill.khachHang == null}">Khách
-                                                                                vãng lai
-                                                                            </td>
-                                                                            <td th:if="${bill.khachHang != null}"
-                                                                                th:text="${bill.khachHang.hoTenKH}"></td>
-
-                                                                            <td th:text="${bill.getTongSP()}"></td>
-                                                                            <td class="grandTotal"
-                                                                                id="tongTienSauKhuyenMai2"
-                                                                                th:text="${bill.getTongTien()}">
-                                                                            </td>
-                                                                            <th>
-                                                                                <i data-bs-toggle="tooltip"
-                                                                                   title="Chỉnh sửa"
-                                                                                   style="cursor: pointer; margin: 0 10px 0 20px;"
-                                                                                   class="fe fe-edit-3"></i>
-
-                                                                                <a th:if="${bill.trangThai == 1}"
-                                                                                   th:href="@{'http://localhost:8081/ban-hang/bill/print/' + ${bill.idHD}}"
-                                                                                   onclick="window.open(this.href, '_blank'); return false;">
-                                                                                    <i class="fe fe-printer"
-                                                                                       data-bs-toggle="tooltip" title=""
-                                                                                       style="cursor: pointer; color: #ff9f43;"
-                                                                                       data-bs-original-title="In hóa đơn"
-                                                                                       aria-label="fe fe-printer"></i>
-                                                                                </a>
-
-                                                                                <a style="margin-left: 10px;"
-                                                                                   th:if="${bill.trangThai == 0}">
-                                                                                    <button data-bs-toggle="modal"
-                                                                                            data-bs-target="#exampleModal2">
-                                                                                        <i class="si si-close"
-                                                                                           data-bs-toggle="tooltip"
-                                                                                           title="Delete hóa đơn"></i>
-                                                                                    </button>
-
-                                                                                    <div class="modal fade"
-                                                                                         id="exampleModal2"
-                                                                                         tabindex="-1"
-                                                                                         aria-labelledby="exampleModalLabel7"
-                                                                                         aria-hidden="true">
-                                                                                        <div class="modal-dialog modal-md text-center"
-                                                                                             style="width: 550px;">
-                                                                                            <div class="modal-content">
-                                                                                                <div class="modal-header">
-                                                                                                    <h1 class="modal-title fs-5"
-                                                                                                        id="exampleModalLabel7">
-                                                                                                        Xác
-                                                                                                        nhận</h1>
-                                                                                                    <button type="button"
-                                                                                                            class="btn-close"
-                                                                                                            data-bs-dismiss="modal"
-                                                                                                            aria-label="Close"></button>
-                                                                                                </div>
-                                                                                                <div class="modal-body">
-                                                                                                    <div class="text-center"
-                                                                                                         type="">Bạn
-                                                                                                        có chắc
-                                                                                                        muốn Xóa
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="modal-footer text-center">
-                                                                                                    <a type="button"
-                                                                                                       class="btn btn-warning"
-                                                                                                       th:href="@{'/ban-hang/delete-hoa-don-cho/' + ${bill.idHD}}"
-                                                                                                       style="background-color: #37517E;height: 50px;cursor: pointer;color: white;padding: 10px 20px;border-radius: 10px;margin: auto; display: inline-block;"
-                                                                                                    >Xóa</a>
-                                                                                                    <button type="button"
-                                                                                                            style="background-color: #bb2d3b;height: 50px;color: white;;cursor: pointer;border: none;border-radius: 10px;margin: auto; display: inline-block"
-                                                                                                            class="btn btn-warning"
-                                                                                                            data-bs-dismiss="modal">
-                                                                                                        Hủy
-                                                                                                    </button>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </a>
-
-                                                                            </th>
-
-                                                                        </tr>
-                                                                    </th:block>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -883,6 +779,26 @@
         </div>
     </div>
 </div>
+
+<style>
+    .btn-danger.btn-sm {
+        padding: 2px 5px;
+        font-size: 12px;
+        line-height: 1;
+    }
+    .position-absolute {
+        position: absolute;
+    }
+    .top-minus-10 {
+        top: -10px;
+    }
+    .end-0 {
+        right: 0;
+    }
+    .mb-3 {
+        margin-bottom: 1rem;
+    }
+</style>
 
 <div th:if="${showModalKhachHang}" class="modal fade" id="chonTaiKhoan" tabindex="-1"
      aria-labelledby="exampleModalLabel3"
@@ -951,6 +867,70 @@
     </div>
 </div>
 
+<div th:if="${showModalQuetQR}" class="modal fade" id="quetQR" tabindex="-1" aria-labelledby="exampleModalLabel1"
+     aria-hidden="true"
+     data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Sản phẩm</h5>
+                <a type="button" th:href="@{'/ban-hang/cart/hoadon/'+ ${idHoaDon}}">
+                    <span aria-hidden="true">×</span>
+                </a>
+
+            </div>
+            <div class="modal-body">
+                <div class="row m-3">
+                    <div class="col-6">
+                        <img th:src="@{'/images/imgsProducts/'+ ${quetQR.hinhAnh.url1}}" alt="" height="400"
+                             width="300">
+                    </div>
+                    <div class="col-6">
+                        <div class="container">
+                            <div class="row">
+                                <div class="">
+                                    <div class="text-left fs-2 fw-bolder">
+                                        <label th:text="${quetQR.giay.tenGiay}"></label>
+                                    </div>
+                                    <div class="text-left fs-3 fw-normal">
+                                        <label th:text="${'Hãng : '+ quetQR.giay.hang.tenHang}"></label>
+                                    </div>
+                                    <div class="text-left fs-4 fw-bolder">
+                                        <form action="/ban-hang/add-to-cart" method="get">
+                                            <div class="">
+                                                <span>Số lượng</span>
+                                                <span th:text="${quetQR.soLuong}"></span> đôi
+                                                <input type="number" name="soLuong" value="1" min="1"
+                                                       class="form-control"/>
+                                            </div>
+                                            <div>
+                                                <label>Size : </label>
+                                                <input type="radio" th:name="idChiTietGiay"
+                                                       th:value="${quetQR.idCTG}"
+                                                       th:text="${quetQR.size.soSize}" checked="true"/>
+                                            </div>
+                                            <div>
+                                                <label>Giá bán : </label>
+                                                <!--                                                <label th:text="${quetQR.giaBan} +' đ'"></label>-->
+                                                <label th:text=" ${#numbers.formatDecimal(quetQR.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></label>
+
+                                            </div>
+                                            <button type="submit" class="btn btn-secondary btn-center mt-3">Thêm
+                                                giỏ hàng
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div th:if="${showModal}" class="modal fade" id="chonSize" tabindex="-1" aria-labelledby="exampleModalLabel"
      aria-hidden="true"
      data-bs-backdrop="static" data-bs-keyboard="false">
@@ -1011,6 +991,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -1058,6 +1039,13 @@
     </div>
 </div>
 
+
+
+<script>
+    function setDeleteLink(id) {
+        document.getElementById('confirmDeleteButton').setAttribute('href', '/ban-hang/delete-hoa-don-cho/' + id);
+    }
+</script>
 <div th:if="${messageSuccess}" id="success" class="toast-container toast-top-right">
     <div class="toast toast-success" aria-live="polite" style="display: block;">
         <button type="button" class="toast-close-button" role="button"></button>
@@ -1074,6 +1062,13 @@
     </div>
 </div>
 
+<div id="quantityChangeMessage" class="toast-container toast-top-right" style="display: none;">
+    <div class="toast toast-success" aria-live="assertive" style="display: block;">
+        <button type="button" class="toast-close-button" role="button" onclick="dismissQuantityChangeMessage()"></button>
+        <div class="toast-title">Thông báo!</div>
+        <div class="toast-message">Bạn vừa chỉnh sửa lại số lượng sản phẩm trong hóa đơn! Vui lòng ấn reload hóa đơn để cập nhật đúng dữ liệu!</div>
+    </div>
+</div>
 
 <!--Modal end-->
 <script src="/js/jquery-3.6.0.min.js"></script>
@@ -1087,6 +1082,7 @@
 <script src="/plugins/sweetalert/sweetalert2.all.min.js"></script>
 <script src="/plugins/sweetalert/sweetalerts.min.js"></script>
 <script src="/js/script.js"></script>
+
 
 
 <script th:inline="javascript">
@@ -1172,7 +1168,29 @@
     });
 </script>
 
+<script th:inline="javascript">
 
+    var quantityChanged = false; // Biến để theo dõi xem số lượng đã được thay đổi hay chưa
+
+    function markQuantityChanged() {
+        quantityChanged = true;
+        showQuantityChangeMessage(); // Hiển thị thông báo khi số lượng thay đổi
+    }
+
+    function showQuantityChangeMessage() {
+        var quantityChangeMessage = document.getElementById('quantityChangeMessage');
+        if (quantityChangeMessage) {
+            quantityChangeMessage.style.display = 'block'; // Hiển thị thông báo
+        }
+    }
+
+    function dismissQuantityChangeMessage() {
+        var quantityChangeMessage = document.getElementById('quantityChangeMessage');
+        if (quantityChangeMessage) {
+            quantityChangeMessage.style.display = 'none'; // Ẩn thông báo khi người dùng đóng
+        }
+    }
+</script>
 
 <script th:inline="javascript">
     /*<![CDATA[*/
@@ -1184,77 +1202,6 @@
 
 
 </script>
-
-
-
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    function updateTotalAmountAndGrandTotal(inputElement) {
-
-        // Lấy giá trị số lượng từ input
-        var quantity = parseInt(inputElement.value);
-        var idCTG = inputElement.getAttribute('name');
-        fetch('/ban-hang/updateQuantity', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'idCTG=' + encodeURIComponent(idCTG) + '&quantity=' + encodeURIComponent(quantity),
-        })
-            .then(response => response.text())
-            .then(data => {
-            })
-            .catch(error => {
-            })
-            .then(response => {
-                if (response.ok) {
-                    return response.text(); // Hoặc response.json() nếu bạn trả về JSON
-                } else {
-                    throw new Error('Something went wrong on api server!');
-                }
-            })
-            .then(data => {
-                console.log(data); // Hoặc xử lý kết quả từ server
-            })
-            .catch(error => {
-                console.error(error);
-            });
-
-        // Lấy giá trị giá bán từ phần tử cha
-        var giaBan = parseInt(inputElement.closest('.product-lists').querySelector('.product-lists li:nth-child(2) div').innerText.replace(/[^0-9]/g, ''));
-
-        // Tính tổng tiền và cập nhật vào phần tử hiển thị tổng tiền
-        var totalAmountElement = inputElement.closest('.product-lists').querySelector('.product-lists li:nth-child(3) div');
-        var totalAmount = giaBan * quantity;
-        var tongTienSanPham = giaBan * quantity;
-        totalAmountElement.innerText = formatCurrency(totalAmount) + ' đ';
-        totalAmountElement.innerText = formatCurrency(tongTienSanPham) + ' đ';
-
-        // Cập nhật tổng tiền bên dưới
-        updateGrandTotal();
-
-
-        // Hàm cập nhật tổng tiền bên dưới
-        function updateGrandTotal() {
-            var totalElements = document.querySelectorAll('.product-lists li:nth-child(3) div');
-            var grandTotalElement = document.querySelector('.setvalue h6');
-
-            var grandTotal = 0;
-            totalElements.forEach(function (element) {
-                grandTotal += parseInt(element.innerText.replace(/[^0-9]/g, ''));
-            });
-            console.log(grandTotal);
-            grandTotalElement.innerText = formatCurrency(grandTotal) + ' đ';
-        }
-
-        // Hàm định dạng số tiền thành chuỗi có định dạng
-        function formatCurrency(amount) {
-            return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').replace(/\.00/g, '');
-        }
-    }
-
-</script>
-
 
 
 <script>
@@ -1319,7 +1266,53 @@
 
 </script>
 
+
+<script type="text/javascript">
+    let scanner = new Instascan.Scanner({video: document.getElementById('video')});
+    const videoElement = document.getElementById('video');
+    const stopButton = document.getElementById('stopButton');
+    scanButton.addEventListener('click', () => {
+        // Ẩn nút quét QR
+        scanButton.style.display = 'none';
+
+        // Hiển thị video
+        videoElement.style.display = 'block';
+        stopButton.style.display = 'block';
+        Instascan.Camera.getCameras().then(function (cameras) {
+            if (cameras.length > 0) {
+                scanner.start(cameras[0]);
+            } else {
+                alert('Cameras found');
+            }
+        }).catch(function (e) {
+            console.error(e);
+        });
+
+        scanner.addListener("scan", function (idChiTietGiay) {
+            window.location.href = `/ban-hang/quet-qr/${idChiTietGiay}`;
+        });
+    });
+    stopButton.addEventListener('click', () => {
+        // Dừng video bằng cách dừng track hình ảnh
+        const stream = videoElement.srcObject;
+        const tracks = stream.getTracks();
+
+        tracks.forEach(function (track) {
+            track.stop();
+        });
+
+        // Ẩn video
+        videoElement.style.display = 'none';
+        stopButton.style.display = 'none';
+        // Hiển thị lại nút quét QR
+        scanButton.style.display = 'block';
+
+    });
+</script>
+
+
 <script th:inline="javascript">
+    var quantityChanged = false;
 
     document.addEventListener('DOMContentLoaded', function () {
         updateInputState();
@@ -1336,9 +1329,30 @@
         }
     }
 
-    /*<![CDATA[*/
+    function clearQuantity(inputElement) {
+        inputElement.setAttribute('data-original-value', inputElement.value);
+        inputElement.value = '';
+    }
+
+    function restoreQuantity(inputElement) {
+        if (inputElement.value === '') {
+            inputElement.value = inputElement.getAttribute('data-original-value');
+        } else {
+            markQuantityChanged(inputElement);
+        }
+    }
+
+    function markQuantityChanged(inputElement) {
+        quantityChanged = true;
+        updateTotalAmountAndGrandTotal(inputElement);
+    }
+
     function updateTotalAmountAndGrandTotal(inputElement) {
         var quantity = parseInt(inputElement.value);
+        if (isNaN(quantity) || quantity < 1) {
+            quantity = parseInt(inputElement.getAttribute('data-original-value'));
+            inputElement.value = quantity;
+        }
         var idCTG = inputElement.getAttribute('data-id');
 
         fetch('/ban-hang/updateQuantity', {
@@ -1360,7 +1374,6 @@
                     var grandTotalElement = document.querySelector('#tongTienSanPham');
                     var grandTotalElement2 = document.querySelector('#tienTamTinh');
                     var grandTotalElement3 = document.querySelector('#tongTienSauKhuyenMai');
-                    var grandTotalElement4 = document.querySelector('#tongTienSauKhuyenMai2');
                     var grandTotal = 0;
 
                     totalElements.forEach(function (element) {
@@ -1375,12 +1388,12 @@
 
                 } else {
                     alert(data.body.error);
-                    // Đặt lại giá trị số lượng về giá trị ban đầu nếu có lỗi
                     inputElement.value = inputElement.getAttribute('data-original-value');
                 }
             })
             .catch(error => {
                 console.error('Error updating quantity:', error);
+                inputElement.value = inputElement.getAttribute('data-original-value');
             });
     }
 
@@ -1391,31 +1404,22 @@
     function incrementQuantity(input) {
         var quantityInput = input.parentNode.querySelector('.quantityInput');
         var currentQuantity = parseInt(quantityInput.value);
-
-        // Lưu lại giá trị hiện tại vào thuộc tính data-original-value
         quantityInput.setAttribute('data-original-value', currentQuantity);
-
         quantityInput.value = currentQuantity + 1;
-        updateTotalAmountAndGrandTotal(quantityInput);
+        markQuantityChanged(quantityInput);
     }
 
     function decrementQuantity(input) {
         var quantityInput = input.parentNode.querySelector('.quantityInput');
         var currentQuantity = parseInt(quantityInput.value);
         if (currentQuantity > 1) {
-            // Lưu lại giá trị hiện tại vào thuộc tính data-original-value
             quantityInput.setAttribute('data-original-value', currentQuantity);
-
             quantityInput.value = currentQuantity - 1;
-            updateTotalAmountAndGrandTotal(quantityInput);
+            markQuantityChanged(quantityInput);
         }
     }
 
-
-
-    /*]]>*/
 </script>
-
 
 </body>
 </html>

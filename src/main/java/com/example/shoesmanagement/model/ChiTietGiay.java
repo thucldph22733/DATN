@@ -57,7 +57,6 @@ public class ChiTietGiay {
     @Column(name = "gia_Ban")
     private double giaBan;
 
-
     @Column(name = "so_Luong")
     private int soLuong;
 
@@ -70,28 +69,12 @@ public class ChiTietGiay {
     @Column(name = "tg_Sua")
     private Date tgSua;
 
-    @Column(name = "ma_NV_Sua")
-    private String maNVSua;
-
-
-
-    @Column(name = "LD_Sua")
-    private String lyDoSua; 
-    
     @Column(name = "barCode")
     private String barcode;
 
-    @Column(name = "trang_thai_mail")
-    private Integer trangThaiMail;
 
-    @Column(name = "id_chi_tiet_giay_old")
-    private UUID idCTGOld;
 
-//    @Column(name = "quantity_update")
-//    private Integer quantityUpdate = 0;
 
-    public String getFormattedGiaBan() {
-        DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
-        return decimalFormat.format(giaBan);
-    }
+
+
 }
