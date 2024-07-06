@@ -45,8 +45,8 @@ public class GiayChiTietController {
     private HttpSession session;
     @Autowired
     private GiayRepository giayRepository;
-    @Autowired
-    private CreateBarCodeService createBarCodeService;
+//    @Autowired
+//    private CreateBarCodeService createBarCodeService;
     @Autowired
     private MauSacRepository mauSacRepository;
     @Autowired
@@ -1429,22 +1429,22 @@ public class GiayChiTietController {
         return ResponseEntity.ok("ok");
     }
 
-    @GetMapping("/barCodeTest")
-    public String createBarCode(Model model, RedirectAttributes redirectAttributes) {
-        //Xóa dữ liệu cũ
-        createBarCodeService.deleteQRCode();
-        //
-        List<ChiTietGiay> chiTietGiays = giayChiTietService.getAllChiTietGiay();
-        if (chiTietGiays != null && !chiTietGiays.isEmpty()) {
-            for (ChiTietGiay chiTietGiay : chiTietGiays) {
-                createBarCodeService.saveBarcodeImage(chiTietGiay, 300, 200);
-            }
-        } else {
-            return "redirect:/manage/giay-chi-tiet";
-        }
-        redirectAttributes.addFlashAttribute("message", true);
-        return "redirect:/manage/giay-chi-tiet";
-    }
+//    @GetMapping("/barCodeTest")
+//    public String createBarCode(Model model, RedirectAttributes redirectAttributes) {
+//        //Xóa dữ liệu cũ
+//        createBarCodeService.deleteQRCode();
+//        //
+//        List<ChiTietGiay> chiTietGiays = giayChiTietService.getAllChiTietGiay();
+//        if (chiTietGiays != null && !chiTietGiays.isEmpty()) {
+//            for (ChiTietGiay chiTietGiay : chiTietGiays) {
+//                createBarCodeService.saveBarcodeImage(chiTietGiay, 300, 200);
+//            }
+//        } else {
+//            return "redirect:/manage/giay-chi-tiet";
+//        }
+//        redirectAttributes.addFlashAttribute("message", true);
+//        return "redirect:/manage/giay-chi-tiet";
+//    }
 
 
 }
