@@ -120,6 +120,10 @@ public class HoaDonOnlineController {
 
     @GetMapping("online/delete/{idHD}")
     public String huyHoaDonOnline(@PathVariable UUID idHD, Model model) {
+        if (session.getAttribute("managerLogged") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "redirect:/login";
+        }
         String lyDoHuy = request.getParameter("lyDoHuy");
         Date date = new Date();
         HoaDon hoaDon = hoaDonService.getOne(idHD);
@@ -128,8 +132,10 @@ public class HoaDonOnlineController {
         hoaDon.setTrangThai(5);
 
         hoaDonService.save(hoaDon);
+
         showData(model);
         showTab3(model);
+        model.addAttribute("message", "Hóa đơn đã được hủy thành công.");
         return "manage/manage-bill-online";
     }
 
