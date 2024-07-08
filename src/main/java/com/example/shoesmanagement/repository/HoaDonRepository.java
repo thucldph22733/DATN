@@ -1,9 +1,6 @@
 package com.example.shoesmanagement.repository;
 
-import com.example.shoesmanagement.model.HoaDon;
-import com.example.shoesmanagement.model.KhachHang;
-import com.example.shoesmanagement.model.KhuyenMai;
-import com.example.shoesmanagement.model.NhanVien;
+import com.example.shoesmanagement.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -49,5 +46,8 @@ public interface HoaDonRepository  extends JpaRepository<HoaDon, UUID> {
 
     @Query("select km from KhuyenMai km left join HoaDon hd on km.idKM = hd.khuyenMai.idKM where km.dieuKienKMBill <= ?1 and km.trangThai= 1 and km.soLuong > 0")
     List<KhuyenMai> listDieuKienKhuyenMai(double tongTienSanPham);
+
+
+
 
 }

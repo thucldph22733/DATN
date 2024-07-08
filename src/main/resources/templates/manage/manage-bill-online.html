@@ -25,7 +25,24 @@
     <link rel="stylesheet" href="/plugins/simpleline/simple-line-icons.css">
     <link rel="stylesheet" href="/css/style.css">
 </head>
-
+<style>
+    /* CSS để điều chỉnh vị trí của thông báo */
+    .invalid-feedback {
+        position: absolute;
+        top: 83px;
+        z-index: 1050;
+        display: none;
+        width: 250px; /* Điều chỉnh độ rộng của thông báo */
+        text-align: center;
+        text-align: center;
+        background-color: #dc3545; /* Màu nền */
+        color: white; /* Màu chữ */
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        font-size: 0.875rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+</style>
 <body class="mini-sidebar">
 <div th:fragment="main">
     <div th:if="${reLoadPage}" id="global-loader">
@@ -190,6 +207,9 @@
         </div>
     </div>
     <!--CODE TỪ DƯỚI NÀY-->
+    <div th:if="${message}" class="alert alert-success" role="alert">
+        <span th:text="${message}"></span>
+    </div>
     <div class="page-wrapper">
         <div class="content">
             <div class="page-header">
@@ -854,19 +874,23 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form th:action="@{'/manage/bill/online/delete/' + ${bill.idHD}}" method="get">
+                        <form th:action="@{'/manage/bill/online/delete/' + ${bill.idHD}}" method="get"
+                              id="huyHoaDonForm">
                             <div class="form-group">
                                 <label for="lyDoHuy">Lí do hủy hóa đơn: </label>
                                 <input type="text" class="form-control" id="lyDoHuy" th:id="lyDoHuy" name="lyDoHuy"
                                        th:name="lyDoHuy"/>
+                                <div class="invalid-feedback">Vui lòng nhập lí do hủy hóa đơn.</div>
                             </div>
-                            <button type="submit" class="btn btn-danger">Hủy hóa đơn</button>
+                            <button type="submit" class="btn btn-danger" style="margin-top: 21px">Hủy hóa đơn</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </th:block>
+
+
     <!--    Modal delete thanh toán-->
 
     <!--    Modal edit thanh toán-->
@@ -1548,6 +1572,23 @@
 <script src="/plugins/sweetalert/sweetalerts.min.js"></script>
 
 <script src="/js/script.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    document.addEventListener('DOMContentLoaded', function() {
+        var huyHoaDonForm = document.getElementById('huyHoaDonForm');
+        huyHoaDonForm.addEventListener('submit', function(event) {
+            var lyDoHuyInput = document.getElementById('lyDoHuy');
+            var invalidFeedback = document.querySelector('#huyHoaDonForm .invalid-feedback');
+            if (lyDoHuyInput.value.trim() === '') {
+                event.preventDefault(); // Ngăn form submit nếu ly do huy không được nhập
+                invalidFeedback.style.display = 'block';
+            } else {
+                invalidFeedback.style.display = 'none';
+            }
+        });
+    });
+    /*]]>*/
+</script>
 <script>
     // Lấy tất cả các container của form
     const formContainers = document.querySelectorAll('.form-container');
