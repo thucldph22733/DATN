@@ -165,6 +165,7 @@ public class BanHangController {
                              @ModelAttribute("messageSuccess") String messageSuccess,
                              @ModelAttribute("messageError") String messageError, RedirectAttributes redirectAttributes,
                              HttpSession httpSession) {
+
         NhanVien nhanVien = (NhanVien) httpSession.getAttribute("staffLogged");
         List<HoaDon> listHoaDonHomNay = hoaDonService.listAllHoaDonByNhanVienHienTai(nhanVien);
         model.addAttribute("listHoaDonHomNay", listHoaDonHomNay);
@@ -198,7 +199,6 @@ public class BanHangController {
         if (findByIdHoaDon.isEmpty()) {
             model.addAttribute("messageGioHang", "Trong giỏ hàng chưa có sản phẩm");
         }
-
         double tongTienSanPham = hoaDonChiTietService.tongTienSanPham(findByIdHoaDon);
         double tongTien = hoaDonChiTietService.tongTien(findByIdHoaDon);
 
@@ -210,15 +210,13 @@ public class BanHangController {
         if (tongTienSanPham < listKM.stream().mapToDouble(KhuyenMai::getDieuKienKMBill).min().orElse(Double.MAX_VALUE)) {
             giaTienGiam = 0;
         }
-
         model.addAttribute("tongTienSanPham", tongTienSanPham);
         model.addAttribute("tongTien", tongTien - giaTienGiam);
         model.addAttribute("giaTienGiam", giaTienGiam);
         model.addAttribute("listKhachHang", khachHangService.findKhachHangByTrangThai());
-
         model.addAttribute("tongSanPham", findByIdHoaDon.size());
-        httpSession.setAttribute("tongSP", findByIdHoaDon.size());
 
+        httpSession.setAttribute("tongSP", findByIdHoaDon.size());
         httpSession.setAttribute("tongTienSanPham", tongTienSanPham);
         httpSession.setAttribute("tongTien", tongTien - giaTienGiam);
         httpSession.setAttribute("giaTienGiam", giaTienGiam);
@@ -232,14 +230,12 @@ public class BanHangController {
         // Thông tin khách hàng
         KhachHang khachHang = hoaDon.getKhachHang();
         model.addAttribute("khachHang", khachHang != null ? khachHang : null);
-
         if (messageSuccess == null || !"true".equals(messageSuccess)) {
             model.addAttribute("messageSuccess", false);
         }
         if (messageError == null || !"true".equals(messageError)) {
             model.addAttribute("messageError", false);
         }
-
         model.addAttribute("idHoaDon", idHoaDon);
         return "/manage/ban-hang";
     }
