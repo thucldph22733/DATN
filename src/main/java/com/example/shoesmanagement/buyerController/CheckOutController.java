@@ -277,7 +277,7 @@ public class CheckOutController {
         }
 
         String nameAddress = request.getParameter("nameAddress");
-         String fullName = request.getParameter("fullName");
+        String fullName = request.getParameter("fullName");
         String phoneAddress = request.getParameter("phoneAddress");
         String city = request.getParameter("city");
         String district = request.getParameter("district");
@@ -315,6 +315,7 @@ public class CheckOutController {
                 .mapToDouble(HoaDonChiTiet::getDonGia)
                 .sum();
 
+        // Cập nhật phí vận chuyển sau khi thêm địa chỉ mới
         Double shippingFee = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
         hoaDon.setTongTien(total + shippingFee - giaTienGiam);
         hoaDonService.add(hoaDon);
@@ -341,7 +342,7 @@ public class CheckOutController {
         model.addAttribute("addNewAddressNotNull", true);
         model.addAttribute("billPlaceOrder", hoaDon);
         model.addAttribute("shippingFee", shippingFee2);
-        model.addAttribute("toTalOder", total + shippingFee - giaTienGiam);
+        model.addAttribute("toTalOder", total + shippingFee2 - giaTienGiam);
 
         session.removeAttribute("diaChiGiaoHang");
         session.setAttribute("diaChiGiaoHang", diaChiKH);
