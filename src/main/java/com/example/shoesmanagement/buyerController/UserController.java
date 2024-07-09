@@ -85,11 +85,12 @@ public class UserController {
     private String getSettingAccount(Model model) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-
         UserForm(model, khachHang);
-//        showThongBao(model, khachHang);
+
+        model.addAttribute("pagesettingAccount",true);
         return "online/user";
     }
+
 
     @GetMapping("/addresses")
     private String getAddressAccount(Model model) {
