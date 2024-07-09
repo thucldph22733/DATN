@@ -113,7 +113,7 @@ public class HoaDonOnlineController {
         model.addAttribute("reLoadPage", true);
         showData(model);
         showTab3(model);
-
+        model.addAttribute("messageXacNhan", "Xác nhận nhân viên giao thành công.");
 
         return "manage/manage-bill-online";
     }

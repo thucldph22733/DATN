@@ -152,6 +152,7 @@ public class HomeOrder {
             hoaDonService.add(hoaDon);
             showData(model);
             showDataTab2(model);
+            model.addAttribute("messageLay", "Lấy hàng thành công.");
             return "transportation/index";
         } else if (trangThaiGiaoHang.equals("thanhCong")) {
             String viTri = "Đơn hàng đã giao hàng thành công";
@@ -185,6 +186,7 @@ public class HomeOrder {
 
             showData(model);
             showDataTab2(model);
+            model.addAttribute("messageGiao", "Giao hàng thành công.");
             return "transportation/index";
         } else if (trangThaiGiaoHang.equals("thatBai")) {
 
@@ -228,6 +230,8 @@ public class HomeOrder {
 
                 showDataTab2(model);
                 showData(model);
+                model.addAttribute("messageHuy", "Giao hàng thất bại.");
+
                 return "transportation/index";
             }
             showData(model);

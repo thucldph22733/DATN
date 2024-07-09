@@ -42,6 +42,29 @@
         font-size: 0.875rem;
         box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     }
+    .custom-alert {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: auto;
+        padding: 15px;
+        background-color: #4caf50; /* Màu nền thông báo */
+        color: white; /* Màu chữ */
+        border-radius: 5px; /* Bo góc */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+        z-index: 9999; /* Đảm bảo thông báo ở trên cùng */
+        transition: all 0.5s ease-in-out; /* Hiệu ứng chuyển động */
+    }
+
+    .custom-alert.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .custom-alert.hide {
+        opacity: 0;
+        visibility: hidden;
+    }
 </style>
 <body class="mini-sidebar">
 <div th:fragment="main">
@@ -207,8 +230,10 @@
         </div>
     </div>
     <!--CODE TỪ DƯỚI NÀY-->
-    <div th:if="${message}" class="alert alert-success" role="alert">
+    <div th:if="${message}" class="alert alert-success custom-alert" role="alert">
         <span th:text="${message}"></span>
+    </div>  <div th:if="${messageXacNhan}" class="alert alert-success custom-alert" role="alert">
+        <span th:text="${messageXacNhan}"></span>
     </div>
     <div class="page-wrapper">
         <div class="content">
@@ -1638,6 +1663,16 @@
     });
     $(document).ready(function () {
         $('#hoanTienThanhCong').modal('show');
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const alert = document.querySelector('.custom-alert');
+        if (alert) {
+            setTimeout(() => {
+                alert.classList.add('hide');
+            }, 5000); // 5 giây
+        }
     });
 </script>
 

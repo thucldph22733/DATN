@@ -420,7 +420,7 @@
                                 <input type="text" th:value="${giaTienGiam}" id="tienGiam" style="display: none">
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billPlaceOrder.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p th:text="'₫' + ${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 0, 'POINT')}"></p>
-                                <p th:text="'₫' + ${#numbers.formatDecimal(billPlaceOrder.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                <p th:text="'₫' + ${#numbers.formatDecimal(shippingFee, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p style="font-size: 18pt; font-weight: 700;" th:text="'₫' + ${#numbers.formatDecimal(toTalOder, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                             </div>
                         </div>
