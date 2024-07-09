@@ -251,6 +251,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="card">
@@ -309,7 +310,7 @@
                                                                             th:text="${bill.khachHang.hoTenKH}"></td>
 
                                                                         <td th:text="${bill.tongSP}"></td>
-                                                                        <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+                                                                        <td th:text="${bill.tongTien}"></td>
                                                                         <th>
                                                                             <i class="si si-eye"
                                                                                th:data-bs-toggle="modal"
@@ -335,6 +336,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
 
                                 <div class="tab-pane fade" id="solid-rounded-justified-tab2">
@@ -388,8 +390,7 @@
                                                                             th:text="${bill.khachHang.hoTenKH}"></td>
 
                                                                         <td th:text="${bill.tongSP}"></td>
-                                                                        <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
-                                                                        <th>
+                                                                        <td th:text="${bill.tongTienSanPham}"></td>                                                                        <th>
                                                                             <i class="si si-eye"
                                                                                th:data-bs-toggle="modal"
                                                                                th:data-bs-target="'#modalDetailHD' + ${bill.idHD}"
@@ -433,16 +434,13 @@
                                                                         Thời gian tạo
                                                                     </th>
                                                                     <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                                        Thời gian thanh toán
-                                                                    </th>
-                                                                    <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
                                                                         Trạng thái
                                                                     </th>
                                                                     <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
                                                                         Khách hàng
                                                                     </th>
                                                                     <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
-                                                                        Tổng sản phẩm
+                                                                        Tổng SP
                                                                     </th>
                                                                     <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
                                                                         Tổng tiền
@@ -452,17 +450,16 @@
                                                                     </th>
                                                                 </tr>
                                                                 </thead>
-
                                                                 <tbody>
-
                                                                 <th:block th:each="bill: ${listHoaDonThanhCong}">
                                                                     <tr>
                                                                         <td th:text="${bill.maHD}"></td>
                                                                         <td th:text="${#dates.format(bill.tgTao, 'HH:mm yyyy-MM-dd')}"></td>
-                                                                        <td th:text="${#dates.format(bill.tgThanhToan, 'HH:mm yyyy-MM-dd')}"></td>
-                                                                        <td th:if="${bill.trangThai == 0}">HD Chờ
+
+
+                                                                        <td th:if="${bill.getTrangThai() == 0}">HD Chờ
                                                                         </td>
-                                                                        <td th:if="${bill.trangThai == 1}">HD Thành
+                                                                        <td th:if="${bill.getTrangThai() == 1}">HD Thành
                                                                             công
                                                                         </td>
 
@@ -473,20 +470,15 @@
                                                                             th:text="${bill.khachHang.hoTenKH}"></td>
 
                                                                         <td th:text="${bill.tongSP}"></td>
-
-                                                                        <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
-                                                                        <th>
-                                                                        <th>
+                                                                        <td th:text="${bill.tongTien}"></td>                                                                        <th>
                                                                             <i class="si si-eye"
                                                                                th:data-bs-toggle="modal"
                                                                                th:data-bs-target="'#modalDetailHD' + ${bill.idHD}"
-                                                                               style="cursor: pointer; margin: 0 20px 0 20px; color: #ff9f43;"></i>
+                                                                               style="cursor: pointer; color: #ff9f43;"></i>
                                                                         </th>
                                                                     </tr>
                                                                 </th:block>
-
                                                                 </tbody>
-
                                                             </table>
                                                         </div>
                                                     </div>
@@ -554,7 +546,7 @@
                             <div class="col-lg-4 col-sm-12 col-12" >
                                 <div class="form-group">
                                     <label style="border: none; font-size: 12pt; font-weight: 600;">Tổng tiền sản phẩm</label>
-                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                    <td th:text="${bill.tongTienSanPham}"></td>
                                 </div>
                             </div>
 
@@ -569,7 +561,7 @@
                             <div class="col-lg-4 col-sm-12 col-12">
                                 <div class="form-group">
                                     <label style="border: none; font-size: 12pt; font-weight: 600;">Tổng tiền thanh toán</label>
-                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                    <td th:text="${bill.tongTien}"></td>
                                 </div>
                             </div>
 
@@ -611,8 +603,7 @@
                                 </div>
                             </div>
 
-                            <!-- So lan thay doi -->
-                            <th:block th:each="x: ${bill.hoaDonChiTiets}">
+                            <th:block th:each="x: ${bill.hoaDonChiTiets}" th:if="${x.soLuong > 0}">
 
                                 <div class="col-lg-2 col-sm-12 col-12">
                                     <div class="form-group">
@@ -640,11 +631,7 @@
                                         <p th:text="'₫'+${#numbers.formatDecimal(x.donGia, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                     </div>
                                 </div>
-
                             </th:block>
-
-
-                            <!-- So lan thay doi -->
 
                         </div>
                         <div class="col-lg-12">
