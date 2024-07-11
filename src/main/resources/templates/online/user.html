@@ -110,6 +110,21 @@
             cursor:pointer;
         }
     </style>
+    <style>
+        .modal-dialog.modal-sm {
+            max-width: 400px; /* Kích thước tối đa của modal */
+        }
+        .modal-content {
+            padding: 20px;
+        }
+        .modal-body .form-group {
+            margin-bottom: 15px;
+        }
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
 <body>
 <!-- Page Preloder -->
 <!--<div id="preloder">-->
@@ -162,6 +177,7 @@
         </div>
     </div>
     <div class="container"  style=" height: 100px">
+
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
@@ -217,7 +233,9 @@
 
 <!-- Shop Section Begin -->
 <section class="shop spad" style="margin-top: -70px;">
+
     <div class="container">
+
         <div class="row">
 
             <div class="col-lg-3">
@@ -1643,19 +1661,20 @@
                 <!--                Setting Account Begin-->
                 <div th:if="${pagesettingAccount}" class="card">
                     <div class="card-body" >
-                        <div class="row" style="  width: 803px; margin-left: 2px; border-radius: 5px; margin-top: 40px;">
+
+                        <div class="row" style="  width: 803px; margin-left: 2px; border-radius: 5px; margin-top: -90px;">
 
                             <div class="form-group" style="margin-left: 50px; margin-top: 50px; width: 300px;">
                                 <label>Họ tên</label>
                                 <br>
                                 <label>
-                                    <input class="form-control" type="text" placeholder="Nguyen Manh Thuy">
+                                    <input class="form-control" type="text" th:value="${khachHang.hoTenKH}" placeholder="Nguyen Manh Thuy">
                                 </label>
                             </div>
                             <div class="form-group" style="margin-left: 50px; margin-top: 50px; width: 300px;">
                                 <label>Giới tính</label>
                                 <br>
-                                <input type="text" class="form-control" placeholder="Nam">
+                                <input type="text" class="form-control" th:value="${khachHang.gioiTinh == 1 ? 'Nam' : 'Nữ'}" placeholder="Male">
                             </div>
                             <br>
                             <div class="form-group" style="margin-left: 50px; margin-top: 10px;  width: 300px;">
@@ -1668,15 +1687,12 @@
                             <div class="form-group" style="margin-left: 50px; margin-top: 10px;  width: 300px;">
                                 <label>Email :</label>
                                 <br>
-                                <input placeholder="nmthuy03@gmail.com" type="text" class="form-control" >
-                            </div>
-                            <div class="form-group" style="margin-left: 50px; margin-top: 10px;  width: 300px;">
-                                <label>SDT :</label>
-                                <br>
-                                <input type="text" class="form-control" placeholder="0362965179">
+                                <input type="text" th:value="${khachHang.emailKH}" class="form-control">
                             </div>
                             <br>
-
+                            <div class="row" style="width: 803px; margin-left: 2px; border-radius: 5px; margin-top: 20px;">
+                                <button class="btn btn-success" style="height: 50px; width: 160px;" data-toggle="modal" data-target="#editInfoModal">Thay đổi thông tin</button>
+                            </div>
                         </div>
 
                 </div>
@@ -1688,10 +1704,51 @@
         </div>
     </div>
 
+        <!-- Modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="editInfoModal" tabindex="-1" role="dialog" aria-labelledby="editInfoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editInfoModalLabel">Chỉnh sửa thông tin</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/buyer/update/user" method="post" th:object="${khachHang}">
+                            <div class="form-group">
+                                <label>Họ tên</label>
+                                <input class="form-control" type="text" th:field="*{hoTenKH}" placeholder="Nguyen Manh Thuy">
+                            </div>
+                            <div class="form-group">
+                                <label>Giới tính</label>
+                                <select class="form-control" th:field="*{gioiTinh}">
+                                    <option value="1" th:selected="${khachHang.gioiTinh == 1}">Nam</option>
+                                    <option value="0" th:selected="${khachHang.gioiTinh == 0}">Nữ</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Ngày sinh</label>
+                                <input type="text" class="form-control" th:field="*{ngaySinh}" placeholder="29-08-2003">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" class="form-control" th:field="*{emailKH}">
+                            </div>
+                            <!-- Các trường ẩn để gửi CSRF token, nếu cần thiết -->
+                            <!-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> -->
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary" onclick="submitForm()">Lưu thay đổi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-
-
-    <!--    Modal thong bao thanh toan begin-->
+        <!--    Modal thong bao thanh toan begin-->
     <div th:if="${modalVNPayError}" class="modal fade" id="statusErrorsModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content">
@@ -2922,7 +2979,12 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-
+<script>
+    function submitForm() {
+        // Gửi form khi nhấn nút "Lưu thay đổi"
+        document.querySelector("#editInfoModal form").submit();
+    }
+</script>
 <script>
     const host = "https://esgoo.net/";
     var callAPI = (api) => {
