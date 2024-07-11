@@ -5,10 +5,7 @@ import com.example.shoesmanagement.model.ChiTietGiay;
 import com.example.shoesmanagement.model.GioHang;
 import com.example.shoesmanagement.model.GioHangChiTiet;
 import com.example.shoesmanagement.model.KhachHang;
-import com.example.shoesmanagement.service.GHCTService;
-import com.example.shoesmanagement.service.GiayChiTietService;
-import com.example.shoesmanagement.service.GiayService;
-import com.example.shoesmanagement.service.MauSacService;
+import com.example.shoesmanagement.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +37,8 @@ public class CartController {
 
     @Autowired
     private GiayService giayService;
-
+@Autowired
+private GioHangService gioHangService;
     @RestController
     public class LoginApiController {
 
@@ -99,8 +97,10 @@ public class CartController {
 
     @GetMapping("/cart/delete/{idCTG}")
     private String deleteInCard(Model model, @PathVariable UUID idCTG, RedirectAttributes redirectAttribute) {
+        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         ChiTietGiay chiTietGiay = gctService.getByIdChiTietGiay(idCTG);
-        GioHangChiTiet gioHangChiTiet = ghctService.findByCTSPActiveAndTrangThai(chiTietGiay,1);
+        GioHang gioHang = gioHangService.findByKhachHang(khachHang);
+        GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(chiTietGiay,gioHang);
         gioHangChiTiet.setTrangThai(0);
         ghctService.addNewGHCT(gioHangChiTiet);
 
