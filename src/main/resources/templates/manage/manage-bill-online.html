@@ -45,9 +45,9 @@
 </style>
 <body class="mini-sidebar">
 <div th:fragment="main">
-    <div th:if="${reLoadPage}" id="global-loader">
-        <div class="whirly-loader"></div>
-    </div>
+<!--    <div th:if="${reLoadPage}" id="global-loader">-->
+<!--        <div class="whirly-loader"></div>-->
+<!--    </div>-->
 
     <div class="main-wrapper">
         <div class="header">
@@ -936,34 +936,51 @@
                                                 <h3 th:text="${nullHoaDon}"></h3>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <th:block th:each="product : ${listSanPham}">
-                                                <div class="col-lg-3 col-sm-6">
-                                                    <div class="tab_content active">
-                                                        <div class="productset flex-fill ">
-                                                            <div class="productsetimg">
-                                                                <img th:src="@{'/images/imgsProducts/'+ ${product.hinhAnh}}"
-                                                                     alt="img">
-                                                                <h6>[[${product.soLuong}]]</h6>
-                                                                <div class="check-product">
-                                                                    <i class="fa fa-check"></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="productsetcontent">
-                                                                <h3>[[${product.tenGiay}]]</h3>
-                                                                <h3 th:text=" ${#numbers.formatDecimal(product.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h3>
-                                                                <h4 th:text="${product.mauSac}"></h4>
-                                                                <a
-                                                                        th:href="@{'/ban-hang/chon-size/' + ${product.idGiay}+'/'+${product.mauSac} }"
-                                                                        class="btn btn-outline-warning m-3">
-                                                                    Chọn</a>
 
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        <table class="table table-bordered product-table">
+                                            <thead>
+                                            <tr>
+                                                <th>Hình Ảnh</th>
+                                                <th>Số Lượng</th>
+                                                <th>Tên Giày</th>
+                                                <th>Giá Bán</th>
+                                                <th>Màu Sắc</th>
+                                                <th>Hành Động</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <th:block th:each="product : ${listSanPham}">
+                                                <tr>
+                                                    <td>
+                                                        <img style="height: 90px;width: 90px"
+                                                             th:src="@{'/images/imgsProducts/'+ ${product.hinhAnh}}"
+                                                             alt="img">
+                                                    </td>
+                                                    <td>
+                                                        <h6>[[${product.soLuong}]]</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h3 style="font-size: 12pt">
+                                                            [[${product.tenGiay}]]</h3>
+                                                    </td>
+                                                    <td>
+                                                        <h3 style="font-size: 12pt"
+                                                            th:text=" ${#numbers.formatDecimal(product.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h3>
+                                                    </td>
+                                                    <td>
+                                                        <h4 style="font-size: 12pt"
+                                                            th:text="${product.mauSac}"></h4>
+                                                    </td>
+                                                    <td>
+                                                        <a style="font-size: 11pt"
+                                                           th:href="@{'/manage-bill-online/chon-size2/' + ${product.idGiay}+'/'+${product.mauSac} }"
+                                                           class="btn btn-outline-warning">Chọn</a>
+                                                    </td>
+                                                </tr>
                                             </th:block>
-                                        </div>
+                                            </tbody>
+                                        </table>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-5 col-sm-12 ">
@@ -1059,9 +1076,9 @@
                                         th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
 
                                     <td>
-                                        <i class="fa fa-times"
-                                           th:data-bs-toggle="modal"
-                                           style="cursor: pointer; margin: 0 20px 0 20px; color: #ff9f43;"></i>
+                                        <form th:action="@{/manage/bill/deleteChiTietGiay/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}" method="post">
+                                            <button type="submit">Xóa</button>
+                                        </form>
                                     </td>
 
 
@@ -1096,6 +1113,8 @@
         </div>
     </th:block>
     <!--    Modal edit thanh toán-->
+
+
 
 
     <!-- Modal detail Hóa Đơn begin-->
