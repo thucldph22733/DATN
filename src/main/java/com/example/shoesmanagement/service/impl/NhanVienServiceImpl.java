@@ -23,6 +23,8 @@ public class NhanVienServiceImpl implements NhanVienService {
     private NhanVienRepository nhanVienRepsitory;
     @Autowired
     private ChucVuRepository chucVuRepsitory;
+    @Autowired
+    private NhanVienRepository nhanVienRepository;
 
     @Override
     public NhanVien checkByEmailAndPass(String email, String pass) {
@@ -102,4 +104,8 @@ public class NhanVienServiceImpl implements NhanVienService {
         }
         return nhanVienRepsitory.findByMaNVOrHoTenNV(maNV, tenNV);
     }
+    public NhanVien findByEmailNV(String emailNV) {
+        return nhanVienRepository.findByEmailNV(emailNV);
+    }
+
 }

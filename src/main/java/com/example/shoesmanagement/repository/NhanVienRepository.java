@@ -32,4 +32,5 @@ public interface NhanVienRepository extends JpaRepository<NhanVien, UUID> {
 
     @Query(value = "select nv from NhanVien nv order by nv.tgThem desc")
     List<NhanVien> getAllNhanVien();
+
 }

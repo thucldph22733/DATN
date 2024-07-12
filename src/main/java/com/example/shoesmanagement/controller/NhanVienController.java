@@ -77,8 +77,8 @@ public class NhanVienController {
 
 
     @GetMapping("/change-password")
-    public String changePass(@RequestParam(value = "email", defaultValue = "") String email,String passwordnew ,
-                             HttpServletRequest request, Model model) {
+    public String changePass(@RequestParam(value = "email", defaultValue = "") String email,
+                             String passwordnew, HttpServletRequest request, Model model) {
         return "manage/change-pass";
     }
 
@@ -89,14 +89,28 @@ public class NhanVienController {
                                  @RequestParam("reNewPass") String reNewPass,
                                  RedirectAttributes redirectAttributes,
                                  HttpServletRequest request, Model model) {
-        NhanVien nhanVien = new NhanVien();
+        if (!newPass.equals(reNewPass)) {
+            redirectAttributes.addFlashAttribute("mess", "Mật khẩu mới và mật khẩu nhập lại không khớp!");
+            return "redirect:/change-password";
+        }
+
+        NhanVien nhanVien = nhanVienService.findByEmailNV(email);
+        if (nhanVien == null) {
+            redirectAttributes.addFlashAttribute("mess", "Email không tồn tại!");
+            return "redirect:/change-password";
+        }
+
+        if (!nhanVien.getMatKhau().equals(currentPass)) {
+            redirectAttributes.addFlashAttribute("mess", "Mật khẩu hiện tại không đúng!");
+            return "redirect:/change-password";
+        }
+
         nhanVien.setMatKhau(newPass);
         nhanVienService.save(nhanVien);
-        authService.ChangePass(email, currentPass, reNewPass, newPass, request);
-        redirectAttributes.addFlashAttribute("mess", "Đổi mật khẩu thành công !!!");
+
+        redirectAttributes.addFlashAttribute("mess", "Đổi mật khẩu thành công!!!");
         return "redirect:/login";
     }
-
 
     @GetMapping("/nhan-vien/viewAdd")
     public String viewAddNhanVien(Model model

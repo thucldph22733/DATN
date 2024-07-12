@@ -28,4 +28,7 @@ public interface NhanVienService {
     public List<NhanVien> findByTrangThai(int trangThai);
 
     public List<NhanVien> fillterNhanVien(String maNV, String tenNV);
+
+   NhanVien findByEmailNV(String emailNV) ;
+
 }
