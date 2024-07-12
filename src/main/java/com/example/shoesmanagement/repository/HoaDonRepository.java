@@ -50,4 +50,8 @@ public interface HoaDonRepository  extends JpaRepository<HoaDon, UUID> {
     @Query("select km from KhuyenMai km left join HoaDon hd on km.idKM = hd.khuyenMai.idKM where km.dieuKienKMBill <= ?1 and km.trangThai= 1 and km.soLuong > 0")
     List<KhuyenMai> listDieuKienKhuyenMai(double tongTienSanPham);
 
+    @Query("select hd from HoaDon hd where hd.loaiHD = 1 and hd.trangThai = ?1")
+    List<HoaDon> locHoaDonOff(int trangThai);
+
+    List<HoaDon> findByTrangThai(int trangThai);
 }

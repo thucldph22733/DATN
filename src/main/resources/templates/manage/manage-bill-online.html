@@ -25,12 +25,52 @@
     <link rel="stylesheet" href="/plugins/simpleline/simple-line-icons.css">
     <link rel="stylesheet" href="/css/style.css">
 </head>
+<style>
+    /* CSS để điều chỉnh vị trí của thông báo */
+    .invalid-feedback {
+        position: absolute;
+        top: 83px;
+        z-index: 1050;
+        display: none;
+        width: 250px; /* Điều chỉnh độ rộng của thông báo */
+        text-align: center;
+        text-align: center;
+        background-color: #dc3545; /* Màu nền */
+        color: white; /* Màu chữ */
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        font-size: 0.875rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+    .custom-alert {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: auto;
+        padding: 15px;
+        background-color: #4caf50; /* Màu nền thông báo */
+        color: white; /* Màu chữ */
+        border-radius: 5px; /* Bo góc */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+        z-index: 9999; /* Đảm bảo thông báo ở trên cùng */
+        transition: all 0.5s ease-in-out; /* Hiệu ứng chuyển động */
+    }
 
+    .custom-alert.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .custom-alert.hide {
+        opacity: 0;
+        visibility: hidden;
+    }
+</style>
 <body class="mini-sidebar">
 <div th:fragment="main">
-    <div th:if="${reLoadPage}" id="global-loader">
-        <div class="whirly-loader"></div>
-    </div>
+    <!--    <div th:if="${reLoadPage}" id="global-loader">-->
+    <!--        <div class="whirly-loader"></div>-->
+    <!--    </div>-->
 
     <div class="main-wrapper">
         <div class="header">
@@ -190,6 +230,11 @@
         </div>
     </div>
     <!--CODE TỪ DƯỚI NÀY-->
+    <div th:if="${message}" class="alert alert-success custom-alert" role="alert">
+        <span th:text="${message}"></span>
+    </div>  <div th:if="${messageXacNhan}" class="alert alert-success custom-alert" role="alert">
+    <span th:text="${messageXacNhan}"></span>
+</div>
     <div class="page-wrapper">
         <div class="content">
             <div class="page-header">
@@ -404,6 +449,47 @@
                                                         <h4 class="card-title">Tất cả hóa đơn</h4>
                                                     </div>
                                                     <div class="card-body">
+                                                        <div class="table-top">
+                                                            <div class="search-set">
+                                                                <div class="search-path">
+                                                                    <a class="btn btn-filter" id="filter_search">
+                                                                        <img src="/images/img/icons/filter.svg" alt="img">
+                                                                        <span><img src="/images/img/icons/closes.svg" alt="img"></span>
+                                                                    </a>
+                                                                </div>
+
+                                                                <div class="search-input">
+                                                                    <a class="btn btn-searchset">
+                                                                        <img src="/images/img/icons/search-white.svg" alt="img">
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <form method="get" th:action="@{/manage/bill/online/filter}">
+                                                            <div class="card" id="filter_inputs">
+                                                                <div class="card-body pb-0">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-2 col-sm-6 col-12">
+                                                                            <div class="form-group">
+                                                                                <select class="select" id="locTrangThai" name="trangThai">
+                                                                                    <option>Trạng thái</option>
+                                                                                    <option value="Chờ thanh toán">Chờ thanh toán</option>
+                                                                                    <option value="Chờ xác nhận">Chờ xác nhận</option>
+                                                                                    <option value="Chờ lấy hàng">Chờ lấy hàng</option>
+                                                                                    <option value="Chờ giao hàng">Chờ giao hàng</option>
+                                                                                    <option value="Giao thành công">Giao thành công</option>
+                                                                                    <option value="Đã Hủy">Đã Hủy</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-lg-1 col-sm-6 col-12 ms-auto"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+
                                                         <div class="table-responsive">
                                                             <div class="vertical-scroll scroll-demo">
                                                                 <table class="table  datanew ">
@@ -442,28 +528,17 @@
                                                                             <td th:text="${bill.maHD}"></td>
                                                                             <td th:text="${#dates.format(bill.tgTao, 'HH:mm yyyy-MM-dd')}"></td>
 
-                                                                            <td th:if="${bill.trangThai == 0 }"> Chờ
-                                                                                thanh toán
-                                                                            </td>
-                                                                            <td th:if="${bill.trangThai == 1 }"> Chờ xác
-                                                                                nhận
-                                                                            </td>
-                                                                            <td th:if="${bill.trangThai == 2 }"> Chờ lấy
-                                                                                hàng
-                                                                            </td>
-                                                                            <td th:if="${bill.trangThai == 3 }"> Chờ
-                                                                                giao hàng
-                                                                            </td>
-                                                                            <td th:if="${bill.trangThai == 4 }">Giao
-                                                                                thành công
-                                                                            </td>
-                                                                            <td th:if="${bill.trangThai == 5 }">Đã Hủy
-                                                                            </td>
+                                                                            <td th:if="${bill.trangThai == 0 }"> Chờ thanh toán</td>
+                                                                            <td th:if="${bill.trangThai == 1 }"> Chờ xác nhận</td>
+                                                                            <td th:if="${bill.trangThai == 2 }"> Chờ lấy hàng</td>
+                                                                            <td th:if="${bill.trangThai == 3 }"> Chờ giao hàng</td>
+                                                                            <td th:if="${bill.trangThai == 4 }">Giao thành công</td>
+                                                                            <td th:if="${bill.trangThai == 5 }">Đã Hủy</td>
 
                                                                             <td th:text="${bill.khachHang.hoTenKH}"></td>
                                                                             <td th:text="${bill.tongSP}"></td>
-                                                                            <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
-                                                                            <th>
+                                                                            <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT')}"></td>
+                                                                            <td>
                                                                                 <i class="si si-eye"
                                                                                    th:data-bs-toggle="modal"
                                                                                    th:data-bs-target="'#modalDetailHD' + ${bill.idHD}"
@@ -491,7 +566,7 @@
                                                                                        data-bs-original-title="In hóa đơn"
                                                                                        aria-label="fe fe-printer"></i>
                                                                                 </a>
-                                                                            </th>
+                                                                            </td>
                                                                         </tr>
                                                                     </th:block>
                                                                     </tbody>
@@ -549,7 +624,7 @@
                                                                             th:each="bill, i: ${listHoaDonOnlineGiaoHang}">
                                                                         <tr th:unless="${bill.trangThai ==2  or bill.trangThai == 3  or bill.trangThai == 6}">
 
-                                                                        <td th:text="${i.index}"></td>
+                                                                            <td th:text="${i.index}"></td>
                                                                             <td th:text="${bill.maHD}"></td>
                                                                             <td th:if="${bill.nhanVien != null}"
                                                                                 th:text="${bill.nhanVien.hoTenNV}"></td>
@@ -571,7 +646,7 @@
                                                                             <td th:if="${bill.trangThai == 2}">Chờ lấy
                                                                                 hàng
                                                                             </td>
-                                                                            <th>
+                                                                            <td>
                                                                                 <i class="fe fe-eye"
                                                                                    th:data-bs-toggle="modal"
                                                                                    th:data-bs-target="'#viewBillGH' + ${bill.idHD}"
@@ -582,7 +657,7 @@
                                                                                        title="Xem vận đơn"
                                                                                        style="cursor: pointer;"></i>
                                                                                 </a>
-                                                                            </th>
+                                                                            </td>
                                                                         </tr>
                                                                     </th:block>
                                                                     </tbody>
@@ -676,12 +751,12 @@
 
                                                                             <td th:text="${bill.khachHang.hoTenKH}"></td>
                                                                             <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
-                                                                            <th>
+                                                                            <td>
                                                                                 <i class="si si-speedometer"
                                                                                    th:data-bs-toggle="modal"
                                                                                    th:data-bs-target="'#modalXemLichSuThanhToan' + ${bill.idHD}"
                                                                                    style="cursor: pointer; margin: 0 20px 0 0; color: #ff9f43;"></i>
-                                                                            </th>
+                                                                            </td>
                                                                         </tr>
                                                                     </th:block>
                                                                     </tbody>
@@ -741,7 +816,7 @@
                             <div class="col-lg-4 col-sm-12 col-12">
                                 <div class="form-group">
                                     <label style="border: none; font-size: 12pt; font-weight: 600;">Tổng tiền</label>
-                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT')}"></p>
                                 </div>
                             </div>
                             <div class="col-lg-5 col-sm-12 col-12">
@@ -854,19 +929,23 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form th:action="@{'/manage/bill/online/delete/' + ${bill.idHD}}" method="get">
+                        <form th:action="@{'/manage/bill/online/delete/' + ${bill.idHD}}" method="get"
+                              id="huyHoaDonForm">
                             <div class="form-group">
                                 <label for="lyDoHuy">Lí do hủy hóa đơn: </label>
                                 <input type="text" class="form-control" id="lyDoHuy" th:id="lyDoHuy" name="lyDoHuy"
                                        th:name="lyDoHuy"/>
+                                <div class="invalid-feedback">Vui lòng nhập lí do hủy hóa đơn.</div>
                             </div>
-                            <button type="submit" class="btn btn-danger">Hủy hóa đơn</button>
+                            <button type="submit" class="btn btn-danger" style="margin-top: 21px">Hủy hóa đơn</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </th:block>
+
+
     <!--    Modal delete thanh toán-->
 
     <!--    Modal edit thanh toán-->
@@ -912,34 +991,51 @@
                                                 <h3 th:text="${nullHoaDon}"></h3>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <th:block th:each="product : ${listSanPham}">
-                                                <div class="col-lg-3 col-sm-6">
-                                                    <div class="tab_content active">
-                                                        <div class="productset flex-fill ">
-                                                            <div class="productsetimg">
-                                                                <img th:src="@{'/images/imgsProducts/'+ ${product.hinhAnh}}"
-                                                                     alt="img">
-                                                                <h6>[[${product.soLuong}]]</h6>
-                                                                <div class="check-product">
-                                                                    <i class="fa fa-check"></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="productsetcontent">
-                                                                <h3>[[${product.tenGiay}]]</h3>
-                                                                <h3 th:text=" ${#numbers.formatDecimal(product.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h3>
-                                                                <h4 th:text="${product.mauSac}"></h4>
-                                                                <a
-                                                                        th:href="@{'/ban-hang/chon-size/' + ${product.idGiay}+'/'+${product.mauSac} }"
-                                                                        class="btn btn-outline-warning m-3">
-                                                                    Chọn</a>
 
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        <table class="table table-bordered product-table">
+                                            <thead>
+                                            <tr>
+                                                <th>Hình Ảnh</th>
+                                                <th>Số Lượng</th>
+                                                <th>Tên Giày</th>
+                                                <th>Giá Bán</th>
+                                                <th>Màu Sắc</th>
+                                                <th>Hành Động</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <th:block th:each="product : ${listSanPham}">
+                                                <tr>
+                                                    <td>
+                                                        <img style="height: 90px;width: 90px"
+                                                             th:src="@{'/images/imgsProducts/'+ ${product.hinhAnh}}"
+                                                             alt="img">
+                                                    </td>
+                                                    <td>
+                                                        <h6>[[${product.soLuong}]]</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h3 style="font-size: 12pt">
+                                                            [[${product.tenGiay}]]</h3>
+                                                    </td>
+                                                    <td>
+                                                        <h3 style="font-size: 12pt"
+                                                            th:text=" ${#numbers.formatDecimal(product.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h3>
+                                                    </td>
+                                                    <td>
+                                                        <h4 style="font-size: 12pt"
+                                                            th:text="${product.mauSac}"></h4>
+                                                    </td>
+                                                    <td>
+                                                        <a style="font-size: 11pt"
+                                                           th:href="@{'/manage-bill-online/chon-size2/' + ${product.idGiay}+'/'+${product.mauSac} }"
+                                                           class="btn btn-outline-warning">Chọn</a>
+                                                    </td>
+                                                </tr>
                                             </th:block>
-                                        </div>
+                                            </tbody>
+                                        </table>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-5 col-sm-12 ">
@@ -1035,9 +1131,9 @@
                                         th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
 
                                     <td>
-                                        <i class="fa fa-times"
-                                           th:data-bs-toggle="modal"
-                                           style="cursor: pointer; margin: 0 20px 0 20px; color: #ff9f43;"></i>
+                                        <form th:action="@{/manage/bill/deleteChiTietGiay/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}" method="post">
+                                            <button type="submit">Xóa</button>
+                                        </form>
                                     </td>
 
 
@@ -1074,6 +1170,8 @@
     <!--    Modal edit thanh toán-->
 
 
+
+
     <!-- Modal detail Hóa Đơn begin-->
     <th:block th:each="bill: ${listHoaDonOnline}">
         <div th:unless="${bill.trangThai == 6}" class="modal fade" th:id="'modalDetailHD' + ${bill.idHD}" tabindex="-1"
@@ -1106,14 +1204,14 @@
                             <div class="col-lg-2 col-sm-12 col-12">
                                 <div class="form-group">
                                     <label style="border: none; font-size: 12pt; font-weight: 600;">Tổng tiền</label>
-                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT')}"></p>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-12 col-12">
                                 <div class="form-group">
                                     <label style="border: none; font-size: 12pt; font-weight: 600;">Tổng tiền đã
                                         giảm</label>
-                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT')}"></p>
                                 </div>
                             </div>
 
@@ -1496,7 +1594,7 @@
                             </div>
                             <div class="col-lg-3 col-sm-12 col-12">
                                 <div class="form-group">
-                                        <label>Thời gian giao hàng :</label>
+                                    <label>Thời gian giao hàng :</label>
                                     <p style="font-size: 11pt; font-weight: 600;"
                                        th:if="${billDelivery.giaoHang.tgShip !=null}"
                                        th:text="${#dates.format(billDelivery.giaoHang.tgShip, 'HH:mm yyyy-MM-dd')}"></p>
@@ -1527,27 +1625,37 @@
 
 </section>
 
-
-<!--    <div th:replace="manage/main :: main"></div>-->
-
-
 <script src="/js/jquery-3.6.0.min.js"></script>
-
 <script src="/js/feather.min.js"></script>
-
 <script src="/js/jquery.slimscroll.min.js"></script>
-
 <script src="/js/jquery.dataTables.min.js"></script>
 <script src="/js/dataTables.bootstrap4.min.js"></script>
-
-<script src="/js/bootstrap.bundle.min.js"></script>
-
 <script src="/plugins/select2/js/select2.min.js"></script>
-
+<script src="/plugins/select2/js/custom-select.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/plugins/scrollbar/scrollbar.min.js"></script>
+<script src="/plugins/scrollbar/custom-scroll.js"></script>
 <script src="/plugins/sweetalert/sweetalert2.all.min.js"></script>
 <script src="/plugins/sweetalert/sweetalerts.min.js"></script>
-
 <script src="/js/script.js"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    document.addEventListener('DOMContentLoaded', function() {
+        var huyHoaDonForm = document.getElementById('huyHoaDonForm');
+        huyHoaDonForm.addEventListener('submit', function(event) {
+            var lyDoHuyInput = document.getElementById('lyDoHuy');
+            var invalidFeedback = document.querySelector('#huyHoaDonForm .invalid-feedback');
+            if (lyDoHuyInput.value.trim() === '') {
+                event.preventDefault(); // Ngăn form submit nếu ly do huy không được nhập
+                invalidFeedback.style.display = 'block';
+            } else {
+                invalidFeedback.style.display = 'none';
+            }
+        });
+    });
+    /*]]>*/
+</script>
 <script>
     // Lấy tất cả các container của form
     const formContainers = document.querySelectorAll('.form-container');
@@ -1599,6 +1707,34 @@
         $('#hoanTienThanhCong').modal('show');
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const alert = document.querySelector('.custom-alert');
+        if (alert) {
+            setTimeout(() => {
+                alert.classList.add('hide');
+            }, 5000); // 5 giây
+        }
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#locTrangThai").change(function () {
+            var maTrangThai = $(this).val();
 
+            // Ẩn tất cả các dòng trong bảng
+            $("#data-table tbody tr").hide();
+
+            // Hiển thị các dòng có giá trị kích thước tương ứng
+            $("#data-table tbody tr").each(function () {
+                var maTT = $(this).find("td:eq(3)").text(); // Vị trí cột chứa giá trị kích thước
+                if (maTT === maTrangThai || maTrangThai === "Trạng thái") {
+                    $(this).show();
+                }
+            });
+            console.log(maTrangThai);
+        });
+    });
+</script>
 </body>
 </html>
