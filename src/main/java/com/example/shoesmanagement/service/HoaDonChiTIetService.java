@@ -29,4 +29,9 @@ public interface HoaDonChiTIetService {
     void updateQuantityGiay(UUID idHDCT, int newQuantity);
 
     HoaDonChiTiet findByCTGActiveAndKhachHagAndTrangThai(ChiTietGiay chiTietGiay , HoaDon hoaDon);
+
+    public void deleteCTG(UUID idCTG);
+
+
+    void deleteChiTietGiay(UUID idHDCT);
 }
