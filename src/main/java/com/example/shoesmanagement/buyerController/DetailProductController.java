@@ -121,7 +121,7 @@ public class DetailProductController {
 
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
 
-        GioHangChiTiet gioHangChiTiet = ghctService.findByCTSPActiveAndTrangThai(ctg,1);
+        GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(ctg,gioHang);
         if(quantity > ctg.getSoLuong()) { // Giả sử ctg.getSoLuong() là phương thức lấy số lượng hiện có của sản phẩm
             // Thêm thông báo lỗi vào redirectAttributes
             redirectAttribute.addFlashAttribute("successMessage", "Số lượng sản phẩm không đủ. Vui lòng giảm số lượng.");

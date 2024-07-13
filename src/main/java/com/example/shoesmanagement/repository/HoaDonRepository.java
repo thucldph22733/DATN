@@ -1,9 +1,6 @@
 package com.example.shoesmanagement.repository;
 
-import com.example.shoesmanagement.model.HoaDon;
-import com.example.shoesmanagement.model.KhachHang;
-import com.example.shoesmanagement.model.KhuyenMai;
-import com.example.shoesmanagement.model.NhanVien;
+import com.example.shoesmanagement.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -54,4 +51,5 @@ public interface HoaDonRepository  extends JpaRepository<HoaDon, UUID> {
     List<HoaDon> locHoaDonOff(int trangThai);
 
     List<HoaDon> findByTrangThai(int trangThai);
+
 }

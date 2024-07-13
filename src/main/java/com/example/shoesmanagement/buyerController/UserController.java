@@ -12,6 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -85,11 +88,36 @@ public class UserController {
     private String getSettingAccount(Model model) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-
+        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+        model.addAttribute("khachHang", khachHang1);
         UserForm(model, khachHang);
-//        showThongBao(model, khachHang);
+
+        model.addAttribute("pagesettingAccount",true);
         return "online/user";
     }
+    @PostMapping("/update/user")
+    public String updateUser(HttpServletRequest request,Model model) {
+        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        String hoTenKH = request.getParameter("hoTenKH");
+        String gioiTinh = request.getParameter("gioiTinh");
+        String ngaySinhStr = request.getParameter("ngaySinh");
+        String emailKH = request.getParameter("emailKH");
+        Date ngaySinh = null;
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            ngaySinh = dateFormat.parse(ngaySinhStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+        khachHang1.setHoTenKH(hoTenKH);
+        khachHang1.setGioiTinh(Integer.parseInt(gioiTinh));
+        khachHang1.setNgaySinh(ngaySinh);
+        khachHang1.setEmailKH(emailKH);
+        khachHangService.save(khachHang1);
+        return "redirect:/buyer/setting";
+    }
+
 
     @GetMapping("/addresses")
     private String getAddressAccount(Model model) {

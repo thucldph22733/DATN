@@ -1,6 +1,8 @@
 package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.*;
+import com.example.shoesmanagement.repository.HoaDonChiTietRepository;
+import com.example.shoesmanagement.repository.SizeRepository;
 import com.example.shoesmanagement.service.*;
 import com.example.shoesmanagement.viewModel.GiayViewModel;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,10 +22,27 @@ public class HoaDonOnlineController {
     private HoaDonService hoaDonService;
 
     @Autowired
+    private GiayService giayService;
+
+    @Autowired
+    private GHCTService ghctService;
+
+    @Autowired
+    private HoaDonChiTietRepository hoaDonChiTietRepository;
+
+    @Autowired
     private NhanVienService nhanVienService;
     @Autowired
     private GiaoHangService giaoHangService;
+    private int tongSanPham = 0;
 
+    private double giaBan = 0;
+
+    private double tongTienSanPham = tongSanPham * giaBan;
+
+    private double giaTienGiam = 0;
+
+    private double tongTien = tongTienSanPham - giaTienGiam;
 
     @Autowired
     private HttpServletRequest request;
@@ -33,9 +52,14 @@ public class HoaDonOnlineController {
     @Autowired
     private GiayViewModelService giayViewModelService;
     @Autowired
+    private SizeRepository sizeRepository;
+    @Autowired
     private LSThanhToanService lsThanhToanService;
     @Autowired
     private GiayChiTietService giayChiTietService;
+
+    @Autowired
+    private HoaDonChiTIetService hoaDonChiTietService;
 
     @Autowired
     private ChucVuService chucVuService;
@@ -45,13 +69,23 @@ public class HoaDonOnlineController {
     @GetMapping("online")
     private String manageBillOnline(Model model) {
         model.addAttribute("reLoadPage", true);
+        List<GiayViewModel> list = giayViewModelService.getAllVm();
+        List<GiayViewModel> listG = giayViewModelService.getAllVm();
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/login";
         }
+        if (listG != null && !listG.isEmpty()) {
+            System.out.println("Danh sách sản phẩm không rỗng, số lượng: " + listG.size());
+            for (GiayViewModel product : listG) {
+                System.out.println(product);
+            }
+        } else {
+            System.out.println("Danh sách sản phẩm rỗng hoặc null");
+        }
         showData(model);
         showTab1(model);
-
+        model.addAttribute("listSanPham", listG);
 
         return "manage/manage-bill-online";
     }
@@ -113,13 +147,17 @@ public class HoaDonOnlineController {
         model.addAttribute("reLoadPage", true);
         showData(model);
         showTab3(model);
-
+        model.addAttribute("messageXacNhan", "Xác nhận nhân viên giao thành công.");
 
         return "manage/manage-bill-online";
     }
 
     @GetMapping("online/delete/{idHD}")
     public String huyHoaDonOnline(@PathVariable UUID idHD, Model model) {
+        if (session.getAttribute("managerLogged") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "redirect:/login";
+        }
         String lyDoHuy = request.getParameter("lyDoHuy");
         Date date = new Date();
         HoaDon hoaDon = hoaDonService.getOne(idHD);
@@ -128,8 +166,10 @@ public class HoaDonOnlineController {
         hoaDon.setTrangThai(5);
 
         hoaDonService.save(hoaDon);
+
         showData(model);
         showTab3(model);
+        model.addAttribute("message", "Hóa đơn đã được hủy thành công.");
         return "manage/manage-bill-online";
     }
 
@@ -283,7 +323,82 @@ public class HoaDonOnlineController {
             model.addAttribute("listSanPham", list);
         }
 
-        return "manage/manage-bill-online";
+        return "redirect:/manage/bill/online";
     }
+
+
+    @GetMapping("/xoa-gio-hang2/{idChiTietGiay}")
+    public String xoaSanPham(@PathVariable("idChiTietGiay") UUID idChiTietGiay, RedirectAttributes redirectAttributes, Model model) {
+        model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
+        List<GiayViewModel> listG = giayViewModelService.getAllVm();
+        model.addAttribute("listSanPham", listG);
+        ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idChiTietGiay);
+        UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
+        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHoaDon, idChiTietGiay);
+
+        // Cập nhật tổng tiền hóa đơn
+        HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
+        hoaDon.setTongTien(hoaDon.getTongTien() - hoaDonChiTiet.getDonGia());
+        hoaDon.setTongTienSanPham(hoaDon.getTongTienSanPham() - hoaDonChiTiet.getDonGia());
+        hoaDonService.add(hoaDon);
+
+        // Cập nhật số lượng sản phẩm và trạng thái của ChiTietGiay
+        chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + hoaDonChiTiet.getSoLuong());
+        chiTietGiay.setTrangThai(1);
+        giayChiTietService.save(chiTietGiay);
+
+        // Xóa chi tiết hóa đơn
+        hoaDonChiTietService.delete(hoaDonChiTiet);
+
+        // Cập nhật số lượng sản phẩm trong giỏ hàng
+        tongSanPham--;
+        httpSession.setAttribute("tongSP", tongSanPham);
+
+        httpSession.removeAttribute("idChiTietGiay");
+        redirectAttributes.addFlashAttribute("messageSuccess", true);
+        redirectAttributes.addFlashAttribute("tb", "Xóa thành công");
+        return "redirect:/manage-bill-online/" + idHoaDon;
+    }
+
+    @GetMapping("/chon-size2/{idGiay}/{mauSac}")
+    public String chonSize(@PathVariable(value = "idGiay") UUID idGiay,
+                           @PathVariable(value = "mauSac") String mauSac, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+
+        UUID idHoaDon = (UUID) session.getAttribute("idHoaDon");
+        if (idHoaDon == null) {
+            redirectAttributes.addFlashAttribute("messageError", true);
+            redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
+            return "redirect:/manage-bill-online/online";
+        }
+
+        List<GiayViewModel> listG = giayViewModelService.getAllVm();
+        model.addAttribute("listSanPham", listG);
+        Giay giay = giayService.getByIdGiay(idGiay);
+        List<ChiTietGiay> sizeList = sizeRepository.findByIdGiayAndMauSac2(idGiay, mauSac);
+
+        model.addAttribute("gioHang", hoaDonChiTietService.findByIdHoaDon(idHoaDon));
+        model.addAttribute("giay", giay);
+        model.addAttribute("listChiTietGiay", sizeList);
+        model.addAttribute("idHoaDon", idHoaDon);
+        model.addAttribute("showModal", true);
+        model.addAttribute("tongTienSanPham", tongTienSanPham);
+        model.addAttribute("tongTien", tongTien);
+
+        return "redirect:/manage-bill-online/online";
+    }
+
+    @PostMapping("/deleteChiTietGiay/{idCTG}")
+    public String deleteChiTietGiay(Model model, @PathVariable UUID idCTG, RedirectAttributes redirectAttribute) {
+        ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idCTG);
+        hoaDonChiTietRepository.deleteHoaDonChiTietByChiTietGiay(chiTietGiay.getIdCTG());
+
+
+
+        redirectAttribute.addFlashAttribute("successMessage", "Sản phẩm đã được xoá khỏi giỏ hàng thành công!");
+        return "redirect:/manage/bill/online"; // Điều hướng về trang danh sách chi tiết giày
+    }
+
+
+
 
 }

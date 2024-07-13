@@ -68,9 +68,11 @@
 </style>
 <body class="mini-sidebar">
 <div th:fragment="main">
+
     <!--    <div th:if="${reLoadPage}" id="global-loader">-->
     <!--        <div class="whirly-loader"></div>-->
     <!--    </div>-->
+
 
     <div class="main-wrapper">
         <div class="header">
@@ -233,8 +235,10 @@
     <div th:if="${message}" class="alert alert-success custom-alert" role="alert">
         <span th:text="${message}"></span>
     </div>  <div th:if="${messageXacNhan}" class="alert alert-success custom-alert" role="alert">
+
     <span th:text="${messageXacNhan}"></span>
 </div>
+
     <div class="page-wrapper">
         <div class="content">
             <div class="page-header">
@@ -1717,10 +1721,12 @@
         }
     });
 </script>
+
 <script>
     $(document).ready(function () {
         $("#locTrangThai").change(function () {
             var maTrangThai = $(this).val();
+
 
             // Ẩn tất cả các dòng trong bảng
             $("#data-table tbody tr").hide();

@@ -1,7 +1,9 @@
 package com.example.shoesmanagement.repository;
 
 import com.example.shoesmanagement.model.*;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Controller;
 
@@ -13,8 +15,14 @@ public interface HoaDonChiTietRepository  extends JpaRepository<HoaDonChiTiet, U
 
     void deleteById(UUID id);
 
+    @Modifying
+    @Transactional
+    @Query("delete from HoaDonChiTiet hdct where hdct.chiTietGiay.idCTG = ?1")
+    void deleteHoaDonChiTietByChiTietGiay(UUID idCtg);
+
     @Query(value = "select hdct from HoaDonChiTiet hdct where hdct.hoaDon.idHD = ?1 and hdct.chiTietGiay.idCTG =?2")
     HoaDonChiTiet findByIdHoaDonAndIdChiTietGiay(UUID idHoaDon, UUID idChiTietGiay);
+
 
     @Query(value = "select * from hoa_don_chi_tiet where id_hd = ?1 and trang_thai = 1", nativeQuery = true)
     List<HoaDonChiTiet> findByIdHoaDon(UUID idHoaDon);

@@ -27,15 +27,17 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTIetService {
     }
 
     @Override
+    public void delete(HoaDonChiTiet hoaDonChiTiet) {
+
+    }
+
+    @Override
     public void add(HoaDonChiTiet hoaDonChiTiet) {
         hoaDonChiTietRepository.save(hoaDonChiTiet);
 
     }
 
-    @Override
-    public void delete(HoaDonChiTiet hoaDonChiTiet) {
-        hoaDonChiTietRepository.delete(hoaDonChiTiet);
-    }
+
 
     @Override
     public void save(HoaDonChiTiet hoaDonChiTiet) {
@@ -108,5 +110,15 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTIetService {
     @Override
     public HoaDonChiTiet findByCTGActiveAndKhachHagAndTrangThai(ChiTietGiay chiTietGiay, HoaDon hoaDon) {
         return hoaDonChiTietRepository.findByChiTietGiayAndTrangThaiAndHoaDon(chiTietGiay, 1, hoaDon);
+    }
+
+    @Override
+    public void deleteCTG(UUID idCTG) {
+        hoaDonChiTietRepository.deleteHoaDonChiTietByChiTietGiay(idCTG);
+    }
+
+    @Override
+    public void deleteChiTietGiay(UUID idHDCT) {
+        hoaDonChiTietRepository.deleteById(idHDCT);
     }
 }
