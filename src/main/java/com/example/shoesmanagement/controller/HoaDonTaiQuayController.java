@@ -136,7 +136,9 @@ public class HoaDonTaiQuayController {
     public String locTrangThai(@RequestParam(value = "trangThai", required = false) Integer trangThai, Model model) {
         List<HoaDon> danhSachHoaDon;
         if ("Trạng thái".equals(trangThai)) {
+
             danhSachHoaDon = hoaDonService.getAllHoaDonOffLine();
+
         } else {
             danhSachHoaDon = hoaDonRepository.locHoaDonOff(trangThai);
         }
