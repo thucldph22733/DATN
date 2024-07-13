@@ -36,10 +36,8 @@ public class KhuyenMaiController {
     @GetMapping("/khuyen-mai")
     public String hienThi(Model model) {
         List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
-        List<KhachHang> khachHang = khachHangService.getAllKhachHang();
         model.addAttribute("khuyenMai", khuyenMai);
         model.addAttribute("addKhuyenMai", new KhuyenMai());
-        model.addAttribute("khachHang", khachHang);
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/login";

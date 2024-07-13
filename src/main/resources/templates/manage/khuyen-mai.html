@@ -248,56 +248,6 @@
                             </tbody>
                         </table>
                     </div>
-
-                    <div class="pt-5">
-                        <div class="border border-dark border-opacity-50 p-5 rounded-3">
-                            <div class="row">
-                                <div class="col-4 border-end border-black">
-                                    <div>
-                                        <h4 class="text-uppercase text-center">danh sách khuyễn mãi</h4>
-                                        <label for="promotion-select">Chọn khuyến mãi</label>
-                                        <select id="promotion-select" name="promotionId" class="form-select">
-                                            <option value=""></option>
-                                            <th:block th:each="promotion : ${khuyenMai}">
-                                                <option th:value="${promotion.idKM}"
-                                                        th:text="${promotion.tenKM}">
-                                                </option>
-                                            </th:block>
-                                        </select>
-                                    </div>
-
-                                    <div class="d-flex justify-content-center">
-                                        <a class="btn btn-outline-danger mt-2 w-50">Gửi</a>
-                                    </div>
-                                </div>
-
-                                <div class="col-8">
-                                    <h4 class="text-uppercase text-center">danh sách khách hàng</h4>
-                                    <table class="table">
-                                        <thead>
-                                        <tr class="table-primary">
-                                            <td><input type="checkbox"/></td>
-                                            <td>Mã KH</td>
-                                            <td>Tên KH</td>
-                                            <td>SDT KH</td>
-                                            <td>Email KH</td>
-                                        </tr>
-                                        </thead>
-
-                                        <tbody>
-                                        <tr th:each="items1 : ${khachHang}">
-                                            <td><input type="checkbox"/></td>
-                                            <td th:text="${items1.maKH}"></td>
-                                            <td th:text="${items1.hoTenKH}"></td>
-                                            <td th:text="${items1.sdtKH}"></td>
-                                            <td th:text="${items1.emailKH}"></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
