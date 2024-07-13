@@ -222,8 +222,9 @@
                             <tr th:each="items : ${khuyenMai}">
                                 <td th:text="${items.maKM}"></td>
                                 <td th:text="${items.tenKM}"></td>
-                                <td th:text="${items.giaTienGiam}"></td>
-                                <td th:text="${items.dieuKienKMBill}"></td>
+                                <td th:text="${#numbers.formatDecimal(items.giaTienGiam, 0, 'COMMA', 0, 'POINT')}"></td>
+
+                                <td th:text="${#numbers.formatDecimal(items.dieuKienKMBill, 0, 'COMMA', 0, 'POINT')}"></td>
                                 <td th:text="${items.soLuong}"></td>
                                 <td th:text="${items.soLuongDaDung}"></td>
                                 <td>
