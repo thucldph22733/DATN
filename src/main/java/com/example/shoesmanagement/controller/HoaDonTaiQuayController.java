@@ -1,3 +1,4 @@
+
 package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.HoaDon;
@@ -135,7 +136,9 @@ public class HoaDonTaiQuayController {
     public String locTrangThai(@RequestParam(value = "trangThai", required = false) Integer trangThai, Model model) {
         List<HoaDon> danhSachHoaDon;
         if ("Trạng thái".equals(trangThai)) {
-           danhSachHoaDon = hoaDonService.getAllHoaDonOffLine();
+
+            danhSachHoaDon = hoaDonService.getAllHoaDonOffLine();
+
         } else {
             danhSachHoaDon = hoaDonRepository.locHoaDonOff(trangThai);
         }

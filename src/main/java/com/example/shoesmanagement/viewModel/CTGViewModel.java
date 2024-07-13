@@ -1,10 +1,7 @@
 package com.example.shoesmanagement.viewModel;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.UUID;
@@ -14,6 +11,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+
     public class CTGViewModel {
     @Id
     @Column(name = "id_giay")
