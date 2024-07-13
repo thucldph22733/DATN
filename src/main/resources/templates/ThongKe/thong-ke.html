@@ -296,16 +296,33 @@
                         <h3 align="center" class="text-danger">Biểu đồ doanh số bán hàng</h3>
                     </div>
                     <div class="row">
-                        <div class="col-lg-8  hover">
+                        <div class="col-lg-6  hover">
                             <div class="header__top__hover" style="color: #1d1d42 ;right: 5px"></div>
                         </div>
-                        <div class="col-lg-4 ">
-                            <select id="mySelect" class="form-select" onchange="showCorrespondingValue()">
-                                <option selected disabled>Lọc theo</option>
-                                <option value="Tháng">Tháng</option>
-                                <option value="Năm">Năm</option>
-                                <option value="Ngày">Ngày</option>
-                            </select>
+<!--                        <div class="col-lg-4 ">-->
+<!--                            <select id="mySelect" class="form-select" onchange="showCorrespondingValue()">-->
+<!--                                <option selected disabled>Lọc theo</option>-->
+<!--                                <option value="Tháng">Tháng</option>-->
+<!--                                <option value="Năm">Năm</option>-->
+<!--                                <option value="Ngày">Ngày</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+                        <div class="col-lg-6 ">
+                            <form class="row g-3">
+                                <div class="col-auto">
+                                    <label class="form-label">Từ</label>
+                                    <input type="date" class="form-control" id="tuNgay">
+                                </div>
+
+                                <div class="col-auto">
+                                    <label class="form-label">Đến</label>
+                                    <input type="date" class="form-control" id="denNgay">
+                                </div>
+
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary mb-3">Tìm</button>
+                                </div>
+                            </form>
                         </div>
 
                     </div>

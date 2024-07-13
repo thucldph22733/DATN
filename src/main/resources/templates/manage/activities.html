@@ -10,7 +10,7 @@
           content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
-    <title>Sneaker Shop - Admin</title>
+    <title>TeeZy Shop - Admin</title>
 
     <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
 
@@ -43,8 +43,7 @@
                 <a href="/manage" class="logo-small">
                     <img src="/images/img/logo.png" alt="">
                 </a>
-                <a id="toggle_btn" href="javascript:void(0);">
-                </a>
+                <a id="toggle_btn" href="javascript:void(0);"></a>
             </div>
 
             <a id="mobile_btn" class="mobile_btn" href="#sidebar">
@@ -56,33 +55,38 @@
             </a>
 
             <ul class="nav user-menu">
-
                 <li class="nav-item dropdown has-arrow main-drop">
                     <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
-                                            <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">
-                        <span class="status online"></span></span>
+                        <span class="user-img">
+                            <img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">
+                            <span class="status online"></span>
+                        </span>
                     </a>
                     <div class="dropdown-menu menu-drop-user">
                         <div class="profilename">
-                                                    <div class="profileset">
-                                                        <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">
-                                                        <span class="status online"></span></span>
-                                                        <div class="profilesets">
-                                                            <h6 th:text="${session.managerLogged.hoTenNV}"></h6>
-                                                            <h5 th:text="${session.managerLogged.chucVu.tenCV}"></h5>
-                                                        </div>
-                                                    </div>
+                            <div class="profileset">
+                                <span class="user-img">
+                                    <img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">
+                                    <span class="status online"></span>
+                                </span>
+                                <div class="profilesets">
+                                    <h6 th:text="${session.managerLogged.hoTenNV}"></h6>
+                                    <h5 th:text="${session.managerLogged.chucVu.tenCV}"></h5>
+                                </div>
+                            </div>
                             <hr class="m-0">
                             <a class="dropdown-item" href="/logout">Bán hàng tại quầy</a>
                             <a class="dropdown-item" href="/order/">Vận chuyển</a>
                             <a class="dropdown-item" href="profile.html">
                                 <i class="me-2" data-feather="user"></i> My Profile
                             </a>
-                            <a class="dropdown-item" href="/manage/change-password"><i class="me-2"
-                                                                                    data-feather="settings"></i>Change passwoord</a>
+                            <a class="dropdown-item" href="/manage/change-password">
+                                <i class="me-2" data-feather="settings"></i>Change passwoord
+                            </a>
                             <hr class="m-0">
-                            <a class="dropdown-item logout pb-0" href="/logout"><img src="/images/img/icons/log-out.svg"
-                                                                                     class="me-2" alt="img">Logout</a>
+                            <a class="dropdown-item logout pb-0" href="/logout">
+                                <img src="/images/img/icons/log-out.svg" class="me-2" alt="img">Logout
+                            </a>
                         </div>
                     </div>
                 </li>
@@ -99,9 +103,7 @@
                     <a class="dropdown-item" href="signin.html">Đăng xuất</a>
                 </div>
             </div>
-
         </div>
-
 
         <div class="sidebar" id="sidebar">
             <div class="sidebar-inner slimscroll">
@@ -113,12 +115,6 @@
                                 <span>Trang chủ nè</span>
                             </a>
                         </li>
-<!--                        <li>-->
-<!--                            <a href="/manage/ban-hang" data-link="link2" onclick="setActiveLink()">-->
-<!--                                <img src="/images/iconBanHang.png" alt="img">-->
-<!--                                <span>Bán hàng</span>-->
-<!--                            </a>-->
-<!--                        </li>-->
                         <li>
                             <a href="/ThongKe/thong-ke">
                                 <img src="/images/img/icons/dashboard.svg" alt="img">
@@ -136,6 +132,7 @@
                                 <li><a href="/manage/hinh-anh">Hình Ảnh</a></li>
                                 <li><a href="/manage/mau-sac">Màu Sắc</a></li>
                                 <li><a href="/manage/size">Size</a></li>
+                                <li><a href="/manage/test">t</a></li>
                             </ul>
                         </li>
                         <li class="submenu">
@@ -172,7 +169,6 @@
                         </li>
                         <li class="submenu">
                             <a href="javascript:void(0);">
-<!--                                <img src="/images/img/icons/transfer1.svg" alt="img"/>-->
                                 <img src="/images/iconKhuyenMai.png" alt="img"/>
                                 <span>Quản lý Khuyến Mãi</span>
                                 <span class="menu-arrow"></span>
@@ -182,8 +178,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="/manage/giao-hang"><i data-feather="layers"></i><span> Quản lý giao hàng</span>
-                            </a>
+                            <a href="/manage/giao-hang"><i data-feather="layers"></i><span> Quản lý giao hàng</span></a>
                         </li>
                     </ul>
                 </div>
