@@ -68,9 +68,11 @@
 </style>
 <body class="mini-sidebar">
 <div th:fragment="main">
-<!--    <div th:if="${reLoadPage}" id="global-loader">-->
-<!--        <div class="whirly-loader"></div>-->
-<!--    </div>-->
+
+    <!--    <div th:if="${reLoadPage}" id="global-loader">-->
+    <!--        <div class="whirly-loader"></div>-->
+    <!--    </div>-->
+
 
     <div class="main-wrapper">
         <div class="header">
@@ -526,10 +528,12 @@
                                                                             <td th:text="${bill.maHD}"></td>
                                                                             <td th:text="${#dates.format(bill.tgTao, 'HH:mm yyyy-MM-dd')}"></td>
 
+
                                                                             <td th:if="${bill.trangThai == 0 }">Chờ thanh toán</td>
                                                                             <td th:if="${bill.trangThai == 1 }">Chờ xác nhận</td>
                                                                             <td th:if="${bill.trangThai == 2 }">Chờ lấy hàng</td>
                                                                             <td th:if="${bill.trangThai == 3 }">Chờ giao hàng</td>
+
                                                                             <td th:if="${bill.trangThai == 4 }">Giao thành công</td>
                                                                             <td th:if="${bill.trangThai == 5 }">Đã Hủy</td>
 
@@ -622,7 +626,7 @@
                                                                             th:each="bill, i: ${listHoaDonOnlineGiaoHang}">
                                                                         <tr th:unless="${bill.trangThai ==2  or bill.trangThai == 3  or bill.trangThai == 6}">
 
-                                                                        <td th:text="${i.index}"></td>
+                                                                            <td th:text="${i.index}"></td>
                                                                             <td th:text="${bill.maHD}"></td>
                                                                             <td th:if="${bill.nhanVien != null}"
                                                                                 th:text="${bill.nhanVien.hoTenNV}"></td>
@@ -1202,14 +1206,14 @@
                             <div class="col-lg-2 col-sm-12 col-12">
                                 <div class="form-group">
                                     <label style="border: none; font-size: 12pt; font-weight: 600;">Tổng tiền</label>
-                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT')}"></p>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-12 col-12">
                                 <div class="form-group">
                                     <label style="border: none; font-size: 12pt; font-weight: 600;">Tổng tiền đã
                                         giảm</label>
-                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT')}"></p>
                                 </div>
                             </div>
 
@@ -1592,7 +1596,7 @@
                             </div>
                             <div class="col-lg-3 col-sm-12 col-12">
                                 <div class="form-group">
-                                        <label>Thời gian giao hàng :</label>
+                                    <label>Thời gian giao hàng :</label>
                                     <p style="font-size: 11pt; font-weight: 600;"
                                        th:if="${billDelivery.giaoHang.tgShip !=null}"
                                        th:text="${#dates.format(billDelivery.giaoHang.tgShip, 'HH:mm yyyy-MM-dd')}"></p>
@@ -1623,27 +1627,20 @@
 
 </section>
 
-
-<!--    <div th:replace="manage/main :: main"></div>-->
-
-
 <script src="/js/jquery-3.6.0.min.js"></script>
-
 <script src="/js/feather.min.js"></script>
-
 <script src="/js/jquery.slimscroll.min.js"></script>
-
 <script src="/js/jquery.dataTables.min.js"></script>
 <script src="/js/dataTables.bootstrap4.min.js"></script>
-
-<script src="/js/bootstrap.bundle.min.js"></script>
-
 <script src="/plugins/select2/js/select2.min.js"></script>
-
+<script src="/plugins/select2/js/custom-select.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/plugins/scrollbar/scrollbar.min.js"></script>
+<script src="/plugins/scrollbar/custom-scroll.js"></script>
 <script src="/plugins/sweetalert/sweetalert2.all.min.js"></script>
 <script src="/plugins/sweetalert/sweetalerts.min.js"></script>
-
 <script src="/js/script.js"></script>
+
 <script th:inline="javascript">
     /*<![CDATA[*/
     document.addEventListener('DOMContentLoaded', function() {
