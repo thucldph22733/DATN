@@ -1,23 +1,19 @@
+
 package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.HoaDon;
 import com.example.shoesmanagement.model.HoaDonChiTiet;
-//import com.example.shoesmanagement.model.KhuyenMaiChiTietHoaDon;
 import com.example.shoesmanagement.model.KhuyenMai;
+import com.example.shoesmanagement.repository.HoaDonRepository;
 import com.example.shoesmanagement.repository.KhuyenMaiRepository;
 import com.example.shoesmanagement.service.*;
-//import com.example.shoesmanagement.service.KhuyenMaiChiTietHoaDonService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RequestMapping("/manage/bill")
 @Controller
@@ -47,8 +43,19 @@ public class HoaDonTaiQuayController {
     @Autowired
     private HttpSession session;
 
+    @Autowired
+    private HoaDonRepository hoaDonRepository;
+
+    @ModelAttribute("danhSachTrangThai")
+    public Map<Integer, String> getDanhSach(){
+        Map<Integer, String> danhSach = new HashMap<>();
+        danhSach.put(1, "HD Thành công");
+        danhSach.put(0, "HD Chờ");
+        return danhSach;
+    }
+
     @GetMapping("/offline")
-    public String getAll(Model model){
+    public String getAll(Model model) {
 
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
@@ -69,8 +76,8 @@ public class HoaDonTaiQuayController {
         int soLuongSanPhamDaBan = 0;
         double tongSoTienGiam = 0;
 
-        for (HoaDon x: hoaDonList) {
-            if (x.getTrangThai() == 0){
+        for (HoaDon x : hoaDonList) {
+            if (x.getTrangThai() == 0) {
                 soLuongHoaDonCho++;
                 listHoaDonCho.add(x);
             }
@@ -81,7 +88,7 @@ public class HoaDonTaiQuayController {
                 tongSoTienGiam += khuyenMai.getGiaTienGiam();
             }
 
-            if (x.getTrangThai() == 1){
+            if (x.getTrangThai() == 1) {
                 soLuongHoaDonThanhCong++;
                 soTienDaThanhToan += x.getTongTien();
                 listHoaDonThanhCong.add(x);
@@ -109,21 +116,33 @@ public class HoaDonTaiQuayController {
         model.addAttribute("hoaDonList", hoaDonList);
         model.addAttribute("hoaDonChiTietList", hoaDonChiTietList);  // Danh sách chi tiết hóa đơn
 
-        return "manage/manage-bill-offline";
+//        return "manage/manage-bill-offline";
+        return "manage/manage-bill-off";
     }
-
 
 
     @GetMapping("/detail/{idHoaDon}")
-    public String detailHoaDon(@PathVariable("idHoaDon")UUID idHoaDon, Model model){
+    public String detailHoaDon(@PathVariable("idHoaDon") UUID idHoaDon, Model model) {
         List<HoaDonChiTiet> findByIdHoaDon = hoaDonChiTietService.findByIdHoaDon(idHoaDon);
         HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
-        model.addAttribute("hoaDonChiTiet",findByIdHoaDon);
-        model.addAttribute("hoaDon",hoaDon);
-        model.addAttribute("modalHoaDon",true);
-        return "manage/manage-bill-offline";
+        model.addAttribute("hoaDonChiTiet", findByIdHoaDon);
+        model.addAttribute("hoaDon", hoaDon);
+        model.addAttribute("modalHoaDon", true);
+//        return "manage/manage-bill-offline";
+        return "manage/manage-bill-off";
     }
 
+    @GetMapping("/bill/offline/filter")
+    public String locTrangThai(@RequestParam(value = "trangThai", required = false) Integer trangThai, Model model) {
+        List<HoaDon> danhSachHoaDon;
+        if ("Trạng thái".equals(trangThai)) {
 
+            danhSachHoaDon = hoaDonService.getAllHoaDonOffLine();
 
+        } else {
+            danhSachHoaDon = hoaDonRepository.locHoaDonOff(trangThai);
+        }
+        model.addAttribute("hoaDon", danhSachHoaDon);
+        return "manage/manage-bill-off";
+    }
 }
