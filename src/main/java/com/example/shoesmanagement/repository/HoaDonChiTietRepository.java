@@ -23,6 +23,9 @@ public interface HoaDonChiTietRepository  extends JpaRepository<HoaDonChiTiet, U
     @Query(value = "select hdct from HoaDonChiTiet hdct where hdct.hoaDon.idHD = ?1 and hdct.chiTietGiay.idCTG =?2")
     HoaDonChiTiet findByIdHoaDonAndIdChiTietGiay(UUID idHoaDon, UUID idChiTietGiay);
 
+    @Query(value = "select hdct from HoaDonChiTiet hdct where hdct.hoaDon.idHD = ?1 and hdct.chiTietGiay.idCTG =?2")
+    HoaDonChiTiet updateTongGiay(UUID idHoaDon, UUID idChiTietGiay);
+
 
     @Query(value = "select * from hoa_don_chi_tiet where id_hd = ?1 and trang_thai = 1", nativeQuery = true)
     List<HoaDonChiTiet> findByIdHoaDon(UUID idHoaDon);
