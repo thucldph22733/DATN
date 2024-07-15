@@ -125,107 +125,78 @@
         border-radius: 0.5rem;
         text-transform: uppercase;
     }
-
-    .modal-content {
-        border: 1px solid #dee2e6;
-        box-shadow: 0 5px 15px rgba(0,0,0,.5);
-        padding: 20px;
-    }
-
-    .modal-title {
-        font-family: var(--font-family);
-        font-size: var(--font-size);
-        font-weight: bold;
-    }
-
-    .modal-body {
-        font-family: var(--font-family);
-        font-size: var(--font-size);
-    }
-
-    .modal.fade .modal-dialog {
-        transition: transform .3s ease-out;
-        transform: translate(0, -50%);
-    }
-
-    .modal.show .modal-dialog {
-        transform: translate(0, 0);
-    }
-
-    .modal-dialog {
+    .toast-container {
         position: fixed;
-        left: 40%;
-        transform: translateX(-50%);
+        top: 20px;
+        right: 20px;
+        z-index: 10000;
+        display: none; /* Ẩn ban đầu */
     }
 
-    .signup-link {
-        color: #582209;
-        font-size: 0.875rem;
-        line-height: 1.25rem;
-        text-align: center;
-        margin-top: 11%;
+    .toast {
+        padding: 15px;
+        border-radius: 5px;
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
     }
 
-    .forgotPassword {
-        text-decoration: underline;
+    .toast.show {
+        display: block; /* Hiển thị khi có class show */
     }
 
-    .forgotPassword {
-        text-align: center;
-        position: relative;
-        margin-left: 33%;
-        width: 100%;
-        bottom: -15px;
-        font-size: 0.9rem;
-        align-self: center;
-        font-weight: bold;
-        color: #2c1001;
-    }
-
-    .forgotPassword::after {
+    .toast-close-button {
         position: absolute;
-        content: '';
-        width: 200%;
-        height: 1px;
-        bottom: -13px;
-        margin-left: -150%;
-        background: #040404;
-    }
-
-    .forgotPassword:hover {
-        text-decoration: underline;
+        top: 5px;
+        right: 5px;
+        background: none;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
     }
 
 </style>
 
-<body >
-<div id="div1" class="hidden">
-
-    <form action="/change-pass-post" method="post" class="form">
-        <p class="form-title">Đổi Mật Khẩu</p>
-
-        <div class="input-container">
-            <input placeholder="Email or Phone" name="email" type="text" id="email" required>
-        </div>
-
-        <div class="input-container">
-            <input placeholder="Password" name="currentPass" type="password" class="form-control" id="currentPass" required>
-        </div>
-
-        <div class="input-container">
-            <input placeholder="New Password" name="newPass" type="password" class="form-control" id="newPass" required>
-        </div>
-
-        <div class="input-container">
-            <input placeholder="Enter a new password" name="reNewPass" type="password" class="form-control" id="reNewPass" required>
-        </div>
-
-        <button class="submit" type="submit" id="loginButton">
-            Save
-        </button>
-    </form>
-
+<body>
+<div th:if="${successMessage}" class="alert alert-success">
+    <p th:text="${successMessage}"></p>
 </div>
-</body>
+<div th:if="${mess}" class="alert alert-danger">
+    <p th:text="${mess}"></p>
+</div>
+<div id="div1" class="hidden">
+    <form action="/manage/change-pass-post" method="post" class="form">
+        <p class="form-title">Đổi Mật Khẩu</p>
+        <div class="input-container">
+            <input placeholder="Email" name="email" type="text" id="email" required>
+        </div>
+        <div class="input-container">
+            <input placeholder="Mật khẩu hiện tại" name="currentPass" type="password" class="form-control" id="currentPass" required>
+        </div>
+        <div class="input-container">
+            <input placeholder="Mật khẩu mới" name="newPass" type="password" class="form-control" id="newPass" required>
+        </div>
+        <div class="input-container">
+            <input placeholder="Nhập lại mật khẩu mới" name="reNewPass" type="password" class="form-control" id="reNewPass" required>
+        </div>
+        <button class="submit" type="submit" id="loginButton">Lưu</button>
+    </form>
+</div>
 
+<script>
+    function hideToast() {
+        document.getElementById('error').classList.remove('show');
+    }
+
+    window.onload = function() {
+        var toast = document.getElementById('error');
+        if (toast) {
+            toast.classList.add('show');
+            setTimeout(function() {
+                toast.classList.remove('show');
+            }, 5000); // Ẩn sau 5 giây
+        }
+    };
+</script>
+</body>
 </html>

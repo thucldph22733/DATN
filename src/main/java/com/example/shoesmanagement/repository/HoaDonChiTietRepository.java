@@ -13,6 +13,10 @@ import java.util.UUID;
 @Controller
 public interface HoaDonChiTietRepository  extends JpaRepository<HoaDonChiTiet, UUID> {
 
+    void deleteByChiTietGiay(ChiTietGiay chiTietGiay);
+
+    List<HoaDonChiTiet> findByChiTietGiay(ChiTietGiay chiTietGiay);
+
     void deleteById(UUID id);
 
     @Modifying

@@ -12,11 +12,28 @@ import java.util.UUID;
 
 @Service
 public class KhachHangServiceImpl  implements KhachHangService {
+
     @Autowired
     private KhachHangRepository khachHangRepository;
+
     @Override
     public KhachHang checkLoginEmail(String email, String pass) {
         return khachHangRepository.findByEmailKHAndTrangThaiAndMatKhau(email,1,pass);
+    }
+
+    @Override
+    public KhachHang findByEmail(String email) {
+        return khachHangRepository.findByEmailKH(email);
+    }
+
+    @Override
+    public boolean changePassword(KhachHang khachHang, String currentPass, String newPass) {
+        if (khachHang.getMatKhau().equals(currentPass)) {
+            khachHang.setMatKhau(newPass);
+            khachHangRepository.save(khachHang);
+            return true;
+        }
+        return false;
     }
 
     @Override

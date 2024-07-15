@@ -131,9 +131,26 @@
     }
 
 
+    .alert-success {
+        background-color: #D1FAE5;
+        border-color: #34D399;
+        color: #065F46;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 1000;
+    }
+
 </style>
 <body>
-v
+<div th:if="${successMessage}" class="alert alert-success">
+    <p th:text="${successMessage}"></p>
+</div>
+
 <form  class="form" method="post">
     <p class="form-title">Đăng nhập vào hệ thống!</p> <br>
     <p style="margin-top:-20px; text-align: center " >Xin mời bạn nhập đầy đủ thông tin đăng nhập</p>
@@ -147,7 +164,6 @@ v
     <button  class="submit" onclick="login()" type="button" id="loginButton">
         Login
     </button>
-    <a class="forgotPassword" th:href="@{'/buyer/forgotpassword'}">Quên mật khẩu?</a>
 
     <p class="signup-link">
         Bạn chưa có tài khoản ?
@@ -155,7 +171,6 @@ v
     </p>
 </form>
 <div id="loginSuccessModal" class="modal">
-    <!-- Modal content -->
     <div class="modal-content">
         <span class="close">&times;</span>
         <p th:text="${loginSuccessMessage}" style="color: green;"></p>
@@ -224,6 +239,17 @@ v
     }
 </script>
 
+
+<script>
+    window.onload = function() {
+        var successAlert = document.querySelector('.alert-success');
+        if (successAlert) {
+            setTimeout(function() {
+                successAlert.style.display = 'none';
+            }, 3000); // Ẩn sau 3 giây
+        }
+    };
+</script>
 
 </body>
 </html>
