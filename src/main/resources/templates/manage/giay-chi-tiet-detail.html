@@ -67,7 +67,8 @@
                 <ul class="nav user-menu">
 
                     <li class="nav-item dropdown has-arrow flag-nav">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0);"
+                           role="button">
                             <i class="flag flag-vn"></i>
                         </a>
                     </li>
@@ -89,15 +90,20 @@
                     </li>
 
                     <li class="nav-item dropdown has-arrow main-drop">
-                        <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
-                                        <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">
+                        <a href="javascript:void(0);" class="dropdown-toggle nav-link userset"
+                           data-bs-toggle="dropdown">
+                                        <span class="user-img"><img
+                                                th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}"
+                                                alt="">
                     <span class="status online"></span></span>
                         </a>
                         <div class="dropdown-menu menu-drop-user">
                             <div class="profilename">
 
                                 <div class="profileset">
-                                                        <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">
+                                                        <span class="user-img"><img
+                                                                th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}"
+                                                                alt="">
                                                         <span class="status online"></span></span>
                                     <div class="profilesets">
                                         <h6 th:text="${session.managerLogged.hoTenNV}"></h6>
@@ -105,13 +111,15 @@
                                     </div>
                                 </div>
                                 <hr class="m-0">
-                                <a class="dropdown-item" href="profile.html"> <i class="me-2" data-feather="user"></i> My
+                                <a class="dropdown-item" href="profile.html"> <i class="me-2" data-feather="user"></i>
+                                    My
                                     Profile</a>
                                 <a class="dropdown-item" href="generalsettings.html"><i class="me-2"
                                                                                         data-feather="settings"></i>Settings</a>
                                 <hr class="m-0">
-                                <a class="dropdown-item logout pb-0" href="/logout"><img src="/images/img/icons/log-out.svg"
-                                                                                         class="me-2" alt="img">Logout</a>
+                                <a class="dropdown-item logout pb-0" href="/logout"><img
+                                        src="/images/img/icons/log-out.svg"
+                                        class="me-2" alt="img">Logout</a>
                             </div>
                         </div>
                     </li>
@@ -171,7 +179,8 @@
                                 </ul>
                             </li>
                             <li class="submenu">
-                                <a href="javascript:void(0);"><img src="/images/img/icons/purchase1.svg" alt="img"><span> Lịch sử thanh toán</span>
+                                <a href="javascript:void(0);"><img src="/images/img/icons/purchase1.svg"
+                                                                   alt="img"><span> Lịch sử thanh toán</span>
                                     <span class="menu-arrow"></span></a>
                                 <ul>
                                     <li><a href="/manage/history/delivery">Thanh toán tiền mặt</a></li>
@@ -201,10 +210,11 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="/manage/giao-hang"><i data-feather="layers"></i><span> Quản lý giao hàng</span> </a>
+                                <a href="/manage/giao-hang"><i data-feather="layers"></i><span> Quản lý giao hàng</span>
+                                </a>
                             </li>
                             <li>
-                                <a href="/change-password" ><img src="/images/img/icons/edit-6.svg" alt="img"><span>Đổi Mật Khẩu</span>
+                                <a href="/change-password"><img src="/images/img/icons/edit-6.svg" alt="img"><span>Đổi Mật Khẩu</span>
                                 </a>
                             </li>
                         </ul>
@@ -212,114 +222,118 @@
                 </div>
             </div>
             <form th:object="${giayChiTietDetail}" method="post"
-          th:action="@{'/manage/giay-chi-tiet/detail/'+ ${giayChiTietDetail.idCTG}}">
-        <div class="page-wrapper">
-            <div class="content">
-                <div class="page-header">
-                    <div class="page-title">
-                        <h4>Giày Chi Tiết Detail</h4>
-                        <h6>Quản Lý Giày</h6>
-                    </div>
-                </div>
+                  th:action="@{'/manage/giay-chi-tiet/detail/'+ ${giayChiTietDetail.idCTG}}">
+                <div class="page-wrapper">
+                    <div class="content">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <h4>Giày Chi Tiết Detail</h4>
+                                <h6>Quản Lý Giày</h6>
+                            </div>
+                        </div>
 
-                <div class="row">
-                    <div class="col-lg-8 col-sm-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="bar-code-view">
-                                    <div class="row">
-                                        <div class="col-lg-10 image">
-                                            <img th:src="@{'/images/imgsBarcode/' + ${giayChiTietDetail.idCTG} +'.png'}"
-                                                 alt="barcode">
+                        <div class="row">
+                            <div class="col-lg-8 col-sm-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="bar-code-view">
+                                            <div class="row">
+                                                <div class="col-lg-10 image">
+                                                    <img th:src="@{'/images/imgsBarcode/' + ${giayChiTietDetail.idCTG} +'.png'}"
+                                                         alt="barcode">
+                                                </div>
+                                                <div class="col-lg-2"><a class="printimg">
+                                                    <img src="/images/img/icons/printer.svg" alt="print">
+                                                </a></div>
+                                            </div>
                                         </div>
-                                        <div class="col-lg-2"><a class="printimg">
-                                            <img src="/images/img/icons/printer.svg" alt="print">
-                                        </a></div>
+                                        <div class="productdetails">
+                                            <ul class="product-bar">
+                                                <li>
+                                                    <h4>Tên Giày</h4>
+                                                    <h6 th:text="${giayChiTietDetail.giay.tenGiay}"></h6>
+                                                </li>
+                                                <li>
+                                                    <h4>Size</h4>
+                                                    <h6 th:text="${giayChiTietDetail.size.soSize}"></h6>
+                                                </li>
+                                                <li>
+                                                    <h4>Màu Sắc</h4>
+                                                    <h6 th:text="${giayChiTietDetail.mauSac.tenMau}"></h6>
+                                                </li>
+                                                <li>
+                                                    <h4>Số Lượng</h4>
+                                                    <h6 th:text="${giayChiTietDetail.soLuong}"></h6>
+                                                </li>
+                                                <li>
+                                                    <h4>Giá Bán</h4>
+                                                    <h6 th:text="${#numbers.formatDecimal(giayChiTietDetail.giaBan, 2, 'COMMA', 1, 'POINT')} + ' đ'"></h6>
+                                                </li>
+                                                <li>
+                                                    <h4>Trọng Lượng</h4>
+                                                    <h6 th:text="${giayChiTietDetail.trongLuong} + ' gram'"></h6>
+                                                </li>
+                                                <li>
+                                                    <h4>Năm Sản Xuất</h4>
+                                                    <h6 th:text="${giayChiTietDetail.namSX}"></h6>
+                                                </li>
+                                                <li>
+                                                    <h4>Năm Bảo Hành</h4>
+                                                    <h6 th:text="${giayChiTietDetail.namBH}"></h6>
+                                                </li>
+                                                <li>
+                                                    <h4>Trạng Thái</h4>
+                                                    <h6 th:if="${giayChiTietDetail.trangThai == 1}">Hoạt Động</h6>
+                                                    <h6 th:unless="${giayChiTietDetail.trangThai == 1}">Không Hoạt
+                                                        Động</h6>
+                                                </li>
+                                                <li>
+                                                    <h4>Mô Tả</h4>
+                                                    <h6 th:text="${giayChiTietDetail.giay.moTa}"></h6>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="productdetails">
-                                    <ul class="product-bar">
-                                        <li>
-                                            <h4>Tên Giày</h4>
-                                            <h6 th:text="${giayChiTietDetail.giay.tenGiay}"></h6>
-                                        </li>
-                                        <li>
-                                            <h4>Size</h4>
-                                            <h6 th:text="${giayChiTietDetail.size.soSize}"></h6>
-                                        </li>
-                                        <li>
-                                            <h4>Màu Sắc</h4>
-                                            <h6 th:text="${giayChiTietDetail.mauSac.tenMau}"></h6>
-                                        </li>
-                                        <li>
-                                            <h4>Số Lượng</h4>
-                                            <h6 th:text="${giayChiTietDetail.soLuong}"></h6>
-                                        </li>
-                                        <li>
-                                            <h4>Giá Bán</h4>
-                                            <h6 th:text="${#numbers.formatDecimal(giayChiTietDetail.giaBan, 2, 'COMMA', 1, 'POINT')} + ' đ'"></h6>
-                                        </li>
-                                        <li>
-                                            <h4>Trọng Lượng</h4>
-                                            <h6 th:text="${giayChiTietDetail.trongLuong} + ' gram'"></h6>
-                                        </li>
-                                        <li>
-                                            <h4>Năm Sản Xuất</h4>
-                                            <h6 th:text="${giayChiTietDetail.namSX}"></h6>
-                                        </li>
-                                        <li>
-                                            <h4>Năm Bảo Hành</h4>
-                                            <h6 th:text="${giayChiTietDetail.namBH}"></h6>
-                                        </li>
-                                        <li>
-                                            <h4>Trạng Thái</h4>
-                                            <h6 th:if="${giayChiTietDetail.trangThai == 1}">Hoạt Động</h6>
-                                            <h6 th:unless="${giayChiTietDetail.trangThai == 1}">Không Hoạt Động</h6>
-                                        </li>
-                                        <li>
-                                            <h4>Mô Tả</h4>
-                                            <h6 th:text="${giayChiTietDetail.giay.moTa}"></h6>
-                                        </li>
-                                    </ul>
-                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="slider-product-details">
-                                    <div class="owl-carousel owl-theme">
-                                        <div class="slider-product">
-                                            <img th:src="@{'/images/imgsProducts/'+ ${giayChiTietDetail.hinhAnh.url1}}"
-                                                 alt="img"/>
+                            <div class="col-lg-4 col-sm-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="slider-product-details">
+                                            <div class="owl-carousel owl-theme">
+                                                <div class="slider-product">
+                                                    <img th:src="@{'/images/imgsProducts/'+ ${giayChiTietDetail.hinhAnh.url1}}"
+                                                         alt="img"/>
+                                                </div>
+                                                <div class="slider-product">
+                                                    <img th:src="@{'/images/imgsProducts/'+ ${giayChiTietDetail.hinhAnh.url2}}"
+                                                         alt="img"/>
+                                                </div>
+                                                <div class="slider-product">
+                                                    <img th:src="@{'/images/imgsProducts/'+ ${giayChiTietDetail.hinhAnh.url3}}"
+                                                         alt="img"/>
+                                                </div>
+                                                <div class="slider-product">
+                                                    <img th:src="@{'/images/imgsProducts/'+ ${giayChiTietDetail.hinhAnh.url4}}"
+                                                         alt="img"/>
+                                                </div>
+                                                <!--                                        <div class="slider-product">-->
+                                                <!--                                            <img th:src="@{'/images/imgsProducts/'+ ${giayChiTietDetail.hinhAnh.url5}}"-->
+                                                <!--                                                 alt="img"/>-->
+                                                <!--                                        </div>-->
+                                            </div>
                                         </div>
-                                        <div class="slider-product">
-                                            <img th:src="@{'/images/imgsProducts/'+ ${giayChiTietDetail.hinhAnh.url2}}"
-                                                 alt="img"/>
-                                        </div>
-                                        <div class="slider-product">
-                                            <img th:src="@{'/images/imgsProducts/'+ ${giayChiTietDetail.hinhAnh.url3}}"
-                                                 alt="img"/>
-                                        </div>
-                                        <div class="slider-product">
-                                            <img th:src="@{'/images/imgsProducts/'+ ${giayChiTietDetail.hinhAnh.url4}}"
-                                                 alt="img"/>
-                                        </div>
-                                        <!--                                        <div class="slider-product">-->
-                                        <!--                                            <img th:src="@{'/images/imgsProducts/'+ ${giayChiTietDetail.hinhAnh.url5}}"-->
-                                        <!--                                                 alt="img"/>-->
-                                        <!--                                        </div>-->
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
+
 <script src="/js/jquery-3.6.0.min.js"></script>
 
 <script src="/js/feather.min.js"></script>

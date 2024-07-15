@@ -2,6 +2,7 @@ package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.*;
 import com.example.shoesmanagement.repository.HoaDonChiTietRepository;
+import com.example.shoesmanagement.repository.KhuyenMaiRepository;
 import com.example.shoesmanagement.repository.SizeRepository;
 import com.example.shoesmanagement.service.*;
 import com.example.shoesmanagement.viewModel.GiayViewModel;
@@ -13,7 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("/manage/bill/")
 @Controller
@@ -65,6 +69,9 @@ public class HoaDonOnlineController {
     private ChucVuService chucVuService;
     @Autowired
     private HttpSession httpSession;
+
+    @Autowired
+    private KhuyenMaiRepository khuyenMaiRepository;
 
     @GetMapping("online")
     private String manageBillOnline(Model model) {
@@ -164,6 +171,11 @@ public class HoaDonOnlineController {
         hoaDon.setLyDoHuy(lyDoHuy);
         hoaDon.setTgHuy(date);
         hoaDon.setTrangThai(5);
+
+        KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
+        khuyenMai.setSoLuong(khuyenMai.getSoLuong() + 1);
+        khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() - 1);
+        khuyenMaiRepository.saveAndFlush(khuyenMai);
 
         hoaDonService.save(hoaDon);
 
@@ -302,7 +314,7 @@ public class HoaDonOnlineController {
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam(value = "keyword", required = false)String keyword, Model model,
+    public String search(@RequestParam(value = "keyword", required = false) String keyword, Model model,
                          RedirectAttributes redirectAttributes) {
         UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
         if (keyword.length() >= 3 && keyword.substring(0, 3).equals("CTG")) {
@@ -310,7 +322,7 @@ public class HoaDonOnlineController {
             if (chiTietGiay == null) {
                 redirectAttributes.addFlashAttribute("messageError", true);
                 redirectAttributes.addFlashAttribute("tbaoError", "Không tìm thấy sản mã phẩm ");
-                return "redirect:/manage/bill/online" ;
+                return "redirect:/manage/bill/online";
             }
             model.addAttribute("idHoaDon", idHoaDon);
         } else {
@@ -318,7 +330,7 @@ public class HoaDonOnlineController {
             if (list.isEmpty()) {
                 redirectAttributes.addFlashAttribute("messageError", true);
                 redirectAttributes.addFlashAttribute("tbaoError", "Không tìm thấy sản phẩm");
-                return "redirect:/manage/bill/online" ;
+                return "redirect:/manage/bill/online";
             }
             model.addAttribute("listSanPham", list);
         }
@@ -393,12 +405,9 @@ public class HoaDonOnlineController {
         hoaDonChiTietRepository.deleteHoaDonChiTietByChiTietGiay(chiTietGiay.getIdCTG());
 
 
-
         redirectAttribute.addFlashAttribute("successMessage", "Sản phẩm đã được xoá khỏi giỏ hàng thành công!");
         return "redirect:/manage/bill/online"; // Điều hướng về trang danh sách chi tiết giày
     }
-
-
 
 
 }
