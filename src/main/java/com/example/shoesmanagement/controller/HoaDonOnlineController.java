@@ -412,6 +412,7 @@ public class HoaDonOnlineController {
 
 
 
+
     @PostMapping("/deleteChiTietGiay/{idCTG}/{idHD}")
     @ResponseBody
     public ResponseEntity<String> deleteChiTietGiay(@PathVariable UUID idCTG, @PathVariable UUID idHD) {
@@ -434,6 +435,7 @@ public class HoaDonOnlineController {
             // Trả về phản hồi lỗi
             return ResponseEntity.status(500).body("Có lỗi xảy ra trong quá trình xoá sản phẩm!");
         }
+
     }
 
 

@@ -2,6 +2,9 @@ package com.example.shoesmanagement.buyerController;
 
 import com.example.shoesmanagement.model.GioHang;
 import com.example.shoesmanagement.model.KhachHang;
+
+import com.example.shoesmanagement.model.NhanVien;
+
 import com.example.shoesmanagement.service.EmailService;
 import com.example.shoesmanagement.service.GioHangService;
 import com.example.shoesmanagement.service.KhachHangService;
@@ -45,6 +48,7 @@ public class AuthController {
     public String getFormBuyerLogin(){
         return "online/login";
     }
+
     @GetMapping("/register")
     public String getFormBuyerRegister(Model model) {
         KhachHang khachHang = new KhachHang();
@@ -57,6 +61,42 @@ public class AuthController {
     public String getFormBuyerLogout() {
         session.invalidate();
         return "redirect:/buyer/";
+    }
+
+
+
+    @GetMapping("/change-password")
+    public String changePasswordPage(Model model) {
+        model.addAttribute("email", ""); // Truyền email mặc định vào form
+        return "online/change-password";
+    }
+
+    @PostMapping("/change-password")
+    public String changePasswordPost(
+            @RequestParam("email") String email,
+            @RequestParam("currentPass") String currentPass,
+            @RequestParam("newPass") String newPass,
+            @RequestParam("reNewPass") String reNewPass,
+            RedirectAttributes redirectAttributes) {
+
+        if (!newPass.equals(reNewPass)) {
+            redirectAttributes.addFlashAttribute("mess", "Mật khẩu mới và nhập lại mật khẩu mới không khớp!");
+            return "redirect:/buyer/change-password";
+        }
+
+        KhachHang khachHang = khachHangService.findByEmail(email);
+        if (khachHang == null) {
+            redirectAttributes.addFlashAttribute("mess", "Email không tồn tại!");
+            return "redirect:/buyer/change-password";
+        }
+
+        if (!khachHangService.changePassword(khachHang, currentPass, newPass)) {
+            redirectAttributes.addFlashAttribute("mess", "Mật khẩu hiện tại không đúng!");
+            return "redirect:/buyer/change-password";
+        }
+
+        redirectAttributes.addFlashAttribute("successMessage", "Đổi mật khẩu thành công!!!");
+        return "redirect:/buyer/login"; // Điều hướng về trang đăng nhập
     }
 
 
@@ -102,6 +142,7 @@ public class AuthController {
             return "online/forgotPassword";
         }
     }
+
 
     @PostMapping("/login")
     public ResponseEntity<String> buyerLogin(Model model, HttpSession session) throws MessagingException {

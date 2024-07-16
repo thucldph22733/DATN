@@ -99,39 +99,24 @@
         margin-top: 11%;
     }
 
-    .forgotPassword {
-        text-decoration: underline;
-    }
 
-    .forgotPassword {
-        text-align: center;
-        position: relative;
-        margin-left: 33%;
-        width: 100%;
-        bottom: -15px;
-        font-size: 0.9rem;
-        align-self: center;
-        font-weight: bold;
-        color: #2c1001;
-    }
-
-    .forgotPassword::after {
-        position: absolute;
-        content: '';
-        width: 200%;
-        height: 1px;
-        bottom: -13px;
-        margin-left: -150%;
-        background: #040404;
-    }
-
-    .forgotPassword:hover {
-        text-decoration: underline;
+    .alert-success {
+        background-color: #D1FAE5;
+        border-color: #34D399;
+        color: #065F46;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
 </style>
 
 <body>
+
+<div th:if="${successMessage}" class="alert alert-success">
+    <p th:text="${successMessage}"></p>
+</div>
 
 <div id="div1" class="hidden">
 
@@ -154,8 +139,27 @@
 
         <p class="signup-link">
         </p>
+
     </form>
+
 </div>
+
+<script>
+    function hideToast() {
+        document.getElementById('error').classList.remove('show');
+    }
+
+    window.onload = function() {
+        var toast = document.getElementById('error');
+        if (toast) {
+            toast.classList.add('show');
+            setTimeout(function() {
+                toast.classList.remove('show');
+            }, 5000); // Ẩn sau 5 giây
+        }
+    };
+</script>
+
 </body>
 
 </html>

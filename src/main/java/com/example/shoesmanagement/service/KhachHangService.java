@@ -9,7 +9,9 @@ public interface KhachHangService {
     KhachHang checkLoginEmail(String email, String pass);
     KhachHang checkEmail(String email);
     KhachHang checkLoginSDT(String sdt, String pass);
+    KhachHang findByEmail(String email);
 
+    boolean changePassword(KhachHang khachHang, String currentPass, String newPass);
     public List<KhachHang> getAllKhachHang();
 
     public void save(KhachHang khachHang);

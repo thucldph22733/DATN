@@ -96,4 +96,21 @@ public class HoaDon {
     @ManyToOne
     @JoinColumn(name = "id_khuyen_mai")
     private KhuyenMai khuyenMai;
+
+    public void updateTotalQuantityAndPrice() {
+        int totalQuantity = 0;
+        double totalPrice = 0.0;
+
+        for (HoaDonChiTiet chiTiet : hoaDonChiTiets) {
+            totalQuantity += chiTiet.getSoLuong();
+            totalPrice += chiTiet.getChiTietGiay().getGiaBan() * chiTiet.getSoLuong();
+        }
+
+        this.tongSP = totalQuantity;
+        this.tongTienSanPham = totalPrice;
+
+        // Tính tổng tiền bao gồm cả tiền ship nếu có
+        this.tongTien = (this.tongTienSanPham != null ? this.tongTienSanPham : 0) +
+                (this.tienShip != null ? this.tienShip : 0);
+    }
 }

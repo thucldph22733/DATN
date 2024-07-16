@@ -735,7 +735,7 @@ private GioHangService gioHangService;
             lichSuThanhToan.setTgThanhToan(date);
             lichSuThanhToan.setSoTienThanhToan(hoaDon.getTongTien());
             lichSuThanhToan.setNoiDungThanhToan("Đã thanh toán thành công hóa đơn " + hoaDon.getMaHD() + " ------   ||  Mã VNPAY : " + transactionId + " ||  Số tiền : " + totalPrice);
-            lichSuThanhToan.setKhachHang(khachHang);
+            lichSuThanhToan.setKhachHang    (khachHang);
             lichSuThanhToan.setHoaDon(hoaDon);
             lichSuThanhToan.setMaLSTT("LSTT" + khachHang.getMaKH() + generateRandomNumbers());
             lichSuThanhToan.setTrangThai(0);
