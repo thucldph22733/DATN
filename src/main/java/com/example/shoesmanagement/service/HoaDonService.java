@@ -36,4 +36,5 @@ public interface HoaDonService {
     List<HoaDon> listAllHoaDonByNhanVienHienTai(NhanVien nhanVien);
 
     List<HoaDon> getAllHoaDonOffLine();
+    void updateHoaDon(HoaDon hoaDon);
 }

@@ -313,7 +313,7 @@ private GioHangService gioHangService;
                 .sum();
 
         double total = hoaDonChiTietList.stream()
-                .mapToDouble(HoaDonChiTiet::getDonGia)
+                .mapToDouble(hoaDonChiTiet -> hoaDonChiTiet.getSoLuong() * hoaDonChiTiet.getDonGia())
                 .sum();
 
         // Cập nhật phí vận chuyển sau khi thêm địa chỉ mới
@@ -331,9 +331,14 @@ private GioHangService gioHangService;
         hoaDonService.add(hoaDon);
 
         Double shippingFee2 = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
-
+// Calculate expected delivery date
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DATE, shippingFeeService.tinhNgayNhanDuKien(diaChiKH.getDiaChiChiTiet()));
+        Date ngayDuKien = calendar.getTime();
+        model.addAttribute("ngayDuKien", ngayDuKien);
         model.addAttribute("sumQuantity", sumQuantity);
-        model.addAttribute("total", total);
+        model.addAttribute("total", total );
         model.addAttribute("diaChiKHDefault", diaChiKH);
         model.addAttribute("listProductCheckOut", hoaDonChiTietList);
         model.addAttribute("listAddressKH", diaChiKHList);
@@ -343,7 +348,7 @@ private GioHangService gioHangService;
         model.addAttribute("addNewAddressNotNull", true);
         model.addAttribute("billPlaceOrder", hoaDon);
         model.addAttribute("shippingFee", shippingFee2);
-        model.addAttribute("toTalOder", total + shippingFee2 - giaTienGiam);
+        model.addAttribute("toTalOder", (total) + shippingFee2 - giaTienGiam);
 
         session.removeAttribute("diaChiGiaoHang");
         session.setAttribute("diaChiGiaoHang", diaChiKH);
@@ -376,9 +381,8 @@ private GioHangService gioHangService;
                 .mapToInt(HoaDonChiTiet::getSoLuong)
                 .sum();
         double total = hoaDonChiTietList.stream()
-                .mapToDouble(HoaDonChiTiet::getDonGia)
+                .mapToDouble(hoaDonChiTiet -> hoaDonChiTiet.getSoLuong() * hoaDonChiTiet.getDonGia())
                 .sum();
-
         hoaDonService.add(hoaDon);
 
         Double shippingFee = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
@@ -394,7 +398,8 @@ private GioHangService gioHangService;
         model.addAttribute("ngayDuKien", ngayDuKien);
 
         model.addAttribute("sumQuantity", sumQuantity);
-        model.addAttribute("total", total);
+        model.addAttribute("total", total );
+
         model.addAttribute("diaChiKHDefault", diaChiKHChange);
         model.addAttribute("fullNameLogin", khachHang.getHoTenKH());
 
@@ -403,8 +408,7 @@ private GioHangService gioHangService;
         model.addAttribute("addNewAddressNotNull", true);
         model.addAttribute("shippingFee", shippingFee);
         model.addAttribute("billPlaceOrder", hoaDon);
-        model.addAttribute("toTalOder", total + shippingFee - giaTienGiam);
-
+        model.addAttribute("toTalOder", (total ) + shippingFee - giaTienGiam);
         session.removeAttribute("diaChiGiaoHang");
         session.setAttribute("diaChiGiaoHang", diaChiKHChange);
 

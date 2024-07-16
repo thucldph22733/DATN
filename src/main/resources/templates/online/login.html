@@ -147,9 +147,11 @@
 
 </style>
 <body>
+
 <div th:if="${successMessage}" class="alert alert-success">
     <p th:text="${successMessage}"></p>
 </div>
+
 
 <form  class="form" method="post">
     <p class="form-title">Đăng nhập vào hệ thống!</p> <br>
@@ -164,6 +166,8 @@
     <button  class="submit" onclick="login()" type="button" id="loginButton">
         Login
     </button>
+
+
 
     <p class="signup-link">
         Bạn chưa có tài khoản ?
