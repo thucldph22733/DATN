@@ -295,9 +295,9 @@
                                                                src="/images/img/icons/dash2.svg" alt="img"></span>
                                                     </div>
                                                     <div class="dash-widgetcontent">
-<!--                                                        <h5>₫<span class="counters"-->
-<!--                                                                   th:text="${#numbers.formatDecimal(totalAmount, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></span>-->
-<!--                                                        </h5>-->
+                                                        <h5>₫<span class="counters"
+                                                                   th:text="${#numbers.formatDecimal(totalAmount, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></span>
+                                                        </h5>
                                                         <h6>Tổng tiền</h6>
                                                     </div>
                                                 </div>
@@ -372,17 +372,6 @@
                                                     </div>
                                                     <div class="dash-imgs">
                                                         <i class="fe fe-file"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-2 col-sm-6 col-12 d-flex">
-                                                <div class="dash-count das1">
-                                                    <div class="dash-counts">
-                                                        <h4 th:text="${hoaDonDaThanhToan}"></h4>
-                                                        <h5>Hóa đơn đã thanh toán</h5>
-                                                    </div>
-                                                    <div class="dash-imgs">
-                                                        <i class="fe fe-file-plus"></i>
                                                     </div>
                                                 </div>
                                             </div>

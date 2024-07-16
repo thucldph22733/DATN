@@ -24,7 +24,8 @@ import java.util.*;
 public class CheckOutController {
     @Autowired
     private HttpSession session;
-
+@Autowired
+private KhachHangService khachHangService;
     @Autowired
     private HoaDonService hoaDonService;
 
@@ -427,6 +428,9 @@ private GioHangService gioHangService;
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
         }
+        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+        model.addAttribute("khachHang1", khachHang1);
+
         String hinhThucThanhToan = request.getParameter("hinhThucThanhToan");
         String loiNhan = request.getParameter("loiNhan");
 
@@ -492,7 +496,7 @@ private GioHangService gioHangService;
             hoaDon.setTrangThai(0);
 
             hoaDonService.add(hoaDon);
-
+            giaoHang.setPhiGiaoHang(shippingFee);
             LichSuThanhToan lichSuThanhToan = new LichSuThanhToan();
             lichSuThanhToan.setTgThanhToan(new Date());
             lichSuThanhToan.setSoTienThanhToan(hoaDon.getTongTien());
@@ -510,7 +514,9 @@ private GioHangService gioHangService;
             hoaDon.setTrangThai(1);
 
             hoaDonService.add(hoaDon);
-
+            giaoHang.setPhiGiaoHang(shippingFee);
+            giaoHangService.saveGiaoHang(giaoHang);
+            giaoHang.setNoiDung("Chờ nhân viên xác nhận");
             LichSuThanhToan lichSuThanhToan = new LichSuThanhToan();
             lichSuThanhToan.setTgThanhToan(new Date());
             lichSuThanhToan.setSoTienThanhToan(hoaDon.getTongTien());
@@ -714,8 +720,10 @@ private GioHangService gioHangService;
 
     @GetMapping("/vnpay-payment")
     public String GetMapping(Model model) throws ParseException {
+
         int paymentStatus = vnPayService.orderReturn(request);
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi");
+
 
         if (hoaDon == null) {
             hoaDon = (HoaDon) session.getAttribute("HoaDonThanhToan");
@@ -728,6 +736,11 @@ private GioHangService gioHangService;
         String totalPrice = request.getParameter("vnp_Amount");
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        } else {
+        }
 
         if (paymentStatus == 1) {
 
