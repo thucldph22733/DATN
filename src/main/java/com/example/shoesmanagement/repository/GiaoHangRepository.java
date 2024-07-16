@@ -11,7 +11,7 @@ import java.util.UUID;
 @Repository
 public interface GiaoHangRepository extends JpaRepository<GiaoHang, UUID> {
 
-    List<GiaoHang> findByHoaDonAndTrangThaiOrderByThoiGianDesc(HoaDon hoaDon, int trangThai);
-
-    List<GiaoHang> findByHoaDonOrderByThoiGianDesc(HoaDon hoaDon);
+//    List<GiaoHang> findByHoaDonAndTrangThaiOrderByThoiGianDesc(HoaDon hoaDon, int trangThai);
+//
+//    List<GiaoHang> findByHoaDonOrderByThoiGianDesc(HoaDon hoaDon);
 }

@@ -156,7 +156,7 @@ public class HoaDonOnlineController {
         hoaDonService.add(hoaDon);
 
         GiaoHang giaoHang = hoaDon.getGiaoHang();
-        giaoHang.setNoiDung("Xác nhận nhân viên giao hàng");
+        giaoHang.setNoiDung("Chờ lấy hàng");
         giaoHang.setTgShip(date);
         giaoHangService.saveGiaoHang(giaoHang);
 
@@ -262,6 +262,10 @@ public class HoaDonOnlineController {
                     if (x.getHinhThucThanhToan() == 1) {
                         soLuongHoaDonBanking++;
                         listHoaDonOnlineBaking.add(x);
+                    }
+                    if( x.getLoaiHD() == 1 || x.getTrangThai() == 0 || x.getTrangThai() == 1 ||x.getTrangThai() ==2 ||x.getTrangThai() == 3 ||x.getTrangThai() == 4 ||x.getTrangThai() == 5) {
+                        soLuongHoaDonOnline ++;
+
                     }
                     if (x.getHinhThucThanhToan() == 0) {
                         soLuongHoaDonThanhToanKhiNhanHang++;
