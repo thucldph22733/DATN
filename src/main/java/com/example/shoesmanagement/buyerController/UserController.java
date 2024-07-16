@@ -296,6 +296,8 @@ public class UserController {
     private String getPurchaseShip(Model model) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+        model.addAttribute("khachHang1", khachHang1);
         if (session.getAttribute("KhachHangLogin") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
@@ -318,6 +320,8 @@ public class UserController {
     private String getPurchaseShipConfirm(Model model) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+        model.addAttribute("khachHang1", khachHang1);
         if (session.getAttribute("KhachHangLogin") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
@@ -340,6 +344,8 @@ public class UserController {
     private String getPurchaseReceive(Model model){
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+        model.addAttribute("khachHang1", khachHang1);
         if (session.getAttribute("KhachHangLogin") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
@@ -362,6 +368,8 @@ public class UserController {
     private String getPurchaseCompleted(Model model) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+        model.addAttribute("khachHang1", khachHang1);
         if (session.getAttribute("KhachHangLogin") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
