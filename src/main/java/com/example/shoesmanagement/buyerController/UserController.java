@@ -127,7 +127,8 @@ public class UserController {
     private String getAddressAccount(Model model) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-
+        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+        model.addAttribute("khachHang1", khachHang1);
         UserForm(model, khachHang);
 
         List<DiaChiKH> diaChiKHDefaultList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, true, 1);
@@ -151,7 +152,8 @@ public class UserController {
     @PostMapping("/addresses/add")
     private String addnewAddress(Model model, @RequestParam(name = "defaultSelected", defaultValue = "false") boolean defaultSelected) {
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-
+        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+        model.addAttribute("khachHang1", khachHang1);
         String nameAddress = request.getParameter("nameAddress");
         String fullName = request.getParameter("fullName");
         String phoneAddress = request.getParameter("phoneAddress");
