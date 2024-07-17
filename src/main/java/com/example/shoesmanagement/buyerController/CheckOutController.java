@@ -24,8 +24,7 @@ import java.util.*;
 public class CheckOutController {
     @Autowired
     private HttpSession session;
-@Autowired
-private KhachHangService khachHangService;
+
     @Autowired
     private HoaDonService hoaDonService;
 
@@ -314,7 +313,7 @@ private GioHangService gioHangService;
                 .sum();
 
         double total = hoaDonChiTietList.stream()
-                .mapToDouble(hoaDonChiTiet -> hoaDonChiTiet.getSoLuong() * hoaDonChiTiet.getDonGia())
+                .mapToDouble(HoaDonChiTiet::getDonGia)
                 .sum();
 
         // Cập nhật phí vận chuyển sau khi thêm địa chỉ mới
@@ -332,14 +331,9 @@ private GioHangService gioHangService;
         hoaDonService.add(hoaDon);
 
         Double shippingFee2 = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
-// Calculate expected delivery date
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        calendar.add(Calendar.DATE, shippingFeeService.tinhNgayNhanDuKien(diaChiKH.getDiaChiChiTiet()));
-        Date ngayDuKien = calendar.getTime();
-        model.addAttribute("ngayDuKien", ngayDuKien);
+
         model.addAttribute("sumQuantity", sumQuantity);
-        model.addAttribute("total", total );
+        model.addAttribute("total", total);
         model.addAttribute("diaChiKHDefault", diaChiKH);
         model.addAttribute("listProductCheckOut", hoaDonChiTietList);
         model.addAttribute("listAddressKH", diaChiKHList);
@@ -349,7 +343,7 @@ private GioHangService gioHangService;
         model.addAttribute("addNewAddressNotNull", true);
         model.addAttribute("billPlaceOrder", hoaDon);
         model.addAttribute("shippingFee", shippingFee2);
-        model.addAttribute("toTalOder", (total) + shippingFee2 - giaTienGiam);
+        model.addAttribute("toTalOder", total + shippingFee2 - giaTienGiam);
 
         session.removeAttribute("diaChiGiaoHang");
         session.setAttribute("diaChiGiaoHang", diaChiKH);
@@ -382,8 +376,9 @@ private GioHangService gioHangService;
                 .mapToInt(HoaDonChiTiet::getSoLuong)
                 .sum();
         double total = hoaDonChiTietList.stream()
-                .mapToDouble(hoaDonChiTiet -> hoaDonChiTiet.getSoLuong() * hoaDonChiTiet.getDonGia())
+                .mapToDouble(HoaDonChiTiet::getDonGia)
                 .sum();
+
         hoaDonService.add(hoaDon);
 
         Double shippingFee = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
@@ -399,8 +394,7 @@ private GioHangService gioHangService;
         model.addAttribute("ngayDuKien", ngayDuKien);
 
         model.addAttribute("sumQuantity", sumQuantity);
-        model.addAttribute("total", total );
-
+        model.addAttribute("total", total);
         model.addAttribute("diaChiKHDefault", diaChiKHChange);
         model.addAttribute("fullNameLogin", khachHang.getHoTenKH());
 
@@ -409,7 +403,8 @@ private GioHangService gioHangService;
         model.addAttribute("addNewAddressNotNull", true);
         model.addAttribute("shippingFee", shippingFee);
         model.addAttribute("billPlaceOrder", hoaDon);
-        model.addAttribute("toTalOder", (total ) + shippingFee - giaTienGiam);
+        model.addAttribute("toTalOder", total + shippingFee - giaTienGiam);
+
         session.removeAttribute("diaChiGiaoHang");
         session.setAttribute("diaChiGiaoHang", diaChiKHChange);
 
@@ -428,9 +423,6 @@ private GioHangService gioHangService;
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
         }
-        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
-        model.addAttribute("khachHang1", khachHang1);
-
         String hinhThucThanhToan = request.getParameter("hinhThucThanhToan");
         String loiNhan = request.getParameter("loiNhan");
 
@@ -496,7 +488,7 @@ private GioHangService gioHangService;
             hoaDon.setTrangThai(0);
 
             hoaDonService.add(hoaDon);
-            giaoHang.setPhiGiaoHang(shippingFee);
+
             LichSuThanhToan lichSuThanhToan = new LichSuThanhToan();
             lichSuThanhToan.setTgThanhToan(new Date());
             lichSuThanhToan.setSoTienThanhToan(hoaDon.getTongTien());
@@ -514,9 +506,7 @@ private GioHangService gioHangService;
             hoaDon.setTrangThai(1);
 
             hoaDonService.add(hoaDon);
-            giaoHang.setPhiGiaoHang(shippingFee);
-            giaoHangService.saveGiaoHang(giaoHang);
-            giaoHang.setNoiDung("Chờ nhân viên xác nhận");
+
             LichSuThanhToan lichSuThanhToan = new LichSuThanhToan();
             lichSuThanhToan.setTgThanhToan(new Date());
             lichSuThanhToan.setSoTienThanhToan(hoaDon.getTongTien());
@@ -720,10 +710,8 @@ private GioHangService gioHangService;
 
     @GetMapping("/vnpay-payment")
     public String GetMapping(Model model) throws ParseException {
-
         int paymentStatus = vnPayService.orderReturn(request);
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi");
-
 
         if (hoaDon == null) {
             hoaDon = (HoaDon) session.getAttribute("HoaDonThanhToan");
@@ -736,11 +724,6 @@ private GioHangService gioHangService;
         String totalPrice = request.getParameter("vnp_Amount");
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-        if (khachHang != null) {
-            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
-            model.addAttribute("khachHang1", khachHang1);
-        } else {
-        }
 
         if (paymentStatus == 1) {
 
