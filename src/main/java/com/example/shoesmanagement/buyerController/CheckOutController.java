@@ -26,6 +26,9 @@ public class CheckOutController {
     private HttpSession session;
 
     @Autowired
+    private KhachHangService khachHangService;
+
+    @Autowired
     private HoaDonService hoaDonService;
 
     @Autowired
@@ -58,8 +61,8 @@ public class CheckOutController {
 
     @Autowired
     private KhuyenMaiService khuyenMaiService;
-@Autowired
-private GioHangService gioHangService;
+    @Autowired
+    private GioHangService gioHangService;
 
     @Autowired
     private KhuyenMaiRepository khuyenMaiRepository;

@@ -385,15 +385,6 @@ public class HoaDonOnlineController {
         model.addAttribute("tongTien", tongTien);
 
         return "redirect:/manage-bill-online/online";
-    }
-
-    @PostMapping("/deleteChiTietGiay/{idCTG}")
-    public String deleteChiTietGiay(Model model, @PathVariable UUID idCTG, RedirectAttributes redirectAttribute) {
-        ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idCTG);
-        hoaDonChiTietRepository.deleteHoaDonChiTietByChiTietGiay(chiTietGiay.getIdCTG());
-        redirectAttribute.addFlashAttribute("successMessage", "Sản phẩm đã được xoá khỏi giỏ hàng thành công!");
-        return "redirect:/manage/bill/online"; // Điều hướng về trang danh sách chi tiết giày
-    }
 
 
 

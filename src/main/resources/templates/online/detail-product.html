@@ -33,9 +33,11 @@
                 width: 100%;
                 z-index: 100;
             }
+
             .radio-input input {
                 display: none;
             }
+
             .radio-input {
                 padding: 30px 0 30px 0;
                 position: relative;
@@ -47,6 +49,7 @@
                 flex-wrap: wrap;
                 margin: auto;
             }
+
             .radio-input label {
                 width: 100px;
                 padding: 10px;
@@ -59,12 +62,14 @@
                 margin-right: 50px;
                 margin-top: 20px;
             }
+
             .radio-input label:has(input:checked) {
                 color: #fff;
                 background-color: #000000;
             }
-            .link{
-                text-decoration:none;
+
+            .link {
+                text-decoration: none;
                 height: 100%;
                 width: 100px;
                 z-index: 1;
@@ -74,12 +79,14 @@
                 flex-direction: column;
                 text-align: center;
             }
-            .product__details__pic{
+
+            .product__details__pic {
                 width: 50%;
                 float: left;
-                background-color:revert;
+                background-color: revert;
             }
-            .product__details__text{
+
+            .product__details__text {
                 width: 171%;
                 margin-top: 40px;
             }
@@ -101,16 +108,17 @@
         <div class="container">
             <div class="row">
 
-                <div class="col-lg-3  d-flex align-items-center" >
+                <div class="col-lg-3  d-flex align-items-center">
                     <div class="header__top__left">
                         <p>Chào mừng đến với trải nghiệm mua sắm</p>
                     </div>
                 </div>
 
-                <div class="col-lg-6 d-flex align-items-center" >
+                <div class="col-lg-6 d-flex align-items-center">
                     <form action="/buyer/search" method="post">
                         <div style="width: 100%; display: flex; background-color: white; border: 10px;">
-                            <input th:value="${keyword}" name="keyWord" class="form-control" style="border: none; width: 500px;"  placeholder="Nhập văn bản..." type="text">
+                            <input th:value="${keyword}" name="keyWord" class="form-control"
+                                   style="border: none; width: 500px;" placeholder="Nhập văn bản..." type="text">
                             <div style="width: 60px; background-color: #f3f2ee; height: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                                 <button type="submit" href=""><img src="/images/img/icon/search.png" alt=""></button>
                             </div>
@@ -121,7 +129,8 @@
                 <div class="col-lg-3 d-flex align-items-center">
 
 
-                    <div th:if="${successMessage}" th:attr="data-message=${successMessage}" id="success-toast" style="position: fixed; top: 1rem; right: 1rem; z-index: 1050;">
+                    <div th:if="${successMessage}" th:attr="data-message=${successMessage}" id="success-toast"
+                         style="position: fixed; top: 1rem; right: 1rem; z-index: 1050;">
                         <!-- Toast container, ẩn mặc định và sẽ được hiển thị bằng JavaScript -->
                         <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="7000">
                             <div class="toast-header">
@@ -135,38 +144,42 @@
                         </div>
                     </div>
 
-<!--                    <div th:if="${errorMessage}" th:attr="data-message=${errorMessage}" id="success-toast" style="position: fixed; top: 1rem; right: 1rem; z-index: 1050;">-->
-<!--                        &lt;!&ndash; Toast container, ẩn mặc định và sẽ được hiển thị bằng JavaScript &ndash;&gt;-->
-<!--                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="7000">-->
-<!--                            <div class="toast-header">-->
-<!--                                <strong class="mr-auto">Lỗi</strong>-->
-<!--                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">-->
-<!--                                    <span aria-hidden="true">&times;</span>-->
-<!--                                </button>-->
-<!--                            </div>-->
-<!--                            <div class="toast-body" th:text="${errorMessage}">-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <!--                    <div th:if="${errorMessage}" th:attr="data-message=${errorMessage}" id="success-toast" style="position: fixed; top: 1rem; right: 1rem; z-index: 1050;">-->
+                    <!--                        &lt;!&ndash; Toast container, ẩn mặc định và sẽ được hiển thị bằng JavaScript &ndash;&gt;-->
+                    <!--                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="7000">-->
+                    <!--                            <div class="toast-header">-->
+                    <!--                                <strong class="mr-auto">Lỗi</strong>-->
+                    <!--                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">-->
+                    <!--                                    <span aria-hidden="true">&times;</span>-->
+                    <!--                                </button>-->
+                    <!--                            </div>-->
+                    <!--                            <div class="toast-body" th:text="${errorMessage}">-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
 
 
                     <div>
 
-                        <div th:if="${heartLogged}" class="header__top__links"  >
+                        <div th:if="${heartLogged}" class="header__top__links">
                             <a th:href="@{'/buyer/purchase'}">Đơn mua</a>
                         </div>
 
                         <!--        Buyer FullName Begin    -->
                         <div class="header__top__hover">
-                            <span th:text="${fullNameLogin}"><i class="arrow_carrot-down" ></i></span>
+                            <span th:text="${fullNameLogin}"><i class="arrow_carrot-down"></i></span>
                             <ul>
-                                <li><a th:href="@{'/buyer/setting'}" >Cài đặt</a></li>
+                                <li><a th:href="@{'/buyer/setting'}">Cài đặt</a></li>
                                 <li><a th:href="@{'/buyer/logout'}">Đăng xuất</a></li>
 
                             </ul>
-                            <a th:if="${messageLoginOrSignin}" th:href="@{'/buyer/login'}" style="color: #ffffff;font-size: 13px;text-transform: uppercase;letter-spacing: 2px;display: inline-block;cursor: pointer;">Đăng nhập</a>
+                            <a th:if="${messageLoginOrSignin}" th:href="@{'/buyer/login'}"
+                               style="color: #ffffff;font-size: 13px;text-transform: uppercase;letter-spacing: 2px;display: inline-block;cursor: pointer;">Đăng
+                                nhập</a>
                             <a><span> | | </span></a>
-                            <a th:if="${messageLoginOrSignin}" th:href="@{'/buyer/register'}" style="color: #ffffff;font-size: 13px;text-transform: uppercase;letter-spacing: 2px;display: inline-block;cursor: pointer;">Đăng ký </a>
+                            <a th:if="${messageLoginOrSignin}" th:href="@{'/buyer/register'}"
+                               style="color: #ffffff;font-size: 13px;text-transform: uppercase;letter-spacing: 2px;display: inline-block;cursor: pointer;">Đăng
+                                ký </a>
                         </div>
                         <!--            Buyer FullName End -->
 
@@ -188,8 +201,8 @@
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li><a th:href="@{'/buyer/'}" >Trang Chủ</a></li>
-                        <li class="active"><a th:href="@{'/buyer/shop'}" >Cửa Hàng</a></li>
+                        <li><a th:href="@{'/buyer/'}">Trang Chủ</a></li>
+                        <li class="active"><a th:href="@{'/buyer/shop'}">Cửa Hàng</a></li>
                     </ul>
                 </nav>
             </div>
@@ -199,7 +212,9 @@
 
                     <a th:href="@{'/buyer/cart'}" style="position: relative; display: inline-block; ">
                         <img src="/images/img/icon/cart.png" alt="">
-                        <span class="cart-count" style="position: absolute; height:20px; width: 25px; top: -13px; left: 3px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;" th:text="${sumProductInCart}"></span>
+                        <span class="cart-count"
+                              style="position: absolute; height:20px; width: 25px; top: -13px; left: 3px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;"
+                              th:text="${sumProductInCart}"></span>
                     </a>
                 </div>
             </div>
@@ -215,40 +230,44 @@
 
 <!-- Shop Details Section Begin -->
 <section class="shop-details">
-    <form th:object="${product}"   method="" >
+    <form th:object="${product}" method="">
         <div class="product__details__pic">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="product__details__breadcrumb">
-                            <a th:href="@{'/buyer/homeBuyer'}" >Home</a>
-                            <a th:href="@{'/buyer/shop'}" >Shop</a>
+                            <a th:href="@{'/buyer/homeBuyer'}">Home</a>
+                            <a th:href="@{'/buyer/shop'}">Shop</a>
                             <span>Chi tiết sản phẩm</span>
                         </div>
                     </div>
                 </div>
                 <div class="row" style="margin-right: -150px">
-                    <div class="col-lg-3 col-md-3" >
+                    <div class="col-lg-3 col-md-3">
 
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
-                                    <div style="border-radius:10px; " class="product__thumb__pic set-bg" th:attr="data-setbg=@{'/images/imgsProducts/' + ${hinhAnh.url1}}"></div>
+                                    <div style="border-radius:10px; " class="product__thumb__pic set-bg"
+                                         th:attr="data-setbg=@{'/images/imgsProducts/' + ${hinhAnh.url1}}"></div>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
-                                    <div style="border-radius:10px;" class="product__thumb__pic set-bg" th:attr="data-setbg=@{'/images/imgsProducts/' + ${hinhAnh.url2}}"></div>
+                                    <div style="border-radius:10px;" class="product__thumb__pic set-bg"
+                                         th:attr="data-setbg=@{'/images/imgsProducts/' + ${hinhAnh.url2}}"></div>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">
-                                    <div style="border-radius:10px;" class="product__thumb__pic set-bg" th:attr="data-setbg=@{'/images/imgsProducts/' + ${hinhAnh.url3}}"></div>
+                                    <div style="border-radius:10px;" class="product__thumb__pic set-bg"
+                                         th:attr="data-setbg=@{'/images/imgsProducts/' + ${hinhAnh.url3}}"></div>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">
-                                    <div style="border-radius:10px;" class="product__thumb__pic set-bg" th:attr="data-setbg=@{'/images/imgsProducts/' + ${hinhAnh.url4}}"></div>
+                                    <div style="border-radius:10px;" class="product__thumb__pic set-bg"
+                                         th:attr="data-setbg=@{'/images/imgsProducts/' + ${hinhAnh.url4}}"></div>
                                 </a>
                             </li>
                         </ul>
@@ -291,7 +310,8 @@
                     <div class="col-lg-8">
                         <div class="product__details__text">
                             <h4 th:text="${product.tenGiay}"></h4>
-                            <h3 id="price-range" class="price-range" th:text="'₫' + ${#numbers.formatDecimal(minPrice, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' ' + '-' + ' ₫' + ${#numbers.formatDecimal(maxPrice, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" ></h3>
+                            <h3 id="price-range" class="price-range"
+                                th:text=" ${#numbers.formatDecimal(minPrice, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} +  ' ₫' "></h3>
                             <h3 id="price_product"></h3>
                             <p th:text="${product.moTa}"></p>
 
@@ -303,10 +323,13 @@
 
                             <div class="product__details__option">
                                 <div class="product__details__option__size" style="margin-left: 50px">
-                                    <div class="label-container" style="display: flex; flex-wrap: wrap; justify-content: center;width: 127%;margin-top: 12px;margin-left: -68px">
+                                    <div class="label-container"
+                                         style="display: flex; flex-wrap: wrap; justify-content: center;width: 127%;margin-top: 12px;margin-left: -68px">
                                         <th:block th:each="x : ${listSizeCTG}">
-                                            <label th:unless="${x[2]}" th:name="${x[1]}" class="label" style="width: 200px; margin: 5px; font-weight: unset; font-size: small; height: 40px;"
-                                                   onclick="capNhatGia(event)" th:text="${x[0]} + ' (Số lượng: ' + ${x[3]} + ')'"></label>
+                                            <label th:unless="${x[2]}" th:name="${x[1]}" class="label"
+                                                   style="width: 200px; margin: 5px; font-weight: unset; font-size: small; height: 40px;"
+                                                   onclick="capNhatGia(event)"
+                                                   th:text="${x[0]} + ' (Số lượng: ' + ${x[3]} + ')'"></label>
                                         </th:block>
                                     </div>
                                 </div>
@@ -318,9 +341,12 @@
                                 <div class="quantity">
                                     <p style="display: inline-block; margin: 0;">Số lượng :</p>
                                     <div style="display: inline-block;">
-                                        <input oninput="validateInput()" id="quantityInput" style="width: 80px;" type="number" class="form-control" aria-label="Quantity" min="1" max="10" value="1">
+                                        <input oninput="validateInput()" id="quantityInput" style="width: 80px;"
+                                               type="number" class="form-control" aria-label="Quantity" min="1" max="10"
+                                               value="1">
                                     </div>
-                                    <p class="sum-remind" id="quantityProductMax" style="display: inline-block; margin: 0;" th:text="${sunProductAvaible}"></p>
+                                    <p class="sum-remind" id="quantityProductMax"
+                                       style="display: inline-block; margin: 0;" th:text="${sunProductAvaible}"></p>
                                     <p style="display: inline-block; margin: 0;"><span id="quantity_remind"></span></p>
                                     <p style="display: inline-block; margin: 0;">Sản phẩm có sẵn</p>
                                 </div>
@@ -328,20 +354,16 @@
 
 
                             <div th:if="${buyNowAddCartLogged}" class="product__details__cart__option">
-                                <a  style="color: white; cursor: pointer;" class="primary-btn" id="buyNowButton" >Mua ngay</a>
-                                <a  style="color: white; cursor: pointer;" id="addToCartButton" class="primary-btn" >Thêm vào giỏ hàng</a>
+                                <a style="color: white; cursor: pointer;" class="primary-btn" id="buyNowButton">Mua
+                                    ngay</a>
+                                <a style="color: white; cursor: pointer;" id="addToCartButton" class="primary-btn">Thêm
+                                    vào giỏ hàng</a>
                             </div>
-
-
-
-
-
 
 
                         </div>
                     </div>
                 </div>
-
 
 
             </div>
@@ -350,7 +372,6 @@
     </form>
 </section>
 <!-- Shop Details Section End -->
-
 
 
 <!--Section giá và size begin-->
@@ -371,7 +392,8 @@
 <!--</button>-->
 
 <!-- Modal -->
-<div class="modal fade" id="noticaAddVoucher" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
+<div class="modal fade" id="noticaAddVoucher" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -382,7 +404,8 @@
             </div>
             <div class="modal-body">
                 <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">
-                    <p style="font-size: 13pt; font-weight: 600;">Vui lòng chọn một sản phẩm trước khi thêm vào giỏ hàng.</p>
+                    <p style="font-size: 13pt; font-weight: 600;">Vui lòng chọn một sản phẩm trước khi thêm vào giỏ
+                        hàng.</p>
                 </div>
             </div>
             <div class="modal-footer">
@@ -393,67 +416,13 @@
 </div>
 
 
-
-
 <!-- Modal HTML -->
 
 <!-- Footer Section Begin -->
-<footer class="footer" style="margin-top: 210px">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="footer__about">
-                    <div class="footer__logo">
-                        <a href="#"><img src="/Logo.png" alt=""></a>
-                    </div>
-                    <p> Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế.</p>
-                    <a href="#"><img src="img/payment.png" alt=""></a>
-                </div>
-            </div>
-            <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
-                <div class="footer__widget">
-                    <h6>Cửa hàng</h6>
-                    <ul>
-                        <li><a href="/buyer/shop">Gian hàng</a></li>
-                        <li><a href="/buyer/shop">Xu Hướng</a></li>
-                        <li><a href="/buyer/shop">Đề Xuất</a></li>
-                        <li><a href="/buyer/shop/sale">Giảm giá</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-6">
-                <div class="footer__widget">
-                    <h6>Mua sắm</h6>
-                    <ul>
-                        <li><a href="#">Liên Hệ</a></li>
-                        <li><a href="#">Thanh Toán</a></li>
-                        <li><a href="#">Giao Hàng</a></li>
-                        <li><a href="#">Hoàn Hàng/Tiền</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
-                <div class="footer__widget">
-                    <h6>NewLetter</h6>
-                    <div class="footer__newslatter">
-                        <p>Hãy là người đầu tiên biết về hàng mới, sách tra cứu, khuyến mại và khuyến mãi!</p>
-                        <form action="#">
-                            <input type="text" placeholder="Your email">
-                            <button type="submit"><span class="icon_mail_alt"></span></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="footer__copyright__text">
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                </div>
-            </div>
-        </div>
+<footer style="margin-top: 210px; background: #0b0b0b ">
+    <div class="footer__copyright__text">
+        <p> This template is edit with TeeZy Shop <i class="fa fa-heart-o" aria-hidden="true"></i>
+        </p>
     </div>
 </footer>
 <!-- Footer Section End -->
@@ -497,14 +466,14 @@
         // Lấy giá trị giá từ phần ẩn
         var gia = phanAn.querySelector('input:first-child').value;
 
-        var giaDinhDang = gia.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        var giaDinhDang = gia.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
 
         // Cập nhật giá hiển thị
         var hienThiGia = document.getElementById('price-range');
         hienThiGia.textContent = giaDinhDang;
         // Cập nhật giá hiển thị
         var hienThiGia = document.getElementById('price-range');
-        hienThiGia.textContent = '₫' + gia ;
+        hienThiGia.textContent = '₫' + gia;
     }
 </script>
 
@@ -542,8 +511,8 @@
 </script>
 
 <script>
-    $(document).ready(function(){
-        $('#yourTriggerButton').click(function(){
+    $(document).ready(function () {
+        $('#yourTriggerButton').click(function () {
             $('#simpleModal').modal('show');
         });
     });
@@ -551,14 +520,12 @@
 </script>
 
 
-
-
 <script>
     document.getElementById("buyNowButton").addEventListener("click", function () {
         var quantity = document.getElementById("quantityInput").value;
 
         var selectedLabel = document.querySelector(".label.active");
-        document.addEventListener("keydown", function(event) {
+        document.addEventListener("keydown", function (event) {
             if (event.key === "F5" || event.keyCode === 116) {
                 event.preventDefault();
             }
@@ -578,7 +545,8 @@
 
 <script src="/js/feather.min.js"></script>
 <script src="/js/bootstrap.bundle.min.js"></script>
-<script src="/js/script.js"></script><script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/script.js"></script>
+<script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/jquery.nice-select.min.js"></script>
 <script src="/js/jquery.nicescroll.min.js"></script>
