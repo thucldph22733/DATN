@@ -1,6 +1,7 @@
 package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.ChucVu;
+import com.example.shoesmanagement.model.Hang;
 import com.example.shoesmanagement.model.NhanVien;
 import com.example.shoesmanagement.repository.ChucVuRepository;
 import com.example.shoesmanagement.repository.NhanVienRepository;
@@ -11,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -355,5 +357,23 @@ public class NhanVienController {
             }
         }
         return "redirect:/manage/nhan-vien"; // Chuyển hướng sau khi nhập liệu thành công hoặc không thành công
+    }
+
+    @PutMapping("/nhan-vien/{idNV}")
+    public ResponseEntity<String> capNhatTrangThai(@RequestParam String trangThai,
+                                                   @PathVariable UUID idNV) {
+        int trangThaiInt = Integer.valueOf(trangThai);
+
+        int trangThaiUpdate;
+        if (trangThaiInt == 1) {
+            trangThaiUpdate = 0;
+        } else {
+            trangThaiUpdate = 1;
+        }
+        NhanVien nhanVien = nhanVienService.getByIdNhanVien(idNV);
+        nhanVien.setTrangThai(trangThaiUpdate);
+        nhanVien.setTgSua(new Date());
+        nhanVienService.save(nhanVien);
+        return ResponseEntity.ok("ok");
     }
 }

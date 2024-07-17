@@ -592,8 +592,7 @@
                             <div class="col-sm-2" style="display: block;">
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billDetailShip.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p th:text="'+ ₫' + ${#numbers.formatDecimal(billDetailShip.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                <p class="grandTotal" th:text="'₫' + ${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                <p th:text="'₫' + ${#numbers.formatDecimal(billDetailShip.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 13pt; font-weight: 600;"></p>
+<span th:text="${giaTienGiam != null ? #numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '') : ''}"></span>                                <p th:text="'₫' + ${#numbers.formatDecimal(billDetailShip.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 13pt; font-weight: 600;"></p>
                             </div>
                         </div>
 
@@ -762,8 +761,7 @@
                             <div class="col-sm-2" style="display: block;">
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billShipConfirm.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p th:text="'+ ₫' + ${#numbers.formatDecimal(billShipConfirm.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                <p class="grandTotal" th:text="'₫' + ${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                <p th:text="'₫' + ${#numbers.formatDecimal(billShipConfirm.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 13pt; font-weight: 600;"></p>
+<span th:text="${giaTienGiam != null ? #numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '') : ''}"></span>                                <p th:text="'₫' + ${#numbers.formatDecimal(billShipConfirm.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 13pt; font-weight: 600;"></p>
                             </div>
                         </div>
 
@@ -1668,26 +1666,29 @@
                                 <label>Họ tên</label>
                                 <br>
                                 <label>
-                                    <input class="form-control" type="text" th:value="${khachHang.hoTenKH}" placeholder="Nguyen Manh Thuy">
+                                    <input class="form-control"  th:value="${khachHang1.hoTenKH}" placeholder="Nguyen Manh Thuy">
                                 </label>
                             </div>
                             <div class="form-group" style="margin-left: 50px; margin-top: 50px; width: 300px;">
                                 <label>Giới tính</label>
                                 <br>
-                                <input type="text" class="form-control" th:value="${khachHang.gioiTinh == 1 ? 'Nam' : 'Nữ'}" placeholder="Male">
+                                <input  class="form-control" th:value="${khachHang1.gioiTinh == 1 ? 'Nam' : 'Nữ'}" placeholder="Male">
                             </div>
                             <br>
                             <div class="form-group" style="margin-left: 50px; margin-top: 10px;  width: 300px;">
                                 <label>Ngày sinh :</label>
                                 <br>
-                                <input type="text" class="form-control" placeholder="29-08-2003">
+                                <input type="date" class="form-control" th:value="${khachHang1.ngaySinh != null ? #dates.format(khachHang1.ngaySinh, 'yyyy-MM-dd') : ''}" placeholder="yyyy-MM-dd">
+
                             </div>
 
                             <br>
                             <div class="form-group" style="margin-left: 50px; margin-top: 10px;  width: 300px;">
                                 <label>Email :</label>
                                 <br>
-                                <input type="text" th:value="${khachHang.emailKH}" class="form-control">
+                                <label>
+                                    <input  th:value="${khachHang1.emailKH}" class="form-control">
+                                </label>
                             </div>
                             <br>
                             <div class="row" style="width: 803px; margin-left: 2px; border-radius: 5px; margin-top: 20px;">
@@ -1704,8 +1705,8 @@
         </div>
     </div>
 
-        <!-- Modal -->
-        <!-- Modal -->
+<!--         Modal -->
+<!--         Modal -->
         <div class="modal fade" id="editInfoModal" tabindex="-1" role="dialog" aria-labelledby="editInfoModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
@@ -1716,7 +1717,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="/buyer/update/user" method="post" th:object="${khachHang}">
+                        <form action="/buyer/update/user" method="post" th:object="${khachHang1}">
                             <div class="form-group">
                                 <label>Họ tên</label>
                                 <input class="form-control" type="text" th:field="*{hoTenKH}" placeholder="Nguyen Manh Thuy">
@@ -1724,13 +1725,13 @@
                             <div class="form-group">
                                 <label>Giới tính</label>
                                 <select class="form-control" th:field="*{gioiTinh}">
-                                    <option value="1" th:selected="${khachHang.gioiTinh == 1}">Nam</option>
-                                    <option value="0" th:selected="${khachHang.gioiTinh == 0}">Nữ</option>
+                                    <option value="1" th:selected="${khachHang1.gioiTinh == 1}">Nam</option>
+                                    <option value="0" th:selected="${khachHang1.gioiTinh == 0}">Nữ</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>Ngày sinh</label>
-                                <input type="text" class="form-control" th:field="*{ngaySinh}" placeholder="29-08-2003">
+                                <input type="date" class="form-control" th:field="*{ngaySinh}" placeholder="29-08-2003">
                             </div>
                             <div class="form-group">
                                 <label>Email</label>

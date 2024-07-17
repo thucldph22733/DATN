@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="description" content="POS - Bootstrap Admin Template">
+    <meta name="keywords"
+          content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
+    <meta name="author" content="Dreamguys - Bootstrap Admin Template">
+    <meta name="robots" content="noindex, nofollow">
+    <title>TeeZy Shop - Admin</title>
+    <!-- Thêm các liên kết tới SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/plugins/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/plugins/scrollbar/scroll.min.css">
+    <link rel="stylesheet" href="/plugins/icons/feather/feather.css">
+    <link rel="stylesheet" href="/plugins/icons/flags/flags.css">
+    <link rel="stylesheet" href="/plugins/simpleline/simple-line-icons.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<style>
+    /* CSS để điều chỉnh vị trí của thông báo */
+    .invalid-feedback {
+        position: absolute;
+        top: 83px;
+        z-index: 1050;
+        display: none;
+        width: 250px; /* Điều chỉnh độ rộng của thông báo */
+        text-align: center;
+        text-align: center;
+        background-color: #dc3545; /* Màu nền */
+        color: white; /* Màu chữ */
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        font-size: 0.875rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+    .custom-alert {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: auto;
+        padding: 15px;
+        background-color: #4caf50; /* Màu nền thông báo */
+        color: white; /* Màu chữ */
+        border-radius: 5px; /* Bo góc */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+        z-index: 9999; /* Đảm bảo thông báo ở trên cùng */
+        transition: all 0.5s ease-in-out; /* Hiệu ứng chuyển động */
+    }
+
+    .custom-alert.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .custom-alert.hide {
+        opacity: 0;
+        visibility: hidden;
+    }
+</style>
+<body class="mini-sidebar">
+<div th:fragment="main">
+    <!--    <div th:if="${reLoadPage}" id="global-loader">-->
+    <!--        <div class="whirly-loader"></div>-->
+    <!--    </div>-->
+
+    <div class="main-wrapper">
+        <div class="header">
+            <div class="header-left active">
+                <a href="/manage" class="logo">
+                    <img src="/images/img/logo.png" alt="">
+                </a>
+                <a href="/manage" class="logo-small">
+                    <img src="/images/img/logo.png" alt="">
+                </a>
+                <a id="toggle_btn" href="javascript:void(0);">
+                </a>
+            </div>
+
+            <a id="mobile_btn" class="mobile_btn" href="#sidebar">
+            <span class="bar-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+            </span>
+            </a>
+
+            <ul class="nav user-menu">
+
+                <li class="nav-item dropdown has-arrow flag-nav " style="margin-right: 30px;">
+                    <a href="/manage/bill/online"
+                       style="height: 30px; width: 30px; background-color: #ff9f43; border-radius: 5px; margin-top: 13px;">
+                        <i class="si si-refresh" style="color: #ffffff; margin-left: -10px;"></i>
+                    </a>
+                </li>
+
+
+                <li class="nav-item dropdown has-arrow main-drop">
+                    <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
+                                                                    <span class="user-img"><img
+                                                                            th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}"
+                                                                            alt="">
+                        <span class="status online"></span></span>
+                    </a>
+                    <div class="dropdown-menu menu-drop-user">
+                        <div class="profilename">
+                            <div class="profileset">
+                                                                                    <span class="user-img"><img
+                                                                                            th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}"
+                                                                                            alt="">
+                                                                                    <span class="status online"></span></span>
+                                <div class="profilesets">
+                                    <h6 th:text="${session.managerLogged.hoTenNV}"></h6>
+                                    <h5 th:text="${session.managerLogged.chucVu.tenCV}"></h5>
+                                </div>
+                            </div>
+                            <hr class="m-0">
+                            <a class="dropdown-item" href="/ban-hang/hien-thi">Bán hàng tại quầy</a>
+                            <a class="dropdown-item" href="/order/">Vận chuyển</a>
+                            <a class="dropdown-item" href="/manage/change-password"><i class="me-2"
+                                                                                       data-feather="settings"></i>Change
+                                passwoord</a>
+                            <hr class="m-0">
+                            <a class="dropdown-item logout pb-0" href="/logout"><img src="/images/img/icons/log-out.svg"
+                                                                                     class="me-2" alt="img">Logout</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown mobile-user-menu">
+            <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+               aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="/ban-hang/hien-thi">Bán hàng tại quầy</a>
+                <a class="dropdown-item" href="/order/">Vận chuyển</a>
+                <a class="dropdown-item" href="profile.html">Thông tin cá nhân</a>
+                <a class="dropdown-item" href="/manage/change-password">Cài đặt</a>
+                <a class="dropdown-item" href="signin.html">Đăng xuất</a>
+            </div>
+        </div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li>
+                            <a href="/manage/" data-link="link1" onclick="setActiveLink()">
+                                <img src="/images/iconlogo.png" alt="img">
+                                <span>Trang chủ nè</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/manage/thongke">
+                                <img src="/images/img/icons/dashboard.svg" alt="img">
+                                <span> Thống Kê</span>
+                            </a>
+                        </li>
+                        <li class="submenu">
+                            <a href="javascript:void(0);"><img src="/images/img/icons/product.svg" alt="img">
+                                <span> Quản lý Giày</span>
+                                <span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="/manage/chat-lieu" data-link="link3">Chất Liệu</a></li>
+                                <li><a href="/manage/giay" data-link="link4">Giày</a></li>
+                                <li><a href="/manage/hang">Hãng</a></li>
+                                <li><a href="/manage/hinh-anh">Hình Ảnh</a></li>
+                                <li><a href="/manage/mau-sac">Màu Sắc</a></li>
+                                <input id="mauSac" th:value="${active}">
+                                <li><a href="/manage/size">Size</a></li>
+                                <li><a href="/manage/test">Test</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="javascript:void(0);"><img src="/images/img/icons/expense1.svg" alt="img"><span> Quản Lý Hóa Đơn</span>
+                                <span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="/manage/bill/offline">Hóa đơn tại quầy</a></li>
+                                <li><a href="/manage/bill/online">Quản lý hóa đơn online</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="javascript:void(0);"><img src="/images/img/icons/users1.svg" alt="img"><span> Quản Lý Khách Hàng</span>
+                                <span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="/manage/khach-hang">Khách Hàng</a></li>
+                                <li><a href="/manage/dia-chi">Địa Chỉ </a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="javascript:void(0);"><img src="/images/img/icons/purchase1.svg" alt="img"><span> Lịch sử thanh toán</span>
+                                <span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="/manage/history/delivery">Thanh toán tiền mặt</a></li>
+                                <li><a href="/manage/history/pay">Thanh toán chuyển khoản </a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="javascript:void(0);"><img src="/images/img/icons/users1.svg" alt="img"><span> Quản Lý Nhân Viên</span>
+                                <span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="/manage/chuc-vu">Chức Vụ</a></li>
+                                <li><a href="/manage/nhan-vien">Nhân Viên</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="javascript:void(0);">
+                                <img src="/images/img/icons/transfer1.svg" alt="img"/>
+                                <span>Quản lý Khuyến Mãi</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul>
+                                <li><a href="/manage/voucher-bill">Khuyến Mãi Hóa Đơn</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/manage/giao-hang"><i data-feather="layers"></i><span> Quản lý giao hàng</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--CODE TỪ DƯỚI NÀY-->
+
+
+
+<!--    <div th:replace="manage/main :: main"></div>-->
+
+
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="/js/feather.min.js"></script>
+
+<script src="/js/jquery.slimscroll.min.js"></script>
+
+<script src="/js/jquery.dataTables.min.js"></script>
+<script src="/js/dataTables.bootstrap4.min.js"></script>
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+
+<script src="/plugins/select2/js/select2.min.js"></script>
+
+<script src="/plugins/sweetalert/sweetalert2.all.min.js"></script>
+<script src="/plugins/sweetalert/sweetalerts.min.js"></script>
+
+<script src="/js/script.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    document.addEventListener('DOMContentLoaded', function() {
+        var huyHoaDonForm = document.getElementById('huyHoaDonForm');
+        huyHoaDonForm.addEventListener('submit', function(event) {
+            var lyDoHuyInput = document.getElementById('lyDoHuy');
+            var invalidFeedback = document.querySelector('#huyHoaDonForm .invalid-feedback');
+            if (lyDoHuyInput.value.trim() === '') {
+                event.preventDefault(); // Ngăn form submit nếu ly do huy không được nhập
+                invalidFeedback.style.display = 'block';
+            } else {
+                invalidFeedback.style.display = 'none';
+            }
+        });
+    });
+    /*]]>*/
+</script>
+<script>
+    // Lấy tất cả các container của form
+    const formContainers = document.querySelectorAll('.form-container');
+
+    // Duyệt qua từng form và gán sự kiện cho input
+    formContainers.forEach(function (container) {
+        const maHDElement = container.querySelector('.maHD');
+        const inputMaHDElement = container.querySelector('.inputMaHD');
+        const btnSubmitElement = container.querySelector('.btn-submit');
+
+        inputMaHDElement.addEventListener('input', function () {
+            if (inputMaHDElement.value === maHDElement.innerText) {
+                btnSubmitElement.removeAttribute('disabled');
+            } else {
+                btnSubmitElement.setAttribute('disabled', 'true');
+                alert('Mã hóa đơn không đúng!');
+
+            }
+        });
+    });
+</script>
+<!--Confirm thong bao pay end-->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".btn-cancel").forEach(function (btn) {
+            btn.addEventListener("click", function (event) {
+                if (btn.getAttribute("data-bs-dismiss") !== "modal") {
+                    setTimeout(function () {
+                        window.location.href = btn.getAttribute("href");
+                    }, 500);  // Thời gian chờ để modal đóng hoàn toàn
+                    event.preventDefault();
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#editBillDelivery').modal('show');
+    });
+    $(document).ready(function () {
+        $('#messBillDeliveryThanhCong').modal('show');
+    });
+    $(document).ready(function () {
+        $('#editBillRefundDelivery').modal('show');
+    });
+    $(document).ready(function () {
+        $('#hoanTienThanhCong').modal('show');
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const alert = document.querySelector('.custom-alert');
+        if (alert) {
+            setTimeout(() => {
+                alert.classList.add('hide');
+            }, 5000); // 5 giây
+        }
+    });
+</script>
+<script>
+    function confirmDelete() {
+        Swal.fire({
+            title: 'Bạn có chắc chắn muốn xóa sản phẩm này không?',
+            text: "Bạn sẽ không thể khôi phục lại điều này!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Có, xóa nó!',
+            cancelButtonText: 'Hủy bỏ'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteProduct();
+            }
+        });
+    }
+
+    function deleteProduct() {
+        var form = document.getElementById('deleteForm');
+        var url = form.action;
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(data => {
+                // Xử lý khi xóa thành công, ví dụ xóa dòng trong bảng
+                Swal.fire(
+                    'Đã xóa!',
+                    data,
+                    'success'
+                ).then(() => {
+                    form.closest('tr').remove();
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire(
+                    'Lỗi!',
+                    'Có lỗi xảy ra trong quá trình xoá sản phẩm!',
+                    'error'
+                );
+            });
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#chonSize').modal('show');
+    });
+</script>
+
+
+
+
+</body>
+</html>
+</body>
+</html>
