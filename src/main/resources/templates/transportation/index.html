@@ -501,7 +501,7 @@
                                                         <div class="form-group">
                                                             <label>Thời gian giao dự kiến :</label>
 
-                                                            <!--                                                            <p style="font-size: 11pt; font-weight: 600;" th:text="${#dates.format(billPrint.tgNhanDK, 'HH:mm yyyy-MM-dd')}"></p>-->
+                                                                   <p style="font-size: 11pt; font-weight: 600;" th:text="${#dates.format(HoaDonVanChuyen.getTgNhanDK(), 'HH:mm yyyy-MM-dd')}"></p>
 
                                                         </div>
                                                     </div>
@@ -526,17 +526,17 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4 col-sm-12 col-12">
-                                                        <div class="form-group">
-                                                            <label>Mã vận đơn:</label>
-                                                            <p th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}"
-                                                               style="font-size: 11pt; font-weight: 600;"
-                                                               th:text="${HoaDonVanChuyen.giaoHang.maVanDon}"></p>
-                                                            <input th:if="${HoaDonVanChuyen.giaoHang.tenDVVC == null}"
-                                                                   name="maVanDonGH" id="maVanDon" class="form-control"
-                                                                   type="text">
-                                                        </div>
-                                                    </div>
+<!--                                                    <div class="col-lg-4 col-sm-12 col-12">-->
+<!--                                                        <div class="form-group">-->
+<!--                                                            <label>Mã vận đơn:</label>-->
+<!--                                                            <p th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}"-->
+<!--                                                               style="font-size: 11pt; font-weight: 600;"-->
+<!--                                                               th:text="${HoaDonVanChuyen.giaoHang.maVanDon}"></p>-->
+<!--                                                            <input th:if="${HoaDonVanChuyen.giaoHang.tenDVVC == null}"-->
+<!--                                                                   name="maVanDonGH" id="maVanDon" class="form-control"-->
+<!--                                                                   type="text">-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
 
                                                     <div class="col-lg-4 col-sm-12 col-12">
                                                         <div class="form-group">

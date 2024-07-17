@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -592,7 +593,7 @@
                             <div class="col-sm-2" style="display: block;">
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billDetailShip.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p th:text="'+ ₫' + ${#numbers.formatDecimal(billDetailShip.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-<span th:text="${giaTienGiam != null ? #numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '') : ''}"></span>                                <p th:text="'₫' + ${#numbers.formatDecimal(billDetailShip.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 13pt; font-weight: 600;"></p>
+                                <span th:text="${giaTienGiam != null ? #numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '') : ''}"></span>                                <p th:text="'₫' + ${#numbers.formatDecimal(billDetailShip.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 13pt; font-weight: 600;"></p>
                             </div>
                         </div>
 
@@ -761,7 +762,7 @@
                             <div class="col-sm-2" style="display: block;">
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billShipConfirm.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p th:text="'+ ₫' + ${#numbers.formatDecimal(billShipConfirm.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-<span th:text="${giaTienGiam != null ? #numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '') : ''}"></span>                                <p th:text="'₫' + ${#numbers.formatDecimal(billShipConfirm.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 13pt; font-weight: 600;"></p>
+                                <span th:text="${giaTienGiam != null ? #numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '') : ''}"></span>                                <p th:text="'₫' + ${#numbers.formatDecimal(billShipConfirm.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 13pt; font-weight: 600;"></p>
                             </div>
                         </div>
 
@@ -1291,19 +1292,19 @@
 
                     <div class="card-body" >
 
-                            <div class="row" style="background-color: #f3f2ee; height: 81px; width: 950px; border-radius: 5px; margin-top: -10px;">
-                                <nav class="header__menu mobile-menu" >
-                                    <ul>
-                                        <li th:class="${type1}" style="margin-left: 50px; margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase'}" >Tất cả</a></li>
-                                        <li th:class="${type2}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/pay'}" >Chờ thanh toán</a></li>
-                                        <li th:class="${type3}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/ship'}" >Chờ xác nhận</a></li>
-                                        <li th:class="${type4}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/confirm'}" >Chờ lấy hàng</a></li>
-                                        <li th:class="${type5}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/receive'}">Giao hàng</a></li>
-                                        <li th:class="${type6}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/completed'}">Thành công</a></li>
-                                        <li th:class="${type7}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/cancel'}">Đã hủy</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
+                        <div class="row" style="background-color: #f3f2ee; height: 81px; width: 950px; border-radius: 5px; margin-top: -10px;">
+                            <nav class="header__menu mobile-menu" >
+                                <ul>
+                                    <li th:class="${type1}" style="margin-left: 50px; margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase'}" >Tất cả</a></li>
+                                    <li th:class="${type2}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/pay'}" >Chờ thanh toán</a></li>
+                                    <li th:class="${type3}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/ship'}" >Chờ xác nhận</a></li>
+                                    <li th:class="${type4}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/confirm'}" >Chờ lấy hàng</a></li>
+                                    <li th:class="${type5}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/receive'}">Giao hàng</a></li>
+                                    <li th:class="${type6}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/completed'}">Thành công</a></li>
+                                    <li th:class="${type7}" style="margin-right: 49px;"><a style="font-size: 11pt" th:href="@{'/buyer/purchase/cancel'}">Đã hủy</a></li>
+                                </ul>
+                            </nav>
+                        </div>
 
                         <!-- ALL begin -->
 
@@ -1410,7 +1411,9 @@
 
                                         <div style="display: flex; margin-right: 20px;">
                                             <a  th:href="@{'/buyer/purchase/bill/detail/' + ${x.idHD}}" style=" color: black; text-align: center; padding-top: 12px; align-items: center; height: 50px; width: 130px; border: 0.5px solid black; margin-right: 20px; background-color: #f0f0f0">Xem chi tiết</a>
-                                            <button style="height: 50px; width: 130px; border: 0.5px solid black;">Huỷ Đơn Hàng</button>
+                                            <a th:if="${x.trangThai == 1 or x.trangThai == 0}" th:href="@{'/buyer/purchase/bill/detail/cancel/' + ${x.idHD}}"
+                                               style=" color: black; text-align: center; padding-top: 12px; align-items: center;
+                                               height: 50px; width: 130px; border: 0.5px solid black; margin-right: 20px; background-color: #f0f0f0;">Hủy đơn hàng</a>
                                         </div>
                                     </div>
                                 </div>
@@ -1456,7 +1459,9 @@
 
                                         <div style="display: flex; margin-right: 20px;">
                                             <a  th:href="@{'/buyer/purchase/bill/detail/' + ${x.idHD}}" style=" color: black; text-align: center; padding-top: 12px; align-items: center; height: 50px; width: 130px; border: 0.5px solid black; margin-right: 20px; background-color: #f0f0f0">Xem chi tiết</a>
-                                            <button style="height: 50px; width: 130px; border: 0.5px solid black;">Huỷ Đơn Hàng</button>
+                                            <a th:if="${x.trangThai == 1 or x.trangThai == 0}" th:href="@{'/buyer/purchase/bill/detail/cancel/' + ${x.idHD}}"
+                                               style=" color: black; text-align: center; padding-top: 12px; align-items: center;
+                                               height: 50px; width: 130px; border: 0.5px solid black; margin-right: 20px; background-color: #f0f0f0;">Hủy đơn hàng</a>
                                         </div>
                                     </div>
                                 </div>
@@ -1502,7 +1507,11 @@
 
                                         <div style="display: flex; margin-right: 20px;">
                                             <a  th:href="@{'/buyer/purchase/bill/detail/' + ${x.idHD}}" style=" color: black; text-align: center; padding-top: 12px; align-items: center; height: 50px; width: 130px; border: 0.5px solid black; margin-right: 20px; background-color: #f0f0f0">Xem chi tiết</a>
-                                            <button style="height: 50px; width: 130px; border: 0.5px solid black;">Huỷ Đơn Hàng</button>
+                                            <a th:if="${x.trangThai == 1 or x.trangThai == 0}" th:href="@{'/buyer/purchase/bill/detail/cancel/' + ${x.idHD}}"
+                                               style=" color: black; text-align: center; padding-top: 12px; align-items: center;
+                                               height: 50px; width: 130px; border: 0.5px solid black; margin-right: 20px; background-color: #f0f0f0;">Hủy đơn hàng</a>
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -1573,7 +1582,7 @@
                                     <!-- List CTDP in HD begin -->
                                     <th:block th:each="product : ${x.hoaDonChiTiets}">
                                         <div style="display: flex; padding-left: 40px;">
-                              F              <img th:src="@{'/images/imgsProducts/' + ${product.chiTietGiay.hinhAnh.url1}}" style="height: 80px; width: 80px; border-radius: 5px;" alt="">
+                                            F              <img th:src="@{'/images/imgsProducts/' + ${product.chiTietGiay.hinhAnh.url1}}" style="height: 80px; width: 80px; border-radius: 5px;" alt="">
                                             <div style="width: 300px;">
                                                 <p style="margin: 5px 0 0 15px; color: #637381; font-size: 11pt;" th:text="${product.chiTietGiay.giay.tenGiay}"></p>
                                                 <p style="margin: 0 0 0 15px; color: #637381; font-size: 10pt;" th:text="'Phân loại: ' + ${product.chiTietGiay.mauSac.tenMau} +' | ' + ${product.chiTietGiay.size.soSize} "></p>
@@ -1587,21 +1596,6 @@
                                     </th:block>
                                     <!-- List CTDP in HD end -->
 
-                                    <div style="float: right; margin: 0 0 20px 0;">
-
-                                        <p style="font-size: 13pt; color: black; font-weight: 600; margin-left: 80px;" th:text="'Thanh toán: ₫' + ${#numbers.formatDecimal(x.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-
-                                        <div style="display: flex; margin-right: 20px;">
-                                            <a th:href="@{'/buyer/purchase/bill/detail/' + ${x.idHD}}" style=" color: black; text-align: center; padding-top: 12px; align-items: center; height: 50px; width: 130px; border: 0.5px solid black; margin-right: 20px; background-color: #f0f0f0">Xem chi tiết</a>
-                                            <a th:if="${x.trangThaiHoan != 9 }" th:href="@{'/buyer/purchaser/bill/detail/refund/' + ${x.idHD}}" type style=" color: black; text-align: center; padding-top: 12px; align-items: center; height: 50px;
-                                              width: 250px; border: 0.5px solid black; margin: 0 20px 0 0; background-color: #f0f0f0"> Xem chi tiết Hoàn/Đổi Hàng</a>
-
-                                            <form th:if="${x.trangThaiHoan == 9}" th:action="@{'/buyer/purchaser/bill/refund/' + ${x.idHD}}" method="post">
-                                                <button type="submit" style=" color: black; text-align: center;
-                                                 align-items: center; height: 50px; width: 130px; border: 0.5px solid black; background-color: #f0f0f0">Hoàn/Đổi Hàng</button>
-                                            </form>
-                                        </div>
-                                    </div>
                                 </div>
 
                             </th:block>
@@ -1696,17 +1690,17 @@
                             </div>
                         </div>
 
-                </div>
-                <!--                Setting Account End-->
+                    </div>
+                    <!--                Setting Account End-->
 
+
+                </div>
 
             </div>
-
         </div>
-    </div>
 
-<!--         Modal -->
-<!--         Modal -->
+        <!--         Modal -->
+        <!--         Modal -->
         <div class="modal fade" id="editInfoModal" tabindex="-1" role="dialog" aria-labelledby="editInfoModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
@@ -1750,940 +1744,855 @@
         </div>
 
         <!--    Modal thong bao thanh toan begin-->
-    <div th:if="${modalVNPayError}" class="modal fade" id="statusErrorsModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-body text-center p-lg-4">
-                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
-                        <circle class="path circle" fill="none" stroke="#db3646" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
-                        <line class="path line" fill="none" stroke="#db3646" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3" />
-                        <line class="path line" fill="none" stroke="#db3646" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8" y1="38" X2="34.4" y2="92.2" />
-                    </svg>
-                    <h4 class="text-danger mt-3">Error!</h4>
-                    <p class="mt-3">Thanh toán đơn hàng thất bại.</p>
-                    <button type="button" class="btn btn-sm mt-3 btn-danger" data-bs-dismiss="modal">Ok</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div th:if="${modalVNPaySuccess}" class="modal fade" id="statusSuccessModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-body text-center p-lg-4">
-                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
-                        <circle class="path circle" fill="none" stroke="#198754" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
-                        <polyline class="path check" fill="none" stroke="#198754" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 " />
-                    </svg>
-                    <h4 class="text-success mt-3">Success!</h4>
-                    <p class="mt-3">Thanh toán cho đơn hàng thành công.</p>
-                    <button type="button" class="btn btn-sm mt-3 btn-success" data-bs-dismiss="modal">Ok</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div th:if="${modalDeliverySuccess}" class="modal fade" id="statusSuccessPlaceOrder" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content" style="    border-radius: 30px;">
-                <div class="modal-body text-center p-lg-4">
-                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
-                        <circle class="path circle" fill="none" stroke="#198754" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
-                        <polyline class="path check" fill="none" stroke="#198754" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 " />
-                    </svg>
-                    <h4 class="text-success mt-3">Success!</h4>
-                    <p class="mt-3">Đặt hàng thành công.</p>
-                    <button type="button" class="btn btn-sm mt-3 btn-success" data-bs-dismiss="modal">Ok</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--    Modal thong bao thanh toan end-->
-    `
-
-    <!--    Thêm địa chỉ  begin-->
-    <div th:if="${addNewAddressSetting}" class="modal fade" id="modalThemDiaChi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 500px">
-            <div class="modal-content">
-                <form action="/buyer/addresses/add" method="post">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Thêm địa chỉ mới</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+        <div th:if="${modalVNPayError}" class="modal fade" id="statusErrorsModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content"  style="    border-radius: 30px;">
+                    <div class="modal-body text-center p-lg-4">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                            <circle class="path circle" fill="none" stroke="#db3646" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
+                            <line class="path line" fill="none" stroke="#db3646" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3" />
+                            <line class="path line" fill="none" stroke="#db3646" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8" y1="38" X2="34.4" y2="92.2" />
+                        </svg>
+                        <h4 class="text-danger mt-3">Error!</h4>
+                        <p class="mt-3">Thanh toán đơn hàng thất bại.</p>
+                        <button type="button" class="btn btn-sm mt-3 btn-danger" data-bs-dismiss="modal">Ok</button>
                     </div>
-                    <div class="modal-body">
-                        <div>
-                            <div class="row" style="margin-bottom: 20px;">
-                                <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên địa chỉ" name="nameAddress">
+                </div>
+            </div>
+        </div>
 
-                                <input style="height: 40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên người nhận" name="fullName" >
-                            </div>
-                            <div class="row" style="margin-bottom: 20px;">
-                                <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="SDT người nhận" name="phoneAddress">
+        <div th:if="${modalVNPaySuccess}" class="modal fade" id="statusSuccessModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content"  style="border-radius: 30px;">
+                    <div class="modal-body text-center p-lg-4">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                            <circle class="path circle" fill="none" stroke="#198754" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
+                            <polyline class="path check" fill="none" stroke="#198754" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 " />
+                        </svg>
+                        <h4 class="text-success mt-3">Success!</h4>
+                        <p class="mt-3">Thanh toán cho đơn hàng thành công.</p>
+                        <button type="button" class="btn btn-sm mt-3 btn-success" data-bs-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                                <select class="select" id="city" name="city"
-                                        style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                                       font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
-                                    <option value="" selected>Chọn thành phố</option>
-                                </select>
-                            </div>
+        <div th:if="${modalDeliverySuccess}" class="modal fade" id="statusSuccessPlaceOrder" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content" style="    border-radius: 30px;">
+                    <div class="modal-body text-center p-lg-4">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                            <circle class="path circle" fill="none" stroke="#198754" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
+                            <polyline class="path check" fill="none" stroke="#198754" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 " />
+                        </svg>
+                        <h4 class="text-success mt-3">Success!</h4>
+                        <p class="mt-3">Đặt hàng thành công.</p>
+                        <button type="button" class="btn btn-sm mt-3 btn-success" data-bs-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--    Modal thong bao thanh toan end-->
+        `
 
-                            <div class="row" style="margin-bottom: 20px;">
-
-                                <select class="select" id="district" name="district" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; margin-left: 38px; margin-right: 30px; ">
-                                    <option value="" selected>Chọn quận huyện</option>
-                                </select>
-
-                                <select class="select" id="ward" name="ward" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; ">
-                                    <option value="" selected>Chọn phường/xã</option>
-                                </select>
-
-                            </div>
-
-                            <div class="row" style="margin-bottom: 20px;" >
-
-                                <input name="description" style="height: 40px;width: 410px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381;  padding: 10px 15px; margin-left: 38px;" type="text" placeholder="Mô tả";  >
-
-                            </div>
-
-                            <div style="width: 100%; height:15px;"></div>
-                            <div style="width: 100%; height: 0.5px; background-color: rgb(64, 64, 64) ;"></div>
-                            <div style="width: 100%; height:15px;"></div>
-
-                            <div class="row">
-                                <input style="margin: 0 10px 0 38px;" type="checkbox" name="defaultSelected">  Đặt làm mặc định
-                            </div>
-
+        <!--    Thêm địa chỉ  begin-->
+        <div th:if="${addNewAddressSetting}" class="modal fade" id="modalThemDiaChi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="width: 500px">
+                <div class="modal-content">
+                    <form action="/buyer/addresses/add" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Thêm địa chỉ mới</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!--    Thêm địa chỉ end-->
-
-    <!--    Thay đổi phương thức thanh toán begin-->
-    <div th:if="${modalThayDoiPhuongThucThanhToan}" class="modal fade" id="modalThayDoiPhuongThucThanhToan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-
-        <!--        Modal thay đổi phương thức thanh toán (chờ thanh toán) begin-->
-        <div th:if="${detailBillPay}" class="modal-dialog modal-dialog-centered" role="document" style="width: 550px;" th:object="${billDetailPay}" >
-            <form th:action="@{'/buyer/purchase/pay/change/payment/' + ${billDetailPay.idHD}}" method="post">
-                <div class="modal-content" >
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Thay đổi phương thức thanh toán</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div  style="margin-left: 100px; display: flex; margin-right: 100px;">
-                            <input name="paymentMethod" value="thanhToanKhiNhanHang" type="radio" checked style="height: 30px; width: 30px;">
-                            <p style="margin: 3px 0 0 10px; font-size: 12pt; font-weight: 700;">Thanh toán khi nhận hàng</p>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                    </div>
-
-                </div>
-            </form>
-        </div>
-        <!--        Modal thay đổi phương thức thanh toán (chờ thanh toán) end-->
-
-
-        <!--        Modal thay đổi phương thức thanh toán (chờ thanh toán) begin-->
-        <div th:if="${detailBillShip}" class="modal-dialog modal-dialog-centered" role="document" style="width: 550px;" th:object="${billDetailShip}" >
-            <form th:action="@{'/buyer/purchase/pay/change/payment/' + ${billDetailShip.idHD}}" method="post">
-                <div class="modal-content" >
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Thay đổi phương thức thanh toán</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div  style="margin-left: 100px; display: flex; margin-right: 100px;">
-                            <input name="paymentMethod" value="qrCodeBanking"  type="radio" checked style="height: 30px; width: 30px;">
-                            <p style="margin: 3px 0 0 10px; font-size: 12pt; font-weight: 700;">Thanh toán qua ví VNPAY</p>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                    </div>
-
-                </div>
-            </form>
-        </div>
-        <!--        Modal thay đổi phương thức thanh toán (chờ thanh toán) end-->
-
-    </div>
-    <!--   Thay đổi phương thức thanh toán end-->
-
-    <!--    Modal hủy hóa đơn begin-->
-    <div class="modal fade" id="modalHuyHoaDon" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-
-        <!--       Modal Hủy chờ thanh toán begin-->
-        <div th:if="${detailBillPay}" class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;" th:object="${billDetailPay}" >
-            <form th:action="@{'/buyer/purchase/bill/pay/cancel/' + ${billDetailPay.idHD}}" method="post">
-                <div class="modal-content" >
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Thay đổi phương thức thanh toán</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
                         <div class="modal-body">
-
-                            <div class="row" style="margin: 0 0 30px 0;">
-                                <p style="margin: 0 0 0 10px; font-size: 9pt; font-weight: 500; color: red">*Nếu bạn đã thanh toán, tiền thanh toán sẽ được hoàn vào tài khoản trong 24h</p>
-                            </div>
-
-                            <div class="row" style="margin: 15px 0 15px 0;">
-                                <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                    <input checked type="radio" value="changeSize" style="height: 20px; width: 20px;" name="lyDoHuy">
-                                    <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thay đổi size/ màu</p>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin: 15px 0 15px 0;">
-                                <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                    <input type="radio" value="changeProduct"  style="height: 20px; width: 20px;" name="lyDoHuy">
-                                    <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thay đổi sản phẩm</p>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin: 15px 0 15px 0;">
-                                <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                    <input type="radio" value="none" style="height: 20px; width: 20px;" name="lyDoHuy">
-                                    <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi không  có nhu cầu mua nữa</p>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin: 15px 0 15px 0;">
-                                <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                    <input type="radio" value="lyDoKhac" style="height: 20px; width: 20px;" name="lyDoHuy">
-                                    <p style="margin: 0 15px 0 30px; font-size: 12pt; font-weight: 500;">Khác</p>
-                                    <textarea name="hutThuocNenDauDaDay" cols="25" rows="3"></textarea>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-danger">Hủy Đơn Hàng</button>
-                    </div>
-
-                </div>
-            </form>
-        </div>
-        <!--       Modal Hủy chờ thanh toán end-->
-
-        <!--        Modal hủy chờ giao hàng begin-->
-        <div th:if="${detailBillShip}" class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;" th:object="${billDetailShip}" >
-            <form th:action="@{'/buyer/purchase/bill/pay/cancel/' + ${billDetailShip.idHD}}" method="post">
-                <div class="modal-content" >
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Thay đổi phương thức thanh toán</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="modal-body">
-
-                            <div class="row" style="margin: 0 0 30px 0;">
-                                <p style="margin: 0 0 0 10px; font-size: 9pt; font-weight: 500; color: red">*Nếu bạn đã thanh toán, tiền thanh toán sẽ được hoàn vào tài khoản trong 24h</p>
-                            </div>
-
-                            <div class="row" style="margin: 15px 0 15px 0;">
-                                <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                    <input type="radio" value="changeSize" style="height: 20px; width: 20px;" name="lyDoHuy">
-                                    <p checked style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thay đổi size/ màu</p>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin: 15px 0 15px 0;">
-                                <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                    <input type="radio" value="changeProduct"  style="height: 20px; width: 20px;" name="lyDoHuy">
-                                    <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thay đổi sản phẩm</p>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin: 15px 0 15px 0;">
-                                <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                    <input type="radio" value="none" style="height: 20px; width: 20px;" name="lyDoHuy">
-                                    <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi không  có nhu cầu mua nữa</p>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin: 15px 0 15px 0;">
-                                <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                    <input type="radio" value="lyDoKhac" style="height: 20px; width: 20px;" name="lyDoHuy">
-                                    <p style="margin: 0 15px 0 30px; font-size: 12pt; font-weight: 500;">Khác</p>
-                                    <textarea name="hutThuocNenDauDaDay" cols="25" rows="3"></textarea>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-danger">Hủy Đơn Hàng</button>
-                    </div>
-
-                </div>
-            </form>
-        </div>
-        <!--        Modal hủy chờ giao hàng end-->
-
-    </div>
-    <!--   Modal hủy hóa đơn end-->
-
-    <!--    Modal hủy đơn all begin -->
-    <div th:if="${modalHuyHoaDonInDetailBillPay}" class="modal fade" id="modalHuyHoaDonInDetailBillPay" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-
-        <!--       Modal Hủy chờ thanh toán begin-->
-        <div th:if="${detailBillPay}" class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;" th:object="${billDetailPay}" >
-            <form th:action="@{'/buyer/purchase/bill/pay/cancel/' + ${billDetailPay.idHD}}" method="post">
-                <div class="modal-content" >
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Thay đổi phương thức thanh toán</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="modal-body">
-
-                            <div class="row" style="margin: 0 0 30px 0;">
-                                <p style="margin: 0 0 0 10px; font-size: 9pt; font-weight: 500; color: red">*Nếu bạn đã thanh toán, tiền thanh toán sẽ được hoàn vào tài khoản trong 24h</p>
-                            </div>
-
-                            <div class="row" style="margin: 15px 0 15px 0;">
-                                <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                    <input type="radio" value="changeSize" style="height: 20px; width: 20px;" name="lyDoHuy">
-                                    <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thay đổi size/ màu</p>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin: 15px 0 15px 0;">
-                                <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                    <input type="radio" value="changeProduct"  style="height: 20px; width: 20px;" name="lyDoHuy">
-                                    <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thay đổi sản phẩm</p>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin: 15px 0 15px 0;">
-                                <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                    <input type="radio" value="none" style="height: 20px; width: 20px;" name="lyDoHuy">
-                                    <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi không  có nhu cầu mua nữa</p>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin: 15px 0 15px 0;">
-                                <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                    <input type="radio" value="lyDoKhac" style="height: 20px; width: 20px;" name="lyDoHuy">
-                                    <p style="margin: 0 15px 0 30px; font-size: 12pt; font-weight: 500;">Khác</p>
-                                    <textarea name="hutThuocNenDauDaDay" cols="25" rows="3"></textarea>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-danger">Hủy Đơn Hàng</button>
-                    </div>
-
-                </div>
-            </form>
-        </div>
-        <!--       Modal Hủy chờ thanh toán end-->
-
-        <!--        Modal hủy chờ giao hàng begin-->
-        <div th:if="${detailBillShip}" class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;" th:object="${billDetailShip}" >
-            <form th:action="@{'/buyer/purchase/bill/pay/cancel/' + ${billDetailShip.idHD}}" method="post">
-                <div class="modal-content" >
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Thay đổi phương thức thanh toán</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="modal-body">
-
-                            <div class="row" style="margin: 0 0 30px 0;">
-                                <p style="margin: 0 0 0 10px; font-size: 9pt; font-weight: 500; color: red">*Nếu bạn đã thanh toán, tiền thanh toán sẽ được hoàn vào tài khoản trong 24h</p>
-                            </div>
-
-                            <div class="row" style="margin: 15px 0 15px 0;">
-                                <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                    <input type="radio" value="changeSize" style="height: 20px; width: 20px;" name="lyDoHuy">
-                                    <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thay đổi size/ màu</p>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin: 15px 0 15px 0;">
-                                <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                    <input type="radio" value="changeProduct"  style="height: 20px; width: 20px;" name="lyDoHuy">
-                                    <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thay đổi sản phẩm</p>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin: 15px 0 15px 0;">
-                                <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                    <input type="radio" value="none" style="height: 20px; width: 20px;" name="lyDoHuy">
-                                    <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi không  có nhu cầu mua nữa</p>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin: 15px 0 15px 0;">
-                                <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                    <input type="radio" value="lyDoKhac" style="height: 20px; width: 20px;" name="lyDoHuy">
-                                    <p style="margin: 0 15px 0 30px; font-size: 12pt; font-weight: 500;">Khác</p>
-                                    <textarea name="hutThuocNenDauDaDay" cols="25" rows="3"></textarea>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-danger">Hủy Đơn Hàng</button>
-                    </div>
-
-                </div>
-            </form>
-        </div>
-        <!--        Modal hủy chờ giao hàng end-->
-
-    </div>
-    <!--    Modal hủy đơn all end-->
-
-    <!--    Modal thong bao thay doi dia chi nhan hang begin-->
-    <div class="modal fade" id="thongBaoThayDoiDiaChiNhan" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="messAddThanhCongTitle" >Quy định thay đổi địa chỉ nhận hàng !</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">
-                        <p style="text-align: center; margin-bottom: 20px;color: red;">*Khi thay đổi địa chỉ nhận hàng phí giao hàng có thể thay đổi</p>
-                        <p style="text-align: center; margin-bottom: 20px; color: red;">Mỗi đơn hàng chỉ được thay đổi 1 lần</p>
-                        <p style="text-align: center; margin-bottom: 20px; color: red;">Bạn chắc chắn thay đổi địa chỉ nhận cho đơn hàng này không ?</p>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button data-toggle="modal" data-target="#changeAddressNhanHang" style="width: 150px;border-radius: 5px;margin-top: 6px;height: 40px;" >Thay đổi</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--    Modal thong bao thay doi dia chi nhan hang end-->
-
-    <!--    Modal thong bao thay doi pttt begin-->
-    <div th:if="${showThongBaoThayDoiHTTT}" class="modal fade" id="thongBaoThayDoiHTTT" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="messAddThanhCongTitle" >Quy định thay đổi địa chỉ nhận hàng !</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">
-                        <p style="text-align: center; margin-bottom: 20px;">Thay đổi phương thức thanh toán thành công vui lòng kiểm tra lại đơn hàng</p>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button data-toggle="modal" data-target="#changeAddressNhanHang" style="width: 150px;border-radius: 5px;margin-top: 6px;height: 40px;" >Thay đổi</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--    Modal thong bao thay doi pttt end-->
-
-    <!--    Modal thay đổi địa chỉ nhận hàng begin-->
-    <div th:if="${detailBillPay}" class="modal fade" id="changeAddressNhanHang" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;">
-            <div class="modal-content">
-                <form th:action="'/buyer/purchase/bill/change/address/get/' + ${billDetailPay.idHD} " method="post">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle2">Thay đổi địa chỉ nhận hàng</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div>
-                            <div style="display: flex; margin-left: 20px; margin:10px 0 10px 10px;" th:object="${diaChiKHDefault}">
-                                <input checked type="radio" th:value="${diaChiKHDefault.idDC}" name="idDCKH" style="height: 20px; width: 20px; margin: 0 20px 0 -10px;" >
-                                <h5 style="font-weight: 700; font-size: 13pt ;" th:text="${diaChiKHDefault.tenNguoiNhan}" ></h5>
-                                <span style="margin: -4px 5px 0 5px ;"> | </span>
-                                <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${diaChiKHDefault.sdtNguoiNhan}"></h5>
-                                <span style="margin-left: 20px;"></span>
-                                <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${diaChiKHDefault.tenDC}"></h5>
-                                <span style="margin-left: 10px;"></span>
-                                <h5 style="font-weight: 700; font-size: 12pt ; color: red">Mặc định</h5>
-                            </div>
-                            <h5 style=" margin-bottom: 10px ;font-size: 11pt;" th:text="${diaChiKHDefault.diaChiChiTiet}"></h5>
-                        </div>
-
-                        <div style="width: 465px; margin: 20px 0 20px 0; height: 0.5px; background: rgba(0,0,0,.54);"></div>
-
-                        <th:block th:each="x : ${listAddressKH}">
-
                             <div>
-                                <div style="display: flex; margin-left: 20px; margin:10px 0 10px 10px;">
-                                    <input type="radio" th:value="${x.idDC}" name="idDCKH" style=" height: 20px; width: 20px; margin: 0 20px 0 -10px;">
-                                    <h5 style="font-weight: 700; font-size: 13pt ;" th:text="${x.tenNguoiNhan}" ></h5>
-                                    <span style="margin: -4px 5px 0 5px ;"> | </span>
-                                    <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${x.sdtNguoiNhan}"></h5>
-                                    <span style="margin-left: 20px;"></span>
-                                    <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${x.tenDC}"></h5>
-                                    <span style="margin-left: 10px;"></span>
-                                </div>
-                                <h5 style=" margin-bottom: 10px ;font-size: 11pt;" th:text="${x.diaChiChiTiet}"></h5>
-                            </div>
-
-                            <div style="width:98%; margin: 20px 0 20px 0; height: 0.5px; background: rgba(0,0,0,.54);"></div>
-
-                        </th:block>
-
-                        <a data-toggle="modal" data-target="#addNewAddressNhanHang" style="height: 40px; width: 200px; color: #363434; font-size: 12pt; margin-top: 20px;" href=""> + Thêm mới địa chỉ</a>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-
-                        <button type="submit" style="width: 200px;border-radius: 5px;margin-top: 6px;height: 40px;"  class="btn btn-primary">Lưu thay đổi</button>
-
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!--    Modal thong bao thay doi dia chi nhan hang end-->
-
-    <!--    Modal thêm địa chỉ lấy hàng begin-->
-    <div th:if="${billDetailPay}" class="modal fade" id="addNewAddressNhanHang" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 500px">
-            <div class="modal-content">
-                <form th:action="'/buyer/purchase/bill/add/address/get/' + ${billDetailPay.idHD}" method="post">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Thêm địa chỉ nhận hàng mới</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div>
-                            <div class="row" style="margin-bottom: 20px;">
-                                <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
                                 font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên địa chỉ" name="nameAddress">
 
-                                <input style="height: 40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                    <input style="height: 40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
                                 font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên người nhận" name="fullName" >
-                            </div>
-                            <div class="row" style="margin-bottom: 20px;">
-                                <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="SDT người nhận" name="phoneAddress">
-
-                                <select class="select" id="city" name="city"
-                                        style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                                       font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
-                                    <option value="" selected>Chọn thành phố</option>
-                                </select>
-                            </div>
-
-                            <div class="row" style="margin-bottom: 20px;">
-
-                                <select class="select" id="district" name="district" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; margin-left: 38px; margin-right: 30px; ">
-                                    <option value="" selected>Chọn quận huyện</option>
-                                </select>
-
-                                <select class="select" id="ward" name="ward" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; ">
-                                    <option value="" selected>Chọn phường/xã</option>
-                                </select>
-
-                            </div>
-
-                            <div class="row" style="margin-bottom: 20px;" >
-
-                                <input name="description" style="height: 40px;width: 410px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381;  padding: 10px 15px; margin-left: 38px;" type="text" placeholder="Mô tả";  >
-
-                            </div>
-
-                            <div style="width: 100%; height:15px;"></div>
-                            <div style="width: 100%; height: 0.5px; background-color: rgb(64, 64, 64) ;"></div>
-                            <div style="width: 100%; height:15px;"></div>
-
-                            <div class="row">
-                                <input style="margin: 0 10px 0 38px;" type="checkbox" name="defaultSelected">  Đặt làm mặc định
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!--    Modal thêm địa chỉ lấy hàng end-->
-
-    <!--    Modal thay đổi địa chỉ nhận hàng begin-->
-    <div th:if="${detailBillShip}" class="modal fade" id="changeAddressNhanHang" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;">
-            <div class="modal-content">
-                <form th:action="'/buyer/purchase/bill/change/address/get/' + ${billDetailShip.idHD} " method="post">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle2">Thay đổi địa chỉ nhận hàng</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div>
-                            <div style="display: flex; margin-left: 20px; margin:10px 0 10px 10px;" th:object="${diaChiKHDefault}">
-                                <input checked type="radio" th:value="${diaChiKHDefault.idDC}" name="idDCKH" style="height: 20px; width: 20px; margin: 0 20px 0 -10px;" >
-                                <h5 style="font-weight: 700; font-size: 13pt ;" th:text="${diaChiKHDefault.tenNguoiNhan}" ></h5>
-                                <span style="margin: -4px 5px 0 5px ;"> | </span>
-                                <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${diaChiKHDefault.sdtNguoiNhan}"></h5>
-                                <span style="margin-left: 20px;"></span>
-                                <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${diaChiKHDefault.tenDC}"></h5>
-                                <span style="margin-left: 10px;"></span>
-                                <h5 style="font-weight: 700; font-size: 12pt ; color: red">Mặc định</h5>
-                            </div>
-                            <h5 style=" margin-bottom: 10px ;font-size: 11pt;" th:text="${diaChiKHDefault.diaChiChiTiet}"></h5>
-                        </div>
-
-                        <div style="width: 465px; margin: 20px 0 20px 0; height: 0.5px; background: rgba(0,0,0,.54);"></div>
-
-                        <th:block th:each="x : ${listAddressKH}">
-
-                            <div>
-                                <div style="display: flex; margin-left: 20px; margin:10px 0 10px 10px;">
-                                    <input type="radio" th:value="${x.idDC}" name="idDCKH" style=" height: 20px; width: 20px; margin: 0 20px 0 -10px;">
-                                    <h5 style="font-weight: 700; font-size: 13pt ;" th:text="${x.tenNguoiNhan}" ></h5>
-                                    <span style="margin: -4px 5px 0 5px ;"> | </span>
-                                    <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${x.sdtNguoiNhan}"></h5>
-                                    <span style="margin-left: 20px;"></span>
-                                    <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${x.tenDC}"></h5>
-                                    <span style="margin-left: 10px;"></span>
                                 </div>
-                                <h5 style=" margin-bottom: 10px ;font-size: 11pt;" th:text="${x.diaChiChiTiet}"></h5>
-                            </div>
-
-                            <div style="width:98%; margin: 20px 0 20px 0; height: 0.5px; background: rgba(0,0,0,.54);"></div>
-
-                        </th:block>
-
-                        <a data-toggle="modal" data-target="#addNewAddressNhanHangDelivery" style="height: 40px; width: 200px; color: #363434; font-size: 12pt; margin-top: 20px;" href=""> + Thêm mới địa chỉ</a>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-
-                        <button type="submit" style="width: 200px;border-radius: 5px;margin-top: 6px;height: 40px;"  class="btn btn-primary">Lưu thay đổi</button>
-
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!--    Modal thêm địa chỉ lấy hàng begin-->
-    <div th:if="${detailBillShip}" class="modal fade" id="addNewAddressNhanHangDelivery" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 500px">
-            <div class="modal-content">
-                <form th:action="'/buyer/purchase/bill/add/address/get/' + ${billDetailShip.idHD}" method="post">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Thêm địa chỉ nhận hàng mới</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div>
-                            <div class="row" style="margin-bottom: 20px;">
-                                <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên địa chỉ" name="nameAddress">
-
-                                <input style="height: 40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên người nhận" name="fullName" >
-                            </div>
-                            <div class="row" style="margin-bottom: 20px;">
-                                <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
                                 font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="SDT người nhận" name="phoneAddress">
 
-                                <select class="select" id="city" name="city"
-                                        style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                    <select class="select" id="city" name="city"
+                                            style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
                                                        font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
-                                    <option value="" selected>Chọn thành phố</option>
-                                </select>
-                            </div>
+                                        <option value="" selected>Chọn thành phố</option>
+                                    </select>
+                                </div>
 
-                            <div class="row" style="margin-bottom: 20px;">
+                                <div class="row" style="margin-bottom: 20px;">
 
-                                <select class="select" id="district" name="district" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                    <select class="select" id="district" name="district" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
                                 font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; margin-left: 38px; margin-right: 30px; ">
-                                    <option value="" selected>Chọn quận huyện</option>
-                                </select>
+                                        <option value="" selected>Chọn quận huyện</option>
+                                    </select>
 
-                                <select class="select" id="ward" name="ward" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                    <select class="select" id="ward" name="ward" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
                                 font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; ">
-                                    <option value="" selected>Chọn phường/xã</option>
-                                </select>
+                                        <option value="" selected>Chọn phường/xã</option>
+                                    </select>
 
-                            </div>
+                                </div>
 
-                            <div class="row" style="margin-bottom: 20px;" >
+                                <div class="row" style="margin-bottom: 20px;" >
 
-                                <input name="description" style="height: 40px;width: 410px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                    <input name="description" style="height: 40px;width: 410px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
                                 font-weight: 500; font-size: 14px; color: #637381;  padding: 10px 15px; margin-left: 38px;" type="text" placeholder="Mô tả";  >
 
+                                </div>
+
+                                <div style="width: 100%; height:15px;"></div>
+                                <div style="width: 100%; height: 0.5px; background-color: rgb(64, 64, 64) ;"></div>
+                                <div style="width: 100%; height:15px;"></div>
+
+                                <div class="row">
+                                    <input style="margin: 0 10px 0 38px;" type="checkbox" name="defaultSelected">  Đặt làm mặc định
+                                </div>
+
                             </div>
-
-                            <div style="width: 100%; height:15px;"></div>
-                            <div style="width: 100%; height: 0.5px; background-color: rgb(64, 64, 64) ;"></div>
-                            <div style="width: 100%; height:15px;"></div>
-
-                            <div class="row">
-                                <input style="margin: 0 10px 0 38px;" type="checkbox" name="defaultSelected">  Đặt làm mặc định
-                            </div>
-
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--    Thêm địa chỉ end-->
+
+        <!--    Thay đổi phương thức thanh toán begin-->
+        <div th:if="${modalThayDoiPhuongThucThanhToan}" class="modal fade" id="modalThayDoiPhuongThucThanhToan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+            <!--        Modal thay đổi phương thức thanh toán (chờ thanh toán) begin-->
+            <div th:if="${detailBillPay}" class="modal-dialog modal-dialog-centered" role="document" style="width: 550px;" th:object="${billDetailPay}" >
+                <form th:action="@{'/buyer/purchase/pay/change/payment/' + ${billDetailPay.idHD}}" method="post">
+                    <div class="modal-content" >
+
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Thay đổi phương thức thanh toán</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div  style="margin-left: 100px; display: flex; margin-right: 100px;">
+                                <input name="paymentMethod" value="thanhToanKhiNhanHang" type="radio" checked style="height: 30px; width: 30px;">
+                                <p style="margin: 3px 0 0 10px; font-size: 12pt; font-weight: 700;">Thanh toán khi nhận hàng</p>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        </div>
+
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
-    <!--    Modal thêm địa chỉ lấy hàng end-->
+            <!--        Modal thay đổi phương thức thanh toán (chờ thanh toán) end-->
 
-    <!--Modal thay đổi địa chỉ nhận hàng end-->
 
-    <!--    Validate chọn sản phẩm trả hàng begin-->
-    <div class="modal fade" id="thongBaoChonSPTraHang" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="messAddThanhCongTitle" >Thông báo !</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
+            <!--        Modal thay đổi phương thức thanh toán (chờ thanh toán) begin-->
+            <div th:if="${detailBillShip}" class="modal-dialog modal-dialog-centered" role="document" style="width: 550px;" th:object="${billDetailShip}" >
+                <form th:action="@{'/buyer/purchase/pay/change/payment/' + ${billDetailShip.idHD}}" method="post">
+                    <div class="modal-content" >
 
-                    <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">
-                        <p style="font-size: 13pt; font-weight: 600;">Chọn ít nhất 1 sản phẩm để hoàn hàng !!</p>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Thay đổi phương thức thanh toán</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div  style="margin-left: 100px; display: flex; margin-right: 100px;">
+                                <input name="paymentMethod" value="qrCodeBanking"  type="radio" checked style="height: 30px; width: 30px;">
+                                <p style="margin: 3px 0 0 10px; font-size: 12pt; font-weight: 700;">Thanh toán qua ví VNPAY</p>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        </div>
+
                     </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+                </form>
             </div>
+            <!--        Modal thay đổi phương thức thanh toán (chờ thanh toán) end-->
+
         </div>
-    </div>
-    <!--    Validate chọn sản phẩm trả hàng end-->
+        <!--   Thay đổi phương thức thanh toán end-->
 
+        <!--    Modal hủy hóa đơn begin-->
+        <div class="modal fade" id="modalHuyHoaDon" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
-    <!--    Validate chọn sản phẩm trả hàng begin-->
-    <div th:if="${showThongBaoThayDoiDiaChiNhanHangThanhCong}" class="modal fade" id="thongBaoThayDoiDiaChiNhanHangThanhCong" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="messAddThanhCongTitle" >Thông báo !</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
+            <!--       Modal Hủy chờ thanh toán begin-->
+            <div th:if="${detailBillPay}" class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;" th:object="${billDetailPay}" >
+                <form th:action="@{'/buyer/purchase/bill/pay/cancel/' + ${billDetailPay.idHD}}" method="post">
+                    <div class="modal-content" >
 
-                    <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">
-                        <p style="font-size: 13pt; font-weight: 600;">Thay đổi địa chỉ nhận hàng thành công !</p>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Bạn muốn hủy đơn này này </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="modal-body">
+
+                                <div class="row" style="margin: 0 0 30px 0;">
+                                    <p style="margin: 0 0 0 10px; font-size: 9pt; font-weight: 500; color: red">*Nếu bạn đã thanh toán, vui lòng liên lệ : 0362965179 để hoàn tiền</p>
+                                </div>
+
+                                <div class="row" style="margin: 15px 0 15px 0;">
+                                    <div style="margin-left: 50px; display: flex; margin-right: 50px;">
+                                        <input checked type="radio" value="changeSize" style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thay đổi size/ màu</p>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 15px 0 15px 0;">
+                                    <div style="margin-left: 50px; display: flex; margin-right: 50px;">
+                                        <input type="radio" value="changeProduct"  style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thay đổi sản phẩm</p>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 15px 0 15px 0;">
+                                    <div style="margin-left: 50px; display: flex; margin-right: 50px;">
+                                        <input type="radio" value="none" style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi không  có nhu cầu mua nữa</p>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 15px 0 15px 0;">
+                                    <div style="margin-left: 50px; display: flex; margin-right: 50px;">
+                                        <input type="radio" value="lyDoKhac" style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <p style="margin: 0 15px 0 30px; font-size: 12pt; font-weight: 500;">Khác</p>
+                                        <textarea name="hutThuocNenDauDaDay" cols="25" rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-danger">Hủy Đơn Hàng</button>
+                        </div>
+
                     </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+                </form>
             </div>
-        </div>
-    </div>
-    <!--    Validate chọn sản phẩm trả hàng end-->
+            <!--       Modal Hủy chờ thanh toán end-->
 
-    <!--    Validate chọn sản phẩm trả hàng begin-->
-    <div class="modal fade" id="thongBaoNhapMa" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="messAddThanhCongTitle" >Thông báo !</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
+            <!--        Modal hủy chờ giao hàng begin-->
+            <div th:if="${detailBillShip}" class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;" th:object="${billDetailShip}" >
+                <form th:action="@{'/buyer/purchase/bill/pay/cancel/' + ${billDetailShip.idHD}}" method="post">
+                    <div class="modal-content" >
 
-                    <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">
-                        <p style="font-size: 13pt; font-weight: 600;">Vui lòng nhập mã vận đơn !!</p>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Bạn muốn hủy đơn này này</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="modal-body">
+
+                                <div class="row" style="margin: 0 0 30px 0;">
+                                    <p style="margin: 0 0 0 10px; font-size: 9pt; font-weight: 500; color: red">*Nếu bạn đã thanh toán, vui lòng liên lệ : 0362965179 để hoàn tiền</p>
+                                </div>
+
+                                <div class="row" style="margin: 15px 0 15px 0;">
+                                    <div style="margin-left: 50px; display: flex; margin-right: 50px;">
+                                        <input type="radio" value="changeSize" style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <p checked style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thay đổi size/ màu</p>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 15px 0 15px 0;">
+                                    <div style="margin-left: 50px; display: flex; margin-right: 50px;">
+                                        <input type="radio" value="changeProduct"  style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thay đổi sản phẩm</p>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 15px 0 15px 0;">
+                                    <div style="margin-left: 50px; display: flex; margin-right: 50px;">
+                                        <input type="radio" value="none" style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi không  có nhu cầu mua nữa</p>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 15px 0 15px 0;">
+                                    <div style="margin-left: 50px; display: flex; margin-right: 50px;">
+                                        <input type="radio" value="lyDoKhac" style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <p style="margin: 0 15px 0 30px; font-size: 12pt; font-weight: 500;">Khác</p>
+                                        <textarea name="hutThuocNenDauDaDay" cols="25" rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-danger">Hủy Đơn Hàng</button>
+                        </div>
+
                     </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+                </form>
             </div>
-        </div>
-    </div>
-    <!--    Validate chọn sản phẩm trả hàng end-->
+            <!--        Modal hủy chờ giao hàng end-->
 
-    <!--    Modal dánh giá đơn hàng begin-->
-    <div th:if="${detailBillCompleted}" class="modal fade" id="modalDanhGiaDonHang" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document"  style="width: 750px ">
-            <form th:action="@{'/buyer/purchase/bill/complete/rate/' + ${billDetailCompleted.idHD}}" method="post" enctype="multipart/form-data">
+        </div>
+        <!--   Modal hủy hóa đơn end-->
+
+        <!--    Modal hủy đơn all begin -->
+        <div th:if="${modalHuyHoaDonInDetailBillPay}" class="modal fade" id="modalHuyHoaDonInDetailBillPay" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+            <!--       Modal Hủy chờ thanh toán begin-->
+            <div th:if="${detailBillPay}" class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;" th:object="${billDetailPay}" >
+                <form th:action="@{'/buyer/purchase/bill/pay/cancel/' + ${billDetailPay.idHD}}" method="post">
+                    <div class="modal-content" >
+
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Bạn muốn hủy đơn này này</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="modal-body">
+
+                                <div class="row" style="margin: 0 0 30px 0;">
+                                    <p style="margin: 0 0 0 10px; font-size: 9pt; font-weight: 500; color: red">*Nếu bạn đã thanh toán, vui lòng liên lệ : 0362965179 để hoàn tiền</p>
+                                </div>
+
+                                <div class="row" style="margin: 15px 0 15px 0;">
+                                    <div style="margin-left: 50px; display: flex; margin-right: 50px;">
+                                        <input type="radio" value="changeSize" style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thay đổi size/ màu</p>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 15px 0 15px 0;">
+                                    <div style="margin-left: 50px; display: flex; margin-right: 50px;">
+                                        <input type="radio" value="changeProduct"  style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thay đổi sản phẩm</p>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 15px 0 15px 0;">
+                                    <div style="margin-left: 50px; display: flex; margin-right: 50px;">
+                                        <input type="radio" value="none" style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi không  có nhu cầu mua nữa</p>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 15px 0 15px 0;">
+                                    <div style="margin-left: 50px; display: flex; margin-right: 50px;">
+                                        <input type="radio" value="lyDoKhac" style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <p style="margin: 0 15px 0 30px; font-size: 12pt; font-weight: 500;">Khác</p>
+                                        <textarea name="hutThuocNenDauDaDay" cols="25" rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-danger">Hủy Đơn Hàng</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <!--       Modal Hủy chờ thanh toán end-->
+
+            <!--        Modal hủy chờ giao hàng begin-->
+            <div th:if="${detailBillShip}" class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;" th:object="${billDetailShip}" >
+                <form th:action="@{'/buyer/purchase/bill/pay/cancel/' + ${billDetailShip.idHD}}" method="post">
+                    <div class="modal-content" >
+
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Thay đổi phương thức thanh toán</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="modal-body">
+
+                                <div class="row" style="margin: 0 0 30px 0;">
+                                    <p style="margin: 0 0 0 10px; font-size: 9pt; font-weight: 500; color: red">*Nếu bạn đã thanh toán, tiền thanh toán sẽ được hoàn vào tài khoản trong 24h</p>
+                                </div>
+
+                                <div class="row" style="margin: 15px 0 15px 0;">
+                                    <div style="margin-left: 50px; display: flex; margin-right: 50px;">
+                                        <input type="radio" value="changeSize" style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thay đổi size/ màu</p>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 15px 0 15px 0;">
+                                    <div style="margin-left: 50px; display: flex; margin-right: 50px;">
+                                        <input type="radio" value="changeProduct"  style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thay đổi sản phẩm</p>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 15px 0 15px 0;">
+                                    <div style="margin-left: 50px; display: flex; margin-right: 50px;">
+                                        <input type="radio" value="none" style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi không  có nhu cầu mua nữa</p>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 15px 0 15px 0;">
+                                    <div style="margin-left: 50px; display: flex; margin-right: 50px;">
+                                        <input type="radio" value="lyDoKhac" style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <p style="margin: 0 15px 0 30px; font-size: 12pt; font-weight: 500;">Khác</p>
+                                        <textarea name="hutThuocNenDauDaDay" cols="25" rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-danger">Hủy Đơn Hàng</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <!--        Modal hủy chờ giao hàng end-->
+
+        </div>
+        <!--    Modal hủy đơn all end-->
+
+        <!--    Modal thong bao thay doi dia chi nhan hang begin-->
+        <div class="modal fade" id="thongBaoThayDoiDiaChiNhan" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Đánh giá sản phẩm</h5>
+                        <h5 class="modal-title" id="messAddThanhCongTitle" >Quy định thay đổi địa chỉ nhận hàng !</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="row" style="margin-bottom: 30px;">
-                            <p style="margin: auto; font-weight: 600; font-size: 13pt;">Mức độ đánh giá </p>
 
-                        </div>
-                        <div class="row" >
-                            <div class="col-lg-1"></div>
-                            <div class="col-lg-2">
-                                <input  style="height: 20px; width: 20px; margin-left: 30px; "  type="radio" value="1" name="soDiem">
-                                <p style="margin: auto; font-size: 10pt; margin-left: 30px;">Tệ</p>
-                            </div>
-                            <div class="col-lg-2">
-                                <input style="height: 20px; width: 20px; margin-left: 30px; " type="radio" value="2" name="soDiem">
-                                <p style="margin: auto; font-size: 10pt;">Không hài lòng</p>
-                            </div>
-                            <div class="col-lg-2">
-                                <input  style="height: 20px; width: 20px; margin-left: 30px; "   type="radio" value="3" name="soDiem">
-                                <p style="margin: auto; font-size: 10pt; margin-left: 10px;">Bình thường</p>
-                            </div>
-                            <div class="col-lg-2">
-                                <input  style="height: 20px; width: 20px; margin-left: 30px; "   type="radio" value="4" name="soDiem">
-                                <p style="margin: auto; font-size: 10pt;margin-left: 15px;">Hài lòng</p>
-                            </div>
-                            <div class="col-lg-2">
-                                <input  style="height: 20px; width: 20px; margin-left: 30px; "  checked type="radio" value="5" name="soDiem">
-                                <p style="margin: auto; font-size: 10pt;margin-left: 15px;">Tuyệt vời</p>
-                            </div>
-                            <div class="col-lg-1"></div>
-
-                        </div>
-
-                        <div style="width: 100%; margin-top: 10px; margin-bottom: 10px; height: 1px; background: rgba(0,0,0,.54);"></div>
-
-                        <div class="row">
-                            <p style="margin: auto; font-weight: 600; font-size: 11pt;">Hãy chia sẻ những điều bạn thích về sản phẩm này với những người mua khác nhé.</p>
-                            <textarea name="moTaDanhGia" class="form-control" style="margin:20px 0 0 35px; width: 90%; height: 50px;"></textarea>
-                        </div>
-
-                        <div style="width: 100%; margin-top: 10px; margin-bottom: 10px; height: 1px; background: rgba(0,0,0,.54);"></div>
-
-                        <div class="row" style="margin: 40px 0 50px 40px;">
-                            <div class="col-sm-2 imgUp2">
-                                <div class="imagePreview2"></div>
-                                <label class="btn btn-primary2">Tải lên
-                                    <input accept=".jpg, .jpeg, .png" type="file" name="imagesRequest" class="uploadFile img2" style="width: 0px;height: 0px;">
-                                </label>
-                            </div>
-                            <div class="col-sm-2 imgUp2">
-                                <div class="imagePreview2"></div>
-                                <label class="btn btn-primary2">Tải lên
-                                    <input accept=".jpg, .jpeg, .png" type="file" name="imagesRequest" class="uploadFile img2" style="width: 0px;height: 0px;">
-                                </label>
-                            </div>
-                            <div class="col-sm-2 imgUp2">
-                                <div class="imagePreview2"></div>
-                                <label class="btn btn-primary2">Tải lên
-                                    <input accept=".jpg, .jpeg, .png" type="file" name="imagesRequest" class="uploadFile img2" style="width: 0px;height: 0px;">
-                                </label>
-                            </div>
-
+                        <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">
+                            <p style="text-align: center; margin-bottom: 20px;color: red;">*Khi thay đổi địa chỉ nhận hàng phí giao hàng có thể thay đổi</p>
+                            <p style="text-align: center; margin-bottom: 20px; color: red;">Mỗi đơn hàng chỉ được thay đổi 1 lần</p>
+                            <p style="text-align: center; margin-bottom: 20px; color: red;">Bạn chắc chắn thay đổi địa chỉ nhận cho đơn hàng này không ?</p>
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-primary" style="border-radius: 5px; margin-top: 5px;width: 150px;">Gửi Đánh Giá</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button data-toggle="modal" data-target="#changeAddressNhanHang" style="width: 150px;border-radius: 5px;margin-top: 6px;height: 40px;" >Thay đổi</button>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
-    <!--    Modal đánh giá đơn hàng end-->
+        <!--    Modal thong bao thay doi dia chi nhan hang end-->
 
-    <!--    Modal dánh giá đơn hàng begin-->
-    <th:block th:each="x : ${listAllHDByKhachHang}">
-        <form th:action="@{'/buyer/purchase/bill/complete/rate/' + ${x.idHD}}" method="post" enctype="multipart/form-data">
-            <div  class="modal fade" th:id="'modalDanhGia' + ${x.idHD}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document"  style="width: 750px ">
+        <!--    Modal thong bao thay doi pttt begin-->
+        <div th:if="${showThongBaoThayDoiHTTT}" class="modal fade" id="thongBaoThayDoiHTTT" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="messAddThanhCongTitle" >Quy định thay đổi địa chỉ nhận hàng !</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">
+                            <p style="text-align: center; margin-bottom: 20px;">Thay đổi phương thức thanh toán thành công vui lòng kiểm tra lại đơn hàng</p>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button data-toggle="modal" data-target="#changeAddressNhanHang" style="width: 150px;border-radius: 5px;margin-top: 6px;height: 40px;" >Thay đổi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--    Modal thong bao thay doi pttt end-->
+
+        <!--    Modal thay đổi địa chỉ nhận hàng begin-->
+        <div th:if="${detailBillPay}" class="modal fade" id="changeAddressNhanHang" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;">
+                <div class="modal-content">
+                    <form th:action="'/buyer/purchase/bill/change/address/get/' + ${billDetailPay.idHD} " method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle2">Thay đổi địa chỉ nhận hàng</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div>
+                                <div style="display: flex; margin-left: 20px; margin:10px 0 10px 10px;" th:object="${diaChiKHDefault}">
+                                    <input checked type="radio" th:value="${diaChiKHDefault.idDC}" name="idDCKH" style="height: 20px; width: 20px; margin: 0 20px 0 -10px;" >
+                                    <h5 style="font-weight: 700; font-size: 13pt ;" th:text="${diaChiKHDefault.tenNguoiNhan}" ></h5>
+                                    <span style="margin: -4px 5px 0 5px ;"> | </span>
+                                    <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${diaChiKHDefault.sdtNguoiNhan}"></h5>
+                                    <span style="margin-left: 20px;"></span>
+                                    <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${diaChiKHDefault.tenDC}"></h5>
+                                    <span style="margin-left: 10px;"></span>
+                                    <h5 style="font-weight: 700; font-size: 12pt ; color: red">Mặc định</h5>
+                                </div>
+                                <h5 style=" margin-bottom: 10px ;font-size: 11pt;" th:text="${diaChiKHDefault.diaChiChiTiet}"></h5>
+                            </div>
+
+                            <div style="width: 465px; margin: 20px 0 20px 0; height: 0.5px; background: rgba(0,0,0,.54);"></div>
+
+                            <th:block th:each="x : ${listAddressKH}">
+
+                                <div>
+                                    <div style="display: flex; margin-left: 20px; margin:10px 0 10px 10px;">
+                                        <input type="radio" th:value="${x.idDC}" name="idDCKH" style=" height: 20px; width: 20px; margin: 0 20px 0 -10px;">
+                                        <h5 style="font-weight: 700; font-size: 13pt ;" th:text="${x.tenNguoiNhan}" ></h5>
+                                        <span style="margin: -4px 5px 0 5px ;"> | </span>
+                                        <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${x.sdtNguoiNhan}"></h5>
+                                        <span style="margin-left: 20px;"></span>
+                                        <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${x.tenDC}"></h5>
+                                        <span style="margin-left: 10px;"></span>
+                                    </div>
+                                    <h5 style=" margin-bottom: 10px ;font-size: 11pt;" th:text="${x.diaChiChiTiet}"></h5>
+                                </div>
+
+                                <div style="width:98%; margin: 20px 0 20px 0; height: 0.5px; background: rgba(0,0,0,.54);"></div>
+
+                            </th:block>
+
+                            <a data-toggle="modal" data-target="#addNewAddressNhanHang" style="height: 40px; width: 200px; color: #363434; font-size: 12pt; margin-top: 20px;" href=""> + Thêm mới địa chỉ</a>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+
+                            <button type="submit" style="width: 200px;border-radius: 5px;margin-top: 6px;height: 40px;"  class="btn btn-primary">Lưu thay đổi</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--    Modal thong bao thay doi dia chi nhan hang end-->
+
+        <!--    Modal thêm địa chỉ lấy hàng begin-->
+        <div th:if="${billDetailPay}" class="modal fade" id="addNewAddressNhanHang" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="width: 500px">
+                <div class="modal-content">
+                    <form th:action="'/buyer/purchase/bill/add/address/get/' + ${billDetailPay.idHD}" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Thêm địa chỉ nhận hàng mới</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên địa chỉ" name="nameAddress">
+
+                                    <input style="height: 40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên người nhận" name="fullName" >
+                                </div>
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="SDT người nhận" name="phoneAddress">
+
+                                    <select class="select" id="city" name="city"
+                                            style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                                       font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
+                                        <option value="" selected>Chọn thành phố</option>
+                                    </select>
+                                </div>
+
+                                <div class="row" style="margin-bottom: 20px;">
+
+                                    <select class="select" id="district" name="district" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; margin-left: 38px; margin-right: 30px; ">
+                                        <option value="" selected>Chọn quận huyện</option>
+                                    </select>
+
+                                    <select class="select" id="ward" name="ward" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; ">
+                                        <option value="" selected>Chọn phường/xã</option>
+                                    </select>
+
+                                </div>
+
+                                <div class="row" style="margin-bottom: 20px;" >
+
+                                    <input name="description" style="height: 40px;width: 410px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381;  padding: 10px 15px; margin-left: 38px;" type="text" placeholder="Mô tả";  >
+
+                                </div>
+
+                                <div style="width: 100%; height:15px;"></div>
+                                <div style="width: 100%; height: 0.5px; background-color: rgb(64, 64, 64) ;"></div>
+                                <div style="width: 100%; height:15px;"></div>
+
+                                <div class="row">
+                                    <input style="margin: 0 10px 0 38px;" type="checkbox" name="defaultSelected">  Đặt làm mặc định
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--    Modal thêm địa chỉ lấy hàng end-->
+
+        <!--    Modal thay đổi địa chỉ nhận hàng begin-->
+        <div th:if="${detailBillShip}" class="modal fade" id="changeAddressNhanHang" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;">
+                <div class="modal-content">
+                    <form th:action="'/buyer/purchase/bill/change/address/get/' + ${billDetailShip.idHD} " method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle2">Thay đổi địa chỉ nhận hàng</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div>
+                                <div style="display: flex; margin-left: 20px; margin:10px 0 10px 10px;" th:object="${diaChiKHDefault}">
+                                    <input checked type="radio" th:value="${diaChiKHDefault.idDC}" name="idDCKH" style="height: 20px; width: 20px; margin: 0 20px 0 -10px;" >
+                                    <h5 style="font-weight: 700; font-size: 13pt ;" th:text="${diaChiKHDefault.tenNguoiNhan}" ></h5>
+                                    <span style="margin: -4px 5px 0 5px ;"> | </span>
+                                    <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${diaChiKHDefault.sdtNguoiNhan}"></h5>
+                                    <span style="margin-left: 20px;"></span>
+                                    <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${diaChiKHDefault.tenDC}"></h5>
+                                    <span style="margin-left: 10px;"></span>
+                                    <h5 style="font-weight: 700; font-size: 12pt ; color: red">Mặc định</h5>
+                                </div>
+                                <h5 style=" margin-bottom: 10px ;font-size: 11pt;" th:text="${diaChiKHDefault.diaChiChiTiet}"></h5>
+                            </div>
+
+                            <div style="width: 465px; margin: 20px 0 20px 0; height: 0.5px; background: rgba(0,0,0,.54);"></div>
+
+                            <th:block th:each="x : ${listAddressKH}">
+
+                                <div>
+                                    <div style="display: flex; margin-left: 20px; margin:10px 0 10px 10px;">
+                                        <input type="radio" th:value="${x.idDC}" name="idDCKH" style=" height: 20px; width: 20px; margin: 0 20px 0 -10px;">
+                                        <h5 style="font-weight: 700; font-size: 13pt ;" th:text="${x.tenNguoiNhan}" ></h5>
+                                        <span style="margin: -4px 5px 0 5px ;"> | </span>
+                                        <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${x.sdtNguoiNhan}"></h5>
+                                        <span style="margin-left: 20px;"></span>
+                                        <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${x.tenDC}"></h5>
+                                        <span style="margin-left: 10px;"></span>
+                                    </div>
+                                    <h5 style=" margin-bottom: 10px ;font-size: 11pt;" th:text="${x.diaChiChiTiet}"></h5>
+                                </div>
+
+                                <div style="width:98%; margin: 20px 0 20px 0; height: 0.5px; background: rgba(0,0,0,.54);"></div>
+
+                            </th:block>
+
+                            <a data-toggle="modal" data-target="#addNewAddressNhanHangDelivery" style="height: 40px; width: 200px; color: #363434; font-size: 12pt; margin-top: 20px;" href=""> + Thêm mới địa chỉ</a>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+
+                            <button type="submit" style="width: 200px;border-radius: 5px;margin-top: 6px;height: 40px;"  class="btn btn-primary">Lưu thay đổi</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--    Modal thêm địa chỉ lấy hàng begin-->
+        <div th:if="${detailBillShip}" class="modal fade" id="addNewAddressNhanHangDelivery" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="width: 500px">
+                <div class="modal-content">
+                    <form th:action="'/buyer/purchase/bill/add/address/get/' + ${billDetailShip.idHD}" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Thêm địa chỉ nhận hàng mới</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên địa chỉ" name="nameAddress">
+
+                                    <input style="height: 40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên người nhận" name="fullName" >
+                                </div>
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="SDT người nhận" name="phoneAddress">
+
+                                    <select class="select" id="city" name="city"
+                                            style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                                       font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
+                                        <option value="" selected>Chọn thành phố</option>
+                                    </select>
+                                </div>
+
+                                <div class="row" style="margin-bottom: 20px;">
+
+                                    <select class="select" id="district" name="district" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; margin-left: 38px; margin-right: 30px; ">
+                                        <option value="" selected>Chọn quận huyện</option>
+                                    </select>
+
+                                    <select class="select" id="ward" name="ward" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; ">
+                                        <option value="" selected>Chọn phường/xã</option>
+                                    </select>
+
+                                </div>
+
+                                <div class="row" style="margin-bottom: 20px;" >
+
+                                    <input name="description" style="height: 40px;width: 410px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381;  padding: 10px 15px; margin-left: 38px;" type="text" placeholder="Mô tả";  >
+
+                                </div>
+
+                                <div style="width: 100%; height:15px;"></div>
+                                <div style="width: 100%; height: 0.5px; background-color: rgb(64, 64, 64) ;"></div>
+                                <div style="width: 100%; height:15px;"></div>
+
+                                <div class="row">
+                                    <input style="margin: 0 10px 0 38px;" type="checkbox" name="defaultSelected">  Đặt làm mặc định
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--    Modal thêm địa chỉ lấy hàng end-->
+
+        <!--Modal thay đổi địa chỉ nhận hàng end-->
+
+        <!--    Validate chọn sản phẩm trả hàng begin-->
+        <div class="modal fade" id="thongBaoChonSPTraHang" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="messAddThanhCongTitle" >Thông báo !</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">
+                            <p style="font-size: 13pt; font-weight: 600;">Chọn ít nhất 1 sản phẩm để hoàn hàng !!</p>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--    Validate chọn sản phẩm trả hàng end-->
+
+
+        <!--    Validate chọn sản phẩm trả hàng begin-->
+        <div th:if="${showThongBaoThayDoiDiaChiNhanHangThanhCong}" class="modal fade" id="thongBaoThayDoiDiaChiNhanHangThanhCong" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="messAddThanhCongTitle" >Thông báo !</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">
+                            <p style="font-size: 13pt; font-weight: 600;">Thay đổi địa chỉ nhận hàng thành công !</p>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--    Validate chọn sản phẩm trả hàng end-->
+
+        <!--    Validate chọn sản phẩm trả hàng begin-->
+        <div class="modal fade" id="thongBaoNhapMa" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="messAddThanhCongTitle" >Thông báo !</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">
+                            <p style="font-size: 13pt; font-weight: 600;">Vui lòng nhập mã vận đơn !!</p>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--    Validate chọn sản phẩm trả hàng end-->
+
+        <!--    Modal dánh giá đơn hàng begin-->
+        <div th:if="${detailBillCompleted}" class="modal fade" id="modalDanhGiaDonHang" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document"  style="width: 750px ">
+                <form th:action="@{'/buyer/purchase/bill/complete/rate/' + ${billDetailCompleted.idHD}}" method="post" enctype="multipart/form-data">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLongTitle">Đánh giá sản phẩm</h5>
@@ -2715,7 +2624,7 @@
                                     <p style="margin: auto; font-size: 10pt;margin-left: 15px;">Hài lòng</p>
                                 </div>
                                 <div class="col-lg-2">
-                                    <input  style="height: 20px; width: 20px; margin-left: 30px; " checked type="radio" value="5" name="soDiem">
+                                    <input  style="height: 20px; width: 20px; margin-left: 30px; "  checked type="radio" value="5" name="soDiem">
                                     <p style="margin: auto; font-size: 10pt;margin-left: 15px;">Tuyệt vời</p>
                                 </div>
                                 <div class="col-lg-1"></div>
@@ -2759,202 +2668,239 @@
                             <button type="submit" class="btn btn-primary" style="border-radius: 5px; margin-top: 5px;width: 150px;">Gửi Đánh Giá</button>
                         </div>
                     </div>
-                </div>
-            </div>
-        </form>
-    </th:block>
-    <!--    Modal đánh giá đơn hàng end-->
-
-    <!--Modal địa chỉ lấy hàng hoàn begin-->
-    <div th:if="${addNewAddressNotNull}" class="modal fade" id="modalAddress" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;">
-            <form action="/buyer/purchase/refund/change/address" method="post">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle2">Thay đổi địa chỉ lấy hàng</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div style="margin-bottom: 20px;">
-                            <div style="display: flex; margin-left: 20px; margin:10px 0 10px 10px;" th:object="${diaChiKHDefault}">
-                                <input type="radio" th:value="${diaChiKHDefault.idDC}" name="idDCKH" style="height: 20px; width: 20px; margin: 0 20px 0 -10px;" >
-                                <h5 style="font-weight: 700; font-size: 13pt ;" th:text="${diaChiKHDefault.tenNguoiNhan}" ></h5>
-                                <span style="margin: -4px 5px 0 5px ;"> | </span>
-                                <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${diaChiKHDefault.sdtNguoiNhan}"></h5>
-                                <span style="margin-left: 20px;"></span>
-                                <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${diaChiKHDefault.tenDC}"></h5>
-                                <span style="margin-left: 10px;"></span>
-                                <h5 style="font-weight: 700; font-size: 12pt ; color: red">Mặc định</h5>
-                            </div>
-                            <h5 style=" margin-bottom: 10px ;font-size: 11pt;" th:text="${diaChiKHDefault.diaChiChiTiet}"></h5>
-                        </div>
-
-                        <th:block th:each="x : ${listAddressKH}">
-
-                            <div>
-                                <div style="display: flex; margin-left: 20px; margin:10px 0 10px 10px;">
-                                    <input type="radio" th:value="${x.idDC}" name="idDCKH" style=" height: 20px; width: 20px; margin: 0 20px 0 -10px;">
-                                    <h5 style="font-weight: 700; font-size: 13pt ;" th:text="${x.tenNguoiNhan}" ></h5>
-                                    <span style="margin: -4px 5px 0 5px ;"> | </span>
-                                    <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${x.sdtNguoiNhan}"></h5>
-                                    <span style="margin-left: 20px;"></span>
-                                    <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${x.tenDC}"></h5>
-                                    <span style="margin-left: 10px;"></span>
-                                </div>
-                                <h5 style=" margin-bottom: 10px ;font-size: 11pt;" th:text="${x.diaChiChiTiet}"></h5>
-                            </div>
-
-                            <div style="width: 465px; margin: 20px 0 20px 0; height: 0.5px; background: rgba(0,0,0,.54);"></div>
-
-                        </th:block>
-
-                        <a data-toggle="modal" data-target="#addNewAddress" style="height: 40px; width: 200px; color: #363434; font-size: 12pt; margin-top: 20px;" href=""> + Thêm mới địa chỉ</a>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-primary" style="width: 150px;margin-top: 4px;border-radius: 5px; ">Lưu thay đổi</button>
-                    </div>
-                </div>
-
-            </form>
-        </div>
-    </div>
-    <!--Modal địa chỉ lấy hàng hoàn end-->
-
-    <!--    Modal thêm địa chỉ lấy hàng begin-->
-    <div th:if="${addNewAddressNotNull}" class="modal fade" id="addNewAddress" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 500px">
-            <div class="modal-content">
-                <form action="/buyer/purchase/refund/add/address" method="post">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Thêm địa chỉ mới</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div>
-                            <div class="row" style="margin-bottom: 20px;">
-                                <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên địa chỉ" name="nameAddress">
-
-                                <input style="height: 40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên người nhận" name="fullName" >
-                            </div>
-                            <div class="row" style="margin-bottom: 20px;">
-                                <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="SDT người nhận" name="phoneAddress">
-
-                                <select class="select" id="city" name="city"
-                                        style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                                       font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
-                                    <option value="" selected>Chọn thành phố</option>
-                                </select>
-                            </div>
-
-                            <div class="row" style="margin-bottom: 20px;">
-
-                                <select class="select" id="district" name="district" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; margin-left: 38px; margin-right: 30px; ">
-                                    <option value="" selected>Chọn quận huyện</option>
-                                </select>
-
-                                <select class="select" id="ward" name="ward" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; ">
-                                    <option value="" selected>Chọn phường/xã</option>
-                                </select>
-
-                            </div>
-
-                            <div class="row" style="margin-bottom: 20px;" >
-
-                                <input name="description" style="height: 40px;width: 410px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381;  padding: 10px 15px; margin-left: 38px;" type="text" placeholder="Mô tả";  >
-
-                            </div>
-
-                            <div style="width: 100%; height:15px;"></div>
-                            <div style="width: 100%; height: 0.5px; background-color: rgb(64, 64, 64) ;"></div>
-                            <div style="width: 100%; height:15px;"></div>
-
-                            <div class="row">
-                                <input style="margin: 0 10px 0 38px;" type="checkbox" name="defaultSelected">  Đặt làm mặc định
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                    </div>
                 </form>
             </div>
         </div>
-    </div>
-    <!--    Modal thêm địa chỉ lấy hàng end-->
+        <!--    Modal đánh giá đơn hàng end-->
+
+        <!--    Modal dánh giá đơn hàng begin-->
+        <th:block th:each="x : ${listAllHDByKhachHang}">
+            <form th:action="@{'/buyer/purchase/bill/complete/rate/' + ${x.idHD}}" method="post" enctype="multipart/form-data">
+                <div  class="modal fade" th:id="'modalDanhGia' + ${x.idHD}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document"  style="width: 750px ">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Đánh giá sản phẩm</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row" style="margin-bottom: 30px;">
+                                    <p style="margin: auto; font-weight: 600; font-size: 13pt;">Mức độ đánh giá </p>
+
+                                </div>
+                                <div class="row" >
+                                    <div class="col-lg-1"></div>
+                                    <div class="col-lg-2">
+                                        <input  style="height: 20px; width: 20px; margin-left: 30px; "  type="radio" value="1" name="soDiem">
+                                        <p style="margin: auto; font-size: 10pt; margin-left: 30px;">Tệ</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <input style="height: 20px; width: 20px; margin-left: 30px; " type="radio" value="2" name="soDiem">
+                                        <p style="margin: auto; font-size: 10pt;">Không hài lòng</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <input  style="height: 20px; width: 20px; margin-left: 30px; "   type="radio" value="3" name="soDiem">
+                                        <p style="margin: auto; font-size: 10pt; margin-left: 10px;">Bình thường</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <input  style="height: 20px; width: 20px; margin-left: 30px; "   type="radio" value="4" name="soDiem">
+                                        <p style="margin: auto; font-size: 10pt;margin-left: 15px;">Hài lòng</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <input  style="height: 20px; width: 20px; margin-left: 30px; " checked type="radio" value="5" name="soDiem">
+                                        <p style="margin: auto; font-size: 10pt;margin-left: 15px;">Tuyệt vời</p>
+                                    </div>
+                                    <div class="col-lg-1"></div>
+
+                                </div>
+
+                                <div style="width: 100%; margin-top: 10px; margin-bottom: 10px; height: 1px; background: rgba(0,0,0,.54);"></div>
+
+                                <div class="row">
+                                    <p style="margin: auto; font-weight: 600; font-size: 11pt;">Hãy chia sẻ những điều bạn thích về sản phẩm này với những người mua khác nhé.</p>
+                                    <textarea name="moTaDanhGia" class="form-control" style="margin:20px 0 0 35px; width: 90%; height: 50px;"></textarea>
+                                </div>
+
+                                <div style="width: 100%; margin-top: 10px; margin-bottom: 10px; height: 1px; background: rgba(0,0,0,.54);"></div>
+
+                                <div class="row" style="margin: 40px 0 50px 40px;">
+                                    <div class="col-sm-2 imgUp2">
+                                        <div class="imagePreview2"></div>
+                                        <label class="btn btn-primary2">Tải lên
+                                            <input accept=".jpg, .jpeg, .png" type="file" name="imagesRequest" class="uploadFile img2" style="width: 0px;height: 0px;">
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-2 imgUp2">
+                                        <div class="imagePreview2"></div>
+                                        <label class="btn btn-primary2">Tải lên
+                                            <input accept=".jpg, .jpeg, .png" type="file" name="imagesRequest" class="uploadFile img2" style="width: 0px;height: 0px;">
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-2 imgUp2">
+                                        <div class="imagePreview2"></div>
+                                        <label class="btn btn-primary2">Tải lên
+                                            <input accept=".jpg, .jpeg, .png" type="file" name="imagesRequest" class="uploadFile img2" style="width: 0px;height: 0px;">
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                <button type="submit" class="btn btn-primary" style="border-radius: 5px; margin-top: 5px;width: 150px;">Gửi Đánh Giá</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </th:block>
+        <!--    Modal đánh giá đơn hàng end-->
+
+        <!--Modal địa chỉ lấy hàng hoàn begin-->
+        <div th:if="${addNewAddressNotNull}" class="modal fade" id="modalAddress" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;">
+                <form action="/buyer/purchase/refund/change/address" method="post">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle2">Thay đổi địa chỉ lấy hàng</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div style="margin-bottom: 20px;">
+                                <div style="display: flex; margin-left: 20px; margin:10px 0 10px 10px;" th:object="${diaChiKHDefault}">
+                                    <input type="radio" th:value="${diaChiKHDefault.idDC}" name="idDCKH" style="height: 20px; width: 20px; margin: 0 20px 0 -10px;" >
+                                    <h5 style="font-weight: 700; font-size: 13pt ;" th:text="${diaChiKHDefault.tenNguoiNhan}" ></h5>
+                                    <span style="margin: -4px 5px 0 5px ;"> | </span>
+                                    <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${diaChiKHDefault.sdtNguoiNhan}"></h5>
+                                    <span style="margin-left: 20px;"></span>
+                                    <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${diaChiKHDefault.tenDC}"></h5>
+                                    <span style="margin-left: 10px;"></span>
+                                    <h5 style="font-weight: 700; font-size: 12pt ; color: red">Mặc định</h5>
+                                </div>
+                                <h5 style=" margin-bottom: 10px ;font-size: 11pt;" th:text="${diaChiKHDefault.diaChiChiTiet}"></h5>
+                            </div>
+
+                            <th:block th:each="x : ${listAddressKH}">
+
+                                <div>
+                                    <div style="display: flex; margin-left: 20px; margin:10px 0 10px 10px;">
+                                        <input type="radio" th:value="${x.idDC}" name="idDCKH" style=" height: 20px; width: 20px; margin: 0 20px 0 -10px;">
+                                        <h5 style="font-weight: 700; font-size: 13pt ;" th:text="${x.tenNguoiNhan}" ></h5>
+                                        <span style="margin: -4px 5px 0 5px ;"> | </span>
+                                        <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${x.sdtNguoiNhan}"></h5>
+                                        <span style="margin-left: 20px;"></span>
+                                        <h5 style="font-weight: 700; font-size: 12pt ;" th:text="${x.tenDC}"></h5>
+                                        <span style="margin-left: 10px;"></span>
+                                    </div>
+                                    <h5 style=" margin-bottom: 10px ;font-size: 11pt;" th:text="${x.diaChiChiTiet}"></h5>
+                                </div>
+
+                                <div style="width: 465px; margin: 20px 0 20px 0; height: 0.5px; background: rgba(0,0,0,.54);"></div>
+
+                            </th:block>
+
+                            <a data-toggle="modal" data-target="#addNewAddress" style="height: 40px; width: 200px; color: #363434; font-size: 12pt; margin-top: 20px;" href=""> + Thêm mới địa chỉ</a>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary" style="width: 150px;margin-top: 4px;border-radius: 5px; ">Lưu thay đổi</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <!--Modal địa chỉ lấy hàng hoàn end-->
+
+        <!--    Modal thêm địa chỉ lấy hàng begin-->
+        <div th:if="${addNewAddressNotNull}" class="modal fade" id="addNewAddress" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="width: 500px">
+                <div class="modal-content">
+                    <form action="/buyer/purchase/refund/add/address" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Thêm địa chỉ mới</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên địa chỉ" name="nameAddress">
+
+                                    <input style="height: 40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên người nhận" name="fullName" >
+                                </div>
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="SDT người nhận" name="phoneAddress">
+
+                                    <select class="select" id="city" name="city"
+                                            style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                                       font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
+                                        <option value="" selected>Chọn thành phố</option>
+                                    </select>
+                                </div>
+
+                                <div class="row" style="margin-bottom: 20px;">
+
+                                    <select class="select" id="district" name="district" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; margin-left: 38px; margin-right: 30px; ">
+                                        <option value="" selected>Chọn quận huyện</option>
+                                    </select>
+
+                                    <select class="select" id="ward" name="ward" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; ">
+                                        <option value="" selected>Chọn phường/xã</option>
+                                    </select>
+
+                                </div>
+
+                                <div class="row" style="margin-bottom: 20px;" >
+
+                                    <input name="description" style="height: 40px;width: 410px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381;  padding: 10px 15px; margin-left: 38px;" type="text" placeholder="Mô tả";  >
+
+                                </div>
+
+                                <div style="width: 100%; height:15px;"></div>
+                                <div style="width: 100%; height: 0.5px; background-color: rgb(64, 64, 64) ;"></div>
+                                <div style="width: 100%; height:15px;"></div>
+
+                                <div class="row">
+                                    <input style="margin: 0 10px 0 38px;" type="checkbox" name="defaultSelected">  Đặt làm mặc định
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--    Modal thêm địa chỉ lấy hàng end-->
 
 </section>
 <!-- Shop Section End -->
 
 <!-- Footer Section Begin -->
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="footer__about">
-                    <div class="footer__logo">
-                        <a href="#"><img src="/Logo.png" alt=""></a>
-                    </div>
-                    <p> Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế.</p>
-                    <a href="#"><img src="img/payment.png" alt=""></a>
-                </div>
-            </div>
-            <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
-                <div class="footer__widget">
-                    <h6>Cửa hàng</h6>
-                    <ul>
-                        <li><a href="/buyer/shop">Gian hàng</a></li>
-                        <li><a href="/buyer/shop">Xu Hướng</a></li>
-                        <li><a href="/buyer/shop">Đề Xuất</a></li>
-                        <li><a href="/buyer/shop/sale">Giảm giá</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-6">
-                <div class="footer__widget">
-                    <h6>Mua sắm</h6>
-                    <ul>
-                        <li><a href="#">Liên Hệ</a></li>
-                        <li><a href="#">Thanh Toán</a></li>
-                        <li><a href="#">Giao Hàng</a></li>
-                        <li><a href="#">Hoàn Hàng/Tiền</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
-                <div class="footer__widget">
-                    <h6>NewLetter</h6>
-                    <div class="footer__newslatter">
-                        <p>Hãy là người đầu tiên biết về hàng mới, sách tra cứu, khuyến mại và khuyến mãi!</p>
-                        <form action="#">
-                            <input type="text" placeholder="Your email">
-                            <button type="submit"><span class="icon_mail_alt"></span></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-
-        </div>
-    </div>
+<footer style="margin-top: 210px; background: #0b0b0b ; text-align: center" >
+    <div class="footer__copyright__text">
+        <p> This template is edit with TeeZy Shop <i class="fa fa-heart-o" aria-hidden="true"></i>
+        </p>
     </div>
 </footer>
-<!-- Footer Section End -->
 
 <!--Modal begin-->
 

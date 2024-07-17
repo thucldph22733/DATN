@@ -77,12 +77,15 @@ public class NhanVienController {
     }
 
     @GetMapping("/change-password")
+
     public String changePasswordPage(Model model) {
         model.addAttribute("email", ""); // Truyền email mặc định vào form
+
         return "manage/change-pass";
     }
 
     @PostMapping("/change-pass-post")
+
     public String changePasswordPost(
             @RequestParam("email") String email,
             @RequestParam("currentPass") String currentPass,
@@ -93,26 +96,32 @@ public class NhanVienController {
         if (!newPass.equals(reNewPass)) {
             redirectAttributes.addFlashAttribute("mess", "Mật khẩu mới và mật khẩu nhập lại không khớp!");
             return "redirect:/manage/change-password";
+
         }
 
         NhanVien nhanVien = nhanVienService.findByEmailNV(email);
         if (nhanVien == null) {
             redirectAttributes.addFlashAttribute("mess", "Email không tồn tại!");
+
             return "redirect:/manage/change-password";
+
         }
 
         if (!nhanVien.getMatKhau().equals(currentPass)) {
             redirectAttributes.addFlashAttribute("mess", "Mật khẩu hiện tại không đúng!");
+
             return "redirect:/manage/change-password";
+
         }
 
         nhanVien.setMatKhau(newPass);
         nhanVienService.save(nhanVien);
 
+
         redirectAttributes.addFlashAttribute("successMessage", "Đổi mật khẩu thành công!!!");
         return "redirect:/login"; // Điều hướng về trang đăng nhập
-    }
 
+    }
 
     @GetMapping("/nhan-vien/viewAdd")
     public String viewAddNhanVien(Model model
