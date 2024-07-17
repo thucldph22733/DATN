@@ -24,8 +24,8 @@ import java.util.*;
 public class CheckOutController {
     @Autowired
     private HttpSession session;
-@Autowired
-private KhachHangService khachHangService;
+    @Autowired
+    private KhachHangService khachHangService;
     @Autowired
     private HoaDonService hoaDonService;
 
@@ -59,8 +59,8 @@ private KhachHangService khachHangService;
 
     @Autowired
     private KhuyenMaiService khuyenMaiService;
-@Autowired
-private GioHangService gioHangService;
+    @Autowired
+    private GioHangService gioHangService;
 
     @Autowired
     private KhuyenMaiRepository khuyenMaiRepository;

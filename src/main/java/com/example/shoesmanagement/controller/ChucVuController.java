@@ -8,6 +8,7 @@ import com.example.shoesmanagement.service.NhanVienService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -200,5 +201,24 @@ public class ChucVuController {
             }
         }
         return "redirect:/manage/chuc-vu"; // Chuyển hướng sau khi nhập liệu thành công hoặc không thành công
+    }
+
+
+    @PutMapping("/chuc-vu/{idCV}")
+    public ResponseEntity<String> capNhatTrangThai(@RequestParam String trangThai,
+                                                   @PathVariable UUID idCV) {
+        int trangThaiInt = Integer.valueOf(trangThai);
+
+        int trangThaiUpdate;
+        if (trangThaiInt == 1) {
+            trangThaiUpdate = 0;
+        } else {
+            trangThaiUpdate = 1;
+        }
+        ChucVu chucVu = chucVuService.getByIdChucVu(idCV);
+        chucVu.setTrangThai(trangThaiUpdate);
+        chucVu.setTgSua(new Date());
+        chucVuService.save(chucVu);
+        return ResponseEntity.ok("ok");
     }
 }

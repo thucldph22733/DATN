@@ -231,8 +231,14 @@
                                 <td th:text="${items.maCV}"></td>
                                 <td th:text="${items.tenCV}"></td>
                                 <td>
-                                    <p th:if="${items.trangThai == 1}"  class="badges bg-lightgreen">Hoạt Động</p>
-                                    <p th:unless="${items.trangThai == 1}"  class="badges bg-lightred">Không Hoạt Động</p>
+                                    <span th:id="'trangThaiUpdate_' + ${items.idCV}"
+                                          th:if="${items.trangThai == 1}"
+                                          class="badges bg-lightgreen">Hoạt Động
+                                    </span>
+                                    <span th:id="'trangThaiUpdate_' + ${items.idCV}"
+                                          th:if="${items.trangThai == 0}"
+                                          class="badges bg-lightred">Không Hoạt Động
+                                    </span>
                                 </td>
                                 <td th:text="${#dates.format(items.tgThem, 'dd-MM-yyyy')}" align="center"/>
                                 <td th:text="${#dates.format(items.tgSua, 'dd-MM-yyyy')}" align="center"/>
@@ -240,9 +246,14 @@
                                     <a class="me-3" th:href="@{'/manage/chuc-vu/viewUpdate/' + ${items.idCV}}">
                                         <img src="/images/img/icons/edit.svg" alt="img">
                                     </a>
-                                    <a class="me-3 delete-button"
-                                       th:data-delete-url="@{'/manage/chuc-vu/delete/' + ${items.idCV}}">
-                                        <img src="/images/img/icons/delete.svg" alt="img">
+                                    <a class="form-check form-switch">
+                                        <input class="me-3 form-check-input" type="checkbox" role="switch"
+                                               th:checked="${items.trangThai == 1}"
+                                               th:data-ma="${items.idCV}"
+                                               onchange="thayDoiTrangThai(this)"
+                                               onclick="capNhatTrangThaiChucVu(this.getAttribute('data-ma'))">
+                                        <input style="display: none" th:id="'flexSwitchCheck_' + ${items.idCV}"
+                                               th:value="${items.trangThai}">
                                     </a>
                                 </td>
                             </tr>
@@ -287,6 +298,43 @@
 <script src="/plugins/toastr/toastr.js"></script>
 <script src="/js/script.js"></script>
 
+<script>
+    function capNhatTrangThaiChucVu(id) {
+        idCV = id
+        let trangThai = document.getElementById("flexSwitchCheck_" + id).value;
+        var formData = new FormData();
+        formData.append("trangThai", trangThai);
+        $.ajax({
+            type: "PUT",
+            url: "/manage/chuc-vu/" + id,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                console.log("Success: " + response);
+            },
+            error: function (error) {
+                console.log("Error1: " + JSON.stringify(error));
+            }
+        });
+    }
+
+    function thayDoiTrangThai(checkbox) {
+        let trangThai = checkbox.checked;
+        let tThai = document.getElementById("trangThaiUpdate_" + idCV);
+        if (trangThai) {
+            tThai.innerText = "Hoạt Động";
+            tThai.style.color = "white";
+            tThai.classList.remove("bg-lightred");
+            tThai.classList.add("bg-lightgreen");
+        } else {
+            tThai.innerText = "Không Hoạt Động";
+            tThai.style.color = "white";
+            tThai.classList.remove("bg-lightgreen");
+            tThai.classList.add("bg-lightred");
+        }
+    }
+</script>
 <script>
     function validateForm() {
         var maCV = document.getElementById("maCV").value;
@@ -437,5 +485,6 @@
         }
     }, 5000);
 </script>
+
 </body>
 </html>
