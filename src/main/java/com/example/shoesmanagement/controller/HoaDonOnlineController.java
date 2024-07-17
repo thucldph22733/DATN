@@ -385,9 +385,6 @@ public class HoaDonOnlineController {
         model.addAttribute("tongTien", tongTien);
 
         return "redirect:/manage-bill-online/online";
-    }
-
-
 
 
 
