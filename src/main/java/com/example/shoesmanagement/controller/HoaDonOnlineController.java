@@ -3,6 +3,7 @@ package com.example.shoesmanagement.controller;
 import com.example.shoesmanagement.model.*;
 import com.example.shoesmanagement.repository.HoaDonChiTietRepository;
 import com.example.shoesmanagement.repository.HoaDonRepository;
+import com.example.shoesmanagement.repository.KhuyenMaiRepository;
 import com.example.shoesmanagement.repository.SizeRepository;
 import com.example.shoesmanagement.service.*;
 import com.example.shoesmanagement.viewModel.GiayViewModel;
@@ -489,6 +490,5 @@ public class HoaDonOnlineController {
 
 
 
- return "redirect:/manage/bill/online/hoadon/" + idHoaDon;
-    }
+
 }
