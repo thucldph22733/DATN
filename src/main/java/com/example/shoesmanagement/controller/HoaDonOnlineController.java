@@ -2,12 +2,14 @@ package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.*;
 import com.example.shoesmanagement.repository.HoaDonChiTietRepository;
+import com.example.shoesmanagement.repository.HoaDonRepository;
 import com.example.shoesmanagement.repository.SizeRepository;
 import com.example.shoesmanagement.service.*;
 import com.example.shoesmanagement.viewModel.GiayViewModel;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +28,10 @@ public class HoaDonOnlineController {
 
     @Autowired
     private GHCTService ghctService;
+    @Autowired
+    private KhuyenMaiService khuyenMaiService;
+    @Autowired
+    private KhachHangService khachHangService;
 
     @Autowired
     private HoaDonChiTietRepository hoaDonChiTietRepository;
@@ -65,6 +71,8 @@ public class HoaDonOnlineController {
     private ChucVuService chucVuService;
     @Autowired
     private HttpSession httpSession;
+    @Autowired
+    private HoaDonRepository hoaDonRepository;
 
     @GetMapping("online")
     private String manageBillOnline(Model model) {
