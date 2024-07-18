@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -100,6 +101,16 @@ public class HomeOrder {
                 soLanHuy++;
             }
         }
+        Date date = new Date();
+        Integer sequenceNumber = (Integer) session.getAttribute("sequenceNumber");
+        if (sequenceNumber == null) {
+            sequenceNumber = 1; // Khởi tạo nếu chưa có trong session
+        }
+
+        // Tạo mã hóa đơn với ngày hôm nay và số thứ tự
+        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+        String strDate = formatter.format(date);
+
 
         if (trangThaiGiaoHang.equals("daGuiHang")) {
 
@@ -109,7 +120,11 @@ public class HomeOrder {
             giaoHangService.saveGiaoHang(giaoHang);
 
             if (!donViVanChuyen.equals("humanExpress")) {
-                String maVanDonGH = request.getParameter("maVanDonGH");
+                String maVanDonGH = "MVD_" + strDate + "_" + sequenceNumber;
+
+                // Tăng số thứ tự và lưu lại trong session
+                sequenceNumber++;
+                session.setAttribute("sequenceNumber", sequenceNumber);
                 if (donViVanChuyen.equals("ghn")) {
                     giaoHang.setTenDVVC("Giao hàng nhanh");
                     giaoHang.setMaVanDon(maVanDonGH);
@@ -138,7 +153,7 @@ public class HomeOrder {
             }
             ViTriDonHang viTriDonHang = new ViTriDonHang();
 
-            Date date = new Date();
+
             viTriDonHang.setViTri("Đã lấy/gửi hành thành công ");
             viTriDonHang.setTrangThai(1);
             viTriDonHang.setGiaoHang(hoaDon.getGiaoHang());
@@ -149,6 +164,7 @@ public class HomeOrder {
             hoaDon.setTrangThai(3);
             giaoHang.setTgThanhToan(date);
             giaoHang.setTgNhan(date);
+            giaoHang.setNoiDung("Chờ giao hàng");
             hoaDonService.add(hoaDon);
             showData(model);
             showDataTab2(model);
@@ -157,7 +173,7 @@ public class HomeOrder {
         } else if (trangThaiGiaoHang.equals("thanhCong")) {
             String viTri = "Đơn hàng đã giao hàng thành công";
 
-            Date date = new Date();
+
             ViTriDonHang viTriDonHang = new ViTriDonHang();
 
             viTriDonHang.setViTri(viTri);
@@ -169,10 +185,9 @@ public class HomeOrder {
 
             hoaDon.setTrangThai(4);
             giaoHang.setTgThanhToan(date);
-            giaoHang.setTgNhan(date);
             hoaDon.setTgThanhToan(new Date());
             hoaDonService.add(hoaDon);
-
+            giaoHang.setNoiDung("Giao thành công");
             LichSuThanhToan lichSuThanhToan = new LichSuThanhToan();
             lichSuThanhToan.setHoaDon(hoaDon);
             lichSuThanhToan.setTgThanhToan(date);
@@ -200,15 +215,15 @@ public class HomeOrder {
             viTriDonHang.setGiaoHang(giaoHang);
             viTriDonHangServices.addViTriDonHang(viTriDonHang);
 
-            if (soLanHuy == 2) {
+            if (soLanHuy == 1) {
                 hoaDon.setTrangThai(5);
                 giaoHang.setTgHuy(new Date());
                 giaoHang.setLyDoHuy(moTa);
                 giaoHang.setTrangThai(2);
                 hoaDon.setTgHuy(new Date());
                 hoaDonService.add(hoaDon);
+                giaoHang.setNoiDung("Giao thất bại");
 
-                Date date = new Date();
 
                 ViTriDonHang viTriDonHang2 = new ViTriDonHang();
                 viTriDonHang.setViTri("Đơn hàng đã bị hủy");

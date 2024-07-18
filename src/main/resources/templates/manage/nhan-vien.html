@@ -250,24 +250,32 @@
                                 <td th:text="${items.emailNV}"></td>
                                 <td th:text="${items.diaChi}"></td>
                                 <td th:text="${items.CCCDNV}"></td>
-                                <td th:text="${items.matKhau}"></td>
+                                <td  th:text="${items.matKhau != null ? '*'.repeat(items.matKhau.length()) : ''}"></td>
                                 <td>
-                                    <p th:if="${items.trangThai == 1}" class="badges bg-lightgreen">Đang làm việc</p>
-                                    <p th:unless="${items.trangThai == 1}"  class="badges bg-lightred">Đã nghỉ việc</p>
+                                    <span th:id="'trangThaiUpdate_' + ${items.idNV}"
+                                          th:if="${items.trangThai == 1}"
+                                          class="badges bg-lightgreen">Đang làm việc
+                                    </span>
+                                    <span th:id="'trangThaiUpdate_' + ${items.idNV}"
+                                          th:if="${items.trangThai == 0}"
+                                          class="badges bg-lightred">Đã nghỉ việc
+                                    </span>
                                 </td>
                                 <td th:text="${items.chucVu.tenCV}"></td>
                                 <td th:text="${#dates.format(items.tgThem, 'dd-MM-yyyy')}" align="center"/>
                                 <td th:text="${#dates.format(items.tgSua, 'dd-MM-yyyy')}" align="center"/>
                                 <td>
-                                    <!--                                    <a class="me-3" th:href="@{'/manage/giay/detail/' + ${items.idGiay}}">-->
-                                    <!--                                        <img src="/images/img/icons/eye.svg" alt="img"/>-->
-                                    <!--                                    </a>-->
                                     <a class="me-2" th:href="@{'/manage/nhan-vien/viewUpdate/' + ${items.idNV}}">
                                         <img src="/images/img/icons/edit.svg" alt="img"/>
                                     </a>
-                                    <a class="me-2 delete-button"
-                                       th:data-delete-url="@{'/manage/nhan-vien/delete/' + ${items.idNV}}">
-                                        <img src="/images/img/icons/delete.svg" alt="img"/>
+                                    <a class="form-check form-switch">
+                                        <input class="me-3 form-check-input" type="checkbox" role="switch"
+                                               th:checked="${items.trangThai == 1}"
+                                               th:data-ma="${items.idNV}"
+                                               onchange="thayDoiTrangThai(this)"
+                                               onclick="capNhatTrangThaiNhanVien(this.getAttribute('data-ma'))">
+                                        <input style="display: none" th:id="'flexSwitchCheck_' + ${items.idNV}"
+                                               th:value="${items.trangThai}">
                                     </a>
                                 </td>
                             </tr>
@@ -304,6 +312,43 @@
 
 <script src="/js/script.js"></script>
 
+<script>
+    function capNhatTrangThaiNhanVien(id) {
+        idNV = id
+        let trangThai = document.getElementById("flexSwitchCheck_" + id).value;
+        var formData = new FormData();
+        formData.append("trangThai", trangThai);
+        $.ajax({
+            type: "PUT",
+            url: "/manage/nhan-vien/" + id,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                console.log("Success: " + response);
+            },
+            error: function (error) {
+                console.log("Error1: " + JSON.stringify(error));
+            }
+        });
+    }
+
+    function thayDoiTrangThai(checkbox) {
+        let trangThai = checkbox.checked;
+        let tThai = document.getElementById("trangThaiUpdate_" + idNV);
+        if (trangThai) {
+            tThai.innerText = "Hoạt Động";
+            tThai.style.color = "white";
+            tThai.classList.remove("bg-lightred");
+            tThai.classList.add("bg-lightgreen");
+        } else {
+            tThai.innerText = "Không Hoạt Động";
+            tThai.style.color = "white";
+            tThai.classList.remove("bg-lightgreen");
+            tThai.classList.add("bg-lightred");
+        }
+    }
+</script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Lấy thẻ nút in bằng id

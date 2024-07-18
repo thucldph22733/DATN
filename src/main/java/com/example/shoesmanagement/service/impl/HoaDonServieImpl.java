@@ -6,6 +6,7 @@ import com.example.shoesmanagement.repository.HoaDonChiTietRepository;
 import com.example.shoesmanagement.repository.HoaDonRepository;
 import com.example.shoesmanagement.service.GiayChiTietService;
 import com.example.shoesmanagement.service.HoaDonService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -145,5 +146,11 @@ public class HoaDonServieImpl implements HoaDonService {
     @Override
     public List<HoaDon> listAllHoaDonByNhanVienHienTai(NhanVien nhanVien) {
         return hoaDonRepository.listAllHoaDonByNhanVienHienTai();
+    }
+
+    @Transactional
+    @Override
+    public void deleteByChiTietGiay(ChiTietGiay chiTietGiay) {
+        hoaDonChiTietRepository.deleteByChiTietGiay(chiTietGiay);
     }
 }

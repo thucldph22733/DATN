@@ -37,9 +37,6 @@ public class GiaoHang {
     @Column(name="trang_Thai")
     private int trangThai;
 
-    @Column(name = "thoi_Gian")
-    private Date thoiGian;
-
     @Column(name ="noi_Dung")
     private String noiDung;
 
@@ -67,8 +64,7 @@ public class GiaoHang {
     @Column(name = "ly_do_huy")
     private String lyDoHuy;
 
-    @Column(name = "tg_Nhan_DK")
-    private Date tgNhanDK;
+
 
     @Column(name = "ten_Nguoi_Nhan")
     private String tenNguoiNhan;

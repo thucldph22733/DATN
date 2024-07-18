@@ -1,3 +1,4 @@
+
 package com.example.shoesmanagement.buyerController;
 
 import com.example.shoesmanagement.model.*;
@@ -127,7 +128,11 @@ public class UserController {
     private String getAddressAccount(Model model) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        } else {
+        }
         UserForm(model, khachHang);
 
         List<DiaChiKH> diaChiKHDefaultList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, true, 1);
@@ -151,7 +156,11 @@ public class UserController {
     @PostMapping("/addresses/add")
     private String addnewAddress(Model model, @RequestParam(name = "defaultSelected", defaultValue = "false") boolean defaultSelected) {
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        } else {
+        }
         String nameAddress = request.getParameter("nameAddress");
         String fullName = request.getParameter("fullName");
         String phoneAddress = request.getParameter("phoneAddress");
@@ -245,8 +254,11 @@ public class UserController {
     private String getPurchaseAccount(Model model) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
-        model.addAttribute("khachHang1", khachHang1);
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        } else {
+        }
         if (session.getAttribute("KhachHangLogin") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
@@ -273,6 +285,11 @@ public class UserController {
     private String getPurchasePay(Model model){
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        } else {
+        }
         if (session.getAttribute("KhachHangLogin") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
@@ -294,6 +311,11 @@ public class UserController {
     private String getPurchaseShip(Model model) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        } else {
+        }
         if (session.getAttribute("KhachHangLogin") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
@@ -316,6 +338,11 @@ public class UserController {
     private String getPurchaseShipConfirm(Model model) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        } else {
+        }
         if (session.getAttribute("KhachHangLogin") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
@@ -338,6 +365,11 @@ public class UserController {
     private String getPurchaseReceive(Model model){
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        } else {
+        }
         if (session.getAttribute("KhachHangLogin") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
@@ -360,6 +392,11 @@ public class UserController {
     private String getPurchaseCompleted(Model model) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        } else {
+        }
         if (session.getAttribute("KhachHangLogin") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
@@ -383,8 +420,11 @@ public class UserController {
     private String getPurchaseCancel(Model model) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
-        model.addAttribute("khachHang1", khachHang1);
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        } else {
+        }
         if (session.getAttribute("KhachHangLogin") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
@@ -408,8 +448,11 @@ public class UserController {
     private String getPurchaseRefund(Model model) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
-        model.addAttribute("khachHang1", khachHang1);
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        } else {
+        }
         if (session.getAttribute("KhachHangLogin") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
@@ -432,8 +475,11 @@ public class UserController {
     @GetMapping("/purchase/bill/detail/{idHD}")
     private String getDetailForm(Model model, @PathVariable UUID idHD){
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
-        model.addAttribute("khachHang1", khachHang1);
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        } else {
+        }
         if(khachHang == null) return "redirect:/buyer/login";
 
         List<DiaChiKH> diaChiKHList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, false, 1);
@@ -561,8 +607,11 @@ public class UserController {
         Integer sumProductInCart = listGHCTActive.size();
         model.addAttribute("sumProductInCart", sumProductInCart);
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
-        model.addAttribute("khachHang1", khachHang1);
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        } else {
+        }
         if (session.getAttribute("KhachHangLogin") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
@@ -655,8 +704,11 @@ public class UserController {
         model.addAttribute("sumProductInCart", sumProductInCart);
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonPayDetail");
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
-        model.addAttribute("khachHang1", khachHang1);
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        } else {
+        }
         if (session.getAttribute("KhachHangLogin") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
@@ -715,8 +767,11 @@ public class UserController {
         Integer sumProductInCart = listGHCTActive.size();
         model.addAttribute("sumProductInCart", sumProductInCart);
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
-        model.addAttribute("khachHang1", khachHang1);
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        } else {
+        }
         if (session.getAttribute("KhachHangLogin") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
@@ -892,8 +947,11 @@ public class UserController {
 
         HoaDon hoaDon = hoaDonService.getOne(idHD);
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
-        model.addAttribute("khachHang1", khachHang1);
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        } else {
+        }
         if (session.getAttribute("KhachHangLogin") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
@@ -975,8 +1033,11 @@ public class UserController {
     private String changeAddressNhanHang(Model model, @PathVariable UUID idHD){
         HoaDon hoaDon = hoaDonService.getOne(idHD);
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
-        model.addAttribute("khachHang1", khachHang1);
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        } else {
+        }
         if (session.getAttribute("KhachHangLogin") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
@@ -1066,4 +1127,3 @@ public class UserController {
 
 
 }
-
