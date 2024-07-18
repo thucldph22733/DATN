@@ -111,10 +111,10 @@
                         <div class="profileset">
                                                         <span class="user-img"><img th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}" alt="">
                                                         <span class="status online"></span></span>
-                                                        <div class="profilesets">
-                                                            <h6 th:text="${session.managerLogged.hoTenNV}"></h6>
-                                                            <h5 th:text="${session.managerLogged.chucVu.tenCV}"></h5>
-                                                        </div>
+                            <div class="profilesets">
+                                <h6 th:text="${session.managerLogged.hoTenNV}"></h6>
+                                <h5 th:text="${session.managerLogged.chucVu.tenCV}"></h5>
+                            </div>
                         </div>
                         <hr class="m-0">
                         <a class="dropdown-item" href="profile.html"> <i class="me-2" data-feather="user"></i> My

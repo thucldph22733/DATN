@@ -61,6 +61,7 @@ public class CheckOutController {
 
     @Autowired
     private KhuyenMaiService khuyenMaiService;
+
     @Autowired
     private GioHangService gioHangService;
 
@@ -76,7 +77,6 @@ public class CheckOutController {
     private double giaTienGiam = 0;
 
     @GetMapping("/buyer/checkout")
-
     private String checkOutCart(Model model, HttpServletRequest request,
                                 @RequestParam("selectedProducts") List<String> selectedProducts,
                                 @RequestParam(name = "productIds") List<UUID> productIds,
@@ -87,7 +87,6 @@ public class CheckOutController {
         for (int i = 0; i < selectedProducts.size(); i++) {
             if (!selectedProducts.get(i).equals("none")) selectedProduct.put(productIds.get(i), quantities.get(i));
         }
-
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         if (session.getAttribute("KhachHangLogin") == null) {
@@ -248,7 +247,6 @@ public class CheckOutController {
 
 
         session.removeAttribute("hoaDonTaoMoi");
-
         session.setAttribute("hoaDonTaoMoi", hoaDon);
 
         showData(model);
@@ -330,6 +328,10 @@ public class CheckOutController {
         giaoHang.setTenNguoiNhan(diaChiKH.getTenNguoiNhan());
         giaoHangService.saveGiaoHang(giaoHang);
 
+        List<KhuyenMai> listKM = hoaDonRepository.listDieuKienKhuyenMai(total);
+        model.addAttribute("giaTienGiam", giaTienGiam);
+        model.addAttribute("dieuKienKhuyenMai", listKM);
+
         hoaDon.setTienShip(shippingFee);
         hoaDonService.add(hoaDon);
 
@@ -351,7 +353,9 @@ public class CheckOutController {
         session.removeAttribute("diaChiGiaoHang");
         session.setAttribute("diaChiGiaoHang", diaChiKH);
         showData(model);
-        return "online/checkout";
+
+        return "redirect:/buyer/setting";
+//        return "online/checkout";
     }
 
     @PostMapping("/buyer/checkout/change/address")
@@ -413,7 +417,8 @@ public class CheckOutController {
 
         showData(model);
 
-        return "online/checkout";
+        return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
+//        return "online/checkout";
     }
 
     @PostMapping("/buyer/checkout/placeoder")
@@ -426,6 +431,23 @@ public class CheckOutController {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
         }
+
+        if(hoaDon.getKhuyenMai() != null){   // nếu hoá đơn có dùng khuyến mãi
+            KhuyenMai kmcsdl = khuyenMaiRepository.findById(hoaDon.getKhuyenMai().getIdKM()).get();
+            int slmax = kmcsdl.getSoLuong();
+            int sl = kmcsdl.getSoLuongDaDung();
+            if(sl == slmax){    // nếu số lượng khuyến mãi đã hết thì xoá mã khuyến mãi ra khỏi hoá đơn và trả về trang thanh toán
+                hoaDon.setKhuyenMai(null);
+                hoaDonRepository.saveAndFlush(hoaDon);
+//                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
+                return "redireact:/buyer/cart";
+            } else if (sl < slmax) {    // nếu số lượng khuyến mãi nhỏ hơn sl đã set thì tăng sl lên 1
+                kmcsdl.setSoLuongDaDung(sl + 1);
+                khuyenMaiRepository.saveAndFlush(kmcsdl);
+            }
+        }
+
+
         String hinhThucThanhToan = request.getParameter("hinhThucThanhToan");
         String loiNhan = request.getParameter("loiNhan");
 
@@ -446,12 +468,12 @@ public class CheckOutController {
         hoaDon.setTgNhanDK(ngayKetThuc);
 
 
-        KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
-        if (khuyenMai != null) {
-            khuyenMai.setSoLuong(khuyenMai.getSoLuong() - 1);
-            khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() + 1);
-            khuyenMaiRepository.saveAndFlush(khuyenMai);
-        }
+//        KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
+//        if (khuyenMai != null) {
+//            khuyenMai.setSoLuong(khuyenMai.getSoLuong() - 1);
+//            khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() + 1);
+//            khuyenMaiRepository.saveAndFlush(khuyenMai);
+//        }
 
         hoaDonService.add(hoaDon);
 
@@ -460,7 +482,7 @@ public class CheckOutController {
         List<HoaDonChiTiet> hoaDonChiTietList = hoaDonChiTietService.findByHoaDon(hoaDon);
 
         for (HoaDonChiTiet xx : hoaDonChiTietList) {
-            GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(xx.getChiTietGiay(),gioHang1 );
+            GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(xx.getChiTietGiay(), gioHang1);
             if (gioHangChiTiet != null) {
                 gioHangChiTiet.setTrangThai(0);
                 ghctService.addNewGHCT(gioHangChiTiet);
@@ -611,12 +633,28 @@ public class CheckOutController {
         hoaDon.setTrangThai(7);
         hoaDon.setLoiNhan(hoaDon.getLoiNhan());
 
-        KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
-        if (khuyenMai != null) {
-            khuyenMai.setSoLuong(khuyenMai.getSoLuong() - 1);
-            khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() + 1);
-            khuyenMaiRepository.saveAndFlush(khuyenMai);
+        if(hoaDon.getKhuyenMai() != null){   // nếu hoá đơn có dùng khuyến mãi
+            KhuyenMai kmcsdl = khuyenMaiRepository.findById(hoaDon.getKhuyenMai().getIdKM()).get();
+            int slmax = kmcsdl.getSoLuong();
+            int sl = kmcsdl.getSoLuongDaDung();
+            if(sl == slmax){    // nếu số lượng khuyến mãi đã hết thì xoá mã khuyến mãi ra khỏi hoá đơn và trả về trang thanh toán
+                hoaDon.setKhuyenMai(null);
+                hoaDonRepository.saveAndFlush(hoaDon);
+//                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
+                return "redireact:/buyer/cart";
+            } else if (sl < slmax) {    // nếu số lượng khuyến mãi nhỏ hơn sl đã set thì tăng sl lên 1
+                kmcsdl.setSoLuongDaDung(sl + 1);
+                khuyenMaiRepository.saveAndFlush(kmcsdl);
+            }
         }
+//        KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
+//        if (khuyenMai != null) {
+//            khuyenMai.setSoLuong(khuyenMai.getSoLuong() - 1);
+//            khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() + 1);
+//            khuyenMaiRepository.saveAndFlush(khuyenMai);
+//        }
+
+
 
         hoaDonService.add(hoaDon);
 
@@ -823,13 +861,9 @@ public class CheckOutController {
             hoaDon.setLoaiHD(0);
             hoaDon.setTgTao(date);
             hoaDon.setTrangThai(7);
-            hoaDonService.add(hoaDon);
-
             hoaDon.setKhuyenMai(khuyenMai);
             hoaDonService.add(hoaDon);
-
         }
-
         return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString() + "&idKM=" + idKM;
     }
 }

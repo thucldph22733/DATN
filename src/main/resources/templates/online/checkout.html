@@ -318,7 +318,7 @@
                                                                 <div class="p-2 g-col-4">
                                                                     <h5 class="card-title" th:text="${items.tenKM}"></h5>
                                                                     <p class="card-text" th:text="'Điều kiện: Hóa đơn tối thiểu ' + ${items.dieuKienKMBill}"></p>
-                                                                    <p class="card-text" th:text="'Số lượng: ' + ${items.soLuong}"></p>
+                                                                    <p class="card-text" th:text="'Số lượng còn lại: ' + ${items.soLuong - items.soLuongDaDung}"></p>
                                                                     <button type="submit" class="btn btn-primary" th:formaction="@{'/buyer/checkout/chon-khuyen-mai/' + ${items.idKM}}">Áp dụng</button>
                                                                     <br>
                                                                 </div>

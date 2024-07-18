@@ -875,7 +875,6 @@ public class UserController {
             hoaDonService.add(hoaDonHuy);
         }
         return "redirect:/buyer/purchase/cancel";
-
     }
 
     @GetMapping("/purchase/bill/pay/{idHD}")
