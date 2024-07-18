@@ -312,9 +312,8 @@ public class CheckOutController {
         int sumQuantity = hoaDonChiTietList.stream()
                 .mapToInt(HoaDonChiTiet::getSoLuong)
                 .sum();
-
         double total = hoaDonChiTietList.stream()
-                .mapToDouble(HoaDonChiTiet::getDonGia)
+                .mapToDouble(hoaDonChiTiet -> hoaDonChiTiet.getSoLuong() * hoaDonChiTiet.getDonGia())
                 .sum();
 
         // Cập nhật phí vận chuyển sau khi thêm địa chỉ mới
@@ -336,7 +335,11 @@ public class CheckOutController {
         hoaDonService.add(hoaDon);
 
         Double shippingFee2 = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
-
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DATE, shippingFeeService.tinhNgayNhanDuKien(diaChiKH.getDiaChiChiTiet()));
+        Date ngayDuKien = calendar.getTime();
+        model.addAttribute("ngayDuKien", ngayDuKien);
         model.addAttribute("sumQuantity", sumQuantity);
         model.addAttribute("total", total);
         model.addAttribute("diaChiKHDefault", diaChiKH);
@@ -354,14 +357,15 @@ public class CheckOutController {
         session.setAttribute("diaChiGiaoHang", diaChiKH);
         showData(model);
 
-        return "redirect:/buyer/setting";
-//        return "online/checkout";
+//        return "redirect:/buyer/setting";
+        return "online/checkout";
     }
 
     @PostMapping("/buyer/checkout/change/address")
     private String changeAddressCheckOut(Model model) {
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi");
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
 
@@ -383,7 +387,7 @@ public class CheckOutController {
                 .mapToInt(HoaDonChiTiet::getSoLuong)
                 .sum();
         double total = hoaDonChiTietList.stream()
-                .mapToDouble(HoaDonChiTiet::getDonGia)
+                .mapToDouble(hoaDonChiTiet -> hoaDonChiTiet.getSoLuong() * hoaDonChiTiet.getDonGia())
                 .sum();
 
         hoaDonService.add(hoaDon);
@@ -426,7 +430,13 @@ public class CheckOutController {
 
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi");
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        } else {
+        }
         GioHang gioHang1 = gioHangService.findByKhachHang(khachHang);
+
         if (session.getAttribute("KhachHangLogin") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
