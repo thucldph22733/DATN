@@ -383,33 +383,6 @@ public class HoaDonOnlineController {
         return "redirect:/manage-bill-online/" + idHoaDon;
     }
 
-    @GetMapping("/chon-size2/{idGiay}/{mauSac}")
-    public String chonSize(@PathVariable(value = "idGiay") UUID idGiay,
-                           @PathVariable(value = "mauSac") String mauSac, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-
-        UUID idHoaDon = (UUID) session.getAttribute("idHoaDon");
-//        if (idHoaDon == null) {
-//            redirectAttributes.addFlashAttribute("messageError", true);
-//            redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
-//            return "redirect:/manage/bill/online";
-//        }
-
-        List<GiayViewModel> listG = giayViewModelService.getAllVm();
-        model.addAttribute("listSanPham", listG);
-        Giay giay = giayService.getByIdGiay(idGiay);
-        List<ChiTietGiay> sizeList = sizeRepository.findByIdGiayAndMauSac2(idGiay, mauSac);
-
-        model.addAttribute("gioHang", hoaDonChiTietService.findByIdHoaDon(idHoaDon));
-        model.addAttribute("giay", giay);
-        model.addAttribute("listChiTietGiay", sizeList);
-        model.addAttribute("idHoaDon", idHoaDon);
-        model.addAttribute("showModal1", true);
-        model.addAttribute("tongTienSanPham", tongTienSanPham);
-        model.addAttribute("tongTien", tongTien);
-
-        return "/manage/manage-bill-online";
-    }
-
 
 
     @PostMapping("/deleteChiTietGiay/{idCTG}/{idHD}")
@@ -517,76 +490,7 @@ public class HoaDonOnlineController {
         return "/manage/manage-bill-online";
     }
 
-    @GetMapping("/add-to-hd")
-    public String addToCart(@RequestParam("idChiTietGiay") UUID idChiTietGiay,
-                            @RequestParam("soLuong") int soLuong, Model model,
-                            RedirectAttributes redirectAttributes, HttpSession session) {
-        // Log để kiểm tra giá trị các biến
-        System.out.println("idChiTietGiay: " + idChiTietGiay);
-        System.out.println("soLuong: " + soLuong);
 
-        List<GiayViewModel> listG = giayViewModelService.getAllVm();
-        model.addAttribute("listSanPham", listG);
-        UUID idHoaDon = (UUID) session.getAttribute("idHoaDon");
-
-        if (idHoaDon == null) {
-            redirectAttributes.addFlashAttribute("messageError", true);
-            redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
-            return "redirect:/manage/bill/online";
-        }
-
-        ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idChiTietGiay);
-        if (soLuong > chiTietGiay.getSoLuong()) {
-            redirectAttributes.addFlashAttribute("messageError", true);
-            redirectAttributes.addFlashAttribute("tbaoError", "Số lượng trong kho không đủ");
-            return "redirect:/manage/bill/online/hoadon/" + idHoaDon;
-        }
-
-        HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
-        List<HoaDonChiTiet> cart = (List<HoaDonChiTiet>) session.getAttribute("cart");
-
-        if (cart == null) {
-            cart = new ArrayList<>();
-            session.setAttribute("cart", cart);
-        }
-
-        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHoaDon, idChiTietGiay);
-        if (hoaDonChiTiet != null) {
-            hoaDonChiTiet.setDonGia(chiTietGiay.getGiaBan() * (hoaDonChiTiet.getSoLuong() + soLuong));
-            hoaDonChiTiet.setSoLuong(hoaDonChiTiet.getSoLuong() + soLuong);
-            hoaDon.setTongTienSanPham(chiTietGiay.getGiaBan() * soLuong);
-            hoaDonChiTiet.setTrangThai(1);
-            hoaDonChiTietService.add(hoaDonChiTiet);
-        } else {
-            HoaDonChiTiet hdct = new HoaDonChiTiet();
-            hdct.setChiTietGiay(chiTietGiay);
-            hdct.setHoaDon(hoaDon);
-            hdct.setDonGia(chiTietGiay.getGiaBan() * soLuong);
-            hdct.setSoLuong(soLuong);
-            hdct.setTrangThai(1);
-            hdct.setTgThem(new Date());
-            tongSanPham++;
-            hoaDon.setTongTienSanPham(chiTietGiay.getGiaBan() * soLuong);
-            session.setAttribute("tongSP", tongSanPham);
-            hoaDonChiTietService.add(hdct);
-            cart.add(hdct);
-        }
-
-        if (soLuong == chiTietGiay.getSoLuong()) {
-            chiTietGiay.setTrangThai(0);
-        }
-
-        chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - soLuong);
-        giayChiTietService.save(chiTietGiay);
-
-        // Update tổng tiền sản phẩm trong hóa đơn
-        hoaDon.setTongTienSanPham(hoaDon.getTongTienSanPham() + chiTietGiay.getGiaBan() * soLuong);
-        hoaDonService.save(hoaDon);
-
-        redirectAttributes.addFlashAttribute("messageSuccess", true);
-        redirectAttributes.addFlashAttribute("tb", "Thêm vào giỏ hàng thành công");
-        return "redirect:/manage/bill/online/hoadon/" + idHoaDon;
-    }
 
 
 
