@@ -126,6 +126,7 @@ public class HoaDonServieImpl implements HoaDonService {
         }
 
         hoaDon.setTongTienSanPham(tongTienSanPham);
+        hoaDon.setTongTien(hoaDon.getTongTienSanPham() + hoaDon.getTienShip());
         hoaDon.setTongSP(tongSP);
 
         hoaDonRepository.save(hoaDon);
