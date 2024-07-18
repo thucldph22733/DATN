@@ -44,7 +44,7 @@ public interface HoaDonRepository  extends JpaRepository<HoaDon, UUID> {
     @Query(value = "select * from hoa_don where day(tg_tao) = day(GETDATE()) and loai_hd=1 ",nativeQuery = true)
     List<HoaDon> listAllHoaDonByNhanVienHienTai();
 
-    @Query("select km from KhuyenMai km left join HoaDon hd on km.idKM = hd.khuyenMai.idKM where km.dieuKienKMBill <= ?1 and km.trangThai= 1 and km.soLuong > 0")
+    @Query("select km from KhuyenMai km left join HoaDon hd on km.idKM = hd.khuyenMai.idKM where km.dieuKienKMBill <= ?1 and km.trangThai= 1 and km.soLuong > 0 and km.soLuongDaDung < km.soLuong")
     List<KhuyenMai> listDieuKienKhuyenMai(double tongTienSanPham);
 
     @Query("select hd from HoaDon hd where hd.loaiHD = 1 and hd.trangThai = ?1")

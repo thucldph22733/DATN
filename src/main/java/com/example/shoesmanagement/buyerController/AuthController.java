@@ -2,8 +2,11 @@ package com.example.shoesmanagement.buyerController;
 
 import com.example.shoesmanagement.model.GioHang;
 import com.example.shoesmanagement.model.KhachHang;
+import com.example.shoesmanagement.service.EmailService;
 import com.example.shoesmanagement.service.GioHangService;
 import com.example.shoesmanagement.service.KhachHangService;
+import com.example.shoesmanagement.service.impl.EmailServiceImpl;
+import com.example.shoesmanagement.service.impl.ForgotPasswordServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +33,12 @@ public class AuthController {
     private HttpSession session;
     @Autowired
     private GioHangService gioHangService;
+    @Autowired
+    private EmailServiceImpl emailService;
+
     private Random random = new Random();
+    @Autowired
+    private ForgotPasswordServiceImpl forgotPasswordService;
 
 
     @GetMapping("/login")
@@ -50,6 +58,51 @@ public class AuthController {
         session.invalidate();
         return "redirect:/buyer/";
     }
+
+
+    @GetMapping("/forgotpassword")
+    public String showForgotPasswordForm() {
+        return "online/forgotPassword";
+    }
+
+    @PostMapping("/forgotpassword/sendpassword")
+    public ResponseEntity<String> sendNewPassword(
+            @RequestParam("email") String email,
+            @RequestParam("newPass") String newPass,
+            @RequestParam("reNewPass") String reNewPass) {
+
+        if (!newPass.equals(reNewPass)) {
+            return ResponseEntity.badRequest().body("Mật khẩu mới không khớp.");
+        }
+
+        forgotPasswordService.sendNewPassword(email, newPass); // Gửi mật khẩu mới vào email
+
+        return ResponseEntity.ok("Mật khẩu mới đã được gửi tới email của bạn.");
+    }
+
+    @PostMapping("/forgotpassword/reset")
+    public String handleResetPassword(
+            @RequestParam("email") String email,
+            @RequestParam("code") String code,
+            @RequestParam("newPass") String newPass,
+            @RequestParam("reNewPass") String reNewPass,
+            Model model) {
+
+        if (forgotPasswordService.verifyCode(email, code)) {
+            if (newPass != null && newPass.equals(reNewPass)) {
+                forgotPasswordService.resetPassword(email, newPass);
+                model.addAttribute("message", "Mật khẩu của bạn đã được đặt lại thành công.");
+                return "login";
+            } else {
+                model.addAttribute("error", "Mật khẩu mới không khớp.");
+                return "online/forgotPassword";
+            }
+        } else {
+            model.addAttribute("error", "Mã xác nhận không đúng.");
+            return "online/forgotPassword";
+        }
+    }
+
     @PostMapping("/login")
     public ResponseEntity<String> buyerLogin(Model model, HttpSession session) throws MessagingException {
         String username = request.getParameter("username");

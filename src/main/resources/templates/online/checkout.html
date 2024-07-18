@@ -140,6 +140,9 @@
 
 <!-- Breadcrumb Section Begin -->
 <section class="breadcrumb-option">
+    <div id="popupMessage" style="display: none; position: fixed; top: 20px; right: 20px; background-color: #f44336; color: white; padding: 15px; border-radius: 5px; z-index: 9999;">
+        Vui lòng nhập đầy đủ thông tin trước khi đóng cửa sổ này.
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -205,7 +208,6 @@
                     </div>
                 </div>
                 <!--Show Dia Chi Khach Hang End-->
-
                 <!--Show Product in Bill Begin-->
                 <div th:unless="${addNewAddressNull}" class="row" style="margin-top: 40px;">
                     <div class="col-lg-12 col-md-12">
@@ -316,7 +318,7 @@
                                                                 <div class="p-2 g-col-4">
                                                                     <h5 class="card-title" th:text="${items.tenKM}"></h5>
                                                                     <p class="card-text" th:text="'Điều kiện: Hóa đơn tối thiểu ' + ${items.dieuKienKMBill}"></p>
-                                                                    <p class="card-text" th:text="'Số lượng: ' + ${items.soLuong}"></p>
+                                                                    <p class="card-text" th:text="'Số lượng còn lại: ' + ${items.soLuong - items.soLuongDaDung}"></p>
                                                                     <button type="submit" class="btn btn-primary" th:formaction="@{'/buyer/checkout/chon-khuyen-mai/' + ${items.idKM}}">Áp dụng</button>
                                                                     <br>
                                                                 </div>
@@ -656,10 +658,10 @@
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px">
             <div class="modal-content">
-                <form action="/buyer/checkout/add/address" method="post">
+                <form action="/buyer/checkout/add/address" method="post" id="addressForm">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">Thêm ít nhất một địa chỉ nhận hàng</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" aria-label="Close" id="closeModalButton">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -668,19 +670,19 @@
                             <div class="row" style="margin-bottom: 20px;">
                                 <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
                                 font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text"
-                                       placeholder="Tên địa chỉ" name="nameAddress">
+                                       placeholder="Tên địa chỉ" name="nameAddress" required>
 
                                 <input style="height: 40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
                                 font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text"
-                                       placeholder="Tên người nhận" name="fullName">
+                                       placeholder="Tên người nhận" name="fullName" required>
                             </div>
 
                             <div class="row" style="margin-bottom: 20px;">
                                 <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
                                 font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text"
-                                       placeholder="Số điện thoại người nhận" name="phoneAddress">
+                                       placeholder="Số điện thoại người nhận" name="phoneAddress" required>
 
-                                <select class="select" id="city" name="city"
+                                <select class="select" id="city" name="city" required
                                         style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
                                                        font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
                                     <option value="" selected>Chọn tỉnh/Thành phố</option>
@@ -688,25 +690,21 @@
                             </div>
 
                             <div class="row" style="margin-bottom: 20px;">
-
-
-                                <select class="select" id="district" name="district" style="margin-left: 38px; width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                <select class="select" id="district" name="district" required style="margin-left: 38px; width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
                                 font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; margin-right: 30px;">
                                     <option value="" selected>Chọn Quận/Huyện</option>
                                 </select>
 
-                                <select class="select" id="ward" name="ward" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                <select class="select" id="ward" name="ward" required style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
                                 font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
                                     <option value="" selected>Chọn Phường/Xã</option>
                                 </select>
-
                             </div>
 
                             <div class="row" style="margin-bottom: 20px;">
-
                                 <input name="description" style="margin-left: 38px; height: 40px;width: 410px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
                                 font-weight: 500; font-size: 14px; color: #637381;  padding: 10px 15px;" type="text"
-                                       placeholder="Mô tả" ;>
+                                       placeholder="Mô tả">
 
                             </div>
 
@@ -716,17 +714,22 @@
                                 <input style="margin: 0 10px 0 38px;" checked type="radio" name="defaultSelected"> Đặt
                                 làm mặc định
                             </div>
-
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-secondary" id="closeModal" data-dismiss="modal">Đóng</button>
                         <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+    <!-- Thêm một div để hiển thị thông báo -->
+    <div id="warningMessage" style="display: none; background-color: rgba(255, 0, 0, 0.1); color: red; padding: 10px; margin-bottom: 10px;">
+        Vui lòng nhập đầy đủ thông tin trước khi đóng cửa sổ này.
+    </div>
+
 
 </section>
 <!--Modal Address End-->
@@ -777,7 +780,44 @@
 <script src="/js/jquery.slimscroll.min.js"></script>
 <script src="/js/scrollbar.min.js"></script>
 <script src="/js/custom-scroll.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#addNewAddressNull').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
 
+        // Xử lý sự kiện khi click ra ngoài modal
+        $(document).on('click', function(event) {
+            var modalContent = $('.modal-content');
+            if (!modalContent.is(event.target) && modalContent.has(event.target).length === 0) {
+                // Kiểm tra xem các trường nhập liệu đã hợp lệ hay chưa
+                var isValid = $('#addressForm')[0].checkValidity();
+                if (!isValid) {
+                    // Hiển thị thông báo cảnh báo
+                    $('#popupMessage').fadeIn().delay(2000).fadeOut(); // Hiển thị trong 2 giây và sau đó ẩn
+                    // Ngăn chặn đóng modal
+                    return false;
+                }
+            }
+        });
+
+        // Xử lý sự kiện khi click vào nút Đóng
+        $('#closeModalButton').on('click', function() {
+            // Kiểm tra xem các trường nhập liệu đã hợp lệ hay chưa
+            var isValid = $('#addressForm')[0].checkValidity();
+            if (!isValid) {
+                // Hiển thị thông báo cảnh báo
+                $('#popupMessage').fadeIn().delay(2000).fadeOut(); // Hiển thị trong 2 giây và sau đó ẩn
+                // Ngăn chặn đóng modal
+                return false;
+            } else {
+                // Nếu hợp lệ, cho phép đóng modal
+                $('#addNewAddressNull').modal('hide');
+            }
+        });
+    });
+</script>
 <!--Show modal Thong Bao dia chi begin-->
 <script>
     $(document).ready(function () {

@@ -115,6 +115,23 @@ public class HoaDonServieImpl implements HoaDonService {
     }
 
     @Override
+    public void updateHoaDon(HoaDon hoaDon) {
+        double tongTienSanPham = 0;
+        int tongSP = 0;
+
+        for (HoaDonChiTiet hdc : hoaDon.getHoaDonChiTiets()) {
+            tongTienSanPham += hdc.getDonGia() * hdc.getSoLuong();
+            tongSP += hdc.getSoLuong();
+        }
+
+        hoaDon.setTongTienSanPham(tongTienSanPham);
+        hoaDon.setTongSP(tongSP);
+
+        hoaDonRepository.save(hoaDon);
+    }
+
+
+    @Override
     public List<HoaDon> listHoaDonHuyAndThanhCongByNhanVien(NhanVien nhanVien) {
         return hoaDonRepository.findByNhanVienAndLoaiHDAndTrangThaiOrTrangThaiOrderByTgTaoDesc(nhanVien,0,3,4);
     }
