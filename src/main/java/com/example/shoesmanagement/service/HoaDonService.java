@@ -1,18 +1,16 @@
 package com.example.shoesmanagement.service;
 
-import com.example.shoesmanagement.model.ChatLieu;
-import com.example.shoesmanagement.model.HoaDon;
-import com.example.shoesmanagement.model.KhachHang;
-import com.example.shoesmanagement.model.NhanVien;
+import com.example.shoesmanagement.model.*;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface HoaDonService {
+
     List<HoaDon> getListHoaDonChuaThanhToan();
 
     List<HoaDon> getListHoaDonDaThanhToan();
-
+    void deleteByChiTietGiay(ChiTietGiay chiTietGiay);
     void add(HoaDon hoaDon);
 
     public void save(HoaDon hoaDon);

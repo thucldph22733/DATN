@@ -26,6 +26,9 @@ public class CheckOutController {
     private HttpSession session;
 
     @Autowired
+    private KhachHangService khachHangService;
+
+    @Autowired
     private HoaDonService hoaDonService;
 
     @Autowired
@@ -335,7 +338,7 @@ public class CheckOutController {
         Double shippingFee2 = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
 
         model.addAttribute("sumQuantity", sumQuantity);
-        model.addAttribute("total", total * sumQuantity);
+        model.addAttribute("total", total);
         model.addAttribute("diaChiKHDefault", diaChiKH);
         model.addAttribute("listProductCheckOut", hoaDonChiTietList);
         model.addAttribute("listAddressKH", diaChiKHList);
@@ -345,7 +348,7 @@ public class CheckOutController {
         model.addAttribute("addNewAddressNotNull", true);
         model.addAttribute("billPlaceOrder", hoaDon);
         model.addAttribute("shippingFee", shippingFee2);
-        model.addAttribute("toTalOder", (total * sumQuantity) + shippingFee2 - giaTienGiam);
+        model.addAttribute("toTalOder", total + shippingFee2 - giaTienGiam);
 
         session.removeAttribute("diaChiGiaoHang");
         session.setAttribute("diaChiGiaoHang", diaChiKH);
@@ -398,8 +401,7 @@ public class CheckOutController {
         model.addAttribute("ngayDuKien", ngayDuKien);
 
         model.addAttribute("sumQuantity", sumQuantity);
-        model.addAttribute("total", total * sumQuantity);
-
+        model.addAttribute("total", total);
         model.addAttribute("diaChiKHDefault", diaChiKHChange);
         model.addAttribute("fullNameLogin", khachHang.getHoTenKH());
 
@@ -408,7 +410,8 @@ public class CheckOutController {
         model.addAttribute("addNewAddressNotNull", true);
         model.addAttribute("shippingFee", shippingFee);
         model.addAttribute("billPlaceOrder", hoaDon);
-        model.addAttribute("toTalOder", (total * sumQuantity) + shippingFee - giaTienGiam);
+        model.addAttribute("toTalOder", total + shippingFee - giaTienGiam);
+
         session.removeAttribute("diaChiGiaoHang");
         session.setAttribute("diaChiGiaoHang", diaChiKHChange);
 
@@ -769,7 +772,7 @@ public class CheckOutController {
             lichSuThanhToan.setTgThanhToan(date);
             lichSuThanhToan.setSoTienThanhToan(hoaDon.getTongTien());
             lichSuThanhToan.setNoiDungThanhToan("Đã thanh toán thành công hóa đơn " + hoaDon.getMaHD() + " ------   ||  Mã VNPAY : " + transactionId + " ||  Số tiền : " + totalPrice);
-            lichSuThanhToan.setKhachHang(khachHang);
+            lichSuThanhToan.setKhachHang    (khachHang);
             lichSuThanhToan.setHoaDon(hoaDon);
             lichSuThanhToan.setMaLSTT("LSTT" + khachHang.getMaKH() + generateRandomNumbers());
             lichSuThanhToan.setTrangThai(0);

@@ -241,6 +241,256 @@
     <!--CODE TỪ DƯỚI NÀY-->
 
 
+    <th:block th:each="bill: ${listHoaDonOnline}">
+        <div  th:id="${bill.idHD}" tabindex="-1" aria-labelledby="create"
+             aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered" role="document" style="width: 1200px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chỉnh sửa hóa đơn </h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane show active">
+                            <div class="row">
+                                <div class="col-lg-7 col-sm-12 tabs_wrapper">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="table-top">
+                                                <form method="get" action="/manage/bill/search">
+                                                    <div class="search-set">
+                                                        <div class="search-path">
+                                                            <button class="btn btn-searchset" type="submit">
+                                                                <img src="/images/img/icons/search-white.svg" alt="img"></button>
+                                                        </div>
+                                                        <div>
+                                                            <div>
+                                                                <input type="search" class="form-control form-control-sm" name="keyword" placeholder="Tìm kiếm..." aria-controls="DataTables_Table_0">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tabs_container">
+                                        <div class="row">
+                                            <div th:if="${nullHoaDon}"
+                                                 class="alert alert-success text-center">
+                                                <h3 th:text="${nullHoaDon}"></h3>
+                                            </div>
+                                        </div>
+
+                                        <table class="table table-bordered product-table">
+                                            <thead>
+                                            <tr>
+                                                <th>Hình Ảnh</th>
+                                                <th>Số Lượng</th>
+                                                <th>Tên Giày</th>
+                                                <th>Giá Bán</th>
+                                                <th>Màu Sắc</th>
+                                                <th>Hành Động</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <th:block th:each="product : ${listSanPham}">
+                                                <tr>
+                                                    <td>
+                                                        <img style="height: 90px;width: 90px"
+                                                             th:src="@{'/images/imgsProducts/'+ ${product.hinhAnh}}"
+                                                             alt="img">
+                                                    </td>
+                                                    <td>
+                                                        <h6>[[${product.soLuong}]]</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h3 style="font-size: 12pt">
+                                                            [[${product.tenGiay}]]</h3>
+                                                    </td>
+                                                    <td>
+                                                        <h3 style="font-size: 12pt"
+                                                            th:text=" ${#numbers.formatDecimal(product.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h3>
+                                                    </td>
+                                                    <td>
+                                                        <h4 style="font-size: 12pt"
+                                                            th:text="${product.mauSac}"></h4>
+                                                    </td>
+                                                    <td>
+                                                        <a style="font-size: 11pt"
+                                                           th:href="@{'/manage/changehd/chon-size2/' + ${product.idGiay}+'/'+${product.mauSac} }"
+                                                           class="btn btn-outline-warning">Chọn</a>
+                                                    </td>
+                                                </tr>
+                                            </th:block>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-sm-12 ">
+                                    <div class="order-list">
+                                        <div class="orderid">
+                                            <nav class="navbar navbar-expand-lg">
+                                                <a class="btn" th:href="@{/ban-hang/add-cart}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="25"
+                                                         height="25"
+                                                         fill="currentColor"
+                                                         class="bi bi-person-add" viewBox="0 0 16 16">
+                                                        <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+                                                        <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
+                                                    </svg>
+                                                </a>
+
+
+                                            </nav>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="solid-rounded-justified-tab2">
+
+                        </div>
+                    </div>
+
+
+                    <div class="modal-body">
+
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Phân loại</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                                <th>Hoạt động</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <th:block th:each="x: ${bill.hoaDonChiTiets}">
+                                <tr th:if="${x.chiTietGiay.trangThai == 1}" id="productId" th:value="${x.chiTietGiay.idCTG}">
+                                    <td style="width: 400px;" class="product__cart__item">
+                                        <div class="product__cart__item__pic">
+                                            <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' + ${x.chiTietGiay.mauSac.idMau}}">
+                                                <img style="width:90px; height:90px;" th:src="@{'/images/imgsProducts/' + ${x.chiTietGiay.hinhAnh.url1}}">
+                                            </a>
+                                        </div>
+                                        <div class="product__cart__item__text">
+                                            <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' + ${x.chiTietGiay.mauSac.idMau}}">
+                                                <h6 style="margin-top: -22px;" th:text="${x.chiTietGiay.giay.tenGiay}"></h6>
+                                            </a>
+                                            <h5 class="cart__price" th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
+                                        </div>
+                                    </td>
+                                    <td style="width: 175px;" class="quantity__item">
+                                        <div style="margin-top: -20px; display: block;">
+                                            <span id="showButton" style="font-weight: normal; font-size: medium;">Phân loại :</span>
+                                            <a th:href="@{'/buyer/cart/option/' + ${x.chiTietGiay.giay.idGiay} + '/' + ${x.chiTietGiay.mauSac.idMau} + '/' + ${x.chiTietGiay.idCTG}}">
+                                                <img style="height: 10px; width: 10px;" src="/images/img/icon/dropdown.png" alt="">
+                                            </a>
+                                        </div>
+                                        <div style="padding-right: 20px;">
+                                            <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);" th:text="'Colors : ' + ${x.chiTietGiay.mauSac.tenMau}"></span>
+                                            <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);" th:text="'Size : ' + ${x.chiTietGiay.size.soSize}"></span>
+                                        </div>
+                                    </td>
+                                    <td style="width: 175px;" class="quantity__item">
+                                        <div class="quantity">
+                                            <input class="quantityInput" oninput="validateQuantity(this)" th:value="${x.soLuong}" style="width: 50px; text-align: center; border: 1px solid black;" type="number" name="quantities">
+                                        </div>
+                                    </td>
+                                    <td style="width: 140px;" class="cart__price totalAmount" th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+                                    <!--                                    <td>-->
+                                    <!--                                        <form th:action="@{/manage/bill/deleteChiTietGiay/{idCTG}/{idHD}(idCTG=${x.chiTietGiay.idCTG}, idHD=${bill.idHD})}" method="post">-->
+                                    <!--                                            <button type="submit" class="btn btn-danger btn-sm" >Xóa</button>-->
+                                    <!--                                        </form>-->
+                                    <!--                                    </td>-->
+                                    <td>
+                                        <form id="deleteForm" th:action="@{/manage/bill/deleteChiTietGiay/{idCTG}/{idHD}(idCTG=${x.chiTietGiay.idCTG}, idHD=${bill.idHD})}" method="post">
+                                            <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete()">Xóa</button>
+                                        </form>
+                                    </td>
+
+                                </tr>
+                            </th:block>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+
+    <div th:if="${showModal1}" class="modal fade" id="chonSize" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Sản phẩm</h5>
+
+                    <a type="button" th:href="@{'/manage/changehd/online/'+ ${idHD} }">
+                        <span aria-hidden="true">×</span>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <div class="row m-3">
+                        <div class="col-6">
+                            <img th:src="@{'/images/imgsProducts/'+ ${giay.chiTietGiayList.get(0).hinhAnh.url1}}" alt=""
+                                 height="400" width="300">
+                        </div>
+                        <div class="col-6">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="">
+                                        <div class="text-left fs-2 fw-bolder">
+                                            <label th:text="${giay.tenGiay}"></label>
+                                        </div>
+                                        <div class="text-left fs-3 fw-normal">
+                                            <label th:text="${'Hãng : '+ giay.hang.tenHang}"></label>
+                                            <div id="sizeQuantity" th:if="${not #lists.isEmpty(listChiTietGiay)}">
+                                                Còn hàng <span th:text="${listChiTietGiay.get(0).soLuong}"></span> đôi
+                                            </div>
+                                        </div>
+                                        <div class="text-left fs-4">
+
+                                            <form th:action="@{'/manage/changehd/add-to-hd/' + ${idHoaDon}}" method="get">
+                                                <input type="hidden" th:value="${idHoaDon}" name="idHoaDon"/>
+                                                <div class="">
+                                                    <input type="number" name="soLuong" value="1" min="1" class="form-control"/>
+                                                </div>
+                                                <div class="row">
+                                                    <div th:each="chiTiet : ${listChiTietGiay}" class="col-md-3">
+                                                        <label>
+                                                            <input type="radio" name="idChiTietGiay" th:data-size="${chiTiet.size.soSize}"
+                                                                   th:value="${chiTiet.idCTG}" th:data-quantity="${chiTiet.soLuong}"
+                                                                   th:onclick="'displaySizeQuantity(this)'"
+                                                                   th:checked="${chiTiet == listChiTietGiay.get(0)}"/>
+                                                            <span th:text="${chiTiet.size.soSize}"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-secondary btn-center mt-3">Thêm giỏ hàng</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
 
 <!--    <div th:replace="manage/main :: main"></div>-->
 

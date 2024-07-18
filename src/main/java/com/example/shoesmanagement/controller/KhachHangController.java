@@ -5,22 +5,16 @@ import com.example.shoesmanagement.model.KhachHang;
 import com.example.shoesmanagement.repository.KhachHangRepository;
 import com.example.shoesmanagement.service.DiaChiKHService;
 import com.example.shoesmanagement.service.KhachHangService;
-import com.lowagie.text.DocumentException;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -303,6 +297,24 @@ public class KhachHangController {
         model.addAttribute("khachHangAll", khachHangService.getAllKhachHang());
 
         return "manage/khach-hang"; // Trả về mẫu HTML chứa bảng dữ liệu sau khi lọc
+    }
+
+    @PutMapping("/khach-hang/{idKH}")
+    public ResponseEntity<String> capNhatTrangThai(@RequestParam String trangThai,
+                                                   @PathVariable UUID idKH) {
+        int trangThaiInt = Integer.valueOf(trangThai);
+
+        int trangThaiUpdate;
+        if (trangThaiInt == 1) {
+            trangThaiUpdate = 0;
+        } else {
+            trangThaiUpdate = 1;
+        }
+        KhachHang khachHang = khachHangService.getByIdKhachHang(idKH);
+        khachHang.setTrangThai(trangThaiUpdate);
+        khachHang.setTgSua(new Date());
+        khachHangService.save(khachHang);
+        return ResponseEntity.ok("ok");
     }
 
 //    @PostMapping("/khachHang/import")

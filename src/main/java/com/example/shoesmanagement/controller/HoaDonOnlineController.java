@@ -1,7 +1,9 @@
 package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.*;
-import com.example.shoesmanagement.repository.*;
+import com.example.shoesmanagement.repository.HoaDonChiTietRepository;
+import com.example.shoesmanagement.repository.HoaDonRepository;
+import com.example.shoesmanagement.repository.SizeRepository;
 import com.example.shoesmanagement.service.*;
 import com.example.shoesmanagement.viewModel.GiayViewModel;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,31 +30,11 @@ public class HoaDonOnlineController {
     private GiayService giayService;
 
     @Autowired
-    private SizeService sizeService;
-
+    private GHCTService ghctService;
     @Autowired
     private KhuyenMaiService khuyenMaiService;
-
-    @Autowired
-    private HoaDonRepository hoaDonRepository;
-
     @Autowired
     private KhachHangService khachHangService;
-
-    @Autowired
-    private MauSacService mauSacService;
-
-    @Autowired
-    private MauSacRepository mauSacRepository;
-
-    @Autowired
-    private GiayRepository giayRepository;
-    @Autowired
-    private HinhAnhRepository hinhAnhRepository;
-    @Autowired
-    private SizeRepository sizeRepository;
-    @Autowired
-    private HangRepository hangRepository;
 
     @Autowired
     private HoaDonChiTietRepository hoaDonChiTietRepository;
@@ -78,7 +60,8 @@ public class HoaDonOnlineController {
     private HttpSession session;
     @Autowired
     private GiayViewModelService giayViewModelService;
-
+    @Autowired
+    private SizeRepository sizeRepository;
     @Autowired
     private LSThanhToanService lsThanhToanService;
     @Autowired
@@ -91,6 +74,8 @@ public class HoaDonOnlineController {
     private ChucVuService chucVuService;
     @Autowired
     private HttpSession httpSession;
+    @Autowired
+    private HoaDonRepository hoaDonRepository;
 
     @Autowired
     private KhuyenMaiRepository khuyenMaiRepository;
@@ -98,19 +83,20 @@ public class HoaDonOnlineController {
     @GetMapping("online")
     private String manageBillOnline(Model model) {
         model.addAttribute("reLoadPage", true);
+        List<GiayViewModel> list = giayViewModelService.getAllVm();
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
-        List<ChiTietGiay> chiTietGiayList = new ArrayList<>();
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/login";
         }
-        List<Giay> giayList = giayService.getAllGiay();
-        List<Size> sizeList = sizeService.getAllSize();
-        List<MauSac> mauSacList = mauSacService.getALlMauSac();
-        model.addAttribute("items", chiTietGiayList);
-        model.addAttribute("giayList", giayList);
-        model.addAttribute("sizeList", sizeList);
-        model.addAttribute("mauSacList", mauSacList);
+        if (listG != null && !listG.isEmpty()) {
+            System.out.println("Danh sách sản phẩm không rỗng, số lượng: " + listG.size());
+            for (GiayViewModel product : listG) {
+                System.out.println(product);
+            }
+        } else {
+            System.out.println("Danh sách sản phẩm rỗng hoặc null");
+        }
         showData(model);
         showTab1(model);
         model.addAttribute("listSanPham", listG);
@@ -177,7 +163,7 @@ public class HoaDonOnlineController {
         showTab3(model);
         model.addAttribute("messageXacNhan", "Xác nhận nhân viên giao thành công.");
 
-        return "/manage/manage-bill-online";
+        return "manage/manage-bill-online";
     }
 
     @GetMapping("online/delete/{idHD}")
@@ -257,7 +243,7 @@ public class HoaDonOnlineController {
         if (listAllHoaDonOnline != null) {
             for (HoaDon x : listAllHoaDonOnline) {
                 if (x.getTrangThai() == 6 || x.getTrangThai() == 7) {
-//                    System.out.println("abc");
+                    System.out.println("abc");
                 } else {
                     tongTienHoaDon += x.getTongTien();
                 }
@@ -267,7 +253,7 @@ public class HoaDonOnlineController {
         if (listAllHoaDonOnline != null) {
             for (HoaDon x : listAllHoaDonOnline) {
                 if (x.getTrangThai() == 6 || x.getTrangThai() == 7) {
-//                    System.out.println("abc");
+                    System.out.println("abc");
                 } else {
                     if (x.getHinhThucThanhToan() == 1) {
                         soLuongHoaDonBanking++;
@@ -393,35 +379,6 @@ public class HoaDonOnlineController {
         return "redirect:/manage-bill-online/" + idHoaDon;
     }
 
-    @GetMapping("/chon-size2/{idGiay}/{mauSac}")
-    public String chonSize(@PathVariable(value = "idGiay") UUID idGiay,
-                           @PathVariable(value = "mauSac") String mauSac, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-
-        UUID idHoaDon = (UUID) session.getAttribute("idHoaDon");
-//        if (idHoaDon == null) {
-//            redirectAttributes.addFlashAttribute("messageError", true);
-//            redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
-//            return "redirect:/manage/bill/online";
-//        }
-
-        List<GiayViewModel> listG = giayViewModelService.getAllVm();
-        model.addAttribute("listSanPham", listG);
-        Giay giay = giayService.getByIdGiay(idGiay);
-        List<ChiTietGiay> sizeList = sizeRepository.findByIdGiayAndMauSac2(idGiay, mauSac);
-
-        model.addAttribute("gioHang", hoaDonChiTietService.findByIdHoaDon(idHoaDon));
-        model.addAttribute("giay", giay);
-        model.addAttribute("listChiTietGiay", sizeList);
-        model.addAttribute("idHoaDon", idHoaDon);
-        model.addAttribute("showModal1", true);
-        model.addAttribute("tongTienSanPham", tongTienSanPham);
-        model.addAttribute("tongTien", tongTien);
-
-        return "/manage/manage-bill-online";
-    }
-//        redirectAttribute.addFlashAttribute("successMessage", "Sản phẩm đã được xoá khỏi giỏ hàng thành công!");
-//        return "redirect:/manage/bill/online"; // Điều hướng về trang danh sách chi tiết giày
-
 
     @PostMapping("/deleteChiTietGiay/{idCTG}/{idHD}")
     @ResponseBody
@@ -463,10 +420,12 @@ public class HoaDonOnlineController {
             redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
             model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
             return "redirect:/manage/bill/online";
+
         }
 
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
+
 
         List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
         model.addAttribute("khuyenMai", khuyenMai);
@@ -528,74 +487,8 @@ public class HoaDonOnlineController {
         return "/manage/manage-bill-online";
     }
 
-    @GetMapping("/add-to-hd")
-    public String addToCart(@RequestParam("idChiTietGiay") UUID idChiTietGiay,
-                            @RequestParam("soLuong") int soLuong, Model model,
-                            RedirectAttributes redirectAttributes, HttpSession session) {
-        // Log để kiểm tra giá trị các biến
-        System.out.println("idChiTietGiay: " + idChiTietGiay);
-        System.out.println("soLuong: " + soLuong);
 
-        List<GiayViewModel> listG = giayViewModelService.getAllVm();
-        model.addAttribute("listSanPham", listG);
-        UUID idHoaDon = (UUID) session.getAttribute("idHoaDon");
 
-        if (idHoaDon == null) {
-            redirectAttributes.addFlashAttribute("messageError", true);
-            redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
-            return "redirect:/manage/bill/online";
-        }
-
-        ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idChiTietGiay);
-        if (soLuong > chiTietGiay.getSoLuong()) {
-            redirectAttributes.addFlashAttribute("messageError", true);
-            redirectAttributes.addFlashAttribute("tbaoError", "Số lượng trong kho không đủ");
-            return "redirect:/manage/bill/online/hoadon/" + idHoaDon;
-        }
-
-        HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
-        List<HoaDonChiTiet> cart = (List<HoaDonChiTiet>) session.getAttribute("cart");
-
-        if (cart == null) {
-            cart = new ArrayList<>();
-            session.setAttribute("cart", cart);
-        }
-
-        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHoaDon, idChiTietGiay);
-        if (hoaDonChiTiet != null) {
-            hoaDonChiTiet.setDonGia(chiTietGiay.getGiaBan() * (hoaDonChiTiet.getSoLuong() + soLuong));
-            hoaDonChiTiet.setSoLuong(hoaDonChiTiet.getSoLuong() + soLuong);
-            hoaDon.setTongTienSanPham(chiTietGiay.getGiaBan() * soLuong);
-            hoaDonChiTiet.setTrangThai(1);
-            hoaDonChiTietService.add(hoaDonChiTiet);
-        } else {
-            HoaDonChiTiet hdct = new HoaDonChiTiet();
-            hdct.setChiTietGiay(chiTietGiay);
-            hdct.setHoaDon(hoaDon);
-            hdct.setDonGia(chiTietGiay.getGiaBan() * soLuong);
-            hdct.setSoLuong(soLuong);
-            hdct.setTrangThai(1);
-            hdct.setTgThem(new Date());
-            tongSanPham++;
-            hoaDon.setTongTienSanPham(chiTietGiay.getGiaBan() * soLuong);
-            session.setAttribute("tongSP", tongSanPham);
-            hoaDonChiTietService.add(hdct);
-            cart.add(hdct);
-        }
-
-        if (soLuong == chiTietGiay.getSoLuong()) {
-            chiTietGiay.setTrangThai(0);
-        }
-
-        chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - soLuong);
-        giayChiTietService.save(chiTietGiay);
-
-        // Update tổng tiền sản phẩm trong hóa đơn
-        hoaDon.setTongTienSanPham(hoaDon.getTongTienSanPham() + chiTietGiay.getGiaBan() * soLuong);
-        hoaDonService.save(hoaDon);
-
-        redirectAttributes.addFlashAttribute("messageSuccess", true);
-        redirectAttributes.addFlashAttribute("tb", "Thêm vào giỏ hàng thành công");
-        return "redirect:/manage/bill/online/hoadon/" + idHoaDon;
+ return "redirect:/manage/bill/online/hoadon/" + idHoaDon;
     }
 }
