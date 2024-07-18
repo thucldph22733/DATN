@@ -241,11 +241,13 @@ public class SuaHoaDonOnline {
                            @PathVariable(value = "mauSac") String mauSac, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 
         UUID idHoaDon = (UUID) session.getAttribute("idHoaDon");
-//        if (idHoaDon == null) {
-//            redirectAttributes.addFlashAttribute("messageError", true);
-//            redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
-//            return "redirect:/manage/bill/online";
-//        }
+
+        // Kiểm tra nếu idHoaDon bị null và xử lý
+        if (idHoaDon == null) {
+            redirectAttributes.addFlashAttribute("messageError", true);
+            redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
+            return "redirect:/manage/bill/online";
+        }
 
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
@@ -256,24 +258,28 @@ public class SuaHoaDonOnline {
         model.addAttribute("gioHang", hoaDonChiTietService.findByIdHoaDon(idHoaDon));
         model.addAttribute("giay", giay);
         model.addAttribute("listChiTietGiay", sizeList);
-        model.addAttribute("idHoaDon", idHoaDon);
         model.addAttribute("showModal1", true);
         model.addAttribute("tongTienSanPham", tongTienSanPham);
         model.addAttribute("tongTien", tongTien);
 
         return "/manage/sua_hd_online";
     }
-
     @GetMapping("/add-to-hd/{idHD}")
     public String addToCart(@PathVariable("idHD") UUID idHoaDon,
                             @RequestParam("idChiTietGiay") UUID idChiTietGiay,
                             @RequestParam("soLuong") int soLuong, Model model,
-
                             RedirectAttributes redirectAttributes, HttpSession session) {
-        // Log để kiểm tra giá trị các biến
+        // Kiểm tra giá trị idHoaDon và idChiTietGiay
+        if (idHoaDon == null || idChiTietGiay == null) {
+            redirectAttributes.addFlashAttribute("messageError", true);
+            redirectAttributes.addFlashAttribute("tbaoError", "Giá trị idHoaDon hoặc idChiTietGiay bị thiếu");
+            return "redirect:/manage/changehd/online/";
+        }
+
+        System.out.println("idHoaDon: " + idHoaDon);
         System.out.println("idChiTietGiay: " + idChiTietGiay);
         System.out.println("soLuong: " + soLuong);
-//        idHoaDon = (UUID) session.getAttribute("idHoaDon");
+
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
 
@@ -309,7 +315,6 @@ public class SuaHoaDonOnline {
             hdct.setSoLuong(soLuong);
             hdct.setTrangThai(1);
             hdct.setTgThem(new Date());
-            // Assuming tongSanPham is a class variable
             tongSanPham++;
             hoaDon.setTongTienSanPham(chiTietGiay.getGiaBan() * soLuong);
             session.setAttribute("tongSP", tongSanPham);
@@ -324,7 +329,6 @@ public class SuaHoaDonOnline {
         chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - soLuong);
         giayChiTietService.save(chiTietGiay);
 
-        // Update tổng tiền sản phẩm trong hóa đơn
         hoaDon.setTongTienSanPham(hoaDon.getTongTienSanPham() + chiTietGiay.getGiaBan() * soLuong);
         hoaDonService.save(hoaDon);
 
@@ -332,5 +336,4 @@ public class SuaHoaDonOnline {
         redirectAttributes.addFlashAttribute("tb", "Thêm vào giỏ hàng thành công");
         return "redirect:/manage/changehd/online/" + idHoaDon;
     }
-
 }
