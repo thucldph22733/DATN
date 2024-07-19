@@ -552,7 +552,7 @@
 <!--                                                                                   th:data-bs-toggle="modal"-->
 <!--                                                                                   th:data-bs-target="'#modalEditHoaDon' + ${bill.idHD}"-->
 <!--                                                                                   style="cursor: pointer; margin: 0 20px 0 0; color: #ff9f43;"-->
-<!--                                                                                   th:href="@{/manage/changehd/online}"></i>-->
+<!--                                                                                   </i>-->
 
                                                                                 <a th:if="${bill.trangThai == 1 or bill.trangThai == 2}"
                                                                                    th:href="@{/manage/changehd/online/{id}(id=${bill.idHD})}"
@@ -1142,11 +1142,6 @@
     </th:block>
     <!--    Modal edit chọn size-->
 
-
-
-
-
-    <!-- Modal detail Hóa Đơn begin-->
     <th:block th:each="bill: ${listHoaDonOnline}">
         <div th:unless="${bill.trangThai == 6}" class="modal fade" th:id="'modalDetailHD' + ${bill.idHD}" tabindex="-1"
              aria-labelledby="create" aria-hidden="true">
@@ -1299,6 +1294,137 @@
             </div>
         </div>
     </th:block>
+
+
+    <div th:if="${showModal1}" class="modal fade" id="chonSize" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Sản phẩm</h5>
+
+                    <a type="button" th:href="@{'/manage/changehd/online/'+ ${idHD} }">
+                        <span aria-hidden="true">×</span>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <div class="row m-3">
+                        <div class="col-6">
+                            <img th:src="@{'/images/imgsProducts/'+ ${giay.chiTietGiayList.get(0).hinhAnh.url1}}" alt=""
+                                 height="400" width="300">
+                        </div>
+                        <div class="col-6">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="">
+                                        <div class="text-left fs-2 fw-bolder">
+                                            <label th:text="${giay.tenGiay}"></label>
+                                        </div>
+                                        <div class="text-left fs-3 fw-normal">
+                                            <label th:text="${'Hãng : '+ giay.hang.tenHang}"></label>
+                                            <div id="sizeQuantity" th:if="${not #lists.isEmpty(listChiTietGiay)}">
+                                                Còn hàng <span th:text="${listChiTietGiay.get(0).soLuong}"></span> đôi
+                                            </div>
+                                        </div>
+                                        <div class="text-left fs-4">
+
+                                            <form th:action="@{'/manage/bill/add-to-hd/' + ${idHoaDon}}" method="get">
+                                                <input type="hidden" th:value="${idHoaDon}" name="idHoaDon"/>
+                                                <div class="">
+                                                    <input type="number" name="soLuong" value="1" min="1" class="form-control"/>
+                                                </div>
+                                                <div class="row">
+                                                    <div th:each="chiTiet : ${listChiTietGiay}" class="col-md-3">
+                                                        <label>
+                                                            <input type="radio" name="idChiTietGiay" th:data-size="${chiTiet.size.soSize}"
+                                                                   th:value="${chiTiet.idCTG}" th:data-quantity="${chiTiet.soLuong}"
+                                                                   th:onclick="'displaySizeQuantity(this)'"
+                                                                   th:checked="${chiTiet == listChiTietGiay.get(0)}"/>
+                                                            <span th:text="${chiTiet.size.soSize}"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-secondary btn-center mt-3">Thêm giỏ hàng</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Modal detail Hóa Đơn begin-->
+    <div th:if="${showModal1}" class="modal fade" id="chonSize" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Sản phẩm</h5>
+
+                    <a type="button" th:href="@{'/manage/changehd/online/'+ ${idHD} }">
+                        <span aria-hidden="true">×</span>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <div class="row m-3">
+                        <div class="col-6">
+                            <img th:src="@{'/images/imgsProducts/'+ ${giay.chiTietGiayList.get(0).hinhAnh.url1}}" alt=""
+                                 height="400" width="300">
+                        </div>
+                        <div class="col-6">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="">
+                                        <div class="text-left fs-2 fw-bolder">
+                                            <label th:text="${giay.tenGiay}"></label>
+                                        </div>
+                                        <div class="text-left fs-3 fw-normal">
+                                            <label th:text="${'Hãng : '+ giay.hang.tenHang}"></label>
+                                            <div id="sizeQuantity" th:if="${not #lists.isEmpty(listChiTietGiay)}">
+                                                Còn hàng <span th:text="${listChiTietGiay.get(0).soLuong}"></span> đôi
+                                            </div>
+                                        </div>
+                                        <div class="text-left fs-4">
+
+                                            <form th:action="@{'/manage/changehd/add-to-hd/' + ${idHoaDon}}" method="get">
+                                                <input type="hidden" th:value="${idHoaDon}" name="idHoaDon"/>
+                                                <div class="">
+                                                    <input type="number" name="soLuong" value="1" min="1" class="form-control"/>
+                                                </div>
+                                                <div class="row">
+                                                    <div th:each="chiTiet : ${listChiTietGiay}" class="col-md-3">
+                                                        <label>
+                                                            <input type="radio" name="idChiTietGiay" th:data-size="${chiTiet.size.soSize}"
+                                                                   th:value="${chiTiet.idCTG}" th:data-quantity="${chiTiet.soLuong}"
+                                                                   th:onclick="'displaySizeQuantity(this)'"
+                                                                   th:checked="${chiTiet == listChiTietGiay.get(0)}"/>
+                                                            <span th:text="${chiTiet.size.soSize}"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-secondary btn-center mt-3">Thêm giỏ hàng</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal detail Hóa Đơn end-->
 
 

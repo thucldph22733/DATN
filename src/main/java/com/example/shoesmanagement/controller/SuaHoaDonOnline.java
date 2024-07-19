@@ -111,17 +111,28 @@ public class SuaHoaDonOnline {
         List<Size> sizeList = sizeService.getAllSize();
         List<MauSac> mauSacList = mauSacService.getALlMauSac();
 
+        // Lấy hóa đơn cụ thể dựa vào idHD
+        HoaDon hoaDon = hoaDonService.getOne(idHD);
+        List<HoaDonChiTiet> hoaDonChiTiets = hoaDon.getHoaDonChiTiets();
+
+        model.addAttribute("hoaDon", hoaDon);
+        model.addAttribute("hoaDonChiTiets", hoaDonChiTiets);
         model.addAttribute("items", chiTietGiayList);
         model.addAttribute("giayList", giayList);
         model.addAttribute("sizeList", sizeList);
         model.addAttribute("mauSacList", mauSacList);
         model.addAttribute("listSanPham", listG);
+        model.addAttribute("tongSP", hoaDon.getTongSP());
+        model.addAttribute("tongTien", hoaDon.getTongTien());
+        model.addAttribute("trangThai", hoaDon.getTrangThai());
+        model.addAttribute("khachHang", hoaDon.getKhachHang());
 
         showData(model);
         showTab1(model);
 
         return "manage/sua_hd_online";
     }
+
 
     private void showData(Model model) {
 
@@ -292,6 +303,7 @@ public class SuaHoaDonOnline {
 
         HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
         model.addAttribute("idHoaDon", idHoaDon);
+
         List<HoaDonChiTiet> cart = (List<HoaDonChiTiet>) session.getAttribute("cart");
 
         if (cart == null) {
@@ -330,7 +342,9 @@ public class SuaHoaDonOnline {
         giayChiTietService.save(chiTietGiay);
 
         hoaDon.setTongTienSanPham(hoaDon.getTongTienSanPham() + chiTietGiay.getGiaBan() * soLuong);
+
         hoaDonService.save(hoaDon);
+        hoaDonService.updateHoaDon(hoaDon);
 
         redirectAttributes.addFlashAttribute("messageSuccess", true);
         redirectAttributes.addFlashAttribute("tb", "Thêm vào giỏ hàng thành công");
