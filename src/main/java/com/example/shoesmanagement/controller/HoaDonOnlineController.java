@@ -488,6 +488,108 @@ public class HoaDonOnlineController {
         return "/manage/manage-bill-online";
     }
 
+    @GetMapping("/chon-size2/{idGiay}/{mauSac}")
+    public String chonSize(@PathVariable(value = "idGiay") UUID idGiay,
+                           @PathVariable(value = "mauSac") String mauSac, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+
+        UUID idHoaDon = (UUID) session.getAttribute("idHoaDon");
+
+        // Kiểm tra nếu idHoaDon bị null và xử lý
+        if (idHoaDon == null) {
+            redirectAttributes.addFlashAttribute("messageError", true);
+            redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
+            return "redirect:/manage/bill/online";
+        }
+
+        List<GiayViewModel> listG = giayViewModelService.getAllVm();
+        model.addAttribute("listSanPham", listG);
+        model.addAttribute("idHoaDon", idHoaDon);
+        Giay giay = giayService.getByIdGiay(idGiay);
+        List<ChiTietGiay> sizeList = sizeRepository.findByIdGiayAndMauSac2(idGiay, mauSac);
+
+        model.addAttribute("gioHang", hoaDonChiTietService.findByIdHoaDon(idHoaDon));
+        model.addAttribute("giay", giay);
+        model.addAttribute("listChiTietGiay", sizeList);
+        model.addAttribute("showModal1", true);
+        model.addAttribute("tongTienSanPham", tongTienSanPham);
+        model.addAttribute("tongTien", tongTien);
+
+        return "/manage/manage-bill-online";
+    }
+
+
+    @GetMapping("/add-to-hd/{idHD}")
+    public String addToCart(@PathVariable("idHD") UUID idHoaDon,
+                            @RequestParam("idChiTietGiay") UUID idChiTietGiay,
+                            @RequestParam("soLuong") int soLuong, Model model,
+                            RedirectAttributes redirectAttributes, HttpSession session) {
+        if (idHoaDon == null || idChiTietGiay == null) {
+            redirectAttributes.addFlashAttribute("messageError", true);
+            redirectAttributes.addFlashAttribute("tbaoError", "Giá trị idHoaDon hoặc idChiTietGiay bị thiếu");
+            return "redirect:/manage/bill/online";
+        }
+
+        System.out.println("idHoaDon: " + idHoaDon);
+        System.out.println("idChiTietGiay: " + idChiTietGiay);
+        System.out.println("soLuong: " + soLuong);
+
+        List<GiayViewModel> listG = giayViewModelService.getAllVm();
+        model.addAttribute("listSanPham", listG);
+
+        ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idChiTietGiay);
+        if (soLuong > chiTietGiay.getSoLuong()) {
+            redirectAttributes.addFlashAttribute("messageError", true);
+            redirectAttributes.addFlashAttribute("tbaoError", "Số lượng trong kho không đủ");
+            return "redirect:/manage/bill/online" + idHoaDon;
+        }
+
+        HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
+        model.addAttribute("idHoaDon", idHoaDon);
+        List<HoaDonChiTiet> cart = (List<HoaDonChiTiet>) session.getAttribute("cart");
+
+        if (cart == null) {
+            cart = new ArrayList<>();
+            session.setAttribute("cart", cart);
+        }
+
+        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHoaDon, idChiTietGiay);
+        model.addAttribute("hdct", hoaDonChiTiet);
+        if (hoaDonChiTiet != null) {
+            hoaDonChiTiet.setDonGia(chiTietGiay.getGiaBan() * (hoaDonChiTiet.getSoLuong() + soLuong));
+            hoaDonChiTiet.setSoLuong(hoaDonChiTiet.getSoLuong() + soLuong);
+            hoaDon.setTongTienSanPham(chiTietGiay.getGiaBan() * soLuong);
+            hoaDonChiTiet.setTrangThai(1);
+            hoaDonChiTietService.add(hoaDonChiTiet);
+        } else {
+            HoaDonChiTiet hdct = new HoaDonChiTiet();
+            hdct.setChiTietGiay(chiTietGiay);
+            hdct.setHoaDon(hoaDon);
+            hdct.setDonGia(chiTietGiay.getGiaBan() * soLuong);
+            hdct.setSoLuong(soLuong);
+            hdct.setTrangThai(1);
+            hdct.setTgThem(new Date());
+            tongSanPham++;
+            hoaDon.setTongTienSanPham(chiTietGiay.getGiaBan() * soLuong);
+            session.setAttribute("tongSP", tongSanPham);
+            hoaDonChiTietService.add(hdct);
+            cart.add(hdct);
+        }
+
+        if (soLuong == chiTietGiay.getSoLuong()) {
+            chiTietGiay.setTrangThai(0);
+        }
+
+        chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - soLuong);
+        giayChiTietService.save(chiTietGiay);
+
+        hoaDon.setTongTienSanPham(hoaDon.getTongTienSanPham() + chiTietGiay.getGiaBan() * soLuong);
+        hoaDonService.save(hoaDon);
+
+        redirectAttributes.addFlashAttribute("messageSuccess", true);
+        redirectAttributes.addFlashAttribute("tb", "Thêm vào giỏ hàng thành công");
+        return "redirect:/manage/bill/online" + idHoaDon;
+    }
+
 
 
 

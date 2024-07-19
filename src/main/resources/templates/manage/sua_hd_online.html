@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Chỉnh sửa hóa đơn</title>
 </head>
 <body>
 <!DOCTYPE html>
@@ -74,6 +74,17 @@
         opacity: 0;
         visibility: hidden;
     }
+     .info-row {
+         display: flex;
+         align-items: center;
+         margin-bottom: 10px;
+     }
+
+    .info-label {
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
 </style>
 <body class="mini-sidebar">
 <div th:fragment="main">
@@ -105,7 +116,7 @@
             <ul class="nav user-menu">
 
                 <li class="nav-item dropdown has-arrow flag-nav " style="margin-right: 30px;">
-                    <a href="/manage/bill/online"
+                    <a th:href="@{'/manage/changehd/online/' + ${idHD}}"
                        style="height: 30px; width: 30px; background-color: #ff9f43; border-radius: 5px; margin-top: 13px;">
                         <i class="si si-refresh" style="color: #ffffff; margin-left: -10px;"></i>
                     </a>
@@ -241,189 +252,173 @@
     <!--CODE TỪ DƯỚI NÀY-->
 
 
-    <th:block th:each="bill: ${listHoaDonOnline}">
-        <div  th:id="${bill.idHD}" tabindex="-1" aria-labelledby="create"
-             aria-hidden="true">
+    <th:block th:if="${hoaDon != null}">
+        <div th:id="${hoaDon.idHD}" tabindex="-1" aria-labelledby="create" aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-centered" role="document" style="width: 1200px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Chỉnh sửa hóa đơn </h5>
+                        <h5 class="modal-title">Chỉnh sửa hóa đơn [[${hoaDon.idHD}]]</h5>
                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="tab-content">
-                        <div class="tab-pane show active">
-                            <div class="row">
-                                <div class="col-lg-7 col-sm-12 tabs_wrapper">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="table-top">
-                                                <form method="get" action="/manage/bill/search">
-                                                    <div class="search-set">
-                                                        <div class="search-path">
-                                                            <button class="btn btn-searchset" type="submit">
-                                                                <img src="/images/img/icons/search-white.svg" alt="img"></button>
-                                                        </div>
-                                                        <div>
+                    <div class="modal-body">
+                        <div class="tab-content">
+                            <div class="tab-pane show active">
+                                <div class="row">
+                                    <div class="col-lg-7 col-sm-12 tabs_wrapper">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="table-top">
+                                                    <form method="get" action="/manage/bill/search">
+                                                        <div class="search-set">
+                                                            <div class="search-path">
+                                                                <button class="btn btn-searchset" type="submit">
+                                                                    <img src="/images/img/icons/search-white.svg" alt="img">
+                                                                </button>
+                                                            </div>
                                                             <div>
-                                                                <input type="search" class="form-control form-control-sm" name="keyword" placeholder="Tìm kiếm..." aria-controls="DataTables_Table_0">
+                                                                <div>
+                                                                    <input type="search" class="form-control form-control-sm" name="keyword" placeholder="Tìm kiếm..." aria-controls="DataTables_Table_0">
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </form>
-
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="tabs_container">
-                                        <div class="row">
-                                            <div th:if="${nullHoaDon}"
-                                                 class="alert alert-success text-center">
-                                                <h3 th:text="${nullHoaDon}"></h3>
+                                        <div class="tabs_container">
+                                            <div class="row">
+                                                <div th:if="${nullHoaDon}" class="alert alert-success text-center">
+                                                    <h3 th:text="${nullHoaDon}"></h3>
+                                                </div>
                                             </div>
-                                        </div>
-
-                                        <table class="table table-bordered product-table">
-                                            <thead>
-                                            <tr>
-                                                <th>Hình Ảnh</th>
-                                                <th>Số Lượng</th>
-                                                <th>Tên Giày</th>
-                                                <th>Giá Bán</th>
-                                                <th>Màu Sắc</th>
-                                                <th>Hành Động</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <th:block th:each="product : ${listSanPham}">
+                                            <table class="table table-bordered product-table">
+                                                <thead>
                                                 <tr>
-                                                    <td>
-                                                        <img style="height: 90px;width: 90px"
-                                                             th:src="@{'/images/imgsProducts/'+ ${product.hinhAnh}}"
-                                                             alt="img">
-                                                    </td>
-                                                    <td>
-                                                        <h6>[[${product.soLuong}]]</h6>
-                                                    </td>
-                                                    <td>
-                                                        <h3 style="font-size: 12pt">
-                                                            [[${product.tenGiay}]]</h3>
-                                                    </td>
-                                                    <td>
-                                                        <h3 style="font-size: 12pt"
-                                                            th:text=" ${#numbers.formatDecimal(product.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h3>
-                                                    </td>
-                                                    <td>
-                                                        <h4 style="font-size: 12pt"
-                                                            th:text="${product.mauSac}"></h4>
-                                                    </td>
-                                                    <td>
-                                                        <a style="font-size: 11pt"
-                                                           th:href="@{'/manage/changehd/chon-size2/' + ${product.idGiay}+'/'+${product.mauSac} }"
-                                                           class="btn btn-outline-warning">Chọn</a>
-                                                    </td>
+                                                    <th>Hình Ảnh</th>
+                                                    <th>Số Lượng</th>
+                                                    <th>Tên Giày</th>
+                                                    <th>Giá Bán</th>
+                                                    <th>Màu Sắc</th>
+                                                    <th>Hành Động</th>
                                                 </tr>
-                                            </th:block>
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-5 col-sm-12 ">
-                                    <div class="order-list">
-                                        <div class="orderid">
-                                            <nav class="navbar navbar-expand-lg">
-                                                <a class="btn" th:href="@{/ban-hang/add-cart}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="25"
-                                                         height="25"
-                                                         fill="currentColor"
-                                                         class="bi bi-person-add" viewBox="0 0 16 16">
-                                                        <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
-                                                        <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
-                                                    </svg>
-                                                </a>
-
-
-                                            </nav>
+                                                </thead>
+                                                <tbody>
+                                                <th:block th:each="product : ${listSanPham}">
+                                                    <tr>
+                                                        <td>
+                                                            <img style="height: 90px;width: 90px" th:src="@{'/images/imgsProducts/'+ ${product.hinhAnh}}" alt="img">
+                                                        </td>
+                                                        <td>
+                                                            <h6>[[${product.soLuong}]]</h6>
+                                                        </td>
+                                                        <td>
+                                                            <h3 style="font-size: 12pt">[[${product.tenGiay}]]</h3>
+                                                        </td>
+                                                        <td>
+                                                            <h3 style="font-size: 12pt" th:text="${#numbers.formatDecimal(product.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h3>
+                                                        </td>
+                                                        <td>
+                                                            <h4 style="font-size: 12pt" th:text="${product.mauSac}"></h4>
+                                                        </td>
+                                                        <td>
+                                                            <a style="font-size: 11pt" th:href="@{'/manage/changehd/chon-size2/' + ${product.idGiay}+'/'+${product.mauSac} }" class="btn btn-outline-warning">Chọn</a>
+                                                        </td>
+                                                    </tr>
+                                                </th:block>
+                                                </tbody>
+                                            </table>
                                         </div>
-                                    </div>
 
+
+                                    </div>
+                                    <div class="col-lg-5 col-sm-12 ">
+                                        <div class="info-row">
+                                            <span class="info-label">Tổng số sản phẩm:</span>
+                                            <span th:text="${tongSP+ ' Sản phẩm'}"></span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-label">Tổng tiền hóa đơn:</span>
+                                            <span th:text="${tongTien+' VNĐ'}"></span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-label">Trạng thái hóa đơn:</span>
+                                            <td th:if="${trangThai == 0 }">Chờ thanh toán</td>
+                                            <td th:if="${trangThai == 1 }">Chờ xác nhận</td>
+                                            <td th:if="${trangThai == 2 }">Chờ lấy hàng</td>
+                                            <td th:if="${trangThai == 3 }">Chờ giao hàng</td>
+
+                                            <td th:if="${trangThai == 4 }">Giao thành công</td>
+                                            <td th:if="${trangThai == 5 }">Đã Hủy</td>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
+                            <div class="tab-pane" id="solid-rounded-justified-tab2"></div>
                         </div>
-                        <div class="tab-pane" id="solid-rounded-justified-tab2">
-
-                        </div>
-                    </div>
-
-
-                    <div class="modal-body">
-
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>Sản phẩm</th>
-                                <th>Phân loại</th>
-                                <th>Số lượng</th>
-                                <th>Thành tiền</th>
-                                <th>Hoạt động</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <th:block th:each="x: ${bill.hoaDonChiTiets}">
-                                <tr th:if="${x.chiTietGiay.trangThai == 1}" id="productId" th:value="${x.chiTietGiay.idCTG}">
-                                    <td style="width: 400px;" class="product__cart__item">
-                                        <div class="product__cart__item__pic">
-                                            <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' + ${x.chiTietGiay.mauSac.idMau}}">
-                                                <img style="width:90px; height:90px;" th:src="@{'/images/imgsProducts/' + ${x.chiTietGiay.hinhAnh.url1}}">
-                                            </a>
-                                        </div>
-                                        <div class="product__cart__item__text">
-                                            <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' + ${x.chiTietGiay.mauSac.idMau}}">
-                                                <h6 style="margin-top: -22px;" th:text="${x.chiTietGiay.giay.tenGiay}"></h6>
-                                            </a>
-                                            <h5 class="cart__price" th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
-                                        </div>
-                                    </td>
-                                    <td style="width: 175px;" class="quantity__item">
-                                        <div style="margin-top: -20px; display: block;">
-                                            <span id="showButton" style="font-weight: normal; font-size: medium;">Phân loại :</span>
-                                            <a th:href="@{'/buyer/cart/option/' + ${x.chiTietGiay.giay.idGiay} + '/' + ${x.chiTietGiay.mauSac.idMau} + '/' + ${x.chiTietGiay.idCTG}}">
-                                                <img style="height: 10px; width: 10px;" src="/images/img/icon/dropdown.png" alt="">
-                                            </a>
-                                        </div>
-                                        <div style="padding-right: 20px;">
-                                            <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);" th:text="'Colors : ' + ${x.chiTietGiay.mauSac.tenMau}"></span>
-                                            <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);" th:text="'Size : ' + ${x.chiTietGiay.size.soSize}"></span>
-                                        </div>
-                                    </td>
-                                    <td style="width: 175px;" class="quantity__item">
-                                        <div class="quantity">
-                                            <input class="quantityInput" oninput="validateQuantity(this)" th:value="${x.soLuong}" style="width: 50px; text-align: center; border: 1px solid black;" type="number" name="quantities">
-                                        </div>
-                                    </td>
-                                    <td style="width: 140px;" class="cart__price totalAmount" th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
-                                    <!--                                    <td>-->
-                                    <!--                                        <form th:action="@{/manage/bill/deleteChiTietGiay/{idCTG}/{idHD}(idCTG=${x.chiTietGiay.idCTG}, idHD=${bill.idHD})}" method="post">-->
-                                    <!--                                            <button type="submit" class="btn btn-danger btn-sm" >Xóa</button>-->
-                                    <!--                                        </form>-->
-                                    <!--                                    </td>-->
-                                    <td>
-                                        <form id="deleteForm" th:action="@{/manage/bill/deleteChiTietGiay/{idCTG}/{idHD}(idCTG=${x.chiTietGiay.idCTG}, idHD=${bill.idHD})}" method="post">
-                                            <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete()">Xóa</button>
-                                        </form>
-                                    </td>
-
+                        <div class="modal-body">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Phân loại</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                    <th>Hoạt động</th>
                                 </tr>
-                            </th:block>
-
-                        </table>
+                                </thead>
+                                <tbody>
+                                <th:block th:each="x: ${hoaDon.hoaDonChiTiets}">
+                                    <tr th:if="${x.chiTietGiay.trangThai == 1}" id="productId" th:value="${x.chiTietGiay.idCTG}">
+                                        <td style="width: 400px;" class="product__cart__item">
+                                            <div class="product__cart__item__pic">
+                                                <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' + ${x.chiTietGiay.mauSac.idMau}}">
+                                                    <img style="width:90px; height:90px;" th:src="@{'/images/imgsProducts/' + ${x.chiTietGiay.hinhAnh.url1}}">
+                                                </a>
+                                            </div>
+                                            <div class="product__cart__item__text">
+                                                <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' + ${x.chiTietGiay.mauSac.idMau}}">
+                                                    <h6 style="margin-top: -22px;" th:text="${x.chiTietGiay.giay.tenGiay}"></h6>
+                                                </a>
+                                                <h5 class="cart__price" th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
+                                            </div>
+                                        </td>
+                                        <td style="width: 175px;" class="quantity__item">
+                                            <div style="margin-top: -20px; display: block;">
+                                                <span id="showButton" style="font-weight: normal; font-size: medium;">Phân loại :</span>
+                                                <a th:href="@{'/buyer/cart/option/' + ${x.chiTietGiay.giay.idGiay} + '/' + ${x.chiTietGiay.mauSac.idMau} + '/' + ${x.chiTietGiay.idCTG}}">
+                                                    <img style="height: 10px; width: 10px;" src="/images/img/icon/dropdown.png" alt="">
+                                                </a>
+                                            </div>
+                                            <div style="padding-right: 20px;">
+                                                <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);" th:text="'Colors : ' + ${x.chiTietGiay.mauSac.tenMau}"></span>
+                                                <span style="font-size: 10pt; font-weight: 500; color: rgba(0,0,0,.54);" th:text="'Size : ' + ${x.chiTietGiay.size.soSize}"></span>
+                                            </div>
+                                        </td>
+                                        <td style="width: 175px;" class="quantity__item">
+                                            <div class="quantity">
+                                                <input class="quantityInput" oninput="validateQuantity(this)" th:value="${x.soLuong}" style="width: 50px; text-align: center; border: 1px solid black;" type="number" name="quantities">
+                                            </div>
+                                        </td>
+                                        <td style="width: 140px;" class="cart__price totalAmount" th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+                                        <td>
+                                            <form id="deleteForm" th:action="@{/manage/bill/deleteChiTietGiay/{idCTG}/{idHD}(idCTG=${x.chiTietGiay.idCTG}, idHD=${hoaDon.idHD})}" method="post">
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete()">Xóa</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </th:block>
+
 
     <div th:if="${showModal1}" class="modal fade" id="chonSize" tabindex="-1" aria-labelledby="exampleModalLabel"
          aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -492,166 +487,165 @@
 
 
 
-<!--    <div th:replace="manage/main :: main"></div>-->
+    <!--    <div th:replace="manage/main :: main"></div>-->
 
 
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script src="/js/feather.min.js"></script>
+    <script src="/js/feather.min.js"></script>
 
-<script src="/js/jquery.slimscroll.min.js"></script>
+    <script src="/js/jquery.slimscroll.min.js"></script>
 
-<script src="/js/jquery.dataTables.min.js"></script>
-<script src="/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/js/jquery.dataTables.min.js"></script>
+    <script src="/js/dataTables.bootstrap4.min.js"></script>
 
-<script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
 
-<script src="/plugins/select2/js/select2.min.js"></script>
+    <script src="/plugins/select2/js/select2.min.js"></script>
 
-<script src="/plugins/sweetalert/sweetalert2.all.min.js"></script>
-<script src="/plugins/sweetalert/sweetalerts.min.js"></script>
+    <script src="/plugins/sweetalert/sweetalert2.all.min.js"></script>
+    <script src="/plugins/sweetalert/sweetalerts.min.js"></script>
 
-<script src="/js/script.js"></script>
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    document.addEventListener('DOMContentLoaded', function() {
-        var huyHoaDonForm = document.getElementById('huyHoaDonForm');
-        huyHoaDonForm.addEventListener('submit', function(event) {
-            var lyDoHuyInput = document.getElementById('lyDoHuy');
-            var invalidFeedback = document.querySelector('#huyHoaDonForm .invalid-feedback');
-            if (lyDoHuyInput.value.trim() === '') {
-                event.preventDefault(); // Ngăn form submit nếu ly do huy không được nhập
-                invalidFeedback.style.display = 'block';
-            } else {
-                invalidFeedback.style.display = 'none';
-            }
-        });
-    });
-    /*]]>*/
-</script>
-<script>
-    // Lấy tất cả các container của form
-    const formContainers = document.querySelectorAll('.form-container');
-
-    // Duyệt qua từng form và gán sự kiện cho input
-    formContainers.forEach(function (container) {
-        const maHDElement = container.querySelector('.maHD');
-        const inputMaHDElement = container.querySelector('.inputMaHD');
-        const btnSubmitElement = container.querySelector('.btn-submit');
-
-        inputMaHDElement.addEventListener('input', function () {
-            if (inputMaHDElement.value === maHDElement.innerText) {
-                btnSubmitElement.removeAttribute('disabled');
-            } else {
-                btnSubmitElement.setAttribute('disabled', 'true');
-                alert('Mã hóa đơn không đúng!');
-
-            }
-        });
-    });
-</script>
-<!--Confirm thong bao pay end-->
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.querySelectorAll(".btn-cancel").forEach(function (btn) {
-            btn.addEventListener("click", function (event) {
-                if (btn.getAttribute("data-bs-dismiss") !== "modal") {
-                    setTimeout(function () {
-                        window.location.href = btn.getAttribute("href");
-                    }, 500);  // Thời gian chờ để modal đóng hoàn toàn
-                    event.preventDefault();
-                }
-            });
-        });
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-        $('#editBillDelivery').modal('show');
-    });
-    $(document).ready(function () {
-        $('#messBillDeliveryThanhCong').modal('show');
-    });
-    $(document).ready(function () {
-        $('#editBillRefundDelivery').modal('show');
-    });
-    $(document).ready(function () {
-        $('#hoanTienThanhCong').modal('show');
-    });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const alert = document.querySelector('.custom-alert');
-        if (alert) {
-            setTimeout(() => {
-                alert.classList.add('hide');
-            }, 5000); // 5 giây
-        }
-    });
-</script>
-<script>
-    function confirmDelete() {
-        Swal.fire({
-            title: 'Bạn có chắc chắn muốn xóa sản phẩm này không?',
-            text: "Bạn sẽ không thể khôi phục lại điều này!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Có, xóa nó!',
-            cancelButtonText: 'Hủy bỏ'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                deleteProduct();
-            }
-        });
-    }
-
-    function deleteProduct() {
-        var form = document.getElementById('deleteForm');
-        var url = form.action;
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.text();
+    <script src="/js/script.js"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        document.addEventListener('DOMContentLoaded', function() {
+            var huyHoaDonForm = document.getElementById('huyHoaDonForm');
+            huyHoaDonForm.addEventListener('submit', function(event) {
+                var lyDoHuyInput = document.getElementById('lyDoHuy');
+                var invalidFeedback = document.querySelector('#huyHoaDonForm .invalid-feedback');
+                if (lyDoHuyInput.value.trim() === '') {
+                    event.preventDefault(); // Ngăn form submit nếu ly do huy không được nhập
+                    invalidFeedback.style.display = 'block';
                 } else {
-                    throw new Error('Network response was not ok.');
+                    invalidFeedback.style.display = 'none';
                 }
-            })
-            .then(data => {
-                // Xử lý khi xóa thành công, ví dụ xóa dòng trong bảng
-                Swal.fire(
-                    'Đã xóa!',
-                    data,
-                    'success'
-                ).then(() => {
-                    form.closest('tr').remove();
-                });
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                Swal.fire(
-                    'Lỗi!',
-                    'Có lỗi xảy ra trong quá trình xoá sản phẩm!',
-                    'error'
-                );
             });
-    }
-</script>
+        });
+        /*]]>*/
+    </script>
+    <script>
+        // Lấy tất cả các container của form
+        const formContainers = document.querySelectorAll('.form-container');
 
-<script>
-    $(document).ready(function () {
-        $('#chonSize').modal('show');
-    });
-</script>
+        // Duyệt qua từng form và gán sự kiện cho input
+        formContainers.forEach(function (container) {
+            const maHDElement = container.querySelector('.maHD');
+            const inputMaHDElement = container.querySelector('.inputMaHD');
+            const btnSubmitElement = container.querySelector('.btn-submit');
+
+            inputMaHDElement.addEventListener('input', function () {
+                if (inputMaHDElement.value === maHDElement.innerText) {
+                    btnSubmitElement.removeAttribute('disabled');
+                } else {
+                    btnSubmitElement.setAttribute('disabled', 'true');
+                    alert('Mã hóa đơn không đúng!');
+
+                }
+            });
+        });
+    </script>
+    <!--Confirm thong bao pay end-->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".btn-cancel").forEach(function (btn) {
+                btn.addEventListener("click", function (event) {
+                    if (btn.getAttribute("data-bs-dismiss") !== "modal") {
+                        setTimeout(function () {
+                            window.location.href = btn.getAttribute("href");
+                        }, 500);  // Thời gian chờ để modal đóng hoàn toàn
+                        event.preventDefault();
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#editBillDelivery').modal('show');
+        });
+        $(document).ready(function () {
+            $('#messBillDeliveryThanhCong').modal('show');
+        });
+        $(document).ready(function () {
+            $('#editBillRefundDelivery').modal('show');
+        });
+        $(document).ready(function () {
+            $('#hoanTienThanhCong').modal('show');
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const alert = document.querySelector('.custom-alert');
+            if (alert) {
+                setTimeout(() => {
+                    alert.classList.add('hide');
+                }, 5000); // 5 giây
+            }
+        });
+    </script>
+    <script>
+        function confirmDelete() {
+            Swal.fire({
+                title: 'Bạn có chắc chắn muốn xóa sản phẩm này không?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có, xóa nó!',
+                cancelButtonText: 'Hủy bỏ'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    deleteProduct();
+                }
+            });
+        }
+
+        function deleteProduct() {
+            var form = document.getElementById('deleteForm');
+            var url = form.action;
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Network response was not ok.');
+                    }
+                })
+                .then(data => {
+                    // Xử lý khi xóa thành công, ví dụ xóa dòng trong bảng
+                    Swal.fire(
+                        'Đã xóa!',
+                        data,
+                        'success'
+                    ).then(() => {
+                        form.closest('tr').remove();
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire(
+                        'Lỗi!',
+                        'Có lỗi xảy ra trong quá trình xoá sản phẩm!',
+                        'error'
+                    );
+                });
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#chonSize').modal('show');
+        });
+    </script>
 
 
 
