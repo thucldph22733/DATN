@@ -438,11 +438,26 @@ public class BanHangController {
         hoaDon.setTongSP(tongSanPham);
         hoaDon.setHinhThucThanhToan(0);
 
-        KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
-        if(khuyenMai != null){
-            khuyenMai.setSoLuong(khuyenMai.getSoLuong() - 1);
-            khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() + 1);
-            khuyenMaiRepository.saveAndFlush(khuyenMai);
+//        KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
+//        if(khuyenMai != null){
+//            khuyenMai.setSoLuong(khuyenMai.getSoLuong() - 1);
+//            khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() + 1);
+//            khuyenMaiRepository.saveAndFlush(khuyenMai);
+//        }
+
+        if(hoaDon.getKhuyenMai() != null){   // nếu hoá đơn có dùng khuyến mãi
+            KhuyenMai kmcsdl = khuyenMaiRepository.findById(hoaDon.getKhuyenMai().getIdKM()).get();
+            int slmax = kmcsdl.getSoLuong();
+            int sl = kmcsdl.getSoLuongDaDung();
+            if(sl == slmax){    // nếu số lượng khuyến mãi đã hết thì xoá mã khuyến mãi ra khỏi hoá đơn và trả về trang thanh toán
+                hoaDon.setKhuyenMai(null);
+                hoaDonRepository.saveAndFlush(hoaDon);
+//                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
+                return "redireact:/buyer/cart";
+            } else if (sl < slmax) {    // nếu số lượng khuyến mãi nhỏ hơn sl đã set thì tăng sl lên 1
+                kmcsdl.setSoLuongDaDung(sl + 1);
+                khuyenMaiRepository.saveAndFlush(kmcsdl);
+            }
         }
         hoaDonService.add(hoaDon);
 
