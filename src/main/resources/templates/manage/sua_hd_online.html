@@ -116,7 +116,7 @@
             <ul class="nav user-menu">
 
                 <li class="nav-item dropdown has-arrow flag-nav " style="margin-right: 30px;">
-                    <a th:href="@{'/manage/changehd/online/' + ${idHD}}"
+                    <a th:href="@{'/manage/changehd/online/' + ${idHoaDon}}"
                        style="height: 30px; width: 30px; background-color: #ff9f43; border-radius: 5px; margin-top: 13px;">
                         <i class="si si-refresh" style="color: #ffffff; margin-left: -10px;"></i>
                     </a>
@@ -420,6 +420,8 @@
     </th:block>
 
 
+
+
     <div th:if="${showModal1}" class="modal fade" id="chonSize" tabindex="-1" aria-labelledby="exampleModalLabel"
          aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 
@@ -487,7 +489,7 @@
 
 
 
-    <!--    <div th:replace="manage/main :: main"></div>-->
+<!--        <div th:replace="manage/main :: main"></div>-->
 
 
     <script src="/js/jquery-3.6.0.min.js"></script>
@@ -546,6 +548,26 @@
             });
         });
     </script>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function displaySizeQuantity(radioInput) {
+            var quantity = radioInput.getAttribute('data-quantity');
+            var size = radioInput.getAttribute('data-size');
+            document.getElementById('sizeQuantity').textContent = 'Còn hàng' + ': ' + quantity + ' ' + 'đôi';
+        }
+    </script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function displaySizeQuantity(radioInput) {
+            var quantity = radioInput.getAttribute('data-quantity');
+            var size = radioInput.getAttribute('data-size');
+            document.getElementById('sizeQuantity').textContent = 'Còn hàng' + ': ' + quantity + ' ' + 'đôi';
+        }
+
+
+    </script>
+
     <!--Confirm thong bao pay end-->
     <script>
         document.addEventListener("DOMContentLoaded", function () {

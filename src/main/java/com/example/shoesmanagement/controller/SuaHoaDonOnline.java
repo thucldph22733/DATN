@@ -255,11 +255,7 @@ public class SuaHoaDonOnline {
         UUID idHoaDon = (UUID) session.getAttribute("idHoaDon");
 
         // Kiểm tra nếu idHoaDon bị null và xử lý
-        if (idHoaDon == null) {
-            redirectAttributes.addFlashAttribute("messageError", true);
-            redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
-            return "redirect:/manage/bill/online";
-        }
+
 
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
@@ -270,6 +266,7 @@ public class SuaHoaDonOnline {
         model.addAttribute("gioHang", hoaDonChiTietService.findByIdHoaDon(idHoaDon));
         model.addAttribute("giay", giay);
         model.addAttribute("listChiTietGiay", sizeList);
+        model.addAttribute("idHoaDon", idHoaDon);
         model.addAttribute("showModal1", true);
         model.addAttribute("tongTienSanPham", tongTienSanPham);
         model.addAttribute("tongTien", tongTien);
@@ -314,35 +311,28 @@ public class SuaHoaDonOnline {
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHoaDon, idChiTietGiay);
         model.addAttribute("hdct", hoaDonChiTiet);
         if (hoaDonChiTiet != null) {
-            hoaDonChiTiet.setDonGia(chiTietGiay.getGiaBan() * (hoaDonChiTiet.getSoLuong() + soLuong));
+            // Giữ nguyên đơn giá, chỉ cập nhật số lượng
             hoaDonChiTiet.setSoLuong(hoaDonChiTiet.getSoLuong() + soLuong);
-            hoaDon.setTongTienSanPham(chiTietGiay.getGiaBan() * soLuong);
             hoaDonChiTiet.setTrangThai(1);
             hoaDonChiTietService.add(hoaDonChiTiet);
         } else {
             HoaDonChiTiet hdct = new HoaDonChiTiet();
             hdct.setChiTietGiay(chiTietGiay);
             hdct.setHoaDon(hoaDon);
-            hdct.setDonGia(chiTietGiay.getGiaBan() * soLuong);
+            hdct.setDonGia(chiTietGiay.getGiaBan());
             hdct.setSoLuong(soLuong);
             hdct.setTrangThai(1);
             hdct.setTgThem(new Date());
             tongSanPham++;
-            hoaDon.setTongTienSanPham(chiTietGiay.getGiaBan() * soLuong);
             session.setAttribute("tongSP", tongSanPham);
             hoaDonChiTietService.add(hdct);
             cart.add(hdct);
         }
 
-        if (soLuong == chiTietGiay.getSoLuong()) {
-            chiTietGiay.setTrangThai(0);
-        }
 
-        chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - soLuong);
-        giayChiTietService.save(chiTietGiay);
 
         hoaDon.setTongTienSanPham(hoaDon.getTongTienSanPham() + chiTietGiay.getGiaBan() * soLuong);
-
+        giayChiTietService.save(chiTietGiay);
         hoaDonService.save(hoaDon);
         hoaDonService.updateHoaDon(hoaDon);
 
