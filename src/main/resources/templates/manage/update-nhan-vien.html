@@ -108,12 +108,6 @@
                             </div>
                             <div class="col-lg-6 col-sm-6 col-12">
                                 <div class="form-group">
-                                    <label>Mật Khẩu <span style="color: red;">*</span></label>
-                                    <input disabled type="password" th:field="*{matKhau}">
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-sm-6 col-12">
-                                <div class="form-group">
                                     <label>Chức Vụ <span style="color: red;">*</span></label>
                                     <select class="select" th:field="*{chucVu}" id="loc" name="loc">
                                         <option th:each="loc : ${chucVu}" th:value="${loc.idCV}"
