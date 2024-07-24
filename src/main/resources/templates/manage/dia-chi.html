@@ -154,12 +154,6 @@
                             <table class="table  datanew" id="data-table">
                                 <thead>
                                 <tr>
-                                    <th>
-                                        <label class="checkboxs">
-                                            <input type="checkbox" id="select-all">
-                                            <span class="checkmarks"></span>
-                                        </label>
-                                    </th>
                                     <th>Mã Địa Chỉ</th>
                                     <th>Tên Địa Chỉ</th>
                                     <th>Tên Người Nhận</th>
@@ -180,12 +174,6 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="items : ${diaChi}">
-                                    <td>
-                                        <label class="checkboxs">
-                                            <input type="checkbox">
-                                            <span class="checkmarks"></span>
-                                        </label>
-                                    </td>
                                     <td th:text="${items.maDC}"></td>
                                     <td th:text="${items.tenDC}"></td>
                                     <td th:text="${items.tenNguoiNhan}"></td>

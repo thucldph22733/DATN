@@ -117,56 +117,7 @@
                         </form>
                     </div>
                     <br>
-                    <div class="form-hidden-2" style="display: none">
-                        <form action="/manage/chucVu/import" method="post" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <label> Upload Excel File</label>
-                                <input type="file" name="file" onchange="displaySelectedFileName()"/>
-                            </div>
-                            <button type="submit" class="btn btn-submit me-2">Submit</button>
-                        </form>
-                    </div>
-                    <br>
-                    <div class="table-top">
-                        <div class="search-set">
-                            <div class="search-path">
-                                <a class="btn btn-filter" id="filter_search">
-                                    <img src="/images/img/icons/filter.svg" alt="img">
-                                    <span><img src="/images/img/icons/closes.svg" alt="img"></span>
-                                </a>
-                            </div>
-                            <div class="search-input">
-                                <a class="btn btn-searchset"><img src="/images/img/icons/search-white.svg"
-                                                                  alt="img"></a>
-                            </div>
-                        </div>
-                        <div class="wordset">
-                            <ul>
-                                <li>
-                                    <a class="btn btn-filter" id="import-excel" data-bs-toggle="tooltip"
-                                       data-bs-placement="top" title="Import Excel">
-                                        <img src="/images/img/icons/upload.svg" alt="img">
-                                        <span><img src="/images/img/icons/closes.svg" alt="img"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/manage/chucVu/export/pdf}" data-bs-toggle="tooltip"
-                                       data-bs-placement="top" title="pdf"><img
-                                            src="/images/img/icons/pdf.svg" alt="img"></a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/manage/chucVu/export/excel}" data-bs-toggle="tooltip"
-                                       data-bs-placement="top" title="excel"><img
-                                            src="/images/img/icons/excel.svg" alt="img"></a>
-                                </li>
-                                <li>
-                                    <a id="printButton" data-bs-toggle="tooltip" data-bs-placement="top"
-                                       title="print"><img
-                                            src="/images/img/icons/printer.svg" alt="img"></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+
 
                     <form method="get" th:action="@{/manage/chucVu/filter}">
                         <div class="card" id="filter_inputs">
@@ -206,12 +157,6 @@
                         <table class="table  datanew" id="data-table">
                             <thead>
                             <tr>
-                                <th>
-                                    <label class="checkboxs">
-                                        <input type="checkbox" id="select-all">
-                                        <span class="checkmarks"></span>
-                                    </label>
-                                </th>
                                 <th>Mã Chức Vụ</th>
                                 <th>Tên Chức Vụ</th>
                                 <th>Trạng Thái</th>
@@ -222,12 +167,6 @@
                             </thead>
                             <tbody>
                             <tr th:each="items : ${chucVu}">
-                                <td>
-                                    <label class="checkboxs">
-                                        <input type="checkbox">
-                                        <span class="checkmarks"></span>
-                                    </label>
-                                </td>
                                 <td th:text="${items.maCV}"></td>
                                 <td th:text="${items.tenCV}"></td>
                                 <td>

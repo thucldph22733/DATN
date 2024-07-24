@@ -126,25 +126,24 @@ public class UserController {
 
     @GetMapping("/addresses")
     private String getAddressAccount(Model model) {
-
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         if (khachHang != null) {
             KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
             model.addAttribute("khachHang1", khachHang1);
-        } else {
         }
         UserForm(model, khachHang);
 
         List<DiaChiKH> diaChiKHDefaultList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, true, 1);
         List<DiaChiKH> diaChiKHList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, false, 1);
 
-        if (diaChiKHDefaultList.size() == 0) {
+        if (diaChiKHDefaultList.isEmpty()) {
             model.addAttribute("diaChiShowNull", true);
+            model.addAttribute("isDefaultAddressAvailable", false); // Người dùng chưa có địa chỉ mặc định
         } else {
             model.addAttribute("diaChiShow", true);
             model.addAttribute("addressKHDefault", diaChiKHDefaultList.get(0));
             model.addAttribute("listCartDetail", diaChiKHList);
-
+            model.addAttribute("isDefaultAddressAvailable", true); // Người dùng đã có địa chỉ mặc định
         }
         model.addAttribute("pageAddressesUser", true);
         model.addAttribute("editAddresses", true);
@@ -153,14 +152,15 @@ public class UserController {
         return "online/user";
     }
 
+
     @PostMapping("/addresses/add")
-    private String addnewAddress(Model model, @RequestParam(name = "defaultSelected", defaultValue = "false") boolean defaultSelected) {
+    private String addNewAddress(Model model, @RequestParam(name = "defaultSelected", defaultValue = "false") boolean defaultSelected) {
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         if (khachHang != null) {
             KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
             model.addAttribute("khachHang1", khachHang1);
-        } else {
         }
+
         String nameAddress = request.getParameter("nameAddress");
         String fullName = request.getParameter("fullName");
         String phoneAddress = request.getParameter("phoneAddress");
@@ -184,12 +184,24 @@ public class UserController {
         diaChiKH.setTenNguoiNhan(fullName);
         diaChiKH.setXaPhuong(ward);
         diaChiKH.setTgThem(new Date());
+
+        // Kiểm tra nếu người dùng đã có địa chỉ mặc định
+        List<DiaChiKH> diaChiKHDefaultList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, true, 1);
+        if (!diaChiKHDefaultList.isEmpty()) {
+            // Cập nhật địa chỉ mặc định cũ thành không mặc định
+            DiaChiKH oldDefaultAddress = diaChiKHDefaultList.get(0);
+            oldDefaultAddress.setLoai(false);
+            diaChiKHService.save(oldDefaultAddress);
+        }
+
+        // Đặt địa chỉ mới làm mặc định nếu cần
         diaChiKH.setLoai(defaultSelected);
 
         diaChiKHService.save(diaChiKH);
 
         return "redirect:/buyer/addresses";
     }
+
 
     @GetMapping("/addresses/viewEdit/{id}")
     public String viewEditAddresses(@PathVariable UUID id, Model model, @ModelAttribute("userInput") DiaChiKH userInputDC) {
