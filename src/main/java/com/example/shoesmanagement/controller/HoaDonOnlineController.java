@@ -91,7 +91,6 @@ public class HoaDonOnlineController {
             return "redirect:/login";
         }
         if (listG != null && !listG.isEmpty()) {
-            System.out.println("Danh sách sản phẩm không rỗng, số lượng: " + listG.size());
             for (GiayViewModel product : listG) {
                 System.out.println(product);
             }
@@ -199,8 +198,15 @@ public class HoaDonOnlineController {
                 khuyenMaiRepository.saveAndFlush(kmcsdl);
             }
         }
+        List<HoaDonChiTiet> listHDCT = hoaDon.getHoaDonChiTiets();
+        for (HoaDonChiTiet hdct : listHDCT) {
+            ChiTietGiay chiTietGiay = hdct.getChiTietGiay();
+            chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + hdct.getSoLuong());
+            giayChiTietService.save(chiTietGiay);
+        }
 
         hoaDonService.save(hoaDon);
+
 
         showData(model);
         showTab3(model);
@@ -260,7 +266,7 @@ public class HoaDonOnlineController {
         if (listAllHoaDonOnline != null) {
             for (HoaDon x : listAllHoaDonOnline) {
                 if (x.getTrangThai() == 6 || x.getTrangThai() == 7) {
-                    System.out.println("abc");
+
                 } else {
                     tongTienHoaDon += x.getTongTien();
                 }
@@ -270,7 +276,7 @@ public class HoaDonOnlineController {
         if (listAllHoaDonOnline != null) {
             for (HoaDon x : listAllHoaDonOnline) {
                 if (x.getTrangThai() == 6 || x.getTrangThai() == 7) {
-                    System.out.println("abc");
+
                 } else {
                     if (x.getHinhThucThanhToan() == 1) {
                         soLuongHoaDonBanking++;
