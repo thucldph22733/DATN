@@ -125,25 +125,24 @@ public class UserController {
 
 
     @GetMapping("/addresses")
-    private String getAddressAccount(Model model) {
+    public String getAddressAccount(Model model) {
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         if (khachHang != null) {
             KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
             model.addAttribute("khachHang1", khachHang1);
         }
-        UserForm(model, khachHang);
 
         List<DiaChiKH> diaChiKHDefaultList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, true, 1);
         List<DiaChiKH> diaChiKHList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, false, 1);
 
         if (diaChiKHDefaultList.isEmpty()) {
             model.addAttribute("diaChiShowNull", true);
-            model.addAttribute("isDefaultAddressAvailable", false); // Người dùng chưa có địa chỉ mặc định
+            model.addAttribute("diaChiShow", false);
         } else {
             model.addAttribute("diaChiShow", true);
             model.addAttribute("addressKHDefault", diaChiKHDefaultList.get(0));
             model.addAttribute("listCartDetail", diaChiKHList);
-            model.addAttribute("isDefaultAddressAvailable", true); // Người dùng đã có địa chỉ mặc định
+            model.addAttribute("diaChiShowNull", false);
         }
         model.addAttribute("pageAddressesUser", true);
         model.addAttribute("editAddresses", true);
@@ -151,6 +150,7 @@ public class UserController {
 
         return "online/user";
     }
+
 
 
     @PostMapping("/addresses/add")
@@ -201,6 +201,7 @@ public class UserController {
 
         return "redirect:/buyer/addresses";
     }
+
 
 
     @GetMapping("/addresses/viewEdit/{id}")
