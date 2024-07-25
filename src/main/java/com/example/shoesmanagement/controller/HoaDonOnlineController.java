@@ -202,6 +202,9 @@ public class HoaDonOnlineController {
         for (HoaDonChiTiet hdct : listHDCT) {
             ChiTietGiay chiTietGiay = hdct.getChiTietGiay();
             chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + hdct.getSoLuong());
+            if (chiTietGiay.getSoLuong() > 0) {
+                chiTietGiay.setTrangThai(1);
+            }
             giayChiTietService.save(chiTietGiay);
         }
 
