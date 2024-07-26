@@ -7,15 +7,14 @@ import com.example.shoesmanagement.viewModel.GiayViewModel;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RequestMapping("/manage/changehd/")
 @Controller
@@ -91,6 +90,8 @@ public class SuaHoaDonOnline {
     @Autowired
     private HttpSession httpSession;
 
+
+    private double dieuKienKhuyenMai = 0;
     @GetMapping("/online/{idHD}")
     private String manageBillOnline(@PathVariable UUID idHD, Model model, HttpSession session) {
         // Kiểm tra quyền đăng nhập
@@ -309,7 +310,6 @@ public class SuaHoaDonOnline {
         }
 
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHoaDon, idChiTietGiay);
-        model.addAttribute("hdct", hoaDonChiTiet);
         if (hoaDonChiTiet != null) {
             // Giữ nguyên đơn giá, chỉ cập nhật số lượng
             hoaDonChiTiet.setSoLuong(hoaDonChiTiet.getSoLuong() + soLuong);
@@ -329,10 +329,11 @@ public class SuaHoaDonOnline {
             cart.add(hdct);
         }
 
-
+        // Cập nhật số lượng tồn kho
+        chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - soLuong);
+        giayChiTietService.save(chiTietGiay);
 
         hoaDon.setTongTienSanPham(hoaDon.getTongTienSanPham() + chiTietGiay.getGiaBan() * soLuong);
-        giayChiTietService.save(chiTietGiay);
         hoaDonService.save(hoaDon);
         hoaDonService.updateHoaDon(hoaDon);
 
@@ -340,4 +341,94 @@ public class SuaHoaDonOnline {
         redirectAttributes.addFlashAttribute("tb", "Thêm vào giỏ hàng thành công");
         return "redirect:/manage/changehd/online/" + idHoaDon;
     }
+
+
+    @PostMapping("/deleteChiTietGiay/{idCTG}/{idHD}")
+    @ResponseBody
+    public ResponseEntity<String> deleteChiTietGiay(@PathVariable UUID idCTG, @PathVariable UUID idHD, Model model) {
+        try {
+            System.out.println("Received idCTG: " + idCTG);
+            System.out.println("Received idHD: " + idHD);
+
+            HoaDon hoaDon = hoaDonService.getOne(idHD);
+            ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idCTG);
+
+            // Lấy thông tin chi tiết sản phẩm trong hóa đơn
+            HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHD, idCTG);
+            if (hoaDonChiTiet != null) {
+                int soLuong = hoaDonChiTiet.getSoLuong();
+
+                // Tăng số lượng sản phẩm trong kho
+                chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + soLuong);
+                giayChiTietService.save(chiTietGiay);
+
+                // Xóa sản phẩm khỏi hóa đơn
+                hoaDonChiTietRepository.deleteHoaDonChiTietByChiTietGiay(chiTietGiay.getIdCTG());
+
+                hoaDonService.updateHoaDon(hoaDon);
+                model.addAttribute("idCTG", idCTG);
+            } else {
+                return ResponseEntity.status(404).body("Không tìm thấy chi tiết hóa đơn!");
+            }
+
+            return ResponseEntity.ok("Sản phẩm đã được xoá khỏi giỏ hàng thành công!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Có lỗi xảy ra trong quá trình xoá sản phẩm!");
+        }
+    }
+
+
+    @PostMapping("/updateQuantity")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> updateQuantity(@RequestParam("soLuong") int soLuong, @RequestParam UUID idCTG, @PathVariable UUID idHD, @RequestParam int quantity) {
+        System.out.println("Received idCTG: " + idCTG + ", quantity: " + quantity);
+
+        // Lấy thông tin hóa đơn và chi tiết hóa đơn
+        HoaDon hoaDon = hoaDonService.getOne(idHD);
+        ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idCTG);
+        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHD, idCTG);
+
+        Map<String, Object> response = new HashMap<>();
+
+        if (chiTietGiay == null || hoaDonChiTiet == null) {
+            System.err.println("ChiTietGiay hoặc HoaDonChiTiet không tồn tại");
+            response.put("error", "Sản phẩm không tồn tại");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+
+        if (quantity > chiTietGiay.getSoLuong()) {
+            response.put("error", "Số lượng trong kho không đủ");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        } else {
+            // Cập nhật số lượng và giá của hóa đơn chi tiết
+            int previousQuantity = hoaDonChiTiet.getSoLuong();
+            hoaDonChiTiet.setSoLuong(quantity);
+            hoaDonChiTiet.setDonGia(chiTietGiay.getGiaBan() * quantity);
+            hoaDonChiTietService.add(hoaDonChiTiet);
+
+            // Cập nhật số lượng sản phẩm trong kho
+            int quantityDifference = quantity - previousQuantity;
+            chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - quantityDifference);
+            giayChiTietService.update(chiTietGiay);
+
+            // Tính toán lại tổng tiền của hóa đơn
+            double newTotalAmount = hoaDonChiTiet.getDonGia() * hoaDonChiTiet.getSoLuong() + hoaDon.getTienShip();
+            hoaDon.setTongTien(newTotalAmount);
+
+            // Lưu và cập nhật hóa đơn
+            hoaDonService.save(hoaDon);
+            hoaDonService.updateHoaDon(hoaDon);
+
+            response.put("tongTienSanPham", newTotalAmount);
+
+            System.out.println("Updated HoaDonChiTiet: " + hoaDonChiTiet);
+            System.out.println("Updated ChiTietGiay: " + chiTietGiay);
+            System.out.println("Updated HoaDon: " + hoaDon);
+
+            return ResponseEntity.ok(response);
+        }
+    }
+
+
 }
