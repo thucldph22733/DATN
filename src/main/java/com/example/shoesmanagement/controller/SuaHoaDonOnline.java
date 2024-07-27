@@ -116,6 +116,7 @@ public class SuaHoaDonOnline {
         HoaDon hoaDon = hoaDonService.getOne(idHD);
         List<HoaDonChiTiet> hoaDonChiTiets = hoaDon.getHoaDonChiTiets();
 
+
         model.addAttribute("hoaDon", hoaDon);
         model.addAttribute("hoaDonChiTiets", hoaDonChiTiets);
         model.addAttribute("items", chiTietGiayList);
@@ -133,6 +134,7 @@ public class SuaHoaDonOnline {
 
         return "manage/sua_hd_online";
     }
+
 
 
     private void showData(Model model) {
@@ -379,15 +381,13 @@ public class SuaHoaDonOnline {
     }
 
 
-    @PostMapping("/updateQuantity")
-    @ResponseBody
-    public ResponseEntity<Map<String, Object>> updateQuantity(@RequestParam("soLuong") int soLuong, @RequestParam UUID idCTG, @PathVariable UUID idHD, @RequestParam int quantity) {
-        System.out.println("Received idCTG: " + idCTG + ", quantity: " + quantity);
 
-        // Lấy thông tin hóa đơn và chi tiết hóa đơn
-        HoaDon hoaDon = hoaDonService.getOne(idHD);
+    @PostMapping("/updateQuantity1")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> updateQuantity1(@RequestParam UUID idCTG, @RequestParam int quantity) {
+        UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
         ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idCTG);
-        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHD, idCTG);
+        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHoaDon, idCTG);
 
         Map<String, Object> response = new HashMap<>();
 
@@ -401,26 +401,38 @@ public class SuaHoaDonOnline {
             response.put("error", "Số lượng trong kho không đủ");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } else {
-            // Cập nhật số lượng và giá của hóa đơn chi tiết
+            HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).get();
+            hoaDon.setKhuyenMai(null);
+            hoaDonRepository.saveAndFlush(hoaDon);
+
             int previousQuantity = hoaDonChiTiet.getSoLuong();
             hoaDonChiTiet.setSoLuong(quantity);
-            hoaDonChiTiet.setDonGia(chiTietGiay.getGiaBan() * quantity);
+
+            // Đặt đơn giá mà không nhân với số lượng
+            double donGia = chiTietGiay.getGiaBan();
+            hoaDonChiTiet.setDonGia(donGia);
             hoaDonChiTietService.add(hoaDonChiTiet);
 
-            // Cập nhật số lượng sản phẩm trong kho
             int quantityDifference = quantity - previousQuantity;
             chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - quantityDifference);
             giayChiTietService.update(chiTietGiay);
 
             // Tính toán lại tổng tiền của hóa đơn
-            double newTotalAmount = hoaDonChiTiet.getDonGia() * hoaDonChiTiet.getSoLuong() + hoaDon.getTienShip();
+            double totalProductAmount = hoaDon.getHoaDonChiTiets().stream()
+                    .mapToDouble(hdct -> hdct.getDonGia() * hdct.getSoLuong())
+                    .sum();
+            double newTotalAmount = totalProductAmount + hoaDon.getTienShip();
             hoaDon.setTongTien(newTotalAmount);
 
-            // Lưu và cập nhật hóa đơn
-            hoaDonService.save(hoaDon);
+            // Tính toán lại tổng số lượng sản phẩm trong hóa đơn
+            int newTotalQuantity = hoaDon.getHoaDonChiTiets().stream().mapToInt(HoaDonChiTiet::getSoLuong).sum();
+            hoaDon.setTongSP(newTotalQuantity);
+            hoaDonService.add(hoaDon);
             hoaDonService.updateHoaDon(hoaDon);
 
+
             response.put("tongTienSanPham", newTotalAmount);
+            response.put("tongSoLuongSanPham", newTotalQuantity);
 
             System.out.println("Updated HoaDonChiTiet: " + hoaDonChiTiet);
             System.out.println("Updated ChiTietGiay: " + chiTietGiay);
@@ -429,6 +441,9 @@ public class SuaHoaDonOnline {
             return ResponseEntity.ok(response);
         }
     }
+
+
+
 
 
 }
