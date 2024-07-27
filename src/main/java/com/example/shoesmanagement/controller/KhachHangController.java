@@ -167,18 +167,10 @@ public class KhachHangController {
             , @ModelAttribute("ErrormessageLKH") String ErrormessageLKH) {
         KhachHang khachHang = khachHangService.getByIdKhachHang(id);
         model.addAttribute("khachHang", khachHang);
-        //
-//        List<LoaiKhachHang> loaiKhachHangs = loaiKhachHangService.getAllLoaiKhachHang();
-//        Collections.sort(loaiKhachHangs, (a, b) -> b.getTgThem().compareTo(a.getTgThem()));
-//        model.addAttribute("loaiKhachHang", loaiKhachHangs);
-
-//        model.addAttribute("loaiKhachHangAdd", new LoaiKhachHang());
-        // Kiểm tra xem có dữ liệu người dùng đã nhập không và điền lại vào trường nhập liệu
         if (userInputKH != null) {
             model.addAttribute("khachHangUpdate", userInputKH);
         }
         session.setAttribute("id", id);
-        //
         if (Errormessage == null || !"true".equals(Errormessage)) {
             model.addAttribute("Errormessage", false);
         }
@@ -223,7 +215,6 @@ public class KhachHangController {
             khachHangdb.setHoTenKH(khachHang.getHoTenKH());
             khachHangdb.setDiaChi(khachHang.getDiaChi());
             khachHangdb.setEmailKH(khachHang.getEmailKH());
-            khachHangdb.setMatKhau(khachHang.getMatKhau());
             khachHangdb.setSdtKH(khachHang.getSdtKH());
             khachHangdb.setCCCDKH(khachHang.getCCCDKH());
             khachHangdb.setGioiTinh(khachHang.getGioiTinh());
@@ -236,21 +227,7 @@ public class KhachHangController {
         return "redirect:/manage/khach-hang";
     }
 
-//    @GetMapping("/khachHang/export/pdf")
-//    public void exportToPDFChatLieu(HttpServletResponse response) throws DocumentException, IOException {
-//        response.setContentType("application/pdf");
-//        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-//        String currentDateTime = dateFormatter.format(new Date());
-//
-//        String headerKey = "Content-Disposition";
-//        String headerValue = "attachment; filename=khachHang_" + currentDateTime + ".pdf";
-//        response.setHeader(headerKey, headerValue);
-//
-//        List<KhachHang> listKhachHang = khachHangService.getAllKhachHang();
-//
-//        PDFExporterKhachHang exporter = new PDFExporterKhachHang(listKhachHang);
-//        exporter.export(response);
-//    }
+
     @GetMapping("/khach-hang/detail/{id}")
     public String detail(@PathVariable UUID id, Model model, @ModelAttribute("message") String message) {
         KhachHang khachHang = khachHangService.getByIdKhachHang(id);
@@ -263,22 +240,7 @@ public class KhachHangController {
         session.setAttribute("idDC",id);
         return "manage/khach-hang-detail";
     }
-//    @GetMapping("/khachHang/export/excel")
-//    public void exportToExcelSize(HttpServletResponse response) throws IOException {
-//        response.setContentType("application/octet-stream");
-//        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-//        String currentDateTime = dateFormatter.format(new Date());
-//
-//        String headerKey = "Content-Disposition";
-//        String headerValue = "attachment; filename=khachHang_" + currentDateTime + ".xlsx";
-//        response.setHeader(headerKey, headerValue);
-//
-//        List<KhachHang> listkhachHang = khachHangService.getAllKhachHang();
-//
-//        ExcelExporterKhachHang excelExporter = new ExcelExporterKhachHang(listkhachHang);
-//
-//        excelExporter.export(response);
-//    }
+
 
     @GetMapping("/khachHang/filter")
     public String filterData(Model model,
@@ -317,17 +279,4 @@ public class KhachHangController {
         return ResponseEntity.ok("ok");
     }
 
-//    @PostMapping("/khachHang/import")
-//    public String importData(@RequestParam("file") MultipartFile file) {
-//        if (file != null && !file.isEmpty()) {
-//            try {
-//                InputStream excelFile = file.getInputStream();
-//                khachHangService.importDataFromExcel(excelFile); // Gọi phương thức nhập liệu từ Excel
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                // Xử lý lỗi
-//            }
-//        }
-//        return "redirect:/manage/khach-hang"; // Chuyển hướng sau khi nhập liệu thành công hoặc không thành công
-//    }
 }

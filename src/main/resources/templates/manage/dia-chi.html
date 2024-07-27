@@ -8,7 +8,7 @@
           content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
-    <title>Sneaker Shop - Admin</title>
+    <title>Teezy Shop - Admin</title>
 
     <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
 
@@ -27,9 +27,7 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body class="mini-sidebar">
-<div id="global-loader">
-    <div class="whirly-loader"></div>
-</div>
+
 <div class="main-wrapper">
     <div th:replace="~{manage/activities :: main}"></div>
     <div class="page-wrapper">
@@ -154,12 +152,6 @@
                             <table class="table  datanew" id="data-table">
                                 <thead>
                                 <tr>
-                                    <th>
-                                        <label class="checkboxs">
-                                            <input type="checkbox" id="select-all">
-                                            <span class="checkmarks"></span>
-                                        </label>
-                                    </th>
                                     <th>Mã Địa Chỉ</th>
                                     <th>Tên Địa Chỉ</th>
                                     <th>Tên Người Nhận</th>
@@ -180,12 +172,6 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="items : ${diaChi}">
-                                    <td>
-                                        <label class="checkboxs">
-                                            <input type="checkbox">
-                                            <span class="checkmarks"></span>
-                                        </label>
-                                    </td>
                                     <td th:text="${items.maDC}"></td>
                                     <td th:text="${items.tenDC}"></td>
                                     <td th:text="${items.tenNguoiNhan}"></td>

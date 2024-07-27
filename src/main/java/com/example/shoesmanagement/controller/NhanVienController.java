@@ -321,7 +321,6 @@ public class NhanVienController {
             nhanViendb.setHoTenNV(nhanVien.getHoTenNV());
             nhanViendb.setNgaySinh(nhanVien.getNgaySinh());
             nhanViendb.setSdtNV(nhanVien.getSdtNV());
-            nhanViendb.setMatKhau(nhanVien.getMatKhau());
             nhanViendb.setEmailNV(nhanVien.getEmailNV());
             nhanViendb.setGioiTinh(nhanVien.getGioiTinh());
             nhanViendb.setCCCDNV(nhanVien.getCCCDNV());

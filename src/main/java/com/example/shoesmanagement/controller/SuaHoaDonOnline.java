@@ -331,11 +331,13 @@ public class SuaHoaDonOnline {
             cart.add(hdct);
         }
 
+
         // Cập nhật số lượng tồn kho
         chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - soLuong);
         giayChiTietService.save(chiTietGiay);
 
         hoaDon.setTongTienSanPham(hoaDon.getTongTienSanPham() + chiTietGiay.getGiaBan() * soLuong);
+
         hoaDonService.save(hoaDon);
         hoaDonService.updateHoaDon(hoaDon);
 
