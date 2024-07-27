@@ -406,29 +406,29 @@ public class HoaDonOnlineController {
     }
 
 
-    @PostMapping("/deleteChiTietGiay/{idCTG}/{idHD}")
-    @ResponseBody
-    public ResponseEntity<String> deleteChiTietGiay(@PathVariable UUID idCTG, @PathVariable UUID idHD) {
-        try {
-            // Lấy hóa đơn cần cập nhật
-            HoaDon hoaDon = hoaDonService.getOne(idHD);
-
-            // Lấy chi tiết giày cần xóa
-            ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idCTG);
-
-            // Xóa chi tiết hóa đơn
-            hoaDonChiTietRepository.deleteHoaDonChiTietByChiTietGiay(chiTietGiay.getIdCTG());
-
-            // Cập nhật lại hóa đơn
-            hoaDonService.updateHoaDon(hoaDon);
-
-            // Trả về phản hồi thành công
-            return ResponseEntity.ok("Sản phẩm đã được xoá khỏi giỏ hàng thành công!");
-        } catch (Exception e) {
-            // Trả về phản hồi lỗi
-            return ResponseEntity.status(500).body("Có lỗi xảy ra trong quá trình xoá sản phẩm!");
-        }
-    }
+//    @PostMapping("/deleteChiTietGiay/{idCTG}/{idHD}")
+//    @ResponseBody
+//    public ResponseEntity<String> deleteChiTietGiay(@PathVariable UUID idCTG, @PathVariable UUID idHD) {
+//        try {
+//            // Lấy hóa đơn cần cập nhật
+//            HoaDon hoaDon = hoaDonService.getOne(idHD);
+//
+//            // Lấy chi tiết giày cần xóa
+//            ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idCTG);
+//
+//            // Xóa chi tiết hóa đơn
+//            hoaDonChiTietRepository.deleteHoaDonChiTietByChiTietGiay(chiTietGiay.getIdCTG());
+//
+//            // Cập nhật lại hóa đơn
+//            hoaDonService.updateHoaDon(hoaDon);
+//
+//            // Trả về phản hồi thành công
+//            return ResponseEntity.ok("Sản phẩm đã được xoá khỏi giỏ hàng thành công!");
+//        } catch (Exception e) {
+//            // Trả về phản hồi lỗi
+//            return ResponseEntity.status(500).body("Có lỗi xảy ra trong quá trình xoá sản phẩm!");
+//        }
+//    }
 
 
     @GetMapping("/hoadon/{idHoaDon}")
