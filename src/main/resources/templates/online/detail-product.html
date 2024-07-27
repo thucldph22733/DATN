@@ -454,27 +454,27 @@
         }
     }
 </script>
-<script>
-    function capNhatGia(event) {
-        // Lấy giá trị của label
-        var giaTriLabel = event.target.textContent || event.target.innerText;
+    <script>
+        function capNhatGia(event) {
+            // Lấy giá trị của label
+            var giaTriLabel = event.target.textContent || event.target.innerText;
 
-        // Tìm phần ẩn tương ứng cho kích thước đã chọn
-        var phanAn = document.querySelector('section div[value="' + giaTriLabel + '"]');
+            // Tìm phần ẩn tương ứng cho kích thước đã chọn
+            var phanAn = document.querySelector('section div[value="' + giaTriLabel + '"]');
 
-        // Lấy giá trị giá từ phần ẩn
-        var gia = phanAn.querySelector('input:first-child').value;
+            // Lấy giá trị giá từ phần ẩn
+            var gia = phanAn.querySelector('input:first-child').value;
 
-        var giaDinhDang = gia.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
+            var giaDinhDang = gia.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
 
-        // Cập nhật giá hiển thị
-        var hienThiGia = document.getElementById('price-range');
-        hienThiGia.textContent = giaDinhDang;
-        // Cập nhật giá hiển thị
-        var hienThiGia = document.getElementById('price-range');
-        hienThiGia.textContent = '₫' + gia;
-    }
-</script>
+            // Cập nhật giá hiển thị
+            var hienThiGia = document.getElementById('price-range');
+            hienThiGia.textContent = giaDinhDang;
+            // Cập nhật giá hiển thị
+            var hienThiGia = document.getElementById('price-range');
+            hienThiGia.textContent = '₫' + gia;
+        }
+    </script>
 
 <script>
     document.getElementById("addToCartButton").addEventListener("click", function () {
