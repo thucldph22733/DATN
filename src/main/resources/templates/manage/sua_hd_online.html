@@ -172,12 +172,6 @@
 
 
 
-    .btn-danger.btn-sm {
-        padding: 2px 5px;
-        font-size: 12px;
-        line-height: 1;
-    }
-
 
      .info-row {
          display: flex;
@@ -243,6 +237,48 @@
         align-items: center;
         justify-content: center;
     }
+
+    .button-container {
+        display: flex;
+    }
+
+    .button-form {
+        flex: 1;
+        margin-right: 5px; /* Adjust as needed */
+    }
+
+    .button-form:last-child {
+        margin-right: 0; /* Remove margin for the last button */
+    }
+
+    .btn {
+        width: 100%;
+        padding: 0.5rem 1rem; /* Adjust padding as needed */
+        border-radius: 0.25rem; /* Adjust border radius as needed */
+        font-size: 0.875rem; /* Adjust font size as needed */
+        text-align: center;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+        color: #fff;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        color: #fff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0069d9;
+    }
+
 
 
 
@@ -434,7 +470,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Chỉnh sửa hóa đơn [[${hoaDon.idHD}]]</h5>
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <button type="button" git class="close" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
@@ -578,23 +614,23 @@
 <!--                                                </div>-->
 <!--                                            </td>-->
                                             <td>
-                                                <input style="margin-top: 3px; border: none; font-weight: 700; font-size: 18pt; background-color: white;"
+                                                <input
                                                        type="button" value="-"
                                                        class="button-minus dec button"
-                                                       onclick="decrementQuantity(this)">
+                                                       onclick="decrementQuantity1(this)">
                                                 <input class="quantityInput"
-                                                       onfocus="clearQuantity(this)"
-                                                       onblur="restoreQuantity(this)"
+                                                       onfocus="clearQuantity1(this)"
+                                                       onblur="restoreQuantity1(this)"
                                                        onchange="markQuantityChanged1(this)"
                                                        th:value="${x.soLuong}"
                                                        style="width: 30px; text-align: center; border: none;"
                                                        type="text"
                                                        th:data-id="${x.chiTietGiay.idCTG}"
                                                        min="1">
-                                                <input style="border: none; font-weight: 700; font-size: 14pt; background-color: white;"
+                                                <input
                                                        type="button" value="+"
                                                        class="button-plus inc button"
-                                                       onclick="incrementQuantity(this)">
+                                                       onclick="incrementQuantity1(this)">
                                             </td>
 
 
@@ -604,12 +640,22 @@
                                                 th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}">
                                             </td>
                                             <td>
-                                                <form th:action="@{/manage/changehd/deleteChiTietGiay/{idCTG}/{idHD}(idCTG=${x.chiTietGiay.idCTG}, idHD=${hoaDon.idHD})}"
-                                                      th:attr="id='deleteForm-${x.chiTietGiay.idCTG}'"
-                                                      method="post">
-                                                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('${x.chiTietGiay.idCTG}')">Xóa</button>
-                                                </form>
+                                                <!-- Container for buttons with Flexbox -->
+                                                <div class="button-container">
+                                                    <!-- Delete form -->
+                                                    <form th:action="@{/manage/changehd/deleteChiTietGiay/{idCTG}/{idHD}(idCTG=${x.chiTietGiay.idCTG}, idHD=${hoaDon.idHD})}"
+                                                          th:attr="id='deleteForm-${x.chiTietGiay.idCTG}'"
+                                                          method="post" class="button-form">
+                                                        <button type="button" class="btn btn-danger" onclick="confirmDelete('${x.chiTietGiay.idCTG}')">Xóa</button>
+                                                    </form>
+
+                                                    <!-- Update form -->
+                                                    <form th:action="@{'/manage/changehd/online/' + ${hoaDon.idHD}}" method="get" class="button-form">
+                                                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                                    </form>
+                                                </div>
                                             </td>
+
                                         </tr>
                                     </th:block>
                                     </tbody>
@@ -912,11 +958,11 @@
             if (isNaN(quantity) || quantity < 1) {
                 inputElement.value = inputElement.getAttribute('data-original-value');
             } else {
-                updateTotalAmountAndGrandTotal(inputElement);
+                updateTotalAmountAndGrandTotal1(inputElement);
             }
         }
 
-        function incrementQuantity(button) {
+        function incrementQuantity1(button) {
             var quantityInput = button.parentNode.querySelector('.quantityInput');
             var currentQuantity = parseInt(quantityInput.value);
             quantityInput.setAttribute('data-original-value', currentQuantity);
@@ -924,7 +970,7 @@
             markQuantityChanged1(quantityInput);
         }
 
-        function decrementQuantity(button) {
+        function decrementQuantity1(button) {
             var quantityInput = button.parentNode.querySelector('.quantityInput');
             var currentQuantity = parseInt(quantityInput.value);
             if (currentQuantity > 1) {
@@ -934,11 +980,11 @@
             }
         }
 
-        function updateTotalAmountAndGrandTotal(inputElement) {
+        function updateTotalAmountAndGrandTotal1(inputElement) {
             var quantity = parseInt(inputElement.value);
             var idCTG = inputElement.getAttribute('data-id');
 
-            fetch('/ban-hang/updateQuantity', {
+            fetch('/manage/changehd/updateQuantity1', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
