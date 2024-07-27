@@ -91,7 +91,6 @@ public class HoaDonOnlineController {
             return "redirect:/login";
         }
         if (listG != null && !listG.isEmpty()) {
-            System.out.println("Danh sách sản phẩm không rỗng, số lượng: " + listG.size());
             for (GiayViewModel product : listG) {
                 System.out.println(product);
             }
@@ -180,11 +179,36 @@ public class HoaDonOnlineController {
         hoaDon.setTgHuy(date);
         hoaDon.setTrangThai(5);
 
-        KhuyenMai kmcsdl = khuyenMaiRepository.findById(hoaDon.getKhuyenMai().getIdKM()).get();
-        kmcsdl.setSoLuongDaDung(kmcsdl.getSoLuongDaDung() - 1);
-        khuyenMaiRepository.saveAndFlush(kmcsdl);
+
+     
+
+        if (hoaDon.getKhuyenMai() != null) {   // nếu hoá đơn có dùng khuyến mãi
+            KhuyenMai kmcsdl = khuyenMaiRepository.findById(hoaDon.getKhuyenMai().getIdKM()).get();
+            int slmax = kmcsdl.getSoLuong();
+            int sl = kmcsdl.getSoLuongDaDung();
+            if (sl == slmax) {    // nếu số lượng khuyến mãi đã hết thì xoá mã khuyến mãi ra khỏi hoá đơn và trả về trang thanh toán
+                hoaDon.setKhuyenMai(null);
+                hoaDonRepository.saveAndFlush(hoaDon);
+               return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
+              
+            } else if (sl < slmax) {    // nếu số lượng khuyến mãi nhỏ hơn sl đã set thì tăng sl lên 1
+                kmcsdl.setSoLuongDaDung(sl + 1);
+                khuyenMaiRepository.saveAndFlush(kmcsdl);
+            }
+        }
+        List<HoaDonChiTiet> listHDCT = hoaDon.getHoaDonChiTiets();
+        for (HoaDonChiTiet hdct : listHDCT) {
+            ChiTietGiay chiTietGiay = hdct.getChiTietGiay();
+            chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + hdct.getSoLuong());
+            if (chiTietGiay.getSoLuong() > 0) {
+                chiTietGiay.setTrangThai(1);
+            }
+            giayChiTietService.save(chiTietGiay);
+        }
+
 
         hoaDonService.save(hoaDon);
+
 
         showData(model);
         showTab3(model);
@@ -243,7 +267,7 @@ public class HoaDonOnlineController {
         if (listAllHoaDonOnline != null) {
             for (HoaDon x : listAllHoaDonOnline) {
                 if (x.getTrangThai() == 6 || x.getTrangThai() == 7) {
-                    System.out.println("abc");
+
                 } else {
                     tongTienHoaDon += x.getTongTien();
                 }
@@ -253,7 +277,7 @@ public class HoaDonOnlineController {
         if (listAllHoaDonOnline != null) {
             for (HoaDon x : listAllHoaDonOnline) {
                 if (x.getTrangThai() == 6 || x.getTrangThai() == 7) {
-                    System.out.println("abc");
+
                 } else {
                     if (x.getHinhThucThanhToan() == 1) {
                         soLuongHoaDonBanking++;
@@ -380,29 +404,29 @@ public class HoaDonOnlineController {
     }
 
 
-    @PostMapping("/deleteChiTietGiay/{idCTG}/{idHD}")
-    @ResponseBody
-    public ResponseEntity<String> deleteChiTietGiay(@PathVariable UUID idCTG, @PathVariable UUID idHD) {
-        try {
-            // Lấy hóa đơn cần cập nhật
-            HoaDon hoaDon = hoaDonService.getOne(idHD);
-
-            // Lấy chi tiết giày cần xóa
-            ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idCTG);
-
-            // Xóa chi tiết hóa đơn
-            hoaDonChiTietRepository.deleteHoaDonChiTietByChiTietGiay(chiTietGiay.getIdCTG());
-
-            // Cập nhật lại hóa đơn
-            hoaDonService.updateHoaDon(hoaDon);
-
-            // Trả về phản hồi thành công
-            return ResponseEntity.ok("Sản phẩm đã được xoá khỏi giỏ hàng thành công!");
-        } catch (Exception e) {
-            // Trả về phản hồi lỗi
-            return ResponseEntity.status(500).body("Có lỗi xảy ra trong quá trình xoá sản phẩm!");
-        }
-    }
+//    @PostMapping("/deleteChiTietGiay/{idCTG}/{idHD}")
+//    @ResponseBody
+//    public ResponseEntity<String> deleteChiTietGiay(@PathVariable UUID idCTG, @PathVariable UUID idHD) {
+//        try {
+//            // Lấy hóa đơn cần cập nhật
+//            HoaDon hoaDon = hoaDonService.getOne(idHD);
+//
+//            // Lấy chi tiết giày cần xóa
+//            ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idCTG);
+//
+//            // Xóa chi tiết hóa đơn
+//            hoaDonChiTietRepository.deleteHoaDonChiTietByChiTietGiay(chiTietGiay.getIdCTG());
+//
+//            // Cập nhật lại hóa đơn
+//            hoaDonService.updateHoaDon(hoaDon);
+//
+//            // Trả về phản hồi thành công
+//            return ResponseEntity.ok("Sản phẩm đã được xoá khỏi giỏ hàng thành công!");
+//        } catch (Exception e) {
+//            // Trả về phản hồi lỗi
+//            return ResponseEntity.status(500).body("Có lỗi xảy ra trong quá trình xoá sản phẩm!");
+//        }
+//    }
 
 
     @GetMapping("/hoadon/{idHoaDon}")
