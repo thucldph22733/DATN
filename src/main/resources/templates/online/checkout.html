@@ -331,7 +331,7 @@
                                                                 <div class="p-2 g-col-4">
                                                                     <h5 class="card-title" th:text="${items.tenKM}"></h5>
                                                                     <p class="card-text" th:text="'Điều kiện: Hóa đơn tối thiểu ' + ${items.dieuKienKMBill}"></p>
-                                                                    <p class="card-text" th:text="'Số lượng còn lại: ' + ${items.soLuong - items.soLuongDaDung}"></p>
+                                                                    <p class="card-text" id="soLuongCon" th:text="'Số lượng còn lại: ' + ${items.soLuong - items.soLuongDaDung}"></p>
                                                                     <button type="submit" class="btn btn-primary" th:formaction="@{'/buyer/checkout/chon-khuyen-mai/' + ${items.idKM}}">Áp dụng</button>
                                                                     <br>
                                                                 </div>
@@ -432,9 +432,9 @@
                                 <p style="font-size: 12pt; font-weight: 700;">Tổng tiền đơn hàng:</p>
                             </div>
                             <div class="col-lg-2">
-                                <input type="text" th:value="${giaTienGiam}" id="tienGiam" style="display: none">
+<!--                                <input type="text" th:value="${giaTienGiam}" id="tienGiam" style="display: none">-->
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billPlaceOrder.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                <p th:text="'₫' + ${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 0, 'POINT')}"></p>
+                                <p id="tienGiam" th:text="'₫' + ${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 0, 'POINT')}"></p>
                                 <p th:text="'₫' + ${#numbers.formatDecimal(shippingFee, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p style="font-size: 18pt; font-weight: 700;" th:text="'₫' + ${#numbers.formatDecimal(toTalOder, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                             </div>
@@ -924,9 +924,16 @@
 </script>
 <script th:if="${successMessage}">
     document.addEventListener('DOMContentLoaded', (event) => {
+        // Hiển thị thông báo
         var toastElement = document.getElementById('success-toast').querySelector('.toast');
         var toast = new bootstrap.Toast(toastElement);
         toast.show();
+
+        // Gắn giá trị 0 cho thuộc tính "giaTienGiam" của phần tử có ID "tienGiam"
+        var giaTienGiam = document.getElementById("tienGiam");
+        giaTienGiam.textContent = "₫0";
+        giaTienGiam.setAttribute("giaTienGiam", 0);
+        console.log(giaTienGiam);
     });
 </script>
 </body>

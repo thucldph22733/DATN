@@ -455,7 +455,7 @@ public class BanHangController {
 //                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
                 return "redireact:/buyer/cart";
             } else if (sl < slmax) {    // nếu số lượng khuyến mãi nhỏ hơn sl đã set thì tăng sl lên 1
-                kmcsdl.setSoLuongDaDung(sl + 1);
+                kmcsdl.setSoLuongDaDung(sl - 1);
                 khuyenMaiRepository.saveAndFlush(kmcsdl);
             }
         }

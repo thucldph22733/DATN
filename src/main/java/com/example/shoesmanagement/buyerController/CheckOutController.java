@@ -448,6 +448,7 @@ public class CheckOutController {
                 redirectAttribute.addFlashAttribute("successMessage", "Rất tiếc, số lượng khuyến mãi đã hết. Vui lòng chọn khuyến mãi khác!");
                 hoaDon.setKhuyenMai(null);
                 hoaDonRepository.saveAndFlush(hoaDon);
+
                 return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
             } else if (sl < slmax) {    // nếu số lượng khuyến mãi nhỏ hơn sl đã set thì tăng sl lên 1
                 kmcsdl.setSoLuongDaDung(sl + 1);
@@ -638,7 +639,8 @@ public class CheckOutController {
             if (sl == slmax) {    // nếu số lượng khuyến mãi đã hết thì xoá mã khuyến mãi ra khỏi hoá đơn và trả về trang thanh toán
                 redirectAttribute.addFlashAttribute("successMessage", "Rất tiếc, số lượng khuyến mãi đã hết. Vui lòng chọn khuyến mãi khác!");
                 hoaDon.setKhuyenMai(null);
-                hoaDonRepository.saveAndFlush(hoaDon);
+//                hoaDonRepository.saveAndFlush(hoaDon);
+                hoaDonService.add(hoaDon);
                 return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
             } else if (sl < slmax) {    // nếu số lượng khuyến mãi nhỏ hơn sl đã set thì tăng sl lên 1
                 kmcsdl.setSoLuongDaDung(sl + 1);
