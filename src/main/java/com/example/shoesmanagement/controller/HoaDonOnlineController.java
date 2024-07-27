@@ -91,7 +91,6 @@ public class HoaDonOnlineController {
             return "redirect:/login";
         }
         if (listG != null && !listG.isEmpty()) {
-            System.out.println("Danh sách sản phẩm không rỗng, số lượng: " + listG.size());
             for (GiayViewModel product : listG) {
                 System.out.println(product);
             }
@@ -180,16 +179,42 @@ public class HoaDonOnlineController {
         hoaDon.setTgHuy(date);
         hoaDon.setTrangThai(5);
 
-        KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
-        khuyenMai.setSoLuong(khuyenMai.getSoLuong() + 1);
-        khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() - 1);
-        khuyenMaiRepository.saveAndFlush(khuyenMai);
+//        KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
+//        khuyenMai.setSoLuong(khuyenMai.getSoLuong() + 1);
+//        khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() - 1);
+//        khuyenMaiRepository.saveAndFlush(khuyenMai);
+
+        if (hoaDon.getKhuyenMai() != null) {   // nếu hoá đơn có dùng khuyến mãi
+            KhuyenMai kmcsdl = khuyenMaiRepository.findById(hoaDon.getKhuyenMai().getIdKM()).get();
+            int slmax = kmcsdl.getSoLuong();
+            int sl = kmcsdl.getSoLuongDaDung();
+            if (sl == slmax) {    // nếu số lượng khuyến mãi đã hết thì xoá mã khuyến mãi ra khỏi hoá đơn và trả về trang thanh toán
+                hoaDon.setKhuyenMai(null);
+                hoaDonRepository.saveAndFlush(hoaDon);
+//                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
+                return "redireact:/buyer/cart";
+            } else if (sl < slmax) {    // nếu số lượng khuyến mãi nhỏ hơn sl đã set thì tăng sl lên 1
+                kmcsdl.setSoLuongDaDung(sl + 1);
+                khuyenMaiRepository.saveAndFlush(kmcsdl);
+            }
+        }
+        List<HoaDonChiTiet> listHDCT = hoaDon.getHoaDonChiTiets();
+        for (HoaDonChiTiet hdct : listHDCT) {
+            ChiTietGiay chiTietGiay = hdct.getChiTietGiay();
+            chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + hdct.getSoLuong());
+            if (chiTietGiay.getSoLuong() > 0) {
+                chiTietGiay.setTrangThai(1);
+            }
+            giayChiTietService.save(chiTietGiay);
+        }
 
         hoaDonService.save(hoaDon);
+
 
         showData(model);
         showTab3(model);
         model.addAttribute("message", "Hóa đơn đã được hủy thành công.");
+
         return "manage/manage-bill-online";
     }
 
@@ -244,7 +269,7 @@ public class HoaDonOnlineController {
         if (listAllHoaDonOnline != null) {
             for (HoaDon x : listAllHoaDonOnline) {
                 if (x.getTrangThai() == 6 || x.getTrangThai() == 7) {
-                    System.out.println("abc");
+
                 } else {
                     tongTienHoaDon += x.getTongTien();
                 }
@@ -254,7 +279,7 @@ public class HoaDonOnlineController {
         if (listAllHoaDonOnline != null) {
             for (HoaDon x : listAllHoaDonOnline) {
                 if (x.getTrangThai() == 6 || x.getTrangThai() == 7) {
-                    System.out.println("abc");
+
                 } else {
                     if (x.getHinhThucThanhToan() == 1) {
                         soLuongHoaDonBanking++;
