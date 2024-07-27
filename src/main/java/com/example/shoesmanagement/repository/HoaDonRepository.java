@@ -52,4 +52,19 @@ public interface HoaDonRepository  extends JpaRepository<HoaDon, UUID> {
 
     List<HoaDon> findByTrangThai(int trangThai);
 
+
+    @Query("select sum(hd.tongSP) from HoaDon hd where hd.loaiHD = 1 and hd.trangThai = 1 and month(hd.tgThanhToan) = month(CURRENT_DATE())")
+    Long soLuongSPOff();
+
+    @Query("select sum(hd.tongSP) from HoaDon hd where hd.loaiHD = 0 and hd.trangThai = 4 and month(hd.tgThanhToan) = month(CURRENT_DATE())")
+    Long soLuongSPOnl();
+
+    @Query("select sum(hd.tongTien) from HoaDon hd where hd.loaiHD = 1 and hd.trangThai = 1 and month(hd.tgThanhToan) = month(CURRENT_DATE())")
+    Long doanhThuOff();
+
+    @Query("select sum(hd.tongTien) from HoaDon hd where hd.loaiHD = 0 and hd.trangThai = 4 and month(hd.tgThanhToan) = month(CURRENT_DATE())")
+    Long doanhThuOnl();
+
+    @Query("select km.soLuong - km.soLuongDaDung from KhuyenMai km where km.idKM =?1")
+    Long soLuongCon(UUID ID);
 }

@@ -25,9 +25,6 @@ public class KhuyenMaiController {
     private KhuyenMaiService khuyenMaiService;
 
     @Autowired
-    private KhachHangService khachHangService;
-
-    @Autowired
     private HttpSession session;
 
     @Autowired

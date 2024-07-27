@@ -778,6 +778,12 @@ public class UserController {
         }
         HoaDon hoaDonHuy = hoaDonService.getOne(idHD);
 
+        if (hoaDonHuy.getKhuyenMai() != null) {   // nếu hoá đơn có dùng khuyến mãi
+            KhuyenMai kmcsdl = khuyenMaiRepository.findById(hoaDonHuy.getKhuyenMai().getIdKM()).get();
+            kmcsdl.setSoLuongDaDung(kmcsdl.getSoLuongDaDung() - 1);
+            khuyenMaiRepository.saveAndFlush(kmcsdl);
+        }
+
         LichSuThanhToan lichSuThanhToan =  new LichSuThanhToan();
         lichSuThanhToan.setTgThanhToan(new Date());
         lichSuThanhToan.setSoTienThanhToan(hoaDonHuy.getTongTien());

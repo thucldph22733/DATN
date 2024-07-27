@@ -95,13 +95,14 @@ public class SuaHoaDonOnline {
     private String manageBillOnline(@PathVariable UUID idHD, Model model, HttpSession session) {
         // Kiểm tra quyền đăng nhập
         if (session.getAttribute("managerLogged") == null) {
-            // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/login";
         }
 
+        // Đưa id của hóa đơn vào session
+        session.setAttribute("idHoaDon", idHD);
+
         // Đưa id của hóa đơn vào model để sử dụng trong trang sua_hd_online
         model.addAttribute("idHD", idHD);
-
 
         // Lấy dữ liệu cần thiết và đưa vào model
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
@@ -110,17 +111,28 @@ public class SuaHoaDonOnline {
         List<Size> sizeList = sizeService.getAllSize();
         List<MauSac> mauSacList = mauSacService.getALlMauSac();
 
+        // Lấy hóa đơn cụ thể dựa vào idHD
+        HoaDon hoaDon = hoaDonService.getOne(idHD);
+        List<HoaDonChiTiet> hoaDonChiTiets = hoaDon.getHoaDonChiTiets();
+
+        model.addAttribute("hoaDon", hoaDon);
+        model.addAttribute("hoaDonChiTiets", hoaDonChiTiets);
         model.addAttribute("items", chiTietGiayList);
         model.addAttribute("giayList", giayList);
         model.addAttribute("sizeList", sizeList);
         model.addAttribute("mauSacList", mauSacList);
         model.addAttribute("listSanPham", listG);
+        model.addAttribute("tongSP", hoaDon.getTongSP());
+        model.addAttribute("tongTien", hoaDon.getTongTien());
+        model.addAttribute("trangThai", hoaDon.getTrangThai());
+        model.addAttribute("khachHang", hoaDon.getKhachHang());
 
         showData(model);
         showTab1(model);
 
         return "manage/sua_hd_online";
     }
+
 
     private void showData(Model model) {
 
@@ -269,7 +281,6 @@ public class SuaHoaDonOnline {
                             @RequestParam("idChiTietGiay") UUID idChiTietGiay,
                             @RequestParam("soLuong") int soLuong, Model model,
                             RedirectAttributes redirectAttributes, HttpSession session) {
-        // Kiểm tra giá trị idHoaDon và idChiTietGiay
         if (idHoaDon == null || idChiTietGiay == null) {
             redirectAttributes.addFlashAttribute("messageError", true);
             redirectAttributes.addFlashAttribute("tbaoError", "Giá trị idHoaDon hoặc idChiTietGiay bị thiếu");
@@ -292,6 +303,7 @@ public class SuaHoaDonOnline {
 
         HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
         model.addAttribute("idHoaDon", idHoaDon);
+
         List<HoaDonChiTiet> cart = (List<HoaDonChiTiet>) session.getAttribute("cart");
 
         if (cart == null) {
@@ -300,7 +312,7 @@ public class SuaHoaDonOnline {
         }
 
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHoaDon, idChiTietGiay);
-        model.addAttribute("hdct",hoaDonChiTiet);
+        model.addAttribute("hdct", hoaDonChiTiet);
         if (hoaDonChiTiet != null) {
             hoaDonChiTiet.setDonGia(chiTietGiay.getGiaBan() * (hoaDonChiTiet.getSoLuong() + soLuong));
             hoaDonChiTiet.setSoLuong(hoaDonChiTiet.getSoLuong() + soLuong);
@@ -330,7 +342,9 @@ public class SuaHoaDonOnline {
         giayChiTietService.save(chiTietGiay);
 
         hoaDon.setTongTienSanPham(hoaDon.getTongTienSanPham() + chiTietGiay.getGiaBan() * soLuong);
+
         hoaDonService.save(hoaDon);
+        hoaDonService.updateHoaDon(hoaDon);
 
         redirectAttributes.addFlashAttribute("messageSuccess", true);
         redirectAttributes.addFlashAttribute("tb", "Thêm vào giỏ hàng thành công");

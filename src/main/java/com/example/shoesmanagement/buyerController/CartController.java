@@ -37,11 +37,12 @@ public class CartController {
 
     @Autowired
     private GiayService giayService;
-@Autowired
-private GioHangService gioHangService;
+
+    @Autowired
+    private GioHangService gioHangService;
+
     @RestController
     public class LoginApiController {
-
         @GetMapping("/api/check-login")
         public Map<String, Boolean> checkLoginStatus(HttpSession session) {
             KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
@@ -52,12 +53,11 @@ private GioHangService gioHangService;
 
     }
 
-
     @GetMapping("/cart")
-    private String getShoppingCart(HttpSession session, Model model){
+    private String getShoppingCart(HttpSession session, Model model) {
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
 
-        if(khachHang == null){
+        if (khachHang == null) {
             model.addAttribute("error", "Bạn cần đăng nhập để xem giỏ hàng");
             return "redirect:/buyer/login"; // Sử dụng redirect ở đây
         }
@@ -66,17 +66,16 @@ private GioHangService gioHangService;
         return "/online/shopping-cart";
     }
 
-
     @PostMapping("/cart/updateQuantity")
     @ResponseBody
     public void updateQuantity(@RequestParam UUID idCTG, @RequestParam int quantity) {
 
-        GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
+        GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
         ChiTietGiay chiTietGiay = gctService.getByIdChiTietGiay(idCTG);
 
         GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(chiTietGiay, gioHang);
         gioHangChiTiet.setSoLuong(quantity);
-        gioHangChiTiet.setDonGia(quantity*chiTietGiay.getGiaBan());
+        gioHangChiTiet.setDonGia(quantity * chiTietGiay.getGiaBan());
         ghctService.addNewGHCT(gioHangChiTiet);
 
     }
@@ -100,7 +99,7 @@ private GioHangService gioHangService;
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         ChiTietGiay chiTietGiay = gctService.getByIdChiTietGiay(idCTG);
         GioHang gioHang = gioHangService.findByKhachHang(khachHang);
-        GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(chiTietGiay,gioHang);
+        GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(chiTietGiay, gioHang);
         gioHangChiTiet.setTrangThai(0);
         ghctService.addNewGHCT(gioHangChiTiet);
 
@@ -168,6 +167,4 @@ private GioHangService gioHangService;
         }
         return sb.toString();
     }
-
-
 }

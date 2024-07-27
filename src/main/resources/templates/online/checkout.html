@@ -163,7 +163,20 @@
 <!-- Checkout Section Begin -->
 <section class="checkout spad">
     <div class="container">
-
+        <div th:if="${successMessage}" th:attr="data-message=${successMessage}" id="success-toast"
+             style="position: fixed; top: 1rem; right: 1rem; z-index: 1050;">
+            <!-- Toast container, ẩn mặc định và sẽ được hiển thị bằng JavaScript -->
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="7000">
+                <div class="toast-header">
+                    <strong class="mr-auto">Thông báo</strong>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body" th:text="${successMessage}">
+                </div>
+            </div>
+        </div>
         <form action="/buyer/checkout/placeoder" method="post" id="orderForm" onsubmit="return confirmOrder()">
 
 
@@ -313,7 +326,7 @@
 
                                                 <div class="modal-body">
                                                     <div class="card m-2" th:each="items : ${dieuKienKhuyenMai}">
-                                                        <div class="card-body">
+                                                        <div class="card-body border border-secondary">
                                                             <div class="grid gap-3">
                                                                 <div class="p-2 g-col-4">
                                                                     <h5 class="card-title" th:text="${items.tenKM}"></h5>
@@ -588,10 +601,9 @@
                             <div style="width: 100%; height:15px;"></div>
                             <div style="width: 100%; height: 0.5px; background-color: rgb(64, 64, 64) ;"></div>
                             <div style="width: 100%; height:15px;"></div>
-
                             <div class="row">
-                                <input style="margin: 0 10px 0 38px;" type="checkbox" name="defaultSelected"> Đặt làm
-                                mặc định
+                                <input style="margin: 0 10px 0 38px;" checked type="radio" name="defaultSelected"> Đặt
+                                làm mặc định
                             </div>
 
                         </div>
@@ -681,7 +693,11 @@
         Vui lòng nhập đầy đủ thông tin trước khi đóng cửa sổ này.
     </div>
 
-
+    <div th:if="${session.checkoutParams != null}">
+        <div th:if="${session.checkoutParams.get('kmMessage') != null}">
+            <div class="alert alert-danger" role="alert" th:text="${session.checkoutParams.get('kmMessage')}"></div>
+        </div>
+    </div>
 </section>
 <!--Modal Address End-->
 
@@ -787,7 +803,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 
 <script>
     document.getElementById('submitBtn').addEventListener('click', function(event) {
@@ -906,6 +921,13 @@
     window.onload = function () {
         updateEstimatedDate();
     }
+</script>
+<script th:if="${successMessage}">
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var toastElement = document.getElementById('success-toast').querySelector('.toast');
+        var toast = new bootstrap.Toast(toastElement);
+        toast.show();
+    });
 </script>
 </body>
 </html>
