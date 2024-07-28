@@ -8,17 +8,16 @@ import com.example.shoesmanagement.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class CheckOutController {
@@ -426,7 +425,7 @@ public class CheckOutController {
     }
 
     @PostMapping("/buyer/checkout/placeoder")
-    public String placeOrder(Model model) {
+    public String placeOrder(Model model, HttpSession session, RedirectAttributes redirectAttribute) {
 
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi");
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
@@ -442,21 +441,31 @@ public class CheckOutController {
             return "redirect:/buyer/login";
         }
 
-        if(hoaDon.getKhuyenMai() != null){   // nếu hoá đơn có dùng khuyến mãi
+        if (hoaDon.getKhuyenMai() != null) {   // nếu hoá đơn có dùng khuyến mãi
             KhuyenMai kmcsdl = khuyenMaiRepository.findById(hoaDon.getKhuyenMai().getIdKM()).get();
+
             int slmax = kmcsdl.getSoLuong();
             int sl = kmcsdl.getSoLuongDaDung();
-            if(sl == slmax){    // nếu số lượng khuyến mãi đã hết thì xoá mã khuyến mãi ra khỏi hoá đơn và trả về trang thanh toán
+            if (sl == slmax) {    // nếu số lượng khuyến mãi đã hết thì xoá mã khuyến mãi ra khỏi hoá đơn và trả về trang thanh toán
+                redirectAttribute.addFlashAttribute("successMessage", "Rất tiếc, số lượng khuyến mãi đã hết. Vui lòng chọn khuyến mãi khác!");
                 hoaDon.setKhuyenMai(null);
+                String checkoutParams = (String) session.getAttribute("checkoutParams" + khachHang.getIdKH());
+                String updatedParams = Arrays.stream(checkoutParams.split("&"))
+                        .filter(param -> !param.startsWith("idKM="))
+                        .collect(Collectors.joining("&"));
+
+                // Thêm các tham số còn lại vào redirectAttributes
+                redirectAttribute.addAttribute("params", updatedParams);
+
+
                 hoaDonRepository.saveAndFlush(hoaDon);
+                return "redirect:/buyer/checkout?" + updatedParams;
 //                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
-                return "redireact:/buyer/cart";
             } else if (sl < slmax) {    // nếu số lượng khuyến mãi nhỏ hơn sl đã set thì tăng sl lên 1
                 kmcsdl.setSoLuongDaDung(sl + 1);
                 khuyenMaiRepository.saveAndFlush(kmcsdl);
             }
         }
-
 
         String hinhThucThanhToan = request.getParameter("hinhThucThanhToan");
         String loiNhan = request.getParameter("loiNhan");
@@ -476,14 +485,6 @@ public class CheckOutController {
 
         hoaDon.setLoiNhan(loiNhan);
         hoaDon.setTgNhanDK(ngayKetThuc);
-
-
-//        KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
-//        if (khuyenMai != null) {
-//            khuyenMai.setSoLuong(khuyenMai.getSoLuong() - 1);
-//            khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() + 1);
-//            khuyenMaiRepository.saveAndFlush(khuyenMai);
-//        }
 
         hoaDonService.add(hoaDon);
 
@@ -596,7 +597,6 @@ public class CheckOutController {
             return "redirect:/buyer/shop-details/" + linkBack;
         }
 
-
         if (gioHangChiTiet == null) {
             gioHangChiTiet = new GioHangChiTiet();
             gioHangChiTiet.setChiTietGiay(ctg);
@@ -643,28 +643,23 @@ public class CheckOutController {
         hoaDon.setTrangThai(7);
         hoaDon.setLoiNhan(hoaDon.getLoiNhan());
 
-        if(hoaDon.getKhuyenMai() != null){   // nếu hoá đơn có dùng khuyến mãi
+        if (hoaDon.getKhuyenMai() != null) {   // nếu hoá đơn có dùng khuyến mãi
             KhuyenMai kmcsdl = khuyenMaiRepository.findById(hoaDon.getKhuyenMai().getIdKM()).get();
             int slmax = kmcsdl.getSoLuong();
             int sl = kmcsdl.getSoLuongDaDung();
-            if(sl == slmax){    // nếu số lượng khuyến mãi đã hết thì xoá mã khuyến mãi ra khỏi hoá đơn và trả về trang thanh toán
+            if (sl == slmax) {    // nếu số lượng khuyến mãi đã hết thì xoá mã khuyến mãi ra khỏi hoá đơn và trả về trang thanh toán
+                redirectAttribute.addFlashAttribute("successMessage", "Rất tiếc, số lượng khuyến mãi đã hết. Vui lòng chọn khuyến mãi khác!");
                 hoaDon.setKhuyenMai(null);
-                hoaDonRepository.saveAndFlush(hoaDon);
-//                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
-                return "redireact:/buyer/cart";
+//                hoaDonRepository.saveAndFlush(hoaDon);
+
+                hoaDonService.add(hoaDon);
+                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
             } else if (sl < slmax) {    // nếu số lượng khuyến mãi nhỏ hơn sl đã set thì tăng sl lên 1
                 kmcsdl.setSoLuongDaDung(sl + 1);
                 khuyenMaiRepository.saveAndFlush(kmcsdl);
+
             }
         }
-//        KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
-//        if (khuyenMai != null) {
-//            khuyenMai.setSoLuong(khuyenMai.getSoLuong() - 1);
-//            khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() + 1);
-//            khuyenMaiRepository.saveAndFlush(khuyenMai);
-//        }
-
-
 
         hoaDonService.add(hoaDon);
 
@@ -755,7 +750,7 @@ public class CheckOutController {
         session.setAttribute("hoaDonTaoMoi", hoaDon);
 
         showData(model);
-
+//        return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
         return "online/checkout";
     }
 
@@ -782,7 +777,7 @@ public class CheckOutController {
             lichSuThanhToan.setTgThanhToan(date);
             lichSuThanhToan.setSoTienThanhToan(hoaDon.getTongTien());
             lichSuThanhToan.setNoiDungThanhToan("Đã thanh toán thành công hóa đơn " + hoaDon.getMaHD() + " ------   ||  Mã VNPAY : " + transactionId + " ||  Số tiền : " + totalPrice);
-            lichSuThanhToan.setKhachHang    (khachHang);
+            lichSuThanhToan.setKhachHang(khachHang);
             lichSuThanhToan.setHoaDon(hoaDon);
             lichSuThanhToan.setMaLSTT("LSTT" + khachHang.getMaKH() + generateRandomNumbers());
             lichSuThanhToan.setTrangThai(0);
@@ -859,8 +854,6 @@ public class CheckOutController {
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
 
         if (khuyenMai != null) {
-            GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
-
             Date date = new Date();
             HoaDon hoaDon = new HoaDon();
 
