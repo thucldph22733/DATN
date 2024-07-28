@@ -199,14 +199,7 @@
                                 <li><a href="/manage/dia-chi">Địa Chỉ </a></li>
                             </ul>
                         </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><img src="/images/img/icons/purchase1.svg" alt="img"><span> Lịch sử thanh toán</span>
-                                <span class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a href="/manage/history/delivery">Thanh toán tiền mặt</a></li>
-                                <li><a href="/manage/history/pay">Thanh toán chuyển khoản </a></li>
-                            </ul>
-                        </li>
+
                         <li class="submenu">
                             <a href="javascript:void(0);"><img src="/images/img/icons/users1.svg" alt="img"><span> Quản Lý Nhân Viên</span>
                                 <span class="menu-arrow"></span></a>
@@ -222,7 +215,7 @@
                                 <span class="menu-arrow"></span>
                             </a>
                             <ul>
-                                <li><a href="/manage/voucher-bill">Khuyến Mãi Hóa Đơn</a></li>
+                                <li><a href="/manage/khuyen-mai">Khuyến Mãi Hóa Đơn</a></li>
                             </ul>
                         </li>
                         <li>
@@ -994,7 +987,8 @@
 
                                         </div>
 
-                                    </div>         <div th:class="${tabpane6}" id="solid-rounded-justified-tab6">
+                                    </div>
+                                    <div th:class="${tabpane6}" id="solid-rounded-justified-tab6">
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="card">
@@ -1068,8 +1062,7 @@
 
                                                                             <td th:text="${#dates.format(bill.tgTao, 'HH:mm yyyy-MM-dd')}"></td>
 
-                                                                            <td th:if="${bill.trangThai == 5}"> Giao
-                                                                                thất bại
+                                                                            <td th:if="${bill.trangThai == 5}"> Đã hủy
                                                                             </td>
 
 
