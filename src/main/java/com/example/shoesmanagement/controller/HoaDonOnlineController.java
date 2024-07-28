@@ -98,7 +98,7 @@ public class HoaDonOnlineController {
             System.out.println("Danh sách sản phẩm rỗng hoặc null");
         }
         showData(model);
-        showTab1(model);
+        showTab0(model);
         model.addAttribute("listSanPham", listG);
 
         return "manage/manage-bill-online";
@@ -124,7 +124,7 @@ public class HoaDonOnlineController {
         model.addAttribute("billDelivery", billDelivery);
         model.addAttribute("showEditBillDelivery", true);
 
-        showTab3(model);
+        showTab5(model);
 
         showData(model);
 
@@ -194,7 +194,7 @@ public class HoaDonOnlineController {
 //                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
                 return "redireact:/buyer/cart";
             } else if (sl < slmax) {    // nếu số lượng khuyến mãi nhỏ hơn sl đã set thì tăng sl lên 1
-                kmcsdl.setSoLuongDaDung(sl + 1);
+                kmcsdl.setSoLuongDaDung(sl -1);
                 khuyenMaiRepository.saveAndFlush(kmcsdl);
             }
         }

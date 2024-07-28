@@ -27,6 +27,24 @@
     <link rel="stylesheet" href="/plugins/fontawesome/css/all.min.css">
 
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .page-wrapper {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .welcome-message {
+            font-size: 4em;
+            color: #FF6347; /* Màu Tomato */
+            font-family: 'Arial', sans-serif;
+            background-color: #F0F8FF; /* Màu Alice Blue */
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            width: fit-content;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body class="mini-sidebar">
 
@@ -132,7 +150,7 @@
                                 <li><a href="/manage/hinh-anh">Hình Ảnh</a></li>
                                 <li><a href="/manage/mau-sac">Màu Sắc</a></li>
                                 <li><a href="/manage/size">Size</a></li>
-                                <li><a href="/manage/test">t</a></li>
+
                             </ul>
                         </li>
                         <li class="submenu">
@@ -151,14 +169,7 @@
                                 <li><a href="/manage/dia-chi">Địa Chỉ </a></li>
                             </ul>
                         </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><img src="/images/img/icons/purchase1.svg" alt="img"><span> Lịch sử thanh toán</span>
-                                <span class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a href="/manage/history/delivery">Thanh toán tiền mặt</a></li>
-                                <li><a href="/manage/history/pay">Thanh toán chuyển khoản </a></li>
-                            </ul>
-                        </li>
+
                         <li class="submenu">
                             <a href="javascript:void(0);"><img src="/images/img/icons/users1.svg" alt="img"><span> Quản Lý Nhân Viên</span>
                                 <span class="menu-arrow"></span></a>
@@ -178,17 +189,23 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="/manage/giao-hang"><i data-feather="layers"></i><span> Quản lý giao hàng</span></a>
+
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
         <!--CODE TỪ DƯỚI NÀY-->
+
+
+
     </div>
 </div>
 <div class="page-wrapper">
     <!--    <div th:replace="manage/main :: main"></div>-->
+    <div class="welcome-message" style="margin-top: 13%;">
+        Chào mừng đến với Teezy Shop
+    </div>
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
