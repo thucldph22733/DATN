@@ -311,8 +311,7 @@
                         <div class="product__details__text">
                             <h4 th:text="${product.tenGiay}"></h4>
                             <h3 id="price-range" class="price-range"
-                                th:text="'₫' + ${#numbers.formatDecimal(minPrice, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' ' + '-' + ' ₫' + ${#numbers.formatDecimal(maxPrice, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" ></h3>
-                            <h3 id="price_product"></h3>
+                                th:text="'₫' + ${#numbers.formatDecimal(minPrice, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('[,.]$', '')} + ' - ₫' + ${#numbers.formatDecimal(maxPrice, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('[,.]$', '')}"></h3>         <h3 id="price_product"></h3>
                             <p th:text="${product.moTa}"></p>
 
                             <div class="product__details__option 2">
@@ -455,27 +454,27 @@
         }
     }
 </script>
-<script>
-    function capNhatGia(event) {
-        // Lấy giá trị của label
-        var giaTriLabel = event.target.textContent || event.target.innerText;
+    <script>
+        function capNhatGia(event) {
+            // Lấy giá trị của label
+            var giaTriLabel = event.target.textContent || event.target.innerText;
 
-        // Tìm phần ẩn tương ứng cho kích thước đã chọn
-        var phanAn = document.querySelector('section div[value="' + giaTriLabel + '"]');
+            // Tìm phần ẩn tương ứng cho kích thước đã chọn
+            var phanAn = document.querySelector('section div[value="' + giaTriLabel + '"]');
 
-        // Lấy giá trị giá từ phần ẩn
-        var gia = phanAn.querySelector('input:first-child').value;
+            // Lấy giá trị giá từ phần ẩn
+            var gia = phanAn.querySelector('input:first-child').value;
 
-        var giaDinhDang = gia.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
+            var giaDinhDang = gia.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
 
-        // Cập nhật giá hiển thị
-        var hienThiGia = document.getElementById('price-range');
-        hienThiGia.textContent = giaDinhDang;
-        // Cập nhật giá hiển thị
-        var hienThiGia = document.getElementById('price-range');
-        hienThiGia.textContent = '₫' + gia;
-    }
-</script>
+            // Cập nhật giá hiển thị
+            var hienThiGia = document.getElementById('price-range');
+            hienThiGia.textContent = giaDinhDang;
+            // Cập nhật giá hiển thị
+            var hienThiGia = document.getElementById('price-range');
+            hienThiGia.textContent = '₫' + gia;
+        }
+    </script>
 
 <script>
     document.getElementById("addToCartButton").addEventListener("click", function () {

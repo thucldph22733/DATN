@@ -98,7 +98,7 @@ public class HoaDonOnlineController {
             System.out.println("Danh sách sản phẩm rỗng hoặc null");
         }
         showData(model);
-        showTab1(model);
+        showTab0(model);
         model.addAttribute("listSanPham", listG);
 
         return "manage/manage-bill-online";
@@ -124,7 +124,7 @@ public class HoaDonOnlineController {
         model.addAttribute("billDelivery", billDelivery);
         model.addAttribute("showEditBillDelivery", true);
 
-        showTab3(model);
+        showTab5(model);
 
         showData(model);
 
@@ -194,7 +194,7 @@ public class HoaDonOnlineController {
 //                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
                 return "redireact:/buyer/cart";
             } else if (sl < slmax) {    // nếu số lượng khuyến mãi nhỏ hơn sl đã set thì tăng sl lên 1
-                kmcsdl.setSoLuongDaDung(sl + 1);
+                kmcsdl.setSoLuongDaDung(sl -1);
                 khuyenMaiRepository.saveAndFlush(kmcsdl);
             }
         }
@@ -202,6 +202,9 @@ public class HoaDonOnlineController {
         for (HoaDonChiTiet hdct : listHDCT) {
             ChiTietGiay chiTietGiay = hdct.getChiTietGiay();
             chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + hdct.getSoLuong());
+            if (chiTietGiay.getSoLuong() > 0) {
+                chiTietGiay.setTrangThai(1);
+            }
             giayChiTietService.save(chiTietGiay);
         }
 
@@ -209,13 +212,19 @@ public class HoaDonOnlineController {
 
 
         showData(model);
+        showTab0(model);
+        showTab1(model);
+        showTab2(model);
         showTab3(model);
+        showTab4(model);
+        showTab5(model);
+
         model.addAttribute("message", "Hóa đơn đã được hủy thành công.");
 
         return "manage/manage-bill-online";
     }
 
-    private void showTab1(Model model) {
+    private void showTab0(Model model) {
         model.addAttribute("activeAll", "nav-link active");
         model.addAttribute("xac_nhan_tt", "nav-link");
         model.addAttribute("van_chuyen", "nav-link");
@@ -224,21 +233,83 @@ public class HoaDonOnlineController {
         model.addAttribute("tabpane2", "tab-pane");
         model.addAttribute("tabpane3", "tab-pane");
         model.addAttribute("tabpane4", "tab-pane");
+        model.addAttribute("tabpane5", "tab-pane");
+        model.addAttribute("tabpane6", "tab-pane");
 
     }
 
-    private void showTab3(Model model) {
-
+    private void showTab1(Model model) {
         model.addAttribute("activeAll", "nav-link");
-        model.addAttribute("xac_nhan_tt", "nav-link");
-        model.addAttribute("van_chuyen", "nav-link active");
+        model.addAttribute("cho_xac_nhan", "nav-link active");
+        model.addAttribute("cho_giao_hang", "nav-link");
+        model.addAttribute("cho_lay_hang", "nav-link");
+        model.addAttribute("thanh_cong", "nav-link");
+        model.addAttribute("huy", "nav-link");
+        model.addAttribute("tabpane1", "tab-pane");
+        model.addAttribute("tabpane2", "tab-pane show active");
+        model.addAttribute("tabpane3", "tab-pane");
+        model.addAttribute("tabpane4", "tab-pane");
+        model.addAttribute("tabpane5", "tab-pane");
+        model.addAttribute("tabpane6", "tab-pane");
 
-
+    } private void showTab2(Model model) {
+        model.addAttribute("cho_xac_nhan", "nav-link");
+        model.addAttribute("cho_giao_hang", "nav-link");
+        model.addAttribute("cho_lay_hang", "nav-link active");
+        model.addAttribute("thanh_cong", "nav-link");
+        model.addAttribute("huy", "nav-link");
+        model.addAttribute("tabpane0", "tab-pane");
+        model.addAttribute("activeAll", "nav-link");
         model.addAttribute("tabpane1", "tab-pane");
         model.addAttribute("tabpane2", "tab-pane");
         model.addAttribute("tabpane3", "tab-pane show active");
         model.addAttribute("tabpane4", "tab-pane");
+        model.addAttribute("tabpane5", "tab-pane");
+
+    } private void showTab3(Model model) {
+        model.addAttribute("cho_xac_nhan", "nav-link");
+        model.addAttribute("cho_giao_hang", "nav-link active");
+        model.addAttribute("cho_lay_hang", "nav-link");
+        model.addAttribute("thanh_cong", "nav-link");
+        model.addAttribute("huy", "nav-link");
+        model.addAttribute("tabpane1", "tab-pane");
+        model.addAttribute("activeAll", "nav-link");
+        model.addAttribute("tabpane2", "tab-pane");
+        model.addAttribute("tabpane3", "tab-pane");
+        model.addAttribute("tabpane4", "tab-pane show active");
+        model.addAttribute("tabpane5", "tab-pane");
+        model.addAttribute("tabpane6", "tab-pane");
+
+    } private void showTab4(Model model) {
+        model.addAttribute("cho_xac_nhan", "nav-link");
+        model.addAttribute("cho_giao_hang", "nav-link");
+        model.addAttribute("cho_lay_hang", "nav-link");
+        model.addAttribute("thanh_cong", "nav-link active");
+        model.addAttribute("huy", "nav-link");
+        model.addAttribute("tabpane1", "tab-pane");
+        model.addAttribute("activeAll", "nav-link");
+        model.addAttribute("tabpane2", "tab-pane");
+        model.addAttribute("tabpane3", "tab-pane");
+        model.addAttribute("tabpane4", "tab-pane");
+        model.addAttribute("tabpane5", "tab-pane show active");
+        model.addAttribute("tabpane6", "tab-pane");
+
+    } private void showTab5(Model model) {
+        model.addAttribute("cho_xac_nhan", "nav-link");
+        model.addAttribute("cho_giao_hang", "nav-link");
+        model.addAttribute("cho_lay_hang", "nav-link");
+        model.addAttribute("thanh_cong", "nav-link");
+        model.addAttribute("huy", "nav-link active");
+        model.addAttribute("tabpane1", "tab-pane");
+        model.addAttribute("activeAll", "nav-link");
+        model.addAttribute("tabpane2", "tab-pane");
+        model.addAttribute("tabpane3", "tab-pane");
+        model.addAttribute("tabpane4", "tab-pane");
+        model.addAttribute("tabpane5", "tab-pane");
+        model.addAttribute("tabpane6", "tab-pane show active");
+
     }
+
 
     private void showData(Model model) {
 
@@ -403,29 +474,29 @@ public class HoaDonOnlineController {
     }
 
 
-    @PostMapping("/deleteChiTietGiay/{idCTG}/{idHD}")
-    @ResponseBody
-    public ResponseEntity<String> deleteChiTietGiay(@PathVariable UUID idCTG, @PathVariable UUID idHD) {
-        try {
-            // Lấy hóa đơn cần cập nhật
-            HoaDon hoaDon = hoaDonService.getOne(idHD);
-
-            // Lấy chi tiết giày cần xóa
-            ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idCTG);
-
-            // Xóa chi tiết hóa đơn
-            hoaDonChiTietRepository.deleteHoaDonChiTietByChiTietGiay(chiTietGiay.getIdCTG());
-
-            // Cập nhật lại hóa đơn
-            hoaDonService.updateHoaDon(hoaDon);
-
-            // Trả về phản hồi thành công
-            return ResponseEntity.ok("Sản phẩm đã được xoá khỏi giỏ hàng thành công!");
-        } catch (Exception e) {
-            // Trả về phản hồi lỗi
-            return ResponseEntity.status(500).body("Có lỗi xảy ra trong quá trình xoá sản phẩm!");
-        }
-    }
+//    @PostMapping("/deleteChiTietGiay/{idCTG}/{idHD}")
+//    @ResponseBody
+//    public ResponseEntity<String> deleteChiTietGiay(@PathVariable UUID idCTG, @PathVariable UUID idHD) {
+//        try {
+//            // Lấy hóa đơn cần cập nhật
+//            HoaDon hoaDon = hoaDonService.getOne(idHD);
+//
+//            // Lấy chi tiết giày cần xóa
+//            ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idCTG);
+//
+//            // Xóa chi tiết hóa đơn
+//            hoaDonChiTietRepository.deleteHoaDonChiTietByChiTietGiay(chiTietGiay.getIdCTG());
+//
+//            // Cập nhật lại hóa đơn
+//            hoaDonService.updateHoaDon(hoaDon);
+//
+//            // Trả về phản hồi thành công
+//            return ResponseEntity.ok("Sản phẩm đã được xoá khỏi giỏ hàng thành công!");
+//        } catch (Exception e) {
+//            // Trả về phản hồi lỗi
+//            return ResponseEntity.status(500).body("Có lỗi xảy ra trong quá trình xoá sản phẩm!");
+//        }
+//    }
 
 
     @GetMapping("/hoadon/{idHoaDon}")

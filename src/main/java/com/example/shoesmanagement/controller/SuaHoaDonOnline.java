@@ -7,15 +7,14 @@ import com.example.shoesmanagement.viewModel.GiayViewModel;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RequestMapping("/manage/changehd/")
 @Controller
@@ -91,6 +90,8 @@ public class SuaHoaDonOnline {
     @Autowired
     private HttpSession httpSession;
 
+
+    private double dieuKienKhuyenMai = 0;
     @GetMapping("/online/{idHD}")
     private String manageBillOnline(@PathVariable UUID idHD, Model model, HttpSession session) {
         // Kiểm tra quyền đăng nhập
@@ -115,6 +116,7 @@ public class SuaHoaDonOnline {
         HoaDon hoaDon = hoaDonService.getOne(idHD);
         List<HoaDonChiTiet> hoaDonChiTiets = hoaDon.getHoaDonChiTiets();
 
+
         model.addAttribute("hoaDon", hoaDon);
         model.addAttribute("hoaDonChiTiets", hoaDonChiTiets);
         model.addAttribute("items", chiTietGiayList);
@@ -131,6 +133,33 @@ public class SuaHoaDonOnline {
         showTab1(model);
 
         return "manage/sua_hd_online";
+    }
+
+
+    @PostMapping("/confirmCancelBill/{idHD}")
+    public ResponseEntity<Map<String, String>> confirmCancelBill(@PathVariable UUID idHD, HttpSession session,Model model
+    ) {
+        Map<String, String> response = new HashMap<>();
+
+        // Kiểm tra quyền đăng nhập
+        if (session.getAttribute("managerLogged") == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        // Lấy hóa đơn cụ thể dựa vào idHD
+        HoaDon hoaDon = hoaDonService.getOne(idHD);
+        model.addAttribute("hoaDon", hoaDon);
+
+        // Cập nhật trạng thái hóa đơn nếu không có sản phẩm nào
+        if (hoaDon.getHoaDonChiTiets().isEmpty()) {
+            hoaDon.setTrangThai(5);
+            hoaDonService.save(hoaDon); // Lưu lại thay đổi
+            response.put("status", "updated");
+        } else {
+            response.put("status", "not_updated");
+        }
+
+        return ResponseEntity.ok(response);
     }
 
 
@@ -255,11 +284,7 @@ public class SuaHoaDonOnline {
         UUID idHoaDon = (UUID) session.getAttribute("idHoaDon");
 
         // Kiểm tra nếu idHoaDon bị null và xử lý
-        if (idHoaDon == null) {
-            redirectAttributes.addFlashAttribute("messageError", true);
-            redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
-            return "redirect:/manage/bill/online";
-        }
+
 
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
@@ -270,6 +295,7 @@ public class SuaHoaDonOnline {
         model.addAttribute("gioHang", hoaDonChiTietService.findByIdHoaDon(idHoaDon));
         model.addAttribute("giay", giay);
         model.addAttribute("listChiTietGiay", sizeList);
+        model.addAttribute("idHoaDon", idHoaDon);
         model.addAttribute("showModal1", true);
         model.addAttribute("tongTienSanPham", tongTienSanPham);
         model.addAttribute("tongTien", tongTien);
@@ -312,7 +338,6 @@ public class SuaHoaDonOnline {
         }
 
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHoaDon, idChiTietGiay);
-        model.addAttribute("hdct", hoaDonChiTiet);
         if (hoaDonChiTiet != null) {
             // Giữ nguyên đơn giá, chỉ cập nhật số lượng
             hoaDonChiTiet.setSoLuong(hoaDonChiTiet.getSoLuong() + soLuong);
@@ -332,8 +357,13 @@ public class SuaHoaDonOnline {
             cart.add(hdct);
         }
 
-        hoaDon.setTongTienSanPham(hoaDon.getTongTienSanPham() + chiTietGiay.getGiaBan() * soLuong);
+
+        // Cập nhật số lượng tồn kho
+        chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - soLuong);
         giayChiTietService.save(chiTietGiay);
+
+        hoaDon.setTongTienSanPham(hoaDon.getTongTienSanPham() + chiTietGiay.getGiaBan() * soLuong);
+
         hoaDonService.save(hoaDon);
         hoaDonService.updateHoaDon(hoaDon);
 
@@ -341,4 +371,113 @@ public class SuaHoaDonOnline {
         redirectAttributes.addFlashAttribute("tb", "Thêm vào giỏ hàng thành công");
         return "redirect:/manage/changehd/online/" + idHoaDon;
     }
+
+
+    @PostMapping("/deleteChiTietGiay/{idCTG}/{idHD}")
+    @ResponseBody
+    public ResponseEntity<String> deleteChiTietGiay(@PathVariable UUID idCTG, @PathVariable UUID idHD, Model model) {
+        try {
+            System.out.println("Received idCTG: " + idCTG);
+            System.out.println("Received idHD: " + idHD);
+
+            HoaDon hoaDon = hoaDonService.getOne(idHD);
+            ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idCTG);
+
+
+            // Lấy thông tin chi tiết sản phẩm trong hóa đơn
+            HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHD, idCTG);
+            if (hoaDonChiTiet != null) {
+                int soLuong = hoaDonChiTiet.getSoLuong();
+                List<HoaDonChiTiet> listHDCT =  hoaDonChiTietService.findByIdHoaDon(idHD);
+                if(listHDCT.size() <= 1){
+                    return ResponseEntity.status(400).body("Không thể xóa sản phẩm. Hóa đơn phải có ít nhất một sản phẩm.");
+                }else {
+
+                    // Tăng số lượng sản phẩm trong kho
+                    chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + soLuong);
+                    giayChiTietService.save(chiTietGiay);
+
+                    // Xóa sản phẩm khỏi hóa đơn
+                    hoaDonChiTietRepository.deleteHoaDonChiTietByChiTietGiay(chiTietGiay.getIdCTG());
+
+                    hoaDonService.updateHoaDon(hoaDon);
+                    model.addAttribute("idCTG", idCTG);
+                }
+            } else {
+                return ResponseEntity.status(404).body("Không tìm thấy chi tiết hóa đơn!");
+            }
+
+            return ResponseEntity.ok("Sản phẩm đã được xoá khỏi hóa đơn thành công!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Không thể xóa sản phẩm. Hóa đơn phải có ít nhất một sản phẩm.");
+        }
+    }
+
+
+
+    @PostMapping("/updateQuantity1")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> updateQuantity1(@RequestParam UUID idCTG, @RequestParam int quantity) {
+        UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
+        ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idCTG);
+        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHoaDon, idCTG);
+
+        Map<String, Object> response = new HashMap<>();
+
+        if (chiTietGiay == null || hoaDonChiTiet == null) {
+            System.err.println("ChiTietGiay hoặc HoaDonChiTiet không tồn tại");
+            response.put("error", "Sản phẩm không tồn tại");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+
+        if (quantity > chiTietGiay.getSoLuong()) {
+            response.put("error", "Số lượng trong kho không đủ");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        } else {
+            HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).get();
+            hoaDon.setKhuyenMai(null);
+            hoaDonRepository.saveAndFlush(hoaDon);
+
+            int previousQuantity = hoaDonChiTiet.getSoLuong();
+            hoaDonChiTiet.setSoLuong(quantity);
+
+            // Đặt đơn giá mà không nhân với số lượng
+            double donGia = chiTietGiay.getGiaBan();
+            hoaDonChiTiet.setDonGia(donGia);
+            hoaDonChiTietService.add(hoaDonChiTiet);
+
+            int quantityDifference = quantity - previousQuantity;
+            chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - quantityDifference);
+            giayChiTietService.update(chiTietGiay);
+
+            // Tính toán lại tổng tiền của hóa đơn
+            double totalProductAmount = hoaDon.getHoaDonChiTiets().stream()
+                    .mapToDouble(hdct -> hdct.getDonGia() * hdct.getSoLuong())
+                    .sum();
+            double newTotalAmount = totalProductAmount + hoaDon.getTienShip();
+            hoaDon.setTongTien(newTotalAmount);
+
+            // Tính toán lại tổng số lượng sản phẩm trong hóa đơn
+            int newTotalQuantity = hoaDon.getHoaDonChiTiets().stream().mapToInt(HoaDonChiTiet::getSoLuong).sum();
+            hoaDon.setTongSP(newTotalQuantity);
+            hoaDonService.add(hoaDon);
+            hoaDonService.updateHoaDon(hoaDon);
+
+
+            response.put("tongTienSanPham", newTotalAmount);
+            response.put("tongSoLuongSanPham", newTotalQuantity);
+
+            System.out.println("Updated HoaDonChiTiet: " + hoaDonChiTiet);
+            System.out.println("Updated ChiTietGiay: " + chiTietGiay);
+            System.out.println("Updated HoaDon: " + hoaDon);
+
+            return ResponseEntity.ok(response);
+        }
+    }
+
+
+
+
+
 }

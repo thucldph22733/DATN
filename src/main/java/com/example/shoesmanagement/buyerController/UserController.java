@@ -886,12 +886,20 @@ public class UserController {
             hoaDonHuy.setLyDoHuy(lyDoHuy);
             hoaDonHuy.setTgHuy(new Date());
             hoaDonService.add(hoaDonHuy);
+
             List<HoaDonChiTiet> listHDCT = hoaDonHuy.getHoaDonChiTiets();
             for (HoaDonChiTiet hdct : listHDCT) {
                 ChiTietGiay chiTietGiay = hdct.getChiTietGiay();
                 chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + hdct.getSoLuong());
+
+
+                if (chiTietGiay.getSoLuong() > 0) {
+                    chiTietGiay.setTrangThai(1);
+                }
+
                 giayChiTietService.save(chiTietGiay);
             }
+
         }
         return "redirect:/buyer/purchase/cancel";
     }
