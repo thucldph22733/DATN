@@ -647,6 +647,7 @@ public class CheckOutController {
 
         if (hoaDon.getKhuyenMai() != null) {   // nếu hoá đơn có dùng khuyến mãi
             KhuyenMai kmcsdl = khuyenMaiRepository.findById(hoaDon.getKhuyenMai().getIdKM()).get();
+
             int slmax = kmcsdl.getSoLuong();
             int sl = kmcsdl.getSoLuongDaDung();
             if (sl == slmax) {    // nếu số lượng khuyến mãi đã hết thì xoá mã khuyến mãi ra khỏi hoá đơn và trả về trang thanh toán
@@ -654,11 +655,19 @@ public class CheckOutController {
                 hoaDon.setKhuyenMai(null);
 //                hoaDonRepository.saveAndFlush(hoaDon);
                 hoaDonService.add(hoaDon);
-                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
+//                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
+                String checkoutParams = (String) session.getAttribute("checkoutParams" + khachHang.getIdKH());
+                String updatedParams = Arrays.stream(checkoutParams.split("&"))
+                        .filter(param -> !param.startsWith("idKM="))
+                        .collect(Collectors.joining("&"));
+                // Thêm các tham số còn lại vào redirectAttributes
+                redirectAttribute.addAttribute("params", updatedParams);
+                hoaDonRepository.saveAndFlush(hoaDon);
+                return "redirect:/buyer/checkout?" + updatedParams;
+//                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
             } else if (sl < slmax) {    // nếu số lượng khuyến mãi nhỏ hơn sl đã set thì tăng sl lên 1
                 kmcsdl.setSoLuongDaDung(sl + 1);
                 khuyenMaiRepository.saveAndFlush(kmcsdl);
-
             }
         }
 
@@ -829,7 +838,6 @@ public class CheckOutController {
             return "online/user";
         }
     }
-
 
     public String generateRandomNumbers() {
         Random random = new Random();

@@ -278,6 +278,19 @@
     .btn-primary:hover {
         background-color: #0069d9;
     }
+    #backButton {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #backButton:hover {
+        background-color: #0056b3;
+    }
+
 
 
 
@@ -432,10 +445,7 @@
                                 <li><a href="/manage/khuyen-mai">Khuyến Mãi Hóa Đơn</a></li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="/manage/giao-hang"><i data-feather="layers"></i><span> Quản lý giao hàng</span>
-                            </a>
-                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -450,7 +460,7 @@
             <div th:if="${messageSuccess}" class="notification notification-success">
                 <i class="fas fa-check-circle"></i>
                 <span class="notification-close" onclick="this.parentElement.style.display='none';">&times;</span>
-                <p th:text="${tb}">Thêm vào giỏ hàng thành công</p>
+                <p th:text="${tb}">Thêm vào hóa đơn thành công</p>
             </div>
             <div th:if="${messageError}" class="notification notification-error">
                 <i class="fas fa-exclamation-circle"></i>
@@ -463,9 +473,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Chỉnh sửa hóa đơn [[${hoaDon.idHD}]]</h5>
-                            <button type="button" git class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
+                            <button id="backButton" >×</button>
                         </div>
                         <div class="modal-body">
                             <div class="tab-content">
@@ -522,7 +530,7 @@
                                                                         <h3 style="font-size: 12pt">[[${product.tenGiay}]]</h3>
                                                                     </td>
                                                                     <td>
-                                                                        <h3 style="font-size: 12pt" th:text="${#numbers.formatDecimal(product.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h3>
+                                                                        <h3 style="font-size: 12pt" th:text="${#numbers.formatDecimal(product.giaBan, 0, 'COMMA', 0, 'POINT')} + ' đ'"></h3>
                                                                     </td>
                                                                     <td>
                                                                         <h4 style="font-size: 12pt" th:text="${product.mauSac}"></h4>
@@ -545,7 +553,7 @@
                                             </div>
                                             <div class="info-row">
                                                 <span class="info-label">Tổng tiền hóa đơn:</span>
-                                                <span th:text="${tongTien+' VNĐ'}"></span>
+                                                <span th:text="${#numbers.formatDecimal(tongTien, 0, 'COMMA', 0, 'POINT' ) +' VNĐ'}"></span>
                                             </div>
                                             <div class="info-row">
                                                 <span class="info-label">Trạng thái hóa đơn:</span>
@@ -585,7 +593,7 @@
                                                     <a th:href="@{'/buyer/shop-details/' + ${x.chiTietGiay.giay.idGiay} + '/' + ${x.chiTietGiay.mauSac.idMau}}">
                                                         <h6 style="margin-top: -22px;" th:text="${x.chiTietGiay.giay.tenGiay}"></h6>
                                                     </a>
-                                                    <h5 class="cart__price" th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
+                                                    <h5 class="cart__price" th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 0, 'POINT')}"></h5>
                                                 </div>
                                             </td>
                                             <td style="width: 175px;" class="quantity__item">
@@ -630,7 +638,7 @@
 
 
                                             <td style="width: 140px;" class="cart__price totalAmount"
-                                                th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}">
+                                                th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 0, 'POINT')}">
                                             </td>
                                             <td>
                                                 <!-- Container for buttons with Flexbox -->
@@ -713,7 +721,7 @@
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <button type="submit" class="btn btn-secondary btn-center mt-3">Thêm giỏ hàng</button>
+                                                <button type="submit" class="btn btn-secondary btn-center mt-3">Thêm hóa đơn</button>
                                             </form>
                                         </div>
                                     </div>
@@ -900,7 +908,7 @@
                     console.error('Error:', error);
                     Swal.fire(
                         'Lỗi!',
-                        'Có lỗi xảy ra trong quá trình xoá sản phẩm!',
+                        'Không thể xóa sản phẩm. Hóa đơn phải có ít nhất một sản phẩm.',
                         'error'
                     );
                 });
@@ -1018,9 +1026,11 @@
         }
 
 
-
-
-
+    </script>
+    <script>
+        document.getElementById("backButton").addEventListener("click", function() {
+            window.location.href = "/manage/bill/online";
+        });
     </script>
 
 

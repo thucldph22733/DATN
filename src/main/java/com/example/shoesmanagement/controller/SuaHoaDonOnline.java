@@ -136,6 +136,32 @@ public class SuaHoaDonOnline {
     }
 
 
+    @PostMapping("/confirmCancelBill/{idHD}")
+    public ResponseEntity<Map<String, String>> confirmCancelBill(@PathVariable UUID idHD, HttpSession session,Model model
+    ) {
+        Map<String, String> response = new HashMap<>();
+
+        // Kiểm tra quyền đăng nhập
+        if (session.getAttribute("managerLogged") == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        // Lấy hóa đơn cụ thể dựa vào idHD
+        HoaDon hoaDon = hoaDonService.getOne(idHD);
+        model.addAttribute("hoaDon", hoaDon);
+
+        // Cập nhật trạng thái hóa đơn nếu không có sản phẩm nào
+        if (hoaDon.getHoaDonChiTiets().isEmpty()) {
+            hoaDon.setTrangThai(5);
+            hoaDonService.save(hoaDon); // Lưu lại thay đổi
+            response.put("status", "updated");
+        } else {
+            response.put("status", "not_updated");
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
 
     private void showData(Model model) {
 
@@ -357,28 +383,34 @@ public class SuaHoaDonOnline {
             HoaDon hoaDon = hoaDonService.getOne(idHD);
             ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idCTG);
 
+
             // Lấy thông tin chi tiết sản phẩm trong hóa đơn
             HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHD, idCTG);
             if (hoaDonChiTiet != null) {
                 int soLuong = hoaDonChiTiet.getSoLuong();
+                List<HoaDonChiTiet> listHDCT =  hoaDonChiTietService.findByIdHoaDon(idHD);
+                if(listHDCT.size() <= 1){
+                    return ResponseEntity.status(400).body("Không thể xóa sản phẩm. Hóa đơn phải có ít nhất một sản phẩm.");
+                }else {
 
-                // Tăng số lượng sản phẩm trong kho
-                chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + soLuong);
-                giayChiTietService.save(chiTietGiay);
+                    // Tăng số lượng sản phẩm trong kho
+                    chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + soLuong);
+                    giayChiTietService.save(chiTietGiay);
 
-                // Xóa sản phẩm khỏi hóa đơn
-                hoaDonChiTietRepository.deleteHoaDonChiTietByChiTietGiay(chiTietGiay.getIdCTG());
+                    // Xóa sản phẩm khỏi hóa đơn
+                    hoaDonChiTietRepository.deleteHoaDonChiTietByChiTietGiay(chiTietGiay.getIdCTG());
 
-                hoaDonService.updateHoaDon(hoaDon);
-                model.addAttribute("idCTG", idCTG);
+                    hoaDonService.updateHoaDon(hoaDon);
+                    model.addAttribute("idCTG", idCTG);
+                }
             } else {
                 return ResponseEntity.status(404).body("Không tìm thấy chi tiết hóa đơn!");
             }
 
-            return ResponseEntity.ok("Sản phẩm đã được xoá khỏi giỏ hàng thành công!");
+            return ResponseEntity.ok("Sản phẩm đã được xoá khỏi hóa đơn thành công!");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body("Có lỗi xảy ra trong quá trình xoá sản phẩm!");
+            return ResponseEntity.status(500).body("Không thể xóa sản phẩm. Hóa đơn phải có ít nhất một sản phẩm.");
         }
     }
 
