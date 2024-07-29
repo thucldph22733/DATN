@@ -218,10 +218,7 @@
                                 <li><a href="/manage/khuyen-mai">Khuyến Mãi Hóa Đơn</a></li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="/manage/giao-hang"><i data-feather="layers"></i><span> Quản lý giao hàng</span>
-                            </a>
-                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -567,7 +564,7 @@
 
                                                                             <td th:text="${bill.khachHang.hoTenKH}"></td>
                                                                             <td th:text="${bill.tongSP}"></td>
-                                                                            <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT')}"></td>
+                                                                            <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 0, 'POINT')}"></td>
                                                                             <td>
                                                                                 <i class="si si-eye"
                                                                                    th:data-bs-toggle="modal"
@@ -680,7 +677,7 @@
                                                                             </td>
 
                                                                             <td th:text="${bill.khachHang.hoTenKH}"></td>
-                                                                            <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+                                                                            <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 0, 'POINT')}"></td>
                                                                             <td th:if="${bill.trangThai == 1}">Chờ xác
                                                                                 nhận
                                                                             </td>
@@ -781,7 +778,7 @@
 
 
                                                                             <td th:text="${bill.khachHang.hoTenKH}"></td>
-                                                                            <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+                                                                            <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 0, 'POINT')}"></td>
                                                                             <td>
                                                                                 <i class="si si-speedometer"
                                                                                    th:data-bs-toggle="modal"
@@ -870,7 +867,7 @@
 
 
                                                                             <td th:text="${bill.khachHang.hoTenKH}"></td>
-                                                                            <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+                                                                            <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 0, 'POINT')}"></td>
                                                                             <td>
                                                                                 <i class="si si-speedometer"
                                                                                    th:data-bs-toggle="modal"
@@ -963,7 +960,7 @@
 
 
                                                                             <td th:text="${bill.khachHang.hoTenKH}"></td>
-                                                                            <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+                                                                            <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 0, 'POINT')}"></td>
                                                                             <td th:if="${bill.tgThanhToan != null}"
                                                                                 th:text="${#dates.format(bill.tgThanhToan, 'HH:mm yyyy-MM-dd')}"></td>
                                                                             <td th:if="${bill.tgThanhToan == null}">Chưa
@@ -1067,7 +1064,7 @@
 
 
                                                                             <td th:text="${bill.khachHang.hoTenKH}"></td>
-                                                                            <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+                                                                            <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 0, 'POINT')}"></td>
                                                                             <td th:if="${bill.tgHuy != null}"
                                                                                 th:text="${#dates.format(bill.tgHuy, 'HH:mm yyyy-MM-dd')}"></td>
                                                                             <td th:if="${bill.tgHuy == null}">Chưa
@@ -1141,7 +1138,7 @@
                             <div class="col-lg-4 col-sm-12 col-12">
                                 <div class="form-group">
                                     <label style="border: none; font-size: 12pt; font-weight: 600;">Tổng tiền</label>
-                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT')}"></p>
+                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 0, 'POINT')}"></p>
                                 </div>
                             </div>
                             <div class="col-lg-5 col-sm-12 col-12">
@@ -1509,14 +1506,15 @@
                             <div class="col-lg-2 col-sm-12 col-12">
                                 <div class="form-group">
                                     <label style="border: none; font-size: 12pt; font-weight: 600;">Tổng tiền</label>
-                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT')}"></p>
+                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 0, 'POINT')}"></p>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-12 col-12">
                                 <div class="form-group">
-                                    <label style="border: none; font-size: 12pt; font-weight: 600;">Tổng tiền đã
-                                        giảm</label>
-                                    <p th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT')}"></p>
+                                    <label style="border: none; font-size: 12pt; font-weight: 600;">Giá tiền giảm</label>
+                                    <p th:if="${bill.khuyenMai != null and bill.khuyenMai.giaTienGiam > 0}"
+                                       th:text="'₫' + ${#numbers.formatDecimal(bill.khuyenMai.giaTienGiam, 0, 'COMMA', 0, 'POINT')}"></p>
+                                    <p th:if="${bill.khuyenMai == null or bill.khuyenMai.giaTienGiam <= 0}">₫0</p>
                                 </div>
                             </div>
 
