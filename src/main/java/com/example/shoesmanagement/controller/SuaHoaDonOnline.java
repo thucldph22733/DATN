@@ -407,7 +407,7 @@ public class SuaHoaDonOnline {
                 return ResponseEntity.status(404).body("Không tìm thấy chi tiết hóa đơn!");
             }
 
-            return ResponseEntity.ok("Sản phẩm đã được xoá khỏi giỏ hàng thành công!");
+            return ResponseEntity.ok("Sản phẩm đã được xoá khỏi hóa đơn thành công!");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Không thể xóa sản phẩm. Hóa đơn phải có ít nhất một sản phẩm.");
