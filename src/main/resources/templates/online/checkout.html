@@ -180,7 +180,7 @@
         <form action="/buyer/checkout/placeoder" method="post" id="orderForm" onsubmit="return confirmOrder()">
 
 
-        <div class="checkout__form">
+            <div class="checkout__form">
 
                 <!--Show Dia Chi Khach Hang Begin-->
                 <div th:if="${addNewAddressNotNull}" class="row">
@@ -290,9 +290,9 @@
 
                             <div class="col-lg-3" style="text-align: center;">
 
-<!--                                <p style="font-size: 13pt; font-weight: 700;"-->
-<!--                                   th:text="'₫' + ${#numbers.formatDecimal(tongTienSP, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}">-->
-<!--                                </p> -->
+                                <!--                                <p style="font-size: 13pt; font-weight: 700;"-->
+                                <!--                                   th:text="'₫' + ${#numbers.formatDecimal(tongTienSP, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}">-->
+                                <!--                                </p> -->
                                 <p style="font-size: 13pt; font-weight: 700;"
 
                                    th:text="'₫' + ${#numbers.formatDecimal(total, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
@@ -432,7 +432,11 @@
                                 <p style="font-size: 12pt; font-weight: 700;">Tổng tiền đơn hàng:</p>
                             </div>
                             <div class="col-lg-2">
+<<<<<<< HEAD
 <!--                                <input type="text" th:value="${giaTienGiam}" id="tienGiam" style="display: none">-->
+=======
+                                <!--                                <input type="text" th:value="${giaTienGiam}" id="tienGiam" style="display: none">-->
+>>>>>>> dfd759a0c2fbe224a1256a14a2c292032c0efa91
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billPlaceOrder.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p id="tienGiam" th:text="'₫' + ${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 0, 'POINT')}"></p>
                                 <p th:text="'₫' + ${#numbers.formatDecimal(shippingFee, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>

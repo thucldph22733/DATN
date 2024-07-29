@@ -97,7 +97,7 @@ public class HoaDonOnlineController {
             System.out.println("Danh sách sản phẩm rỗng hoặc null");
         }
         showData(model);
-        showTab1(model);
+        showTab0(model);
         model.addAttribute("listSanPham", listG);
 
         return "manage/manage-bill-online";
@@ -123,8 +123,7 @@ public class HoaDonOnlineController {
         model.addAttribute("billDelivery", billDelivery);
         model.addAttribute("showEditBillDelivery", true);
 
-        showTab3(model);
-
+        showTab5(model);
         showData(model);
 
 

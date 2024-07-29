@@ -297,21 +297,10 @@
                         </div>
 
                         <div class="col-lg-6 ">
-                            <form class="row g-3">
-                                <div class="col-auto">
-                                    <label class="form-label">Từ</label>
-                                    <input type="date" class="form-control" id="tuNgay">
-                                </div>
-
-                                <div class="col-auto">
-                                    <label class="form-label">Đến</label>
-                                    <input type="date" class="form-control" id="denNgay">
-                                </div>
-
-                                <div class="col-auto">
-                                    <button type="submit" class="btn btn-primary mb-3">Tìm</button>
-                                </div>
-                            </form>
+                            <label for="year-select">Chọn năm:</label>
+                            <select id="year-select">
+                                <!-- Các option sẽ được tạo động -->
+                            </select>
                         </div>
                     </div>
 
@@ -608,6 +597,129 @@
         });
 </script>
 
+<script>
+    Highcharts.chart('container', {
 
+        title: {
+            text: 'U.S Solar Employment Growth',
+            align: 'left'
+        },
+
+        subtitle: {
+            text: 'By Job Category. Source: <a href="https://irecusa.org/programs/solar-jobs-census/" target="_blank">IREC</a>.',
+            align: 'left'
+        },
+
+        yAxis: {
+            title: {
+                text: 'Number of Employees'
+            }
+        },
+
+        xAxis: {
+            accessibility: {
+                rangeDescription: 'Range: 2010 to 2022'
+            }
+        },
+
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+
+        plotOptions: {
+            series: {
+                label: {
+                    connectorAllowed: false
+                },
+                pointStart: 2010
+            }
+        },
+
+        series: [{
+            name: 'Installation & Developers',
+            data: [
+                43934, 48656, 65165, 81827, 112143, 142383,
+                171533, 165174, 155157, 161454, 154610, 168960, 171558
+            ]
+        }, {
+            name: 'Other',
+            data: [
+                21908, 5548, 8105, 11248, 8989, 11816, 18274,
+                17300, 13053, 11906, 10073, 11471, 11648
+            ]
+        }],
+
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
+                    }
+                }
+            }]
+        }
+
+    });
+</script>
+
+<script>
+    // Xác định khoảng năm mà bạn muốn hiển thị
+    const startYear = 2000;
+    const endYear = 2300;
+
+    // Lấy phần tử select
+    const yearSelect = document.getElementById('year-select');
+
+    // Tạo các option
+    for (let year = startYear; year <= endYear; year++) {
+        const option = document.createElement('option');
+        option.value = year;
+        option.text = year;
+        yearSelect.add(option);
+    }
+
+    yearSelect.addEventListener('change', function() {
+        const selectedYear = yearSelect.value;
+        console.log('Năm đã chọn:', selectedYear);
+        // Thực hiện các xử lý khác tại đây
+    });
+</script>
+<script>
+    const ctx = document.getElementById('myChart');
+    const monthNames = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6",
+        "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
+
+    const valueOff = [8, 15, 2, 4, 1, 2]
+    const valueOnl = [12, 19, 3, 5, 2, 3]
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: monthNames,
+            datasets: [
+                {
+                    label: 'Onl:',
+                    data: valueOnl,
+                    borderWidth: 1
+                },
+                {
+                    label: 'Off:',
+                    data: valueOff,
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            // Các tuỳ chọn khác cho biểu đồ
+        }
+    });
+</script>
 </body>
 </html>

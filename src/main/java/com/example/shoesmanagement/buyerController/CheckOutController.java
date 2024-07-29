@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class CheckOutController {
@@ -442,14 +443,26 @@ public class CheckOutController {
 
         if (hoaDon.getKhuyenMai() != null) {   // nếu hoá đơn có dùng khuyến mãi
             KhuyenMai kmcsdl = khuyenMaiRepository.findById(hoaDon.getKhuyenMai().getIdKM()).get();
+
             int slmax = kmcsdl.getSoLuong();
             int sl = kmcsdl.getSoLuongDaDung();
             if (sl == slmax) {    // nếu số lượng khuyến mãi đã hết thì xoá mã khuyến mãi ra khỏi hoá đơn và trả về trang thanh toán
                 redirectAttribute.addFlashAttribute("successMessage", "Rất tiếc, số lượng khuyến mãi đã hết. Vui lòng chọn khuyến mãi khác!");
                 hoaDon.setKhuyenMai(null);
+                String checkoutParams = (String) session.getAttribute("checkoutParams" + khachHang.getIdKH());
+                String updatedParams = Arrays.stream(checkoutParams.split("&"))
+                        .filter(param -> !param.startsWith("idKM="))
+                        .collect(Collectors.joining("&"));
+
+                // Thêm các tham số còn lại vào redirectAttributes
+                redirectAttribute.addAttribute("params", updatedParams);
+
+
                 hoaDonRepository.saveAndFlush(hoaDon);
 
-                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
+//                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
+                return "redirect:/buyer/checkout?" + updatedParams;
+//                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
             } else if (sl < slmax) {    // nếu số lượng khuyến mãi nhỏ hơn sl đã set thì tăng sl lên 1
                 kmcsdl.setSoLuongDaDung(sl + 1);
                 khuyenMaiRepository.saveAndFlush(kmcsdl);
@@ -645,6 +658,7 @@ public class CheckOutController {
             } else if (sl < slmax) {    // nếu số lượng khuyến mãi nhỏ hơn sl đã set thì tăng sl lên 1
                 kmcsdl.setSoLuongDaDung(sl + 1);
                 khuyenMaiRepository.saveAndFlush(kmcsdl);
+
             }
         }
 

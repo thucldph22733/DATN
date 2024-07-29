@@ -118,10 +118,10 @@
                     <div class="dropdown-menu menu-drop-user">
                         <div class="profilename">
                             <div class="profileset">
-                                <span class="user-img">
-                                    <img th:src="@{'/images/imgsNhanVien/'+ ${session.managerLogged.AnhNV}}" alt="">
-                                    <span class="status online"></span>
-                                </span>
+                                                                                    <span class="user-img"><img
+                                                                                            th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}"
+                                                                                            alt="">
+                                                                                    <span class="status online"></span></span>
                                 <div class="profilesets">
                                     <h6 th:text="${session.managerLogged.hoTenNV}"></h6>
                                     <h5 th:text="${session.managerLogged.chucVu.tenCV}"></h5>
@@ -620,7 +620,7 @@
 
                                         </div>
                                     </div>
-                                    <div th:class="${tabpane2}" id="solid-rounded-justified-tab2">
+                                    <div th:class="${tabpane2}" id=" solid-rounded-justified-tab2">
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="card">
