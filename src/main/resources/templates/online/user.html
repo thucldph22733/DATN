@@ -115,8 +115,7 @@
     </head>
     <style>
         .card {
-            border: 1px solid #ddd;
-            border-radius: 5px;
+
             padding: 20px;
             margin: 20px 0;
         }
@@ -2232,9 +2231,9 @@
 
                                 <div class="row" style="margin: 15px 0 15px 0;">
                                     <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                        <input type="radio" value="lyDoKhac" style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <input type="radio" value="lyDoKhac" style="height: 20px; width: 20px;" name="lyDoHuy" checked>
                                         <p style="margin: 0 15px 0 30px; font-size: 12pt; font-weight: 500;">Khác</p>
-                                        <textarea name="hutThuocNenDauDaDay" cols="25" rows="3"></textarea>
+                                        <textarea name="customReason" cols="25" rows="3"></textarea>
                                     </div>
                                 </div>
 
@@ -2293,9 +2292,9 @@
 
                                 <div class="row" style="margin: 15px 0 15px 0;">
                                     <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                        <input type="radio" value="lyDoKhac" style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <input type="radio" value="lyDoKhac" style="height: 20px; width: 20px;" name="lyDoHuy" checked>
                                         <p style="margin: 0 15px 0 30px; font-size: 12pt; font-weight: 500;">Khác</p>
-                                        <textarea name="hutThuocNenDauDaDay" cols="25" rows="3"></textarea>
+                                        <textarea name="customReason" cols="25" rows="3"></textarea>
                                     </div>
                                 </div>
 
@@ -2360,9 +2359,9 @@
 
                                 <div class="row" style="margin: 15px 0 15px 0;">
                                     <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                        <input type="radio" value="lyDoKhac" style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <input type="radio" value="lyDoKhac" style="height: 20px; width: 20px;" name="lyDoHuy" checked>
                                         <p style="margin: 0 15px 0 30px; font-size: 12pt; font-weight: 500;">Khác</p>
-                                        <textarea name="hutThuocNenDauDaDay" cols="25" rows="3"></textarea>
+                                        <textarea name="customReason" cols="25" rows="3"></textarea>
                                     </div>
                                 </div>
 
@@ -2380,10 +2379,9 @@
             <!--       Modal Hủy chờ thanh toán end-->
 
             <!--        Modal hủy chờ giao hàng begin-->
-            <div th:if="${detailBillShip}" class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;" th:object="${billDetailShip}" >
+            <div th:if="${detailBillShip}" class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;" th:object="${billDetailShip}">
                 <form th:action="@{'/buyer/purchase/bill/pay/cancel/' + ${billDetailShip.idHD}}" method="post">
-                    <div class="modal-content" >
-
+                    <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLongTitle">Thay đổi phương thức thanh toán</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -2393,7 +2391,6 @@
 
                         <div class="modal-body">
                             <div class="modal-body">
-
                                 <div class="row" style="margin: 0 0 30px 0;">
                                     <p style="margin: 0 0 0 10px; font-size: 9pt; font-weight: 500; color: red">*Nếu bạn đã thanh toán, tiền thanh toán sẽ được hoàn vào tài khoản trong 24h</p>
                                 </div>
@@ -2407,7 +2404,7 @@
 
                                 <div class="row" style="margin: 15px 0 15px 0;">
                                     <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                        <input type="radio" value="changeProduct"  style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <input type="radio" value="changeProduct" style="height: 20px; width: 20px;" name="lyDoHuy">
                                         <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thay đổi sản phẩm</p>
                                     </div>
                                 </div>
@@ -2415,18 +2412,17 @@
                                 <div class="row" style="margin: 15px 0 15px 0;">
                                     <div style="margin-left: 50px; display: flex; margin-right: 50px;">
                                         <input type="radio" value="none" style="height: 20px; width: 20px;" name="lyDoHuy">
-                                        <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi không  có nhu cầu mua nữa</p>
+                                        <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi không có nhu cầu mua nữa</p>
                                     </div>
                                 </div>
 
                                 <div class="row" style="margin: 15px 0 15px 0;">
                                     <div style="margin-left: 50px; display: flex; margin-right: 50px;">
-                                        <input type="radio" value="lyDoKhac" style="height: 20px; width: 20px;" name="lyDoHuy">
+                                        <input type="radio" value="lyDoKhac" style="height: 20px; width: 20px;" name="lyDoHuy" checked>
                                         <p style="margin: 0 15px 0 30px; font-size: 12pt; font-weight: 500;">Khác</p>
-                                        <textarea name="hutThuocNenDauDaDay" cols="25" rows="3"></textarea>
+                                        <textarea name="customReason" cols="25" rows="3"></textarea>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
 
@@ -2434,7 +2430,6 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                             <button type="submit" class="btn btn-danger">Hủy Đơn Hàng</button>
                         </div>
-
                     </div>
                 </form>
             </div>
