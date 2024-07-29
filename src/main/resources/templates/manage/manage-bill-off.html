@@ -81,7 +81,8 @@
                                             <div class="col-sm-12">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h4 style="padding-bottom:5px " class="card-title">Tất cả hóa đơn tại quầy</h4>
+                                                        <h4 style="padding-bottom:5px " class="card-title">Tất cả hóa
+                                                            đơn tại quầy</h4>
                                                     </div>
 
                                                     <div class="card-body">
@@ -89,14 +90,17 @@
                                                             <div class="search-set">
                                                                 <div class="search-path">
                                                                     <a class="btn btn-filter" id="filter_search">
-                                                                        <img src="/images/img/icons/filter.svg" alt="img">
-                                                                        <span><img src="/images/img/icons/closes.svg" alt="img"></span>
+                                                                        <img src="/images/img/icons/filter.svg"
+                                                                             alt="img">
+                                                                        <span><img src="/images/img/icons/closes.svg"
+                                                                                   alt="img"></span>
                                                                     </a>
                                                                 </div>
 
                                                                 <div class="search-input">
                                                                     <a class="btn btn-searchset">
-                                                                        <img src="/images/img/icons/search-white.svg" alt="img">
+                                                                        <img src="/images/img/icons/search-white.svg"
+                                                                             alt="img">
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -117,7 +121,9 @@
                                                                                 <select class="select" id="locTrangThai"
                                                                                         name="trangThai">
                                                                                     <option>Trạng thái</option>
-                                                                                    <option value="HD Thành công">HD Thành công</option>
+                                                                                    <option value="HD Thành công">HD
+                                                                                        Thành công
+                                                                                    </option>
                                                                                     <option value="HD Chờ">HD Chờ
                                                                                     </option>
                                                                                 </select>
@@ -238,6 +244,15 @@
 
                                 <div class="col-lg-3 col-sm-12 col-12">
                                     <div class="form-group">
+                                        <label style="border: none; font-size: 12pt; font-weight: 600;">Thời gian thanh
+                                            toán</label>
+                                        <p th:text="${#dates.format(bill.tgThanhToan, 'HH:mm yyyy-MM-dd')}"></p>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-3 col-sm-12 col-12">
+                                    <div class="form-group">
                                         <label style="border: none; font-size: 12pt; font-weight: 600;">Trạng thái hóa
                                             đơn</label>
                                         <td th:if="${bill.getTrangThai() == 0}">HD Chờ
@@ -256,7 +271,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-sm-12 col-12">
+                                <div class="col-lg-3 col-sm-12 col-12">
                                     <div class="form-group">
                                         <label style="border: none; font-size: 12pt; font-weight: 600;">Tổng tiền sản
                                             phẩm</label>
@@ -264,7 +279,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-sm-12 col-12" th:if="${bill.khuyenMai != null}">
+                                <div class="col-lg-3 col-sm-12 col-12" th:if="${bill.khuyenMai != null}">
                                     <div class="form-group">
                                         <label style="border: none; font-size: 12pt; font-weight: 600;">Tổng tiền đã
                                             giảm</label>
@@ -272,7 +287,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-sm-12 col-12">
+                                <div class="col-lg-3 col-sm-12 col-12">
                                     <div class="form-group">
                                         <label style="border: none; font-size: 12pt; font-weight: 600;">Tổng tiền thanh
                                             toán</label>
