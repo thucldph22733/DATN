@@ -278,6 +278,19 @@
     .btn-primary:hover {
         background-color: #0069d9;
     }
+    #backButton {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #backButton:hover {
+        background-color: #0056b3;
+    }
+
 
 
 
@@ -470,9 +483,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Chỉnh sửa hóa đơn [[${hoaDon.idHD}]]</h5>
-                            <button type="button" git class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
+                            <button id="backButton" >×</button>
                         </div>
                         <div class="modal-body">
                             <div class="tab-content">
@@ -907,7 +918,7 @@
                     console.error('Error:', error);
                     Swal.fire(
                         'Lỗi!',
-                        'Có lỗi xảy ra trong quá trình xoá sản phẩm!',
+                        'Không thể xóa sản phẩm. Hóa đơn phải có ít nhất một sản phẩm.',
                         'error'
                     );
                 });
@@ -1025,9 +1036,11 @@
         }
 
 
-
-
-
+    </script>
+    <script>
+        document.getElementById("backButton").addEventListener("click", function() {
+            window.location.href = "/manage/bill/online";
+        });
     </script>
 
 
