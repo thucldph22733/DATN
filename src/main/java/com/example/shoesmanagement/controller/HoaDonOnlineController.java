@@ -221,7 +221,15 @@ public class HoaDonOnlineController {
 
         return "manage/manage-bill-online";
     }
+    @GetMapping("/online/print/{idHD}")
+    private String printBillOnline(Model model, @PathVariable UUID idHD) {
 
+        HoaDon hoaDon = hoaDonService.getOne(idHD);
+
+        model.addAttribute("billPrint", hoaDon);
+
+        return "manage/managePrintBill";
+    }
     private void showTab0(Model model) {
         model.addAttribute("activeAll", "nav-link active");
         model.addAttribute("cho_xac_nhan", "nav-link");
