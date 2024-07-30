@@ -590,7 +590,8 @@
                                                                                 </a>
 
 
-                                                                                <a th:href="@{'http://localhost:8081/manage/bill/online/print/' + ${bill.idHD}}"
+                                                                                <a   th:if="${bill.trangThai == 4 or bill.trangThai == 5}"
+                                                                                        th:href="@{'http://localhost:8080/manage/bill/online/print/' + ${bill.idHD}}"
                                                                                    onclick="window.open(this.href, '_blank'); return false;">
                                                                                     <i class="fe fe-printer"
                                                                                        data-bs-toggle="tooltip" title=""
