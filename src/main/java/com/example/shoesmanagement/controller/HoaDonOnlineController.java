@@ -383,10 +383,7 @@ public class HoaDonOnlineController {
                         soLuongHoaDonDangGiao++;
                         listAllHoaDonDangGiao.add(x);
                     }
-                    if (x.getTrangThai() == 3) {
-                        soLuongHoaDonDangGiao++;
-                        listAllHoaDonDangGiao.add(x);
-                    }
+
                     if (x.getTrangThai() == 5) {
                         soLuongHoaDonHuy++;
                     }
