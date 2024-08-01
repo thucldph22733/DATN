@@ -38,11 +38,13 @@ public class UserController {
 
     @Autowired
     private ThongBaoServices thongBaoServices;
+
     @Autowired
     private HoaDonChiTIetService hoaDonChiTietService;
 
     @Autowired
     private HoaDonService hoaDonService;
+
     @Autowired
     private ShippingFeeService shippingFeeService;
 
@@ -123,6 +125,7 @@ public class UserController {
         return "redirect:/buyer/setting";
     }
 
+
     @GetMapping("/addresses")
     public String getAddressAccount(Model model) {
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
@@ -149,6 +152,7 @@ public class UserController {
 
         return "online/user";
     }
+
 
     @PostMapping("/addresses/add")
     private String addNewAddress(Model model, @RequestParam(name = "defaultSelected", defaultValue = "false") boolean defaultSelected) {
@@ -198,6 +202,7 @@ public class UserController {
 
         return "redirect:/buyer/addresses";
     }
+
 
     @GetMapping("/addresses/viewEdit/{id}")
     public String viewEditAddresses(@PathVariable UUID id, Model model, @ModelAttribute("userInput") DiaChiKH userInputDC) {
@@ -770,7 +775,7 @@ public class UserController {
     }
 
     @PostMapping("/purchase/bill/pay/cancel/{idHD}")
-    private String cancelBillPay(Model model, @PathVariable UUID idHD) {
+    private String cancelBillPay(Model model, @PathVariable UUID idHD, HttpServletRequest request, HttpSession session) {
         String lyDoHuy = request.getParameter("lyDoHuy");
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged");
         List<GioHangChiTiet> listGHCTActive = ghctService.findByGHActive(gioHang);
@@ -781,19 +786,11 @@ public class UserController {
             KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
             model.addAttribute("khachHang1", khachHang1);
         } else {
-        }
-        if (session.getAttribute("KhachHangLogin") == null) {
-            // Nếu managerLogged bằng null, quay về trang login
+            // Nếu không có khách hàng đăng nhập, quay lại trang đăng nhập
             return "redirect:/buyer/login";
         }
+
         HoaDon hoaDonHuy = hoaDonService.getOne(idHD);
-
-        if (hoaDonHuy.getKhuyenMai() != null) {   // nếu hoá đơn có dùng khuyến mãi
-            KhuyenMai kmcsdl = khuyenMaiRepository.findById(hoaDonHuy.getKhuyenMai().getIdKM()).get();
-            kmcsdl.setSoLuongDaDung(kmcsdl.getSoLuongDaDung() - 1);
-            khuyenMaiRepository.saveAndFlush(kmcsdl);
-        }
-
         LichSuThanhToan lichSuThanhToan = new LichSuThanhToan();
         lichSuThanhToan.setTgThanhToan(new Date());
         lichSuThanhToan.setSoTienThanhToan(hoaDonHuy.getTongTien());
@@ -803,107 +800,51 @@ public class UserController {
         lichSuThanhToan.setMaLSTT("LSTT" + khachHang.getMaKH() + generateRandomNumbers());
         lichSuThanhToan.setLoaiTT(0);
 
-        if (lyDoHuy.equals("changeProduct")) {
+        GiaoHang giaoHang = hoaDonHuy.getGiaoHang();
+        giaoHang.setTgHuy(new Date());
+
+        if ("changeProduct".equals(lyDoHuy)) {
             lyDoHuy = "Tôi muốn thay đổi sản phẩm";
+        } else if ("none".equals(lyDoHuy)) {
+            lyDoHuy = "Tôi không có nhu cầu mua nữa";
+        } else if ("lyDoKhac".equals(lyDoHuy)) {
+            String customReason = request.getParameter("customReason");
+            lyDoHuy = (customReason != null && !customReason.trim().isEmpty()) ? customReason : "Lý do khác";
+        } else if ("changeSize".equals(lyDoHuy)) {
+            lyDoHuy = "Tôi muốn thay đổi size/màu";
+        }
 
-            GiaoHang giaoHang = hoaDonHuy.getGiaoHang();
-            giaoHang.setLyDoHuy(lyDoHuy);
-            giaoHang.setTgHuy(new Date());
-            giaoHangService.saveGiaoHang(giaoHang);
+        giaoHang.setLyDoHuy(lyDoHuy);
+        giaoHangService.saveGiaoHang(giaoHang);
 
-            if (hoaDonHuy.getHinhThucThanhToan() == 1) {
-                if (hoaDonHuy.getTrangThai() == 1) {
-                    lichSuThanhToan.setTrangThai(3);
-                    lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng đã thanh toán ");
-                    lsThanhToanService.addLSTT(lichSuThanhToan);
-                } else if (hoaDonHuy.getTrangThai() == 0) {
-                    lichSuThanhToan.setTrangThai(2);
-                    lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng chưa thanh toán ");
-                    lsThanhToanService.addLSTT(lichSuThanhToan);
-                }
-            }
-
-            hoaDonHuy.setTrangThai(5);
-            hoaDonHuy.setLyDoHuy(lyDoHuy);
-            hoaDonHuy.setTgHuy(new Date());
-            hoaDonService.add(hoaDonHuy);
-        } else if (lyDoHuy.equals("none")) {
-            lyDoHuy = "Tôi không  có nhu cầu mua nữa";
-            GiaoHang giaoHang = hoaDonHuy.getGiaoHang();
-            giaoHang.setLyDoHuy(lyDoHuy);
-            giaoHang.setTgHuy(new Date());
-            giaoHangService.saveGiaoHang(giaoHang);
-
-            if (hoaDonHuy.getTrangThai() == 1) {
-                lichSuThanhToan.setTrangThai(3);
-                lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng đã thanh toán ");
-                lsThanhToanService.addLSTT(lichSuThanhToan);
-            } else if (hoaDonHuy.getTrangThai() == 0) {
-                lichSuThanhToan.setTrangThai(2);
-                lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng chưa thanh toán ");
-                lsThanhToanService.addLSTT(lichSuThanhToan);
-            }
-            hoaDonHuy.setTrangThai(5);
-            hoaDonHuy.setLyDoHuy(lyDoHuy);
-            hoaDonHuy.setTgHuy(new Date());
-            hoaDonService.add(hoaDonHuy);
-        } else if (lyDoHuy.equals("lyDoKhac")) {
-            lyDoHuy = request.getParameter("hutThuocNenDauDaDay");
-            GiaoHang giaoHang = hoaDonHuy.getGiaoHang();
-            giaoHang.setLyDoHuy(lyDoHuy);
-            giaoHang.setTgHuy(new Date());
-            giaoHangService.saveGiaoHang(giaoHang);
-
-            if (hoaDonHuy.getTrangThai() == 1) {
-                lichSuThanhToan.setTrangThai(3);
-                lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng đã thanh toán ");
-                lsThanhToanService.addLSTT(lichSuThanhToan);
-            } else if (hoaDonHuy.getTrangThai() == 0) {
-                lichSuThanhToan.setTrangThai(2);
-                lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng chưa thanh toán");
-                lsThanhToanService.addLSTT(lichSuThanhToan);
-            }
-            hoaDonHuy.setTrangThai(5);
-            hoaDonHuy.setLyDoHuy(lyDoHuy);
-            hoaDonHuy.setTgHuy(new Date());
-            hoaDonService.add(hoaDonHuy);
-        } else if (lyDoHuy.equals("changeSize")) {
-            lyDoHuy = "Tôi muốn thay đổi size/ màu";
-
-
-            GiaoHang giaoHang = hoaDonHuy.getGiaoHang();
-            giaoHang.setLyDoHuy(lyDoHuy);
-            giaoHang.setTgHuy(new Date());
-            giaoHangService.saveGiaoHang(giaoHang);
-
+        if (hoaDonHuy.getHinhThucThanhToan() == 1) {
             if (hoaDonHuy.getTrangThai() == 1) {
                 lichSuThanhToan.setTrangThai(3);
                 lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng đã thanh toán");
-                lsThanhToanService.addLSTT(lichSuThanhToan);
             } else if (hoaDonHuy.getTrangThai() == 0) {
                 lichSuThanhToan.setTrangThai(2);
                 lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng chưa thanh toán");
-                lsThanhToanService.addLSTT(lichSuThanhToan);
             }
-            hoaDonHuy.setTrangThai(5);
-            hoaDonHuy.setLyDoHuy(lyDoHuy);
-            hoaDonHuy.setTgHuy(new Date());
-            hoaDonService.add(hoaDonHuy);
+            lsThanhToanService.addLSTT(lichSuThanhToan);
+        }
 
+        hoaDonHuy.setTrangThai(5);
+        hoaDonHuy.setLyDoHuy(lyDoHuy);
+        hoaDonHuy.setTgHuy(new Date());
+        hoaDonService.add(hoaDonHuy);
+
+        if ("changeSize".equals(lyDoHuy)) {
             List<HoaDonChiTiet> listHDCT = hoaDonHuy.getHoaDonChiTiets();
             for (HoaDonChiTiet hdct : listHDCT) {
                 ChiTietGiay chiTietGiay = hdct.getChiTietGiay();
                 chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + hdct.getSoLuong());
-
-
                 if (chiTietGiay.getSoLuong() > 0) {
                     chiTietGiay.setTrangThai(1);
                 }
-
                 giayChiTietService.save(chiTietGiay);
             }
-
         }
+
         return "redirect:/buyer/purchase/cancel";
     }
 
