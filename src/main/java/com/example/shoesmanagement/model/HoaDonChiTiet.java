@@ -43,7 +43,16 @@ public class HoaDonChiTiet {
 
     @Column(name = "tg_Them")
     private Date tgThem;
+    @Transient
+    private Double tongTien;
 
+    // Phương thức getter để tính tổng tiền
+    public Double getTongTien() {
+        if (donGia != null && soLuong > 0) {
+            return donGia * soLuong;
+        }
+        return 0.0;
+    }
 
 
 }
