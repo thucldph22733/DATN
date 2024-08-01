@@ -579,12 +579,6 @@
                                                                                    th:data-bs-toggle="modal"
                                                                                    th:data-bs-target="'#modalHuyHoaDon' + ${bill.idHD}"
                                                                                    style="cursor: pointer; margin: 0 20px 0 0; color: #ff9f43;"></i>
-                                                                                <!--                                                                                <i class="fe fe-edit"-->
-                                                                                <!--                                                                                   th:if="${bill.trangThai == 1 or bill.trangThai == 2}"-->
-                                                                                <!--                                                                                   th:data-bs-toggle="modal"-->
-                                                                                <!--                                                                                   th:data-bs-target="'#modalEditHoaDon' + ${bill.idHD}"-->
-                                                                                <!--                                                                                   style="cursor: pointer; margin: 0 20px 0 0; color: #ff9f43;"-->
-                                                                                <!--                                                                                   </i>-->
 
                                                                                 <a th:if="${bill.trangThai == 1 or bill.trangThai == 2}"
                                                                                    th:href="@{/manage/changehd/online/{id}(id=${bill.idHD})}"
@@ -596,7 +590,8 @@
                                                                                 </a>
 
 
-                                                                                <a th:href="@{'http://localhost:8081/manage/bill/online/print/' + ${bill.idHD}}"
+                                                                                <a   th:if="${bill.trangThai == 4 or bill.trangThai == 5}"
+                                                                                        th:href="@{'http://localhost:8080/manage/bill/online/print/' + ${bill.idHD}}"
                                                                                    onclick="window.open(this.href, '_blank'); return false;">
                                                                                     <i class="fe fe-printer"
                                                                                        data-bs-toggle="tooltip" title=""
@@ -646,6 +641,9 @@
                                                                             Khách hàng
                                                                         </th>
                                                                         <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
+                                                                            Tổng SP
+                                                                        </th>
+                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
                                                                             Tổng tiền
                                                                         </th>
                                                                         <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
@@ -677,10 +675,12 @@
                                                                             </td>
 
                                                                             <td th:text="${bill.khachHang.hoTenKH}"></td>
+                                                                            <td th:text="${bill.tongSP}"></td>
                                                                             <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 0, 'POINT')}"></td>
                                                                             <td th:if="${bill.trangThai == 1}">Chờ xác
                                                                                 nhận
                                                                             </td>
+
                                                                             <td th:if="${bill.trangThai == 2}">Chờ lấy
                                                                                 hàng
                                                                             </td>
@@ -694,6 +694,20 @@
                                                                                        data-bs-toggle="tooltip"
                                                                                        title="Xem vận đơn"
                                                                                        style="cursor: pointer;"></i>
+                                                                                </a>
+                                                                                <i class="fe fe-x"
+                                                                                   th:if="${bill.trangThai == 1 or bill.trangThai == 2}"
+                                                                                   th:data-bs-toggle="modal"
+                                                                                   th:data-bs-target="'#modalHuyHoaDon' + ${bill.idHD}"
+                                                                                   style="cursor: pointer; margin: 0 20px 0 0; color: #ff9f43;"></i>
+
+                                                                                <a th:if="${bill.trangThai == 1 or bill.trangThai == 2}"
+                                                                                   th:href="@{/manage/changehd/online/{id}(id=${bill.idHD})}"
+                                                                                   class="btn btn-warning"
+                                                                                   style="margin: 0 20px 0 0;">
+                                                                                    <i class="fe fe-edit"
+                                                                                       style="color: #ff9f43;"></i>
+                                                                                    Chỉnh sửa
                                                                                 </a>
                                                                             </td>
                                                                         </tr>
@@ -747,6 +761,9 @@
                                                                             Khách hàng
                                                                         </th>
                                                                         <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
+                                                                            Tổng SP
+                                                                        </th>
+                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
                                                                             Tổng tiền
                                                                         </th>
                                                                         <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
@@ -778,13 +795,29 @@
 
 
                                                                             <td th:text="${bill.khachHang.hoTenKH}"></td>
+                                                                            <td th:text="${bill.tongSP}"></td>
                                                                             <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 0, 'POINT')}"></td>
                                                                             <td>
                                                                                 <i class="si si-speedometer"
                                                                                    th:data-bs-toggle="modal"
                                                                                    th:data-bs-target="'#modalXemLichSuThanhToan' + ${bill.idHD}"
                                                                                    style="cursor: pointer; margin: 0 20px 0 0; color: #ff9f43;"></i>
+                                                                                <i class="fe fe-x"
+                                                                                   th:if="${bill.trangThai == 1 or bill.trangThai == 2}"
+                                                                                   th:data-bs-toggle="modal"
+                                                                                   th:data-bs-target="'#modalHuyHoaDon' + ${bill.idHD}"
+                                                                                   style="cursor: pointer; margin: 0 20px 0 0; color: #ff9f43;"></i>
+
+                                                                                <a th:if="${bill.trangThai == 1 or bill.trangThai == 2}"
+                                                                                   th:href="@{/manage/changehd/online/{id}(id=${bill.idHD})}"
+                                                                                   class="btn btn-warning"
+                                                                                   style="margin: 0 20px 0 0;">
+                                                                                    <i class="fe fe-edit"
+                                                                                       style="color: #ff9f43;"></i>
+                                                                                    Chỉnh sửa
+                                                                                </a>
                                                                             </td>
+
                                                                         </tr>
                                                                     </th:block>
                                                                     </tbody>
@@ -837,6 +870,9 @@
                                                                             Khách hàng
                                                                         </th>
                                                                         <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
+                                                                            Tổng SP
+                                                                        </th>
+                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
                                                                             Tổng tiền
                                                                         </th>
                                                                         <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
@@ -867,6 +903,7 @@
 
 
                                                                             <td th:text="${bill.khachHang.hoTenKH}"></td>
+                                                                            <td th:text="${bill.tongSP}"></td>    <td th:text="${bill.tongSP}"></td>
                                                                             <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 0, 'POINT')}"></td>
                                                                             <td>
                                                                                 <i class="si si-speedometer"
@@ -926,6 +963,9 @@
                                                                             Khách hàng
                                                                         </th>
                                                                         <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
+                                                                            Tổng SP
+                                                                        </th>
+                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
                                                                             Tổng tiền
                                                                         </th>
                                                                         <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
@@ -960,6 +1000,7 @@
 
 
                                                                             <td th:text="${bill.khachHang.hoTenKH}"></td>
+                                                                            <td th:text="${bill.tongSP}"></td>
                                                                             <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 0, 'POINT')}"></td>
                                                                             <td th:if="${bill.tgThanhToan != null}"
                                                                                 th:text="${#dates.format(bill.tgThanhToan, 'HH:mm yyyy-MM-dd')}"></td>
@@ -1024,6 +1065,9 @@
                                                                             Khách hàng
                                                                         </th>
                                                                         <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
+                                                                            Tổng SP
+                                                                        </th>
+                                                                        <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
                                                                             Tổng tiền
                                                                         </th>
                                                                         <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">
@@ -1051,7 +1095,7 @@
                                                                             </td>
                                                                             <td th:if="${bill.nhanVien != null && bill.nhanVien.hoTenNV != null}"
                                                                                 th:text="${bill.nhanVien.hoTenNV}">
-                                                                            </td>
+                                                                            </td>`
                                                                             <td th:if="${bill.nhanVien == null || bill.nhanVien.hoTenNV == null}">Chưa có</td>
 
 
@@ -1064,6 +1108,7 @@
 
 
                                                                             <td th:text="${bill.khachHang.hoTenKH}"></td>
+                                                                            <td th:text="${bill.tongSP}"></td>
                                                                             <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 0, 'POINT')}"></td>
                                                                             <td th:if="${bill.tgHuy != null}"
                                                                                 th:text="${#dates.format(bill.tgHuy, 'HH:mm yyyy-MM-dd')}"></td>
@@ -1612,7 +1657,7 @@
                                 </div>
                                 <div class="col-lg-3 col-sm-12 col-12">
                                     <div class="form-group">
-                                        <p th:text="'₫'+${#numbers.formatDecimal(x.donGia, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                        <p th:text="'₫'+${#numbers.formatDecimal(x.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                     </div>
                                 </div>
                             </th:block>

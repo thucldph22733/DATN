@@ -124,9 +124,9 @@ public class HoaDonOnlineController {
         model.addAttribute("billDelivery", billDelivery);
         model.addAttribute("showEditBillDelivery", true);
 
-        showTab5(model);
 
         showData(model);
+        showTab1(model);
 
 
         return "manage/manage-bill-online";
@@ -155,13 +155,14 @@ public class HoaDonOnlineController {
         hoaDonService.add(hoaDon);
 
 
-        showData(model);
+
 
         model.addAttribute("showMessThanhCong", true);
         model.addAttribute("reLoadPage", true);
-        showData(model);
-        showTab3(model);
+
         model.addAttribute("messageXacNhan", "Xác nhận nhân viên giao thành công.");
+        showData(model);
+        showTab2(model);
 
         return "manage/manage-bill-online";
     }
@@ -213,21 +214,29 @@ public class HoaDonOnlineController {
 
         showData(model);
         showTab0(model);
-        showTab1(model);
-        showTab2(model);
-        showTab3(model);
-        showTab4(model);
+
         showTab5(model);
 
         model.addAttribute("message", "Hóa đơn đã được hủy thành công.");
 
         return "manage/manage-bill-online";
     }
+    @GetMapping("/online/print/{idHD}")
+    private String printBillOnline(Model model, @PathVariable UUID idHD) {
 
+        HoaDon hoaDon = hoaDonService.getOne(idHD);
+
+        model.addAttribute("billPrint", hoaDon);
+
+        return "manage/managePrintBill";
+    }
     private void showTab0(Model model) {
         model.addAttribute("activeAll", "nav-link active");
-        model.addAttribute("xac_nhan_tt", "nav-link");
-        model.addAttribute("van_chuyen", "nav-link");
+        model.addAttribute("cho_xac_nhan", "nav-link");
+        model.addAttribute("cho_giao_hang", "nav-link");
+        model.addAttribute("cho_lay_hang", "nav-link");
+        model.addAttribute("thanh_cong", "nav-link");
+        model.addAttribute("huy", "nav-link");
 
         model.addAttribute("tabpane1", "tab-pane show active");
         model.addAttribute("tabpane2", "tab-pane");
@@ -252,19 +261,19 @@ public class HoaDonOnlineController {
         model.addAttribute("tabpane5", "tab-pane");
         model.addAttribute("tabpane6", "tab-pane");
 
-    } private void showTab2(Model model) {
+    }  private void showTab2(Model model) {
+        model.addAttribute("activeAll", "nav-link");
         model.addAttribute("cho_xac_nhan", "nav-link");
         model.addAttribute("cho_giao_hang", "nav-link");
         model.addAttribute("cho_lay_hang", "nav-link active");
         model.addAttribute("thanh_cong", "nav-link");
         model.addAttribute("huy", "nav-link");
-        model.addAttribute("tabpane0", "tab-pane");
-        model.addAttribute("activeAll", "nav-link");
         model.addAttribute("tabpane1", "tab-pane");
         model.addAttribute("tabpane2", "tab-pane");
         model.addAttribute("tabpane3", "tab-pane show active");
         model.addAttribute("tabpane4", "tab-pane");
         model.addAttribute("tabpane5", "tab-pane");
+        model.addAttribute("tabpane6", "tab-pane");
 
     } private void showTab3(Model model) {
         model.addAttribute("cho_xac_nhan", "nav-link");
@@ -281,13 +290,13 @@ public class HoaDonOnlineController {
         model.addAttribute("tabpane6", "tab-pane");
 
     } private void showTab4(Model model) {
+        model.addAttribute("activeAll", "nav-link");
         model.addAttribute("cho_xac_nhan", "nav-link");
         model.addAttribute("cho_giao_hang", "nav-link");
         model.addAttribute("cho_lay_hang", "nav-link");
         model.addAttribute("thanh_cong", "nav-link active");
         model.addAttribute("huy", "nav-link");
         model.addAttribute("tabpane1", "tab-pane");
-        model.addAttribute("activeAll", "nav-link");
         model.addAttribute("tabpane2", "tab-pane");
         model.addAttribute("tabpane3", "tab-pane");
         model.addAttribute("tabpane4", "tab-pane");
@@ -295,13 +304,13 @@ public class HoaDonOnlineController {
         model.addAttribute("tabpane6", "tab-pane");
 
     } private void showTab5(Model model) {
+        model.addAttribute("activeAll", "nav-link");
         model.addAttribute("cho_xac_nhan", "nav-link");
         model.addAttribute("cho_giao_hang", "nav-link");
         model.addAttribute("cho_lay_hang", "nav-link");
         model.addAttribute("thanh_cong", "nav-link");
         model.addAttribute("huy", "nav-link active");
         model.addAttribute("tabpane1", "tab-pane");
-        model.addAttribute("activeAll", "nav-link");
         model.addAttribute("tabpane2", "tab-pane");
         model.addAttribute("tabpane3", "tab-pane");
         model.addAttribute("tabpane4", "tab-pane");
@@ -374,10 +383,7 @@ public class HoaDonOnlineController {
                         soLuongHoaDonDangGiao++;
                         listAllHoaDonDangGiao.add(x);
                     }
-                    if (x.getTrangThai() == 3) {
-                        soLuongHoaDonDangGiao++;
-                        listAllHoaDonDangGiao.add(x);
-                    }
+
                     if (x.getTrangThai() == 5) {
                         soLuongHoaDonHuy++;
                     }
