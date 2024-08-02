@@ -1,7 +1,6 @@
 package com.example.shoesmanagement.repository;
 
 import com.example.shoesmanagement.model.KhachHang;
-import com.example.shoesmanagement.model.ThongBaoKhachHang;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
