@@ -103,8 +103,12 @@ public class UserController {
     }
 
     @PostMapping("/update/user")
-    public String updateUser(HttpServletRequest request, Model model) {
+    public String updateUser(HttpServletRequest request,Model model) {
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        if (khachHang != null) {
+            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+            model.addAttribute("khachHang1", khachHang1);
+        }
         String hoTenKH = request.getParameter("hoTenKH");
         String gioiTinh = request.getParameter("gioiTinh");
         String ngaySinh = request.getParameter("ngaySinh");
