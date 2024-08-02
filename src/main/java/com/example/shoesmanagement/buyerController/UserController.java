@@ -37,9 +37,6 @@ public class UserController {
     private DiaChiKHService diaChiKHService;
 
     @Autowired
-    private ThongBaoServices thongBaoServices;
-
-    @Autowired
     private HoaDonChiTIetService hoaDonChiTietService;
 
     @Autowired
