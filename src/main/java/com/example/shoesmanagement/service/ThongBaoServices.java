@@ -1,7 +1,6 @@
 package com.example.shoesmanagement.service;
 
 import com.example.shoesmanagement.model.KhachHang;
-import com.example.shoesmanagement.model.ThongBaoKhachHang;
 
 import java.util.List;
 
