@@ -81,26 +81,6 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <div class="form-hidden-2" style="display: none">
-                        <form
-                                action="/manage/giay/import"
-                                method="post"
-                                enctype="multipart/form-data"
-                        >
-                            <div class="form-group">
-                                <label> Upload Excel File</label>
-                                <input
-                                        type="file"
-                                        name="file"
-                                        onchange="displaySelectedFileName()"
-                                />
-                            </div>
-                            <button type="submit" class="btn btn-submit me-2">
-                                Submit
-                            </button>
-                        </form>
-                    </div>
-                    <br/>
                     <div class="table-top">
                         <div class="search-set">
                             <div class="search-path">
@@ -116,49 +96,6 @@
                                 ><img src="/images/img/icons/search-white.svg" alt="img"
                                 /></a>
                             </div>
-                        </div>
-                        <div class="wordset">
-                            <ul>
-                                <li>
-                                    <a class="btn btn-filter"
-                                       id="import-excel"
-                                       data-bs-toggle="tooltip"
-                                       data-bs-placement="top"
-                                       title="Import Excel">
-                                        <img src="/images/img/icons/upload.svg" alt="img"/>
-                                        <span>
-                                            <img src="/images/img/icons/closes.svg" alt="img"/>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                            th:href="@{/manage/giay/export/pdf}"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            title="pdf"
-                                    ><img src="/images/img/icons/pdf.svg" alt="img"
-                                    /></a>
-                                </li>
-                                <li>
-                                    <a
-                                            th:href="@{/manage/giay/export/excel}"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            title="excel"
-                                    ><img src="/images/img/icons/excel.svg" alt="img"
-                                    /></a>
-                                </li>
-                                <li>
-                                    <a
-                                            id="printButton"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            title="print"
-                                    ><img src="/images/img/icons/printer.svg" alt="img"
-                                    /></a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
 
@@ -308,13 +245,14 @@
         </div>
     </div>
 </div>
-<div th:if="${message}" id="toast-container" class="toast-container toast-top-right">
+<div th:if="${message == true}" id="toast-container" class="toast-container toast-top-right">
     <div class="toast toast-success" aria-live="polite" style="display: block">
         <button type="button" class="toast-close-button" role="button"></button>
         <div class="toast-title">Thành Công</div>
         <div class="toast-message">Dữ liệu của bạn đã được cập nhật</div>
     </div>
 </div>
+
 <script src="/js/jquery-3.6.0.min.js"></script>
 
 <script src="/js/feather.min.js"></script>
@@ -486,6 +424,7 @@
         $(".select").select2();
     });
 </script>
+
 <script>
     var idGiay;
 

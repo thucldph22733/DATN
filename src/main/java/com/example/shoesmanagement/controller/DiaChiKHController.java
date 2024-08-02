@@ -1,6 +1,7 @@
 package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.DiaChiKH;
+import com.example.shoesmanagement.model.Giay;
 import com.example.shoesmanagement.model.KhachHang;
 import com.example.shoesmanagement.repository.DiaChiRepository;
 import com.example.shoesmanagement.repository.KhachHangRepository;
@@ -9,6 +10,7 @@ import com.example.shoesmanagement.service.KhachHangService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -490,5 +492,24 @@ public class DiaChiKHController {
             }
         }
         return "redirect:/manage/dia-chi"; // Chuyển hướng sau khi nhập liệu thành công hoặc không thành công
+    }
+
+
+    @PutMapping("/dia-chi/{id}")
+    public ResponseEntity<String> capNhatTrangThai(@RequestParam String trangThai,
+                                                   @PathVariable UUID id) {
+        int trangThaiInt = Integer.valueOf(trangThai);
+
+        int trangThaiUpdate;
+        if (trangThaiInt == 1) {
+            trangThaiUpdate = 0;
+        } else {
+            trangThaiUpdate = 1;
+        }
+        DiaChiKH diaChiKH = diaChiKHService.getByIdDiaChikh(id);
+        diaChiKH.setTrangThai(trangThaiUpdate);
+        diaChiKH.setTgSua(new Date());
+        diaChiKHService.save(diaChiKH);
+        return ResponseEntity.ok("ok");
     }
 }

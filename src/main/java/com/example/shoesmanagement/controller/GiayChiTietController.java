@@ -68,24 +68,20 @@ public class GiayChiTietController {
 
     @GetMapping("/giay-chi-tiet")
     public String dsGiayChiTiet(Model model, @ModelAttribute("message") String message, @ModelAttribute("importError") String importError) {
-        List<ChiTietGiay> items = giayChiTietService.getAllChiTietGiay();
-        List<ChiTietGiay> chiTietGiayList = new ArrayList<>();
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
-
             return "redirect:/login";
-
         }
-
-
+        List<ChiTietGiay> items = giayChiTietService.getAllChiTietGiay();
         List<Giay> giayList = giayService.getAllGiay();
         List<Size> sizeList = sizeService.getAllSize();
         List<MauSac> mauSacList = mauSacService.getALlMauSac();
-        model.addAttribute("items", chiTietGiayList);
+
+        model.addAttribute("items", items);
         model.addAttribute("giayList", giayList);
         model.addAttribute("sizeList", sizeList);
         model.addAttribute("mauSacList", mauSacList);
-        //
+
         if (message == null || !"true".equals(message)) {
             model.addAttribute("message", false);
         }
@@ -94,6 +90,7 @@ public class GiayChiTietController {
         }
         return "manage/giay-chi-tiet";
     }
+
 
     @GetMapping("/giay-chi-tiet/detail/{id}")
     public String detailGiayChiTiet(@PathVariable UUID id, Model model) {
@@ -1324,7 +1321,6 @@ public class GiayChiTietController {
             chiTietGiayDb.setMauSac(chiTietGiay.getMauSac());
             chiTietGiayDb.setSize(chiTietGiay.getSize());
             chiTietGiayDb.setGiaBan(chiTietGiay.getGiaBan());
-
             chiTietGiayDb.setNamBH(chiTietGiay.getNamBH());
             chiTietGiayDb.setNamSX(chiTietGiay.getNamSX());
             chiTietGiayDb.setSoLuong(chiTietGiay.getSoLuong());
@@ -1393,7 +1389,6 @@ public class GiayChiTietController {
             chiTietGiayDb.setMauSac(chiTietGiay.getMauSac());
             chiTietGiayDb.setSize(chiTietGiay.getSize());
             chiTietGiayDb.setGiaBan(chiTietGiay.getGiaBan());
-
             chiTietGiayDb.setNamBH(chiTietGiay.getNamBH());
             chiTietGiayDb.setNamSX(chiTietGiay.getNamSX());
             chiTietGiayDb.setSoLuong(chiTietGiay.getSoLuong());
