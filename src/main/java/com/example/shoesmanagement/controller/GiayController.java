@@ -83,15 +83,15 @@ public class GiayController {
         model.addAttribute("hang", listHang);
         model.addAttribute("chatLieu", listChatLieu);
 
-        if (message == null || "true".equals(message)) {
-            model.addAttribute("message", false);
-        } else {
+        // Thiết lập giá trị cho `message` dựa trên đầu vào từ phía client
+        if ("true".equals(message)) {
             model.addAttribute("message", true);
+        } else {
+            model.addAttribute("message", false);
         }
 
         return "manage/giay";
     }
-
 
     @GetMapping("/giay/viewAdd")
     public String viewAddGiay(Model model
