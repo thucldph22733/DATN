@@ -764,6 +764,7 @@ public class CheckOutController {
 
     @GetMapping("/vnpay-payment")
     public String GetMapping(Model model) throws ParseException {
+
         int paymentStatus = vnPayService.orderReturn(request);
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi");
 
@@ -778,7 +779,12 @@ public class CheckOutController {
         String totalPrice = request.getParameter("vnp_Amount");
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-
+        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+        model.addAttribute("khachHang1", khachHang1);
+        if (session.getAttribute("KhachHangLogin") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "redirect:/buyer/login";
+        }
         if (paymentStatus == 1) {
 
             LichSuThanhToan lichSuThanhToan = new LichSuThanhToan();
@@ -875,6 +881,7 @@ public class CheckOutController {
             hoaDon.setKhuyenMai(khuyenMai);
             hoaDonService.add(hoaDon);
         }
+
         return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString() + "&idKM=" + idKM;
     }
 }
