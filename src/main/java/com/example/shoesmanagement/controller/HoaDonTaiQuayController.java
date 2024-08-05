@@ -56,7 +56,6 @@ public class HoaDonTaiQuayController {
 
     @GetMapping("/offline")
     public String getAll(Model model) {
-
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/login";
@@ -94,12 +93,15 @@ public class HoaDonTaiQuayController {
                 listHoaDonThanhCong.add(x);
                 soLuongSanPhamDaBan += x.getTongSP();
 
-                // Lấy danh sách chi tiết hóa đơn cho hóa đơn hiện tại
+                // Tính tổng số lượng sản phẩm trong hóa đơn chi tiết
+                int tongSanPhamHoaDon = 0;
                 List<HoaDonChiTiet> chiTietList = x.getHoaDonChiTiets();
                 for (HoaDonChiTiet chiTiet : chiTietList) {
-                    tongSanPham += chiTiet.getSoLuong();
+                    tongSanPhamHoaDon += chiTiet.getSoLuong();
                     hoaDonChiTietList.add(chiTiet);
                 }
+                x.setTongSP(tongSanPhamHoaDon);  // Gán tổng số lượng sản phẩm vào thuộc tính tongSP
+                tongSanPham += tongSanPhamHoaDon;
             }
         }
 
@@ -116,7 +118,6 @@ public class HoaDonTaiQuayController {
         model.addAttribute("hoaDonList", hoaDonList);
         model.addAttribute("hoaDonChiTietList", hoaDonChiTietList);  // Danh sách chi tiết hóa đơn
 
-//        return "manage/manage-bill-offline";
         return "manage/manage-bill-off";
     }
 

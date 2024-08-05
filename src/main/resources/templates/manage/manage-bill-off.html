@@ -167,22 +167,18 @@
                                                                 <tr th:each="bill: ${hoaDonList}">
                                                                     <td th:text="${bill.maHD}"></td>
                                                                     <td th:text="${#dates.format(bill.tgTao, 'HH:mm yyyy-MM-dd')}"></td>
-                                                                    <td th:text="${bill.trangThai == 1 ?'HD Thành công':'HD Chờ'}"></td>
-                                                                    <!--                                                                    <td th:text="${bill.trangThai}"></td>-->
+                                                                    <td th:text="${bill.trangThai == 1 ? 'HD Thành công' : 'HD Chờ'}"></td>
                                                                     <td>
                                                                         <span th:if="${bill.khachHang == null}">Không có</span>
-                                                                        <span th:if="${bill.khachHang != null}"
-                                                                              th:text="${bill.khachHang.hoTenKH}"></span>
+                                                                        <span th:if="${bill.khachHang != null}" th:text="${bill.khachHang.hoTenKH}"></span>
                                                                     </td>
-                                                                    <td th:text="${bill.tongSP}"></td>
-                                                                    <!--<td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>-->
-                                                                    <td th:text="'₫'+${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT')}"></td>
+                                                                    <td th:text="${bill.tongSP}"></td> <!-- Hiển thị tổng số lượng sản phẩm -->
+                                                                    <td th:text="'₫' + ${#numbers.formatDecimal(bill.tongTien, 0, 'COMMA', 2, 'POINT')}"></td>
                                                                     <th>
                                                                         <i class="si si-eye"
                                                                            th:data-bs-toggle="modal"
                                                                            th:data-bs-target="'#modalDetailHD' + ${bill.idHD}"
                                                                            style="cursor: pointer; margin: 0 20px 0 20px; color: #ff9f43;"></i>
-
                                                                         <a th:href="@{'http://localhost:8081/manage/bill/offline/print/' + ${bill.idHD}}"
                                                                            onclick="window.open(this.href, '_blank'); return false;">
                                                                             <i class="fe fe-printer"
@@ -194,6 +190,7 @@
                                                                     </th>
                                                                 </tr>
                                                                 </tbody>
+
                                                             </table>
                                                         </div>
                                                     </div>
