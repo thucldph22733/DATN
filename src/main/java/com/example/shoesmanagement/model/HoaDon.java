@@ -97,4 +97,8 @@ public class HoaDon {
     @JoinColumn(name = "id_khuyen_mai")
     private KhuyenMai khuyenMai;
 
+    @Override
+    public String toString() {
+        return this.getMaHD() +"-"+this.getKhuyenMai().getMaKM();
+    }
 }

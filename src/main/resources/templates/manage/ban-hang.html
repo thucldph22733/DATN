@@ -644,7 +644,7 @@
                                                                                                         <p class="card-text"
                                                                                                            th:text="'Điều kiện: Hóa đơn tối thiểu ' + ${items.dieuKienKMBill}"></p>
                                                                                                         <p class="card-text"
-                                                                                                           th:text="'Số lượng: ' + ${items.soLuong}"></p>
+                                                                                                           th:text="'Số lượng còn lại: ' + ${items.soLuong - items.soLuongDaDung}"></p>
                                                                                                         <button type="submit"
                                                                                                                 class="btn btn-primary"
                                                                                                                 th:formaction="@{'/ban-hang/chon-khuyen-mai/' + ${items.idKM}}">

@@ -8,8 +8,7 @@
           content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
-    <title>Teezy Shop - Admin</title>
-
+    <title>Admin/Thống kê</title>
     <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
     <link rel="stylesheet" href="/plugins/icons/flags/flags.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -56,8 +55,7 @@
                             <span><img src="/images/img/icons/dash1.svg" alt="img"></span>
                         </div>
                         <div class="dash-widgetcontent">
-                            <h5><span class="" th:text="${tlbr}"></span></h5>
-                            <h6>Doanh thu tháng này</h6>
+                            <span th:text="${'Doanh thu tháng này: ' + #numbers.formatInteger(doanhThuThangHienTaiOff + doanhThuThangHienTaiOnl, 0, 'COMMA') + ' VND'}"></span>
                         </div>
                     </div>
                 </div>
@@ -82,9 +80,7 @@
                             <span><img src="/images/img/product/product65.png" alt="img"></span>
                         </div>
                         <a class="dash-widgetcontent" href="/manage/giay">
-                            <h5><span class="counters" th:text="${tonggiay}"></span></h5>
-                            <h6>Số lượng sản phẩm đã bán</h6>
-                            <h6></h6>
+                            <span th:text="${'Số lượng sản phẩm đã bán trong tháng: ' + #numbers.formatInteger(tongSanPhamOnl + tongSanPhamOff, 0, 'COMMA')}"></span>
                         </a>
                     </div>
                 </div>
@@ -299,35 +295,20 @@
                         <div class="col-lg-6  hover">
                             <div class="header__top__hover" style="color: #1d1d42 ;right: 5px"></div>
                         </div>
-<!--                        <div class="col-lg-4 ">-->
-<!--                            <select id="mySelect" class="form-select" onchange="showCorrespondingValue()">-->
-<!--                                <option selected disabled>Lọc theo</option>-->
-<!--                                <option value="Tháng">Tháng</option>-->
-<!--                                <option value="Năm">Năm</option>-->
-<!--                                <option value="Ngày">Ngày</option>-->
-<!--                            </select>-->
-<!--                        </div>-->
+
                         <div class="col-lg-6 ">
-                            <form class="row g-3">
-                                <div class="col-auto">
-                                    <label class="form-label">Từ</label>
-                                    <input type="date" class="form-control" id="tuNgay">
-                                </div>
-
-                                <div class="col-auto">
-                                    <label class="form-label">Đến</label>
-                                    <input type="date" class="form-control" id="denNgay">
-                                </div>
-
-                                <div class="col-auto">
-                                    <button type="submit" class="btn btn-primary mb-3">Tìm</button>
-                                </div>
-                            </form>
+                            <label for="year-select">Chọn năm:</label>
+                            <select id="year-select">
+                                <!-- Các option sẽ được tạo động -->
+                            </select>
                         </div>
-
                     </div>
+
                     <div id="container" class="card-body">
                         <!--                         style="width: 550px; height: 400px; margin: 0 auto">-->
+                    </div>
+                    <div>
+                        <canvas id="myChart"></canvas>
                     </div>
                 </div>
 
@@ -336,21 +317,8 @@
                 <div class="card flex-fill">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h4 class="card-title mb-0 text-danger">Sản phẩm bán chạy trong tháng</h4>
-                        <div class="dropdown">
-                            <a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false"
-                               class="dropset">
-                                <i class="fa fa-ellipsis-v"></i>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li>
-                                    <a href="productlist.html" class="dropdown-item">Product List</a>
-                                </li>
-                                <li>
-                                    <a href="addproduct.html" class="dropdown-item">Product Add</a>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
+
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table datanew">
@@ -372,11 +340,7 @@
                                     </td>
                                     <td th:text="${a.tenGiay}"></td>
                                     <td th:text="${a.soLuong}"></td>
-
-
-                                    </td>
                                 </tr>
-
                                 </tbody>
                             </table>
                         </div>
@@ -384,39 +348,28 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
-</div>
-
 
 <script src="/js/jquery-3.6.0.min.js"></script>
-
 <script src="/js/feather.min.js"></script>
-
 <script src="/js/jquery.slimscroll.min.js"></script>
-
 <script src="/js/bootstrap.bundle.min.js"></script>
-
 <script src="/js/jquery.dataTables.min.js"></script>
 <script src="/js/dataTables.bootstrap4.min.js"></script>
-
 <script src="/plugins/select2/js/select2.min.js"></script>
-
 <script src="/plugins/owlcarousel/owl.carousel.min.js"></script>
-
 <script src="/plugins/sweetalert/sweetalert2.all.min.js"></script>
 <script src="/plugins/sweetalert/sweetalerts.min.js"></script>
-
 <script src="/plugins/flot/jquery.flot.js"></script>
 <script src="/plugins/flot/jquery.flot.fillbetween.js"></script>
 <script src="/plugins/flot/jquery.flot.pie.js"></script>
 <script src="/plugins/flot/chart-data.js"></script>
-
 <script src="/js/script.js"></script>
-
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script th:inline="javascript">
     $(function () {
         Highcharts.chart('container', {
@@ -464,7 +417,6 @@
     function showCorrespondingValue() {
         var select = document.getElementById("mySelect");
         var selectedValue = select.value;
-
 
         // Kiểm tra nếu giá trị đã thay đổi, thì load lại trang
         switch (selectedValue) {
@@ -604,6 +556,170 @@
                 break;
         }
     }
+</script>
+
+<script>
+    fetch('/data')
+        .then(response => response.json())
+        .then(data => {
+            const labels = data.map(item => item.month);
+            const dataset1 = data.map(item => item.value1);
+            const dataset2 = data.map(item => item.value2);
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Dataset 1',
+                            data: dataset1,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Dataset 2',
+                            data: dataset2,
+                            borderColor: 'rgba(153, 102, 255, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+</script>
+
+<script>
+    Highcharts.chart('container', {
+
+        title: {
+            text: 'U.S Solar Employment Growth',
+            align: 'left'
+        },
+
+        subtitle: {
+            text: 'By Job Category. Source: <a href="https://irecusa.org/programs/solar-jobs-census/" target="_blank">IREC</a>.',
+            align: 'left'
+        },
+
+        yAxis: {
+            title: {
+                text: 'Number of Employees'
+            }
+        },
+
+        xAxis: {
+            accessibility: {
+                rangeDescription: 'Range: 2010 to 2022'
+            }
+        },
+
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+
+        plotOptions: {
+            series: {
+                label: {
+                    connectorAllowed: false
+                },
+                pointStart: 2010
+            }
+        },
+
+        series: [{
+            name: 'Installation & Developers',
+            data: [
+                43934, 48656, 65165, 81827, 112143, 142383,
+                171533, 165174, 155157, 161454, 154610, 168960, 171558
+            ]
+        }, {
+            name: 'Other',
+            data: [
+                21908, 5548, 8105, 11248, 8989, 11816, 18274,
+                17300, 13053, 11906, 10073, 11471, 11648
+            ]
+        }],
+
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
+                    }
+                }
+            }]
+        }
+
+    });
+</script>
+
+<script>
+    // Xác định khoảng năm mà bạn muốn hiển thị
+    const startYear = 2000;
+    const endYear = 2300;
+
+    // Lấy phần tử select
+    const yearSelect = document.getElementById('year-select');
+
+    // Tạo các option
+    for (let year = startYear; year <= endYear; year++) {
+        const option = document.createElement('option');
+        option.value = year;
+        option.text = year;
+        yearSelect.add(option);
+    }
+
+    yearSelect.addEventListener('change', function() {
+        const selectedYear = yearSelect.value;
+        console.log('Năm đã chọn:', selectedYear);
+        // Thực hiện các xử lý khác tại đây
+    });
+</script>
+<script>
+    const ctx = document.getElementById('myChart');
+    const monthNames = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6",
+        "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
+
+    const valueOff = [8, 15, 2, 4, 1, 2]
+    const valueOnl = [12, 19, 3, 5, 2, 3]
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: monthNames,
+            datasets: [
+                {
+                    label: 'Số lượng đã bán Onl:',
+                    data: valueOnl,
+                    borderWidth: 1
+                },
+                {
+                    label: 'Số lượng đã bán tại quầy:',
+                    data: valueOff,
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            // Các tuỳ chọn khác cho biểu đồ
+        }
+    });
 </script>
 </body>
 </html>

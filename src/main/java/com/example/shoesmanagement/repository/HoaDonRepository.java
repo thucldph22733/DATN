@@ -52,4 +52,31 @@ public interface HoaDonRepository  extends JpaRepository<HoaDon, UUID> {
 
     List<HoaDon> findByTrangThai(int trangThai);
 
+
+//    @Query("select hdct.soLuong from HoaDon hd join HoaDonChiTiet hdct on hd.idHD = hdct.hoaDon.idHD where hd.loaiHD = 1 and hd.trangThai = 1 and month(hd.tgThanhToan) = month(CURRENT_DATE())")
+//    Long soLuongSPOff();
+
+//    @Query("select hdct.soLuong from HoaDon hd join HoaDonChiTiet hdct on hd.idHD = hdct.hoaDon.idHD where hd.loaiHD = 0 and hd.trangThai = 4 and month(hd.tgThanhToan) = month(CURRENT_DATE())")
+//    Long soLuongSPOnl();
+
+    @Query("select sum(hd.tongTien) from HoaDon hd where hd.loaiHD = 1 and hd.trangThai = 1 and month(hd.tgThanhToan) = month(CURRENT_DATE())")
+    Long doanhThuOff();
+
+    @Query("select sum(hd.tongTien) from HoaDon hd where hd.loaiHD = 0 and hd.trangThai = 4 and month(hd.tgThanhToan) = month(CURRENT_DATE())")
+    Long doanhThuOnl();
+
+    @Query("select km.soLuong - km.soLuongDaDung from KhuyenMai km where km.idKM =?1")
+    Long soLuongCon(UUID ID);
+
+    @Query(value = "select sum(hdct.so_luong)\n" +
+            "from hoa_don_chi_tiet hdct join hoa_don hd\n" +
+            "on hdct.id_hd = hd.id_hd \n" +
+            "where hd.loai_hd = '1' and hd.trang_thai = '1' and MONTH(hd.tg_thanh_toan) = MONTH(GETDATE())", nativeQuery = true)
+    Long soLuongSPOff();
+
+    @Query(value = "select sum(hdct.so_luong)\n" +
+            "from hoa_don_chi_tiet hdct join hoa_don hd\n" +
+            "on hdct.id_hd = hd.id_hd \n" +
+            "where hd.loai_hd = '0' and hd.trang_thai = '4' and MONTH(hd.tg_thanh_toan) = MONTH(GETDATE())", nativeQuery = true)
+    Long soLuongSPOnl();
 }

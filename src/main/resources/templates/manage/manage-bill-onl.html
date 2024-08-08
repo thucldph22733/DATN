@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="description" content="POS - Bootstrap Admin Template">
+    <meta name="keywords"
+          content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
+    <meta name="author" content="Dreamguys - Bootstrap Admin Template">
+    <meta name="robots" content="noindex, nofollow">
+    <title>TeeZy Shop - Admin</title>
+    <!-- Thêm các liên kết tới SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/plugins/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/plugins/scrollbar/scroll.min.css">
+    <link rel="stylesheet" href="/plugins/icons/feather/feather.css">
+    <link rel="stylesheet" href="/plugins/icons/flags/flags.css">
+    <link rel="stylesheet" href="/plugins/simpleline/simple-line-icons.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="mini-sidebar">
+<div th:replace="~{manage/activities :: main}"></div>
+<div class="main-wrapper">
+    <div class="page-wrapper">
+        <div class="content">
+
+        </div>
+    </div>
+
+    <section>
+
+    </section>
+</div>
+
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/feather.min.js"></script>
+<script src="/js/jquery.slimscroll.min.js"></script>
+<script src="/js/jquery.dataTables.min.js"></script>
+<script src="/js/dataTables.bootstrap4.min.js"></script>
+<script src="/plugins/select2/js/select2.min.js"></script>
+<script src="/plugins/select2/js/custom-select.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/plugins/scrollbar/scrollbar.min.js"></script>
+<script src="/plugins/scrollbar/custom-scroll.js"></script>
+<script src="/plugins/sweetalert/sweetalert2.all.min.js"></script>
+<script src="/plugins/sweetalert/sweetalerts.min.js"></script>
+<script src="/js/script.js"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    document.addEventListener('DOMContentLoaded', function () {
+        var huyHoaDonForm = document.getElementById('huyHoaDonForm');
+        huyHoaDonForm.addEventListener('submit', function (event) {
+            var lyDoHuyInput = document.getElementById('lyDoHuy');
+            var invalidFeedback = document.querySelector('#huyHoaDonForm .invalid-feedback');
+            if (lyDoHuyInput.value.trim() === '') {
+                event.preventDefault(); // Ngăn form submit nếu ly do huy không được nhập
+                invalidFeedback.style.display = 'block';
+            } else {
+                invalidFeedback.style.display = 'none';
+            }
+        });
+    });
+    /*]]>*/
+</script>
+
+<script>
+    // Lấy tất cả các container của form
+    const formContainers = document.querySelectorAll('.form-container');
+    // Duyệt qua từng form và gán sự kiện cho input
+    formContainers.forEach(function (container) {
+        const maHDElement = container.querySelector('.maHD');
+        const inputMaHDElement = container.querySelector('.inputMaHD');
+        const btnSubmitElement = container.querySelector('.btn-submit');
+
+        inputMaHDElement.addEventListener('input', function () {
+            if (inputMaHDElement.value === maHDElement.innerText) {
+                btnSubmitElement.removeAttribute('disabled');
+            } else {
+                btnSubmitElement.setAttribute('disabled', 'true');
+                alert('Mã hóa đơn không đúng!');
+
+            }
+        });
+    });
+</script>
+
+<!--Confirm thong bao pay end-->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".btn-cancel").forEach(function (btn) {
+            btn.addEventListener("click", function (event) {
+                if (btn.getAttribute("data-bs-dismiss") !== "modal") {
+                    setTimeout(function () {
+                        window.location.href = btn.getAttribute("href");
+                    }, 500);  // Thời gian chờ để modal đóng hoàn toàn
+                    event.preventDefault();
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#editBillDelivery').modal('show');
+    });
+    $(document).ready(function () {
+        $('#messBillDeliveryThanhCong').modal('show');
+    });
+    $(document).ready(function () {
+        $('#editBillRefundDelivery').modal('show');
+    });
+    $(document).ready(function () {
+        $('#hoanTienThanhCong').modal('show');
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const alert = document.querySelector('.custom-alert');
+        if (alert) {
+            setTimeout(() => {
+                alert.classList.add('hide');
+            }, 5000); // 5 giây
+        }
+    });
+</script>
+
+<script>
+    function confirmDelete() {
+        Swal.fire({
+            title: 'Bạn có chắc chắn muốn xóa sản phẩm này không?',
+            text: "Bạn sẽ không thể khôi phục lại điều này!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Có, xóa nó!',
+            cancelButtonText: 'Hủy bỏ'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteProduct();
+            }
+        });
+    }
+
+    function deleteProduct() {
+        var form = document.getElementById('deleteForm');
+        var url = form.action;
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(data => {
+                // Xử lý khi xóa thành công, ví dụ xóa dòng trong bảng
+                Swal.fire(
+                    'Đã xóa!',
+                    data,
+                    'success'
+                ).then(() => {
+                    form.closest('tr').remove();
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire(
+                    'Lỗi!',
+                    'Có lỗi xảy ra trong quá trình xoá sản phẩm!',
+                    'error'
+                );
+            });
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#chonSize').modal('show');
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#locTrangThai").change(function () {
+            var maTrangThai = $(this).val();
+
+
+            // Ẩn tất cả các dòng trong bảng
+            $("#data-table tbody tr").hide();
+
+            // Hiển thị các dòng có giá trị kích thước tương ứng
+            $("#data-table tbody tr").each(function () {
+                var maTT = $(this).find("td:eq(3)").text(); // Vị trí cột chứa giá trị kích thước
+                if (maTT === maTrangThai || maTrangThai === "Trạng thái") {
+                    $(this).show();
+                }
+            });
+            console.log(maTrangThai);
+        });
+    });
+</script>
+</body>
+</html>
