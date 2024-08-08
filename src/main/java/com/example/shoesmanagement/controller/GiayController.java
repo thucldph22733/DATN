@@ -72,19 +72,24 @@ public class GiayController {
     public String getAllGiay(Model model, @ModelAttribute("message") String message) {
         if (session.getAttribute("managerLogged") == null) {
             // Nếu managerLogged bằng null, quay về trang login
-
             return "redirect:/login";
-
         }
+
         List<Giay> listGiay = giayService.getAllGiay();
         List<Hang> listHang = hangService.getALlHang();
         List<ChatLieu> listChatLieu = chatLieuService.getAllChatLieu();
+
         model.addAttribute("giay", listGiay);
         model.addAttribute("hang", listHang);
         model.addAttribute("chatLieu", listChatLieu);
-        if (message == null || "true".equals(message)) {
+
+        // Thiết lập giá trị cho `message` dựa trên đầu vào từ phía client
+        if ("true".equals(message)) {
+            model.addAttribute("message", true);
+        } else {
             model.addAttribute("message", false);
         }
+
         return "manage/giay";
     }
 
