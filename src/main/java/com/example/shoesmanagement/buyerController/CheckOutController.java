@@ -459,8 +459,9 @@ public class CheckOutController {
 
 
                 hoaDonRepository.saveAndFlush(hoaDon);
-                return "redirect:/buyer/checkout?" + updatedParams;
+
 //                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
+                return "redirect:/buyer/checkout?" + updatedParams;
             } else if (sl < slmax) {    // nếu số lượng khuyến mãi nhỏ hơn sl đã set thì tăng sl lên 1
                 kmcsdl.setSoLuongDaDung(sl + 1);
                 khuyenMaiRepository.saveAndFlush(kmcsdl);
@@ -651,15 +652,15 @@ public class CheckOutController {
             if (sl == slmax) {    // nếu số lượng khuyến mãi đã hết thì xoá mã khuyến mãi ra khỏi hoá đơn và trả về trang thanh toán
                 redirectAttribute.addFlashAttribute("successMessage", "Rất tiếc, số lượng khuyến mãi đã hết. Vui lòng chọn khuyến mãi khác!");
                 hoaDon.setKhuyenMai(null);
+//                hoaDonRepository.saveAndFlush(hoaDon);
+                hoaDonService.add(hoaDon);
+//                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
                 String checkoutParams = (String) session.getAttribute("checkoutParams" + khachHang.getIdKH());
                 String updatedParams = Arrays.stream(checkoutParams.split("&"))
                         .filter(param -> !param.startsWith("idKM="))
                         .collect(Collectors.joining("&"));
-
                 // Thêm các tham số còn lại vào redirectAttributes
                 redirectAttribute.addAttribute("params", updatedParams);
-
-
                 hoaDonRepository.saveAndFlush(hoaDon);
                 return "redirect:/buyer/checkout?" + updatedParams;
 //                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
@@ -764,6 +765,7 @@ public class CheckOutController {
 
     @GetMapping("/vnpay-payment")
     public String GetMapping(Model model) throws ParseException {
+
         int paymentStatus = vnPayService.orderReturn(request);
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi");
 
@@ -778,7 +780,12 @@ public class CheckOutController {
         String totalPrice = request.getParameter("vnp_Amount");
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-
+        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+        model.addAttribute("khachHang1", khachHang1);
+        if (session.getAttribute("KhachHangLogin") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "redirect:/buyer/login";
+        }
         if (paymentStatus == 1) {
 
             LichSuThanhToan lichSuThanhToan = new LichSuThanhToan();
@@ -837,7 +844,6 @@ public class CheckOutController {
         }
     }
 
-
     public String generateRandomNumbers() {
         Random random = new Random();
         StringBuilder sb = new StringBuilder();
@@ -861,20 +867,23 @@ public class CheckOutController {
         KhuyenMai khuyenMai = khuyenMaiRepository.findById(idKM).orElse(null);
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
 
+        HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi");
         if (khuyenMai != null) {
-            Date date = new Date();
-            HoaDon hoaDon = new HoaDon();
+//            Date date = new Date();
+//            HoaDon hoaDon = new HoaDon();
 
-            String maHD = "HD_" + khachHang.getMaKH() + "_" + date.getDate() + generateRandomNumbers();
 
-            hoaDon.setKhachHang(khachHang);
-            hoaDon.setMaHD(maHD);
-            hoaDon.setLoaiHD(0);
-            hoaDon.setTgTao(date);
-            hoaDon.setTrangThai(7);
+//            String maHD = "HD_" + khachHang.getMaKH() + "_" + date.getDate() + generateRandomNumbers();
+//
+//            hoaDon.setKhachHang(khachHang);
+//            hoaDon.setMaHD(maHD);
+//            hoaDon.setLoaiHD(0);
+//            hoaDon.setTgTao(date);
+//            hoaDon.setTrangThai(7);
             hoaDon.setKhuyenMai(khuyenMai);
-            hoaDonService.add(hoaDon);
+            hoaDonService.save(hoaDon);
         }
+
         return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString() + "&idKM=" + idKM;
     }
 }

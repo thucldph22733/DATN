@@ -10,7 +10,6 @@ import com.example.shoesmanagement.viewModel.GiayViewModel;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -59,12 +58,16 @@ public class HoaDonOnlineController {
 
     @Autowired
     private HttpSession session;
+
     @Autowired
     private GiayViewModelService giayViewModelService;
+
     @Autowired
     private SizeRepository sizeRepository;
+
     @Autowired
     private LSThanhToanService lsThanhToanService;
+
     @Autowired
     private GiayChiTietService giayChiTietService;
 
@@ -73,8 +76,10 @@ public class HoaDonOnlineController {
 
     @Autowired
     private ChucVuService chucVuService;
+
     @Autowired
     private HttpSession httpSession;
+
     @Autowired
     private HoaDonRepository hoaDonRepository;
 
@@ -123,11 +128,9 @@ public class HoaDonOnlineController {
         model.addAttribute("listNhanVienGiao", listNhanVienGiao);
         model.addAttribute("billDelivery", billDelivery);
         model.addAttribute("showEditBillDelivery", true);
-
-
+        showTab5(model);
         showData(model);
         showTab1(model);
-
 
         return "manage/manage-bill-online";
     }
@@ -154,9 +157,6 @@ public class HoaDonOnlineController {
         hoaDon.setGiaoHang(giaoHang);
         hoaDonService.add(hoaDon);
 
-
-
-
         model.addAttribute("showMessThanhCong", true);
         model.addAttribute("reLoadPage", true);
 
@@ -180,25 +180,12 @@ public class HoaDonOnlineController {
         hoaDon.setTgHuy(date);
         hoaDon.setTrangThai(5);
 
-//        KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
-//        khuyenMai.setSoLuong(khuyenMai.getSoLuong() + 1);
-//        khuyenMai.setSoLuongDaDung(khuyenMai.getSoLuongDaDung() - 1);
-//        khuyenMaiRepository.saveAndFlush(khuyenMai);
-
         if (hoaDon.getKhuyenMai() != null) {   // nếu hoá đơn có dùng khuyến mãi
             KhuyenMai kmcsdl = khuyenMaiRepository.findById(hoaDon.getKhuyenMai().getIdKM()).get();
-            int slmax = kmcsdl.getSoLuong();
-            int sl = kmcsdl.getSoLuongDaDung();
-            if (sl == slmax) {    // nếu số lượng khuyến mãi đã hết thì xoá mã khuyến mãi ra khỏi hoá đơn và trả về trang thanh toán
-                hoaDon.setKhuyenMai(null);
-                hoaDonRepository.saveAndFlush(hoaDon);
-//                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
-                return "redireact:/buyer/cart";
-            } else if (sl < slmax) {    // nếu số lượng khuyến mãi nhỏ hơn sl đã set thì tăng sl lên 1
-                kmcsdl.setSoLuongDaDung(sl -1);
-                khuyenMaiRepository.saveAndFlush(kmcsdl);
-            }
+            kmcsdl.setSoLuongDaDung(kmcsdl.getSoLuongDaDung() - 1);
+            khuyenMaiRepository.saveAndFlush(kmcsdl);
         }
+
         List<HoaDonChiTiet> listHDCT = hoaDon.getHoaDonChiTiets();
         for (HoaDonChiTiet hdct : listHDCT) {
             ChiTietGiay chiTietGiay = hdct.getChiTietGiay();
@@ -210,7 +197,6 @@ public class HoaDonOnlineController {
         }
 
         hoaDonService.save(hoaDon);
-
 
         showData(model);
         showTab0(model);
@@ -244,7 +230,6 @@ public class HoaDonOnlineController {
         model.addAttribute("tabpane4", "tab-pane");
         model.addAttribute("tabpane5", "tab-pane");
         model.addAttribute("tabpane6", "tab-pane");
-
     }
 
     private void showTab1(Model model) {
@@ -260,8 +245,9 @@ public class HoaDonOnlineController {
         model.addAttribute("tabpane4", "tab-pane");
         model.addAttribute("tabpane5", "tab-pane");
         model.addAttribute("tabpane6", "tab-pane");
+    }
 
-    }  private void showTab2(Model model) {
+    private void showTab2(Model model) {
         model.addAttribute("activeAll", "nav-link");
         model.addAttribute("cho_xac_nhan", "nav-link");
         model.addAttribute("cho_giao_hang", "nav-link");
@@ -274,8 +260,9 @@ public class HoaDonOnlineController {
         model.addAttribute("tabpane4", "tab-pane");
         model.addAttribute("tabpane5", "tab-pane");
         model.addAttribute("tabpane6", "tab-pane");
+    }
 
-    } private void showTab3(Model model) {
+    private void showTab3(Model model) {
         model.addAttribute("cho_xac_nhan", "nav-link");
         model.addAttribute("cho_giao_hang", "nav-link active");
         model.addAttribute("cho_lay_hang", "nav-link");
@@ -288,8 +275,9 @@ public class HoaDonOnlineController {
         model.addAttribute("tabpane4", "tab-pane show active");
         model.addAttribute("tabpane5", "tab-pane");
         model.addAttribute("tabpane6", "tab-pane");
+    }
 
-    } private void showTab4(Model model) {
+    private void showTab4(Model model) {
         model.addAttribute("activeAll", "nav-link");
         model.addAttribute("cho_xac_nhan", "nav-link");
         model.addAttribute("cho_giao_hang", "nav-link");
@@ -302,8 +290,9 @@ public class HoaDonOnlineController {
         model.addAttribute("tabpane4", "tab-pane");
         model.addAttribute("tabpane5", "tab-pane show active");
         model.addAttribute("tabpane6", "tab-pane");
+    }
 
-    } private void showTab5(Model model) {
+    private void showTab5(Model model) {
         model.addAttribute("activeAll", "nav-link");
         model.addAttribute("cho_xac_nhan", "nav-link");
         model.addAttribute("cho_giao_hang", "nav-link");
@@ -316,7 +305,6 @@ public class HoaDonOnlineController {
         model.addAttribute("tabpane4", "tab-pane");
         model.addAttribute("tabpane5", "tab-pane");
         model.addAttribute("tabpane6", "tab-pane show active");
-
     }
 
 
@@ -324,10 +312,8 @@ public class HoaDonOnlineController {
 
         List<HoaDon> listAllHoaDonOnline = hoaDonService.listHoaDonOnline();
 
-
         List<HoaDon> listAllHoaDonDangGiao = new ArrayList<>();
         List<HoaDon> listHoaDonOnlineBaking = new ArrayList<>();
-
 
         int soLuongHoaDonOnline = 0;
         int soLuongHoaDonHuy = 0;
@@ -338,7 +324,6 @@ public class HoaDonOnlineController {
         int soLuongHoaDonDaNhan = 0;
         int soLuongHoaDonChoXacNhan = 0;
         int soLuongHoaDonChoLayHang = 0;
-
 
         int soLuongHoaDonThanhToanKhiNhanHang = 0;
 
@@ -396,10 +381,8 @@ public class HoaDonOnlineController {
 
         int soLuongHoaDonChuaThanhToan = soLuongHoaDonChuaThanhToanNhanHang + soLuongHoaDonBanking;
 
-
         int soLuongHdHoanChoXacNhan = 0;
         int soLuongHdHoanKhachHuy = 0;
-
 
         model.addAttribute("sumBillOnline", soLuongHoaDonOnline);
         model.addAttribute("totalAmount", tongTienHoaDon);
@@ -441,10 +424,8 @@ public class HoaDonOnlineController {
             }
             model.addAttribute("listSanPham", list);
         }
-
         return "redirect:/manage/bill/online";
     }
-
 
     @GetMapping("/xoa-gio-hang2/{idChiTietGiay}")
     public String xoaSanPham(@PathVariable("idChiTietGiay") UUID idChiTietGiay, RedirectAttributes redirectAttributes, Model model) {
@@ -616,7 +597,6 @@ public class HoaDonOnlineController {
         return "/manage/manage-bill-online";
     }
 
-
     @GetMapping("/add-to-hd/{idHD}")
     public String addToCart(@PathVariable("idHD") UUID idHoaDon,
                             @RequestParam("idChiTietGiay") UUID idChiTietGiay,
@@ -688,8 +668,4 @@ public class HoaDonOnlineController {
         redirectAttributes.addFlashAttribute("tb", "Thêm vào giỏ hàng thành công");
         return "redirect:/manage/bill/online" + idHoaDon;
     }
-
-
-
-
 }

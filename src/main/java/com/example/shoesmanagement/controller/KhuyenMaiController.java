@@ -25,9 +25,6 @@ public class KhuyenMaiController {
     private KhuyenMaiService khuyenMaiService;
 
     @Autowired
-    private KhachHangService khachHangService;
-
-    @Autowired
     private HttpSession session;
 
     @Autowired
@@ -82,7 +79,6 @@ public class KhuyenMaiController {
     public void capNhatSoLuong(HoaDon hoaDon){
         List<KhuyenMai> khuyenMai = (List<KhuyenMai>) hoaDon.getKhuyenMai();
         for (KhuyenMai km : khuyenMai){
-            km.setSoLuong(km.getSoLuong() - hoaDon.getTongSP());
             km.setSoLuongDaDung(km.getSoLuongDaDung() + hoaDon.getTongSP());
             khuyenMaiService.save(km);
         }

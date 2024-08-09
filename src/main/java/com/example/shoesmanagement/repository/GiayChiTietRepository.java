@@ -42,5 +42,7 @@ public interface GiayChiTietRepository extends JpaRepository<ChiTietGiay, UUID> 
     @Query(value = "select sum(tong_sp) from hoa_don where trang_thai = 4",nativeQuery = true)
     Integer getTongGiay();
 
-
+//    select sum(hd.tong_sp)
+//    from hoa_don hd
+//    where hd.trang_thai = '1'
 }

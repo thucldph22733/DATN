@@ -70,6 +70,7 @@
     }
 </style>
 <body class="mini-sidebar">
+<<<<<<< HEAD
 <!--<div th:fragment="main">-->
 
     <!--    <div th:if="${reLoadPage}" id="global-loader">-->
@@ -118,10 +119,10 @@
                     <div class="dropdown-menu menu-drop-user">
                         <div class="profilename">
                             <div class="profileset">
-                                                                                    <span class="user-img"><img
-                                                                                            th:src="@{'/images/imgsNhanVien/'+${session.managerLogged.AnhNV}}"
-                                                                                            alt="">
-                                                                                    <span class="status online"></span></span>
+                                <span class="user-img">
+                                    <img th:src="@{'/images/imgsNhanVien/'+ ${session.managerLogged.AnhNV}}" alt="">
+                                    <span class="status online"></span>
+                                </span>
                                 <div class="profilesets">
                                     <h6 th:text="${session.managerLogged.hoTenNV}"></h6>
                                     <h5 th:text="${session.managerLogged.chucVu.tenCV}"></h5>
@@ -224,6 +225,7 @@
             </div>
         </div>
     </div>
+<div th:replace="~{manage/activities :: main}"></div>
     <!--CODE TỪ DƯỚI NÀY-->
     <div th:if="${message}" class="alert alert-success custom-alert" role="alert">
         <span th:text="${message}"></span>
@@ -773,9 +775,8 @@
                                                                     </thead>
                                                                     <tbody>
                                                                     <th:block th:each="bill, i: ${listHoaDonOnline}">
+                                                                        <tr th:if="${bill.trangThai == 4 or bill.trangThai == 5}">
                                                                         <tr th:if="${bill.trangThai == 2}">
-
-
                                                                             <td th:text="${i.index}"></td>
                                                                             <td th:text="${bill.maHD}"></td>
 
@@ -2102,8 +2103,6 @@
         </div>
     </div>
     <!-- Modal All Purchase End -->
-
-
 </section>
 
 <script src="/js/jquery-3.6.0.min.js"></script>
@@ -2138,10 +2137,10 @@
     });
     /*]]>*/
 </script>
+
 <script>
     // Lấy tất cả các container của form
     const formContainers = document.querySelectorAll('.form-container');
-
     // Duyệt qua từng form và gán sự kiện cho input
     formContainers.forEach(function (container) {
         const maHDElement = container.querySelector('.maHD');
@@ -2159,6 +2158,7 @@
         });
     });
 </script>
+
 <!--Confirm thong bao pay end-->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -2189,6 +2189,7 @@
         $('#hoanTienThanhCong').modal('show');
     });
 </script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const alert = document.querySelector('.custom-alert');
@@ -2199,6 +2200,7 @@
         }
     });
 </script>
+
 <script>
     function confirmDelete() {
         Swal.fire({
@@ -2260,8 +2262,6 @@
         $('#chonSize').modal('show');
     });
 </script>
-
-
 <script>
     $(document).ready(function () {
         $("#locTrangThai").change(function () {
