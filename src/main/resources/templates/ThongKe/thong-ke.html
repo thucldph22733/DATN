@@ -49,6 +49,20 @@
 <div class="main-wrapper">
     <div class="page-wrapper">
         <div class="content">
+            <form id="dateRangeForm" class="d-flex align-items-center mb-3">
+                <div class="col-md-3">
+                    <label for="startDateData">Từ ngày:</label>
+                    <input type="datetime-local" id="startDateData" name="tuNgay" class="form-control"/>
+                </div>
+                <div class="col-md-3">
+                    <label for="endDateData">Đến ngày:</label>
+                    <input type="datetime-local" id="endDateData" name="denNgay" class="form-control"/>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" id="searchButton" class="btn btn-primary mt-4">Tìm kiếm</button>
+                </div>
+            </form>
+
             <div class="row">
                 <div class="col-lg-4 col-sm-6 col-12">
                     <div class="dash-widget">
@@ -56,8 +70,8 @@
                             <span><img src="/images/img/icons/dash1.svg" alt="img"></span>
                         </div>
                         <div class="dash-widgetcontent">
-                            <h5><span class="" th:text="${tlbr}"></span></h5>
-                            <h6>Doanh thu tháng này</h6>
+                            <h5><span id="doanhThuSpan" class="" th:text="${tlbr}"></span></h5>
+                            <h6>Doanh thu</h6>
                         </div>
                     </div>
                 </div>
@@ -70,7 +84,7 @@
                         <div class="dash-widgetcontent">
                             <h5><span class="" th:text="${ltn}"></span></h5>
                             <div class="row">
-                                <h6 class="col-12">So với tháng trước</h6>
+                                <h6 class="col-12">Doanh thu hôm nay</h6>
                             </div>
                         </div>
                     </div>
@@ -88,9 +102,39 @@
                         </a>
                     </div>
                 </div>
-            </div>
 
-            <!--                Tạm cmt-->
+                <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="dash-widget dash2">
+                        <div class="dash-widgetimg">
+                            <span><img src="/images/img/product/eee.png" alt="img"></span>
+                        </div>
+                        <a class="dash-widgetcontent" >
+                            <h5><span id="doanhThuO" th:text="${dto}"></span></h5>
+                            <h6>Doanh thu online</h6>
+                            <h6></h6>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="dash-widget dash2">
+                        <div class="dash-widgetimg">
+                            <span><img src="/images/img/product/abc1.png" alt="img"></span>
+                        </div>
+                        <a class="dash-widgetcontent" >
+                            <h5><span id="doanhThuF" th:text="${dtf}"></span></h5>
+                            <h6>Doanh thu tại quầy</h6>
+                            <h6></h6>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!--                Tạm cmt-->
             <!--            <div class="row">-->
             <!--                <div class="col-lg-6 col-sm-6 col-12 d-flex">-->
             <!--                    <div class="dash-count">-->
@@ -299,31 +343,33 @@
                         <div class="col-lg-6  hover">
                             <div class="header__top__hover" style="color: #1d1d42 ;right: 5px"></div>
                         </div>
-<!--                        <div class="col-lg-4 ">-->
-<!--                            <select id="mySelect" class="form-select" onchange="showCorrespondingValue()">-->
-<!--                                <option selected disabled>Lọc theo</option>-->
-<!--                                <option value="Tháng">Tháng</option>-->
-<!--                                <option value="Năm">Năm</option>-->
-<!--                                <option value="Ngày">Ngày</option>-->
-<!--                            </select>-->
-<!--                        </div>-->
-                        <div class="col-lg-6 ">
-                            <form class="row g-3">
-                                <div class="col-auto">
-                                    <label class="form-label">Từ</label>
-                                    <input type="date" class="form-control" id="tuNgay">
-                                </div>
 
-                                <div class="col-auto">
-                                    <label class="form-label">Đến</label>
-                                    <input type="date" class="form-control" id="denNgay">
-                                </div>
-
-                                <div class="col-auto">
-                                    <button type="submit" class="btn btn-primary mb-3">Tìm</button>
-                                </div>
-                            </form>
+                        <div class="col-lg-4 ">
+                            <select id="mySelect" class="form-select" onchange="showCorrespondingValue()">
+                                <option selected disabled>Lọc theo</option>
+                                <option value="Tháng">Tháng</option>
+                                <option value="Năm">Năm</option>
+                                <option value="Ngày">Ngày</option>
+                            </select>
                         </div>
+
+<!--                        <div class="col-lg-6 ">-->
+<!--                            <form class="row g-3">-->
+<!--                                <div class="col-auto">-->
+<!--                                    <label class="form-label">Từ</label>-->
+<!--                                    <input type="date" class="form-control" id="tuNgay">-->
+<!--                                </div>-->
+
+<!--                                <div class="col-auto">-->
+<!--                                    <label class="form-label">Đến</label>-->
+<!--                                    <input type="date" class="form-control" id="denNgay">-->
+<!--                                </div>-->
+
+<!--                                <div class="col-auto">-->
+<!--                                    <button type="submit" class="btn btn-primary mb-3">Tìm</button>-->
+<!--                                </div>-->
+<!--                            </form>-->
+<!--                        </div>-->
 
                     </div>
                     <div id="container" class="card-body">
@@ -335,7 +381,7 @@
             <div class="col-lg-5 col-sm-12 col-12 d-flex">
                 <div class="card flex-fill">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h4 class="card-title mb-0 text-danger">Sản phẩm bán chạy trong tháng</h4>
+                        <h4 class="card-title mb-0 text-danger">Top 5 sản phẩm bán chạy trong tháng</h4>
                         <div class="dropdown">
                             <a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false"
                                class="dropset">
@@ -417,6 +463,167 @@
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
+<!--<script>-->
+<!--    document.getElementById('searchButton').addEventListener('click', function() {-->
+<!--        var startDate = document.getElementById('startDateData').value;-->
+<!--        var endDate = document.getElementById('endDateData').value;-->
+
+<!--        fetch(`/ThongKe/api/thong-ke?tuNgay=${startDate}&denNgay=${endDate}`)-->
+<!--            .then(response => response.json())-->
+<!--            .then(data => {-->
+<!--                var doanhThu = data.tlbr !== undefined && data.tlbr !== null ? data.tlbr : 'Không có dữ liệu';-->
+<!--                document.getElementById('doanhThuSpan').innerText = doanhThu+'đ';-->
+<!--            })-->
+<!--            .catch(error => console.error('Error:', error));-->
+<!--    });-->
+
+
+<!--</script>-->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const startDateInput = document.getElementById("startDateData");
+        const endDateInput = document.getElementById("endDateData");
+
+        function formatDate(date, isStartOfDay) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const time = isStartOfDay ? '00:00' : '23:59';
+            return `${year}-${month}-${day}T${time}`;
+        }
+
+        const today = new Date();
+        startDateInput.value = formatDate(today, true);
+        endDateInput.value = formatDate(today, false);
+    });
+
+
+    document.getElementById('searchButton').addEventListener('click', function() {
+        var startDate = document.getElementById('startDateData').value;
+        var endDate = document.getElementById('endDateData').value;
+
+        fetch(`/ThongKe/api/thong-ke?tuNgay=${startDate}&denNgay=${endDate}`)
+            .then(response => response.json())
+            .then(data => {
+                var doanhThu = data.tlbr !== undefined && data.tlbr !== null ? data.tlbr : 'Không có dữ liệu';
+                var formattedDoanhThu = doanhThu !== 'Không có dữ liệu' ? parseFloat(doanhThu).toLocaleString('vi-VN') + 'đ' : doanhThu;
+                document.getElementById('doanhThuSpan').innerText = formattedDoanhThu;
+
+                var doanhThuO = data.dto !== undefined && data.dto !== null ? data.dto : 'Không có dữ liệu';
+                var formattedDoanhThu = doanhThuO !== 'Không có dữ liệu' ? parseFloat(doanhThuO).toLocaleString('vi-VN') + 'đ' : doanhThuO;
+                document.getElementById('doanhThuO').innerText = formattedDoanhThu;
+
+                var doanhThuF = data.dtf !== undefined && data.dtf !== null ? data.dtf : 'Không có dữ liệu';
+                var formattedDoanhThu = doanhThuF !== 'Không có dữ liệu' ? parseFloat(doanhThuF).toLocaleString('vi-VN') + 'đ' : doanhThuF;
+                document.getElementById('doanhThuF').innerText = formattedDoanhThu;
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
+
+
+
+<script th:inline="javascript">
+    $(function () {
+        // Cấu hình biểu đồ
+        Highcharts.chart('container2', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Tổng tiền đã giảm và tổng tiền '
+            },
+            xAxis: {
+                categories: [[${listThang}]],
+                crosshair: true
+            },
+            yAxis: {
+                title: {
+                    text: 'Tổng tiền (VNĐ)'
+
+                }
+            },
+            series: [{
+                name: 'Tổng tiền đã giảm',
+                data: [[${ttdgtt}]]
+            }, {
+                name: 'Tổng tiền',
+                data: [[${tttt}]]
+            }]
+        });
+    });
+    function showCorrespondingValue2() {
+        var select = document.getElementById("mySelect2");
+        var selectedValue = select.value;
+
+
+        // Kiểm tra nếu giá trị đã thay đổi, thì load lại trang
+        switch (selectedValue) {
+            case "Tháng":
+                $(function () {
+                    // Cấu hình biểu đồ
+                    Highcharts.chart('container2', {
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: 'Tổng tiền đã giảm và tổng tiền '
+                        },
+                        xAxis: {
+                            categories: [[${listThang}]],
+                            crosshair: true
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Tổng tiền (VNĐ)'
+
+                            }
+                        },
+                        series: [{
+                            name: 'Tổng tiền đã giảm',
+                            data: [[${ttdgtt}]]
+                        }, {
+                            name: 'Tổng tiền',
+                            data: [[${tttt}]]
+                        }]
+                    });
+                });
+                break;
+            case "Năm":
+                $(function () {
+                    // Cấu hình biểu đồ
+                    Highcharts.chart('container2', {
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: 'Tổng tiền đã giảm và tổng tiền '
+                        },
+                        xAxis: {
+                            categories: [[${listNam}]],
+                            crosshair: true
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Tổng tiền (VNĐ)'
+
+                            }
+                        },
+                        series: [{
+                            name: 'Tổng tiền đã giảm',
+                            data: [[${ttdgtn}]]
+                        }, {
+                            name: 'Tổng tiền',
+                            data: [[${tttn}]]
+                        }]
+                    });
+                });
+                break;
+        }
+    }
+
+</script>
 <script th:inline="javascript">
     $(function () {
         Highcharts.chart('container', {
@@ -497,7 +704,8 @@
                                 '<td style="padding:0"><b>{point.y:.0f} Đôi</b></td></tr>',
                             footerFormat: '</table>',
                             shared: true,
-                            useHTML: true
+                            useHTML: true,
+
                         },
                         plotOptions: {
                             column: {
@@ -597,13 +805,17 @@
                         },
                         series: [{
                             name: 'Năm',
-                            data: [[${listNam}]]
+                            data: [[${listNam1}]]
                         }]
                     });
                 });
                 break;
         }
+
+
+
     }
 </script>
+
 </body>
 </html>

@@ -180,6 +180,7 @@ public interface CTGViewModelRepository extends JpaRepository< CTGViewModel,UUID
             "            left JOIN hoa_don hd ON hd.id_hd =cthd.id_hd \n" +
             "            WHERE\n" +
             "\t\t\ta.id_hinh_anh IS NOT NULL\n" +
+            "\t\t\tAND MONTH(tg_thanh_toan)= MONTH(GETDATE())\n" +
             "            AND g.trang_thai = 1 \n" +
             "\t\t\tAND hd.trang_thai=4\n" +
             "            AND ctg.trang_thai = 1 \n" +

@@ -1,13 +1,17 @@
 package com.example.shoesmanagement.repository;
 
 import com.example.shoesmanagement.model.*;
+import jakarta.persistence.TemporalType;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -47,13 +51,27 @@ public interface HoaDonChiTietRepository  extends JpaRepository<HoaDonChiTiet, U
 
     HoaDonChiTiet findByChiTietGiayAndTrangThaiAndHoaDon(ChiTietGiay chiTietGiay, int trangThai, HoaDon hoaDon);
 
-    @Query(value = "select sum(tong_tien_san_pham) from hoa_don where month(tg_thanh_toan) = month(GETDATE())  and year(tg_thanh_toan) = year(GETDATE()) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3) or (loai_hd=0 and trang_thai=1 and hinh_thuc_thanh_toan=1))\n",
+    @Query(value = "SELECT SUM(tong_tien_san_pham) \n" +
+            "FROM hoa_don \n" +
+            "WHERE CAST(tg_thanh_toan AS DATE) = CAST(GETDATE() AS DATE)\n" +
+            "  AND ((loai_hd = 1 AND trang_thai = 1) \n" +
+            "       OR (loai_hd = 0 AND trang_thai = 4) \n" +
+            "       OR (loai_hd = 0 AND trang_thai = 1 AND hinh_thuc_thanh_toan = 1))\n",
             nativeQuery = true)
     Optional<Double> getLaiThangNay();
 
-    @Query(value = "select sum(tong_tien_san_pham) from hoa_don where ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4) or (loai_hd=0 and trang_thai=3 and hinh_thuc_thanh_toan=1))",nativeQuery = true)
-    Optional<Double> getTongTienLaiCuaHang();
+//@Query(value = "select sum(tong_tien_san_pham) from hoa_don where tg_thanh_toan >= :tuNgay and tg_thanh_toan <= :denNgay and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4) or (loai_hd=0 and trang_thai=1 and hinh_thuc_thanh_toan=1))",
+//        nativeQuery = true)
+//Optional<Double> getLaiThangNay(@Param("tuNgay") LocalDate tuNgay, @Param("denNgay") LocalDate denNgay);
 
+
+    @Query(value = "SELECT SUM(tong_tien_san_pham) FROM hoa_don WHERE tg_thanh_toan >= :tuNgay AND tg_thanh_toan <= :denNgay AND ((loai_hd=1 AND trang_thai=1) OR (loai_hd=0 AND trang_thai = 4) OR (loai_hd=0 AND trang_thai=3 AND hinh_thuc_thanh_toan=1))", nativeQuery = true)
+    Optional<Double> getTongTienLaiCuaHang(@Param("tuNgay") Date tuNgay, @Param("denNgay") Date denNgay);
+
+
+
+    @Query(value = "select sum(tong_tien_san_pham) from hoa_don where ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4) or (loai_hd=0 and trang_thai=3 and hinh_thuc_thanh_toan=1))",nativeQuery = true)
+    Optional<Double> getTongTienLaiCuaHang2();
     @Query(value = "select sum(so_luong) from hoa_don_chi_tiet a join hoa_don b on a.id_hd=b.id_hd where month(b.tg_thanh_toan) = month(GETDATE()) \n" +
             "and year(b.tg_thanh_toan) = year(GETDATE()) and ((b.loai_hd=1 and b.trang_thai=1) or (b.loai_hd=0 and b.trang_thai = 4))\n" +
             "            and day(b.tg_thanh_toan) = day(GETDATE())",nativeQuery = true)
@@ -63,33 +81,51 @@ public interface HoaDonChiTietRepository  extends JpaRepository<HoaDonChiTiet, U
             "((b.loai_hd=1 and b.trang_thai=1) or (b.loai_hd=0 and b.trang_thai = 4))",nativeQuery = true)
     Optional<Integer> getTongSPBanTrongThang();
 
-    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 1 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 3))",nativeQuery = true)
+    @Query(value = "SELECT SUM(so_luong) FROM hoa_don_chi_tiet JOIN hoa_don h ON h.id_hd = hoa_don_chi_tiet.id_hd WHERE tg_them BETWEEN :startDate AND :endDate AND ((h.loai_hd=1 AND h.trang_thai=1) OR (h.loai_hd=0 AND h.trang_thai=4))", nativeQuery = true)
+    Integer getSoLuongTheoNgay(@Param("startDate") @Temporal(TemporalType.TIMESTAMP) Date startDate, @Param("endDate") @Temporal(TemporalType.TIMESTAMP) Date endDate);
+
+
+    @Query(value = "select sum(tong_tien_san_pham) from hoa_don where ( (loai_hd=0 and trang_thai = 4) or (loai_hd=0 and trang_thai=3 and hinh_thuc_thanh_toan=1))",nativeQuery = true)
+    Optional<Double> getDoanhThuOnline();
+
+    @Query(value = "select sum(tong_tien_san_pham) from hoa_don where (loai_hd=1 and trang_thai = 1) ",nativeQuery = true)
+    Optional<Double> getDoanhThuTaiQuay();
+
+    @Query(value = "select sum(tong_tien_san_pham) from hoa_don where tg_thanh_toan >= :tuNgay AND tg_thanh_toan <= :denNgay AND ( (loai_hd=0 and trang_thai = 4) or (loai_hd=0 and trang_thai=3 and hinh_thuc_thanh_toan=1))",nativeQuery = true)
+    Optional<Double> getDoanhThuOnline2(@Param("tuNgay") Date tuNgay, @Param("denNgay") Date denNgay);
+
+    @Query(value = "select sum(tong_tien_san_pham) from hoa_don where tg_thanh_toan >= :tuNgay AND tg_thanh_toan <= :denNgay AND (loai_hd=1 and trang_thai = 1) ",nativeQuery = true)
+    Optional<Double> getDoanhThuTaiQuay2(@Param("tuNgay") Date tuNgay, @Param("denNgay") Date denNgay);
+
+
+    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 1 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 4))",nativeQuery = true)
     Integer getThang1();
-    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 2 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 3))",nativeQuery = true)
+    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 2 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 4))",nativeQuery = true)
     Integer getThang2();
-    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 3 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 3))",nativeQuery = true)
+    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 3 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 4))",nativeQuery = true)
     Integer getThang3();
-    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 4 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 3))",nativeQuery = true)
+    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 4 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 4))",nativeQuery = true)
     Integer getThang4();
-    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 5 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 3))",nativeQuery = true)
+    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 5 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 4))",nativeQuery = true)
     Integer getThang5();
-    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 6 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 3))",nativeQuery = true)
+    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 6 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 4))",nativeQuery = true)
     Integer getThang6();
-    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 7 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 3))",nativeQuery = true)
+    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd \n" +
+            "where MONTH(tg_them) = 7 and ((h.loai_hd=1 and h.trang_thai=4) or (h.loai_hd=0 and h.trang_thai = 4))",nativeQuery = true)
     Integer getThang7();
-    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 8 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 3))",nativeQuery = true)
+    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 8 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 4))",nativeQuery = true)
     Integer getThang8();
-    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 9 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 3))",nativeQuery = true)
+    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 9 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 4))",nativeQuery = true)
     Integer getThang9();
-    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 10 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 3))",nativeQuery = true)
+    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 10 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 4))",nativeQuery = true)
     Integer getThang10();
-    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 11 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 3))",nativeQuery = true)
+    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 11 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 4))",nativeQuery = true)
     Integer getThang11();
-    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 12 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 3))",nativeQuery = true)
+    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where MONTH(tg_them) = 12 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 4))",nativeQuery = true)
     Integer getThang12();
 
     @Query(value = "select sum(so_luong) from hoa_don_chi_tiet a join hoa_don b on a.id_hd=b.id_hd where month(b.tg_thanh_toan) = month(GETDATE()) \n" +
-            "and year(b.tg_thanh_toan) = year(GETDATE()) and (b.loai_hd=1 and b.trang_thai=1) or (b.loai_hd=0 and b.trang_thai = 3)\n" +
+            "and year(b.tg_thanh_toan) = year(GETDATE()) and (b.loai_hd=1 and b.trang_thai=1) or (b.loai_hd=0 and b.trang_thai = 4)\n" +
             "            and day(b.tg_thanh_toan) = day(GETDATE())",nativeQuery = true)
     Integer getNgaythu1();
 
@@ -101,8 +137,7 @@ public interface HoaDonChiTietRepository  extends JpaRepository<HoaDonChiTiet, U
             "sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where year(tg_them) like 2023",nativeQuery = true)
     Integer Nam2023();
 
-    @Query(value = "SELECT \n" +
-            "sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where year(tg_them) like 2024",nativeQuery = true)
+    @Query(value = "select sum(so_luong) from hoa_don_chi_tiet join hoa_don h on h.id_hd=hoa_don_chi_tiet.id_hd where YEAR (tg_them) = 2024 and ((h.loai_hd=1 and h.trang_thai=1) or (h.loai_hd=0 and h.trang_thai = 4))",nativeQuery = true)
     Integer Nam2024();
 
     @Query(value = "SELECT ctg.gia_ban,g.ten_giay ,hdct.don_gia , hdct.so_luong, ha.url1,hd.ten_nguoi_nhan,\n" +
@@ -140,76 +175,76 @@ public interface HoaDonChiTietRepository  extends JpaRepository<HoaDonChiTiet, U
             "\t\t\torder by SUM(cthd.so_luong) desc",nativeQuery = true)
     List<Object[]> getHieuSuatNhanVienBanHang();
 
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 1) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 1) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienDaGiamThang1();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 2) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 2) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienDaGiamThang2();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 3) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 3) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienDaGiamThang3();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 4) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 4) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienDaGiamThang4();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 5) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 5) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienDaGiamThang5();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 6) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 6) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienDaGiamThang6();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 7) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 7) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienDaGiamThang7();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 8) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 8) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienDaGiamThang8();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 9) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 9) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienDaGiamThang9();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 10) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 10) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienDaGiamThang10();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 11) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 11) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienDaGiamThang11();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 12) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 12) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienDaGiamThang12();
 
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 1) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 1) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienThang1();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 2) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 2) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienThang2();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 3) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 3) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienThang3();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 4) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 4) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienThang4();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 5) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 5) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienThang5();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 6) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 6) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienThang6();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 7) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 7) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienThang7();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 8) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 8) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienThang8();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 9) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 9) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienThang9();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 10) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 10) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienThang10();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 11) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 11) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienThang11();
-    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 12) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where (MONTH(tg_thanh_toan) = 12) and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) and year(tg_thanh_toan)=year(getdate())",nativeQuery = true)
     Double getTongTienThang12();
 
-    @Query(value = "select  sum(tong_tien) from hoa_don where year (tg_thanh_toan) = 2021 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) ",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where year (tg_thanh_toan) = 2021 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) ",nativeQuery = true)
     Double getTongTienNam2021();
-    @Query(value = "select  sum(tong_tien) from hoa_don where year(tg_thanh_toan) = 2022 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) ",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where year(tg_thanh_toan) = 2022 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) ",nativeQuery = true)
     Double getTongTienNam2022();
-    @Query(value = "select  sum(tong_tien) from hoa_don where year(tg_thanh_toan) = 2023 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) ",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where year(tg_thanh_toan) = 2023 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) ",nativeQuery = true)
     Double getTongTienNam2023();
-    @Query(value = "select  sum(tong_tien) from hoa_don where year(tg_thanh_toan) = 2024 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) ",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where year(tg_thanh_toan) = 2024 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) ",nativeQuery = true)
     Double getTongTienNam2024();
-    @Query(value = "select  sum(tong_tien) from hoa_don where year(tg_thanh_toan) = 2025 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3))",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where year(tg_thanh_toan) = 2025 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4))",nativeQuery = true)
     Double getTongTienNam2025();
 
-    @Query(value = "select  sum(tong_tien) from hoa_don where year(tg_thanh_toan) = 2021 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3))",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where year(tg_thanh_toan) = 2021 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4))",nativeQuery = true)
     Double getTongTienDaGiamNam2021();
-    @Query(value = "select  sum(tong_tien) from hoa_don where year(tg_thanh_toan) = 2022 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) ",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where year(tg_thanh_toan) = 2022 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) ",nativeQuery = true)
     Double getTongTienDaGiamNam2022();
-    @Query(value = "select  sum(tong_tien) from hoa_don where year(tg_thanh_toan) = 2023 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) ",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where year(tg_thanh_toan) = 2023 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) ",nativeQuery = true)
     Double getTongTienDaGiamNam2023();
-    @Query(value = "select  sum(tong_tien) from hoa_don where year(tg_thanh_toan) = 2024 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) ",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where year(tg_thanh_toan) = 2024 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) ",nativeQuery = true)
     Double getTongTienDaGiamNam2024();
-    @Query(value = "select  sum(tong_tien) from hoa_don where year(tg_thanh_toan) = 2025 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 3)) ",nativeQuery = true)
+    @Query(value = "select  sum(tong_tien) from hoa_don where year(tg_thanh_toan) = 2025 and ((loai_hd=1 and trang_thai=1) or (loai_hd=0 and trang_thai = 4)) ",nativeQuery = true)
     Double getTongTienDaGiamNam2025();
 
     @Query("select g from HoaDonChiTiet g where g.hoaDon.nhanVien.maNV =:maNV")
