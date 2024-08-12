@@ -207,10 +207,13 @@ public class CheckOutController {
         model.addAttribute("sumQuantity", sumQuantity);
         model.addAttribute("total", total);
         model.addAttribute("listProductCheckOut", listHDCTCheckOut);
-        model.addAttribute("toTalOder", total);
+        Double shippingFee = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
+        session.removeAttribute("listProductCheckOut");
+        session.setAttribute("listProductCheckOut", listHDCTCheckOut);
+        model.addAttribute("toTalOder", total + shippingFee - giaTienGiam);
 
         if (diaChiKHDefault != null) {
-            Double shippingFee = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
+
             hoaDon.setTongTien(total + shippingFee - giaTienGiam);
             hoaDon.setTienShip(shippingFee);
             hoaDonService.add(hoaDon);
@@ -244,6 +247,7 @@ public class CheckOutController {
             model.addAttribute("addNewAddressNull", true);
         }
 
+        hoaDonService.add(hoaDon);
 
         session.removeAttribute("hoaDonTaoMoi");
         session.setAttribute("hoaDonTaoMoi", hoaDon);
@@ -449,7 +453,7 @@ public class CheckOutController {
             if (sl == slmax) {    // nếu số lượng khuyến mãi đã hết thì xoá mã khuyến mãi ra khỏi hoá đơn và trả về trang thanh toán
                 redirectAttribute.addFlashAttribute("successMessage", "Rất tiếc, số lượng khuyến mãi đã hết. Vui lòng chọn khuyến mãi khác!");
                 hoaDon.setKhuyenMai(null);
-                String checkoutParams = (String) session.getAttribute("checkoutParams" + khachHang.getIdKH());
+                String checkoutParams = (String) session.getAttribute("checkoutParams" + khachHang.getIdKH()); // luc null la k a
                 String updatedParams = Arrays.stream(checkoutParams.split("&"))
                         .filter(param -> !param.startsWith("idKM="))
                         .collect(Collectors.joining("&"));
@@ -720,14 +724,14 @@ public class CheckOutController {
         hoaDon.setTongTienSanPham(total);
 
         hoaDonService.add(hoaDon);
+        Double shippingFee = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
         model.addAttribute("tongTienSP", tongTienSP);
         model.addAttribute("sumQuantity", sumQuantity);
         model.addAttribute("total", total);
         model.addAttribute("listProductCheckOut", listHDCTCheckOut);
-        model.addAttribute("toTalOder", total);
+        model.addAttribute("toTalOder", total + shippingFee - giaTienGiam);
 
         if (diaChiKHDefault != null) {
-            Double shippingFee = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
             hoaDon.setTongTien(total + shippingFee - giaTienGiam);
             hoaDon.setTienShip(shippingFee);
             hoaDonService.add(hoaDon);
@@ -866,24 +870,56 @@ public class CheckOutController {
     public String chonKM(Model model, @PathVariable("idKM") UUID idKM, HttpSession session, RedirectAttributes redirectAttributes) {
         KhuyenMai khuyenMai = khuyenMaiRepository.findById(idKM).orElse(null);
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        List<DiaChiKH> diaChiKHList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, false, 1);
+
 
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi");
         if (khuyenMai != null) {
-//            Date date = new Date();
-//            HoaDon hoaDon = new HoaDon();
+            DiaChiKH diaChiKHDefault = diaChiKHService.findDCKHDefaulByKhachHang(khachHang);
+            List<HoaDonChiTiet> listHDCTCheckOut = (List<HoaDonChiTiet>) session.getAttribute("listProductCheckOut");
+
+//            model.addAttribute("ngayDuKien", hoaDon.getTgNhanDK());
+
+            model.addAttribute("shippingFee", hoaDon.getTienShip());
+            model.addAttribute("billPlaceOrder", hoaDon);
+            model.addAttribute("khuyenMai", khuyenMai);
+
+            double giaTienGiam = 0.0;
+
+                KhuyenMai voucher = khuyenMaiRepository.findById(idKM).get();
+                giaTienGiam = voucher.getGiaTienGiam();
+                hoaDon.setKhuyenMai(voucher);
 
 
-//            String maHD = "HD_" + khachHang.getMaKH() + "_" + date.getDate() + generateRandomNumbers();
-//
-//            hoaDon.setKhachHang(khachHang);
-//            hoaDon.setMaHD(maHD);
-//            hoaDon.setLoaiHD(0);
-//            hoaDon.setTgTao(date);
-//            hoaDon.setTrangThai(7);
+
+            List<KhuyenMai> listKM = hoaDonRepository.listDieuKienKhuyenMai(hoaDon.getTongTienSanPham());
+
+            model.addAttribute("giaTienGiam", giaTienGiam);
+
+            model.addAttribute("dieuKienKhuyenMai", listKM);
+
+            model.addAttribute("sumQuantity", hoaDon.getTongSP());
+            model.addAttribute("total", hoaDon.getTongTienSanPham());
+            model.addAttribute("listProductCheckOut", listHDCTCheckOut);
+
+
+            model.addAttribute("toTalOder", hoaDon.getTongTienSanPham()
+                    + hoaDon.getTienShip() - giaTienGiam);
+
+            model.addAttribute("tongTienDaGiamVoucherShip", hoaDon.getTongTienSanPham()
+                    - hoaDon.getTienShip());
+            model.addAttribute("diaChiKHDefault", diaChiKHDefault);
+            model.addAttribute("addNewAddressNotNull", true);
+            model.addAttribute("listAddressKH", diaChiKHList);
+
+
             hoaDon.setKhuyenMai(khuyenMai);
+            hoaDon.setTongTien(hoaDon.getTongTienSanPham()
+                    + hoaDon.getTienShip() - giaTienGiam);
             hoaDonService.save(hoaDon);
+
         }
 
-        return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString() + "&idKM=" + idKM;
+        return "online/checkout";
     }
 }
