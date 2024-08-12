@@ -8,7 +8,8 @@
           content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
-    <title>Admin/Thống kê</title>
+    <title>Teezy Shop - Admin</title>
+
     <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
     <link rel="stylesheet" href="/plugins/icons/flags/flags.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -69,10 +70,8 @@
                             <span><img src="/images/img/icons/dash1.svg" alt="img"></span>
                         </div>
                         <div class="dash-widgetcontent">
-
                             <h5><span id="doanhThuSpan" class="" th:text="${tlbr}"></span></h5>
                             <h6>Doanh thu</h6>
-
                         </div>
                     </div>
                 </div>
@@ -97,7 +96,9 @@
                             <span><img src="/images/img/product/product65.png" alt="img"></span>
                         </div>
                         <a class="dash-widgetcontent" href="/manage/giay">
-                            <span th:text="${'Số lượng sản phẩm đã bán trong tháng: ' + #numbers.formatInteger(tongSanPhamOnl + tongSanPhamOff, 0, 'COMMA')}"></span>
+                            <h5><span class="counters" th:text="${tonggiay}"></span></h5>
+                            <h6>Số lượng sản phẩm đã bán</h6>
+                            <h6></h6>
                         </a>
                     </div>
                 </div>
@@ -134,124 +135,26 @@
 
 
         <!--                Tạm cmt-->
-            <!--            <div class="row">-->
-            <!--                <div class="col-lg-6 col-sm-6 col-12 d-flex">-->
-            <!--                    <div class="dash-count">-->
-            <!--                        <a class="dash-counts" href="javascript:void(0);" data-bs-toggle="modal"-->
-            <!--                           data-bs-target="#exampleModal">-->
-            <!--                            <h4 style="color: black;" th:text="${sptt}"> đôi</h4>-->
-            <!--                            <h5 style="color: black;">Sản phẩm đã bán trong tháng</h5>-->
-            <!--                        </a>-->
-            <!--                        <div class="dash-imgs">-->
-            <!--                            <i data-feather="shopping-bag"></i>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
+        <!--            <div class="row">-->
+        <!--                <div class="col-lg-6 col-sm-6 col-12 d-flex">-->
+        <!--                    <div class="dash-count">-->
+        <!--                        <a class="dash-counts" href="javascript:void(0);" data-bs-toggle="modal"-->
+        <!--                           data-bs-target="#exampleModal">-->
+        <!--                            <h4 style="color: black;" th:text="${sptt}"> đôi</h4>-->
+        <!--                            <h5 style="color: black;">Sản phẩm đã bán trong tháng</h5>-->
+        <!--                        </a>-->
+        <!--                        <div class="dash-imgs">-->
+        <!--                            <i data-feather="shopping-bag"></i>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
 
-            <!--                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"-->
-            <!--                     aria-hidden="true">-->
-            <!--                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">-->
-            <!--                        <div class="modal-content">-->
-            <!--                            <div class="modal-header">-->
-            <!--                                <h5 class="modal-title">Sản phẩm bán trong tháng</h5>-->
-            <!--                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">-->
-            <!--                                    <span aria-hidden="true">×</span>-->
-            <!--                                </button>-->
-            <!--                            </div>-->
-            <!--                            <div class="modal-body">-->
-            <!--                                <div class="row">-->
-            <!--                                    <div class="col-4">-->
-            <!--                                        <div class="form-group">-->
-            <!--                                            &lt;!&ndash;                                    <input id="startDate" class="form-control" type="date" />&ndash;&gt;-->
-            <!--                                        </div>-->
-            <!--                                    </div>-->
-
-            <!--                                </div>-->
-            <!--                                <div class="table-responsive a">-->
-            <!--                                    <table class="table datanew" id="data-table">-->
-            <!--                                        <thead>-->
-            <!--                                        <tr>-->
-            <!--                                            <th>Giày</th>-->
-            <!--                                            <th>Khách hàng</th>-->
-            <!--                                            <th></th>-->
-            <!--                                        </tr>-->
-            <!--                                        </thead>-->
-            <!--                                        <tbody>-->
-            <!--                                        <tr th:each="a : ${getT}">-->
-            <!--                                            <td>-->
-            <!--                                                <li>-->
-            <!--                                                    <div class="productimg">-->
-            <!--                                                        <div class="productimgs">-->
-            <!--                                                            <img th:src="@{'/images/imgsProducts/'+ ${a.url1}}"-->
-            <!--                                                                 alt="img">-->
-            <!--                                                        </div>-->
-            <!--                                                        <div class="productcontet">-->
-            <!--                                                            <h4 th:text="${a.tenGiay}">-->
-            <!--                                                                <a href="javascript:void(0);" class="ms-2"-->
-            <!--                                                                   data-bs-toggle="modal"-->
-            <!--                                                                   data-bs-target="#edit"><img-->
-            <!--                                                                        src="/images/img/icons/edit-5.svg"-->
-            <!--                                                                        alt="img"></a>-->
-            <!--                                                            </h4>-->
-            <!--                                                            <div>Śố lượng: x <span th:text="${a.soLuong}"-->
-            <!--                                                                                      style="color:#0a58ca;"></span>-->
-            <!--                                                            </div>-->
-            <!--                                                            <div>Giá bán: <span-->
-            <!--                                                                    th:text="${#numbers.formatDecimal(a.donGia, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"-->
-            <!--                                                                    style="color: #6a1a21"></span></div>-->
-
-            <!--                                                        </div>-->
-            <!--                                                    </div>-->
-            <!--                                                </li>-->
-            <!--                                            </td>-->
-            <!--                                            <td>-->
-            <!--                                                <div>Tên người nhận: <span th:text="${a.ten}"-->
-            <!--                                                                             class="text-info"></span></div>-->
-            <!--                                                <div>SĐT: <span th:text="${a.sdt}" class="text-info"></span></div>-->
-            <!--                                                <div>Địa chỉ: <span th:text="${a.diaChi}" class="text-info"></span>-->
-            <!--                                                </div>-->
-            <!--                                            </td>-->
-            <!--                                            <td>-->
-            <!--                                                <li>-->
-            <!--                                                    &lt;!&ndash;                                            <div th:text="${gioHang.donGia * gioHang.soLuong}"></div>&ndash;&gt;-->
-            <!--                                                    <span>Thành tiền: <div-->
-            <!--                                                            th:text=" ${#numbers.formatDecimal(a.donGia * a.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"-->
-            <!--                                                            style="color: #6a1a21"></div></span>-->
-            <!--                                                </li>-->
-            <!--                                            </td>-->
-
-            <!--                                        </tr>-->
-            <!--                                        </tbody>-->
-            <!--                                    </table>-->
-            <!--                                </div>-->
-
-            <!--                            </div>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-
-
-            <!--                <div class="col-lg-6 col-sm-6 col-12 d-flex">-->
-            <!--                    <div class="dash-count das2">-->
-            <!--                        <a class="dash-counts" href="javascript:void(0);" data-bs-toggle="modal"-->
-            <!--                           data-bs-target="#create">-->
-            <!--                            <h4 th:text="${sptn}"> đôi</h4>-->
-            <!--                            <h5>Sản phẩm đã bán trong ngày</h5>-->
-            <!--                        </a>-->
-            <!--                        <div class="dash-imgs">-->
-            <!--                            <i data-feather="shopping-bag"></i>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-        </div>
-
-        <!--        Hóa đơn chờ-->
-        <!--            <form method="get" th:action="@{/thongke/hoadoncho/filter}">-->
-        <!--                <div class="modal fade" id="create" tabindex="-1" aria-labelledby="create" aria-hidden="true">-->
+        <!--                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"-->
+        <!--                     aria-hidden="true">-->
         <!--                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">-->
         <!--                        <div class="modal-content">-->
         <!--                            <div class="modal-header">-->
-        <!--                                <h5 class="modal-title">Sản phẩm đã bán trong ngày</h5>-->
+        <!--                                <h5 class="modal-title">Sản phẩm bán trong tháng</h5>-->
         <!--                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">-->
         <!--                                    <span aria-hidden="true">×</span>-->
         <!--                                </button>-->
@@ -260,15 +163,13 @@
         <!--                                <div class="row">-->
         <!--                                    <div class="col-4">-->
         <!--                                        <div class="form-group">-->
-        <!--                                            <div class="addonset">-->
-
-        <!--                                            </div>-->
+        <!--                                            &lt;!&ndash;                                    <input id="startDate" class="form-control" type="date" />&ndash;&gt;-->
         <!--                                        </div>-->
         <!--                                    </div>-->
 
         <!--                                </div>-->
         <!--                                <div class="table-responsive a">-->
-        <!--                                    <table class="table datanew">-->
+        <!--                                    <table class="table datanew" id="data-table">-->
         <!--                                        <thead>-->
         <!--                                        <tr>-->
         <!--                                            <th>Giày</th>-->
@@ -277,7 +178,7 @@
         <!--                                        </tr>-->
         <!--                                        </thead>-->
         <!--                                        <tbody>-->
-        <!--                                        <tr th:each="a : ${getN}">-->
+        <!--                                        <tr th:each="a : ${getT}">-->
         <!--                                            <td>-->
         <!--                                                <li>-->
         <!--                                                    <div class="productimg">-->
@@ -324,137 +225,244 @@
         <!--                                        </tbody>-->
         <!--                                    </table>-->
         <!--                                </div>-->
+
         <!--                            </div>-->
         <!--                        </div>-->
         <!--                    </div>-->
         <!--                </div>-->
 
-        <!--            </form>-->
 
-        <!--            Biểu đồ-->
-        <div class="row">
-            <div class="col-lg-7 col-sm-12 col-12 d-flex" style="">
-                <div class="card flex-fill">
-                    <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h3 align="center" class="text-danger">Biểu đồ doanh số bán hàng</h3>
+        <!--                <div class="col-lg-6 col-sm-6 col-12 d-flex">-->
+        <!--                    <div class="dash-count das2">-->
+        <!--                        <a class="dash-counts" href="javascript:void(0);" data-bs-toggle="modal"-->
+        <!--                           data-bs-target="#create">-->
+        <!--                            <h4 th:text="${sptn}"> đôi</h4>-->
+        <!--                            <h5>Sản phẩm đã bán trong ngày</h5>-->
+        <!--                        </a>-->
+        <!--                        <div class="dash-imgs">-->
+        <!--                            <i data-feather="shopping-bag"></i>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+    </div>
+
+    <!--        Hóa đơn chờ-->
+    <!--            <form method="get" th:action="@{/thongke/hoadoncho/filter}">-->
+    <!--                <div class="modal fade" id="create" tabindex="-1" aria-labelledby="create" aria-hidden="true">-->
+    <!--                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">-->
+    <!--                        <div class="modal-content">-->
+    <!--                            <div class="modal-header">-->
+    <!--                                <h5 class="modal-title">Sản phẩm đã bán trong ngày</h5>-->
+    <!--                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">-->
+    <!--                                    <span aria-hidden="true">×</span>-->
+    <!--                                </button>-->
+    <!--                            </div>-->
+    <!--                            <div class="modal-body">-->
+    <!--                                <div class="row">-->
+    <!--                                    <div class="col-4">-->
+    <!--                                        <div class="form-group">-->
+    <!--                                            <div class="addonset">-->
+
+    <!--                                            </div>-->
+    <!--                                        </div>-->
+    <!--                                    </div>-->
+
+    <!--                                </div>-->
+    <!--                                <div class="table-responsive a">-->
+    <!--                                    <table class="table datanew">-->
+    <!--                                        <thead>-->
+    <!--                                        <tr>-->
+    <!--                                            <th>Giày</th>-->
+    <!--                                            <th>Khách hàng</th>-->
+    <!--                                            <th></th>-->
+    <!--                                        </tr>-->
+    <!--                                        </thead>-->
+    <!--                                        <tbody>-->
+    <!--                                        <tr th:each="a : ${getN}">-->
+    <!--                                            <td>-->
+    <!--                                                <li>-->
+    <!--                                                    <div class="productimg">-->
+    <!--                                                        <div class="productimgs">-->
+    <!--                                                            <img th:src="@{'/images/imgsProducts/'+ ${a.url1}}"-->
+    <!--                                                                 alt="img">-->
+    <!--                                                        </div>-->
+    <!--                                                        <div class="productcontet">-->
+    <!--                                                            <h4 th:text="${a.tenGiay}">-->
+    <!--                                                                <a href="javascript:void(0);" class="ms-2"-->
+    <!--                                                                   data-bs-toggle="modal"-->
+    <!--                                                                   data-bs-target="#edit"><img-->
+    <!--                                                                        src="/images/img/icons/edit-5.svg"-->
+    <!--                                                                        alt="img"></a>-->
+    <!--                                                            </h4>-->
+    <!--                                                            <div>Śố lượng: x <span th:text="${a.soLuong}"-->
+    <!--                                                                                      style="color:#0a58ca;"></span>-->
+    <!--                                                            </div>-->
+    <!--                                                            <div>Giá bán: <span-->
+    <!--                                                                    th:text="${#numbers.formatDecimal(a.donGia, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"-->
+    <!--                                                                    style="color: #6a1a21"></span></div>-->
+
+    <!--                                                        </div>-->
+    <!--                                                    </div>-->
+    <!--                                                </li>-->
+    <!--                                            </td>-->
+    <!--                                            <td>-->
+    <!--                                                <div>Tên người nhận: <span th:text="${a.ten}"-->
+    <!--                                                                             class="text-info"></span></div>-->
+    <!--                                                <div>SĐT: <span th:text="${a.sdt}" class="text-info"></span></div>-->
+    <!--                                                <div>Địa chỉ: <span th:text="${a.diaChi}" class="text-info"></span>-->
+    <!--                                                </div>-->
+    <!--                                            </td>-->
+    <!--                                            <td>-->
+    <!--                                                <li>-->
+    <!--                                                    &lt;!&ndash;                                            <div th:text="${gioHang.donGia * gioHang.soLuong}"></div>&ndash;&gt;-->
+    <!--                                                    <span>Thành tiền: <div-->
+    <!--                                                            th:text=" ${#numbers.formatDecimal(a.donGia * a.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"-->
+    <!--                                                            style="color: #6a1a21"></div></span>-->
+    <!--                                                </li>-->
+    <!--                                            </td>-->
+
+    <!--                                        </tr>-->
+    <!--                                        </tbody>-->
+    <!--                                    </table>-->
+    <!--                                </div>-->
+    <!--                            </div>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+
+    <!--            </form>-->
+
+    <!--            Biểu đồ-->
+    <div class="row">
+        <div class="col-lg-7 col-sm-12 col-12 d-flex" style="">
+            <div class="card flex-fill">
+                <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+                    <h3 align="center" class="text-danger">Biểu đồ doanh số bán hàng</h3>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6  hover">
+                        <div class="header__top__hover" style="color: #1d1d42 ;right: 5px"></div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-6  hover">
-                            <div class="header__top__hover" style="color: #1d1d42 ;right: 5px"></div>
-                        </div>
 
-
-                        <div class="col-lg-4 ">
-                            <select id="mySelect" class="form-select" onchange="showCorrespondingValue()">
-                                <option selected disabled>Lọc theo</option>
-                                <option value="Tháng">Tháng</option>
-                                <option value="Năm">Năm</option>
-                                <option value="Ngày">Ngày</option>
-                            </select>
-                        </div>
-
-<!--                        <div class="col-lg-6 ">-->
-<!--                            <form class="row g-3">-->
-<!--                                <div class="col-auto">-->
-<!--                                    <label class="form-label">Từ</label>-->
-<!--                                    <input type="date" class="form-control" id="tuNgay">-->
-<!--                                </div>-->
-
-<!--                                <div class="col-auto">-->
-<!--                                    <label class="form-label">Đến</label>-->
-<!--                                    <input type="date" class="form-control" id="denNgay">-->
-<!--                                </div>-->
-
-<!--                                <div class="col-auto">-->
-<!--                                    <button type="submit" class="btn btn-primary mb-3">Tìm</button>-->
-<!--                                </div>-->
-<!--                            </form>-->
-<!--                        </div>-->
-
-
+                    <div class="col-lg-4 ">
+                        <select id="mySelect" class="form-select" onchange="showCorrespondingValue()">
+                            <option selected disabled>Lọc theo</option>
+                            <option value="Tháng">Tháng</option>
+                            <option value="Năm">Năm</option>
+                            <option value="Ngày">Ngày</option>
+                        </select>
                     </div>
 
-                    <div id="container" class="card-body">
-                        <!--                         style="width: 550px; height: 400px; margin: 0 auto">-->
-                    </div>
-                    <div>
-                        <canvas id="myChart"></canvas>
+                    <!--                        <div class="col-lg-6 ">-->
+                    <!--                            <form class="row g-3">-->
+                    <!--                                <div class="col-auto">-->
+                    <!--                                    <label class="form-label">Từ</label>-->
+                    <!--                                    <input type="date" class="form-control" id="tuNgay">-->
+                    <!--                                </div>-->
+
+                    <!--                                <div class="col-auto">-->
+                    <!--                                    <label class="form-label">Đến</label>-->
+                    <!--                                    <input type="date" class="form-control" id="denNgay">-->
+                    <!--                                </div>-->
+
+                    <!--                                <div class="col-auto">-->
+                    <!--                                    <button type="submit" class="btn btn-primary mb-3">Tìm</button>-->
+                    <!--                                </div>-->
+                    <!--                            </form>-->
+                    <!--                        </div>-->
+
+                </div>
+                <div id="container" class="card-body">
+                    <!--                         style="width: 550px; height: 400px; margin: 0 auto">-->
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-5 col-sm-12 col-12 d-flex">
+            <div class="card flex-fill">
+                <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+                    <h4 class="card-title mb-0 text-danger">Top 5 sản phẩm bán chạy trong tháng</h4>
+                    <div class="dropdown">
+                        <a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false"
+                           class="dropset">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <a href="productlist.html" class="dropdown-item">Product List</a>
+                            </li>
+                            <li>
+                                <a href="addproduct.html" class="dropdown-item">Product Add</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table datanew">
+                            <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Hình ảnh</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng đã bán</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="a,index : ${spBanChay}">
+                                <td th:text="${index.index+1}"></td>
+                                <td>
+                                    <img th:src="@{'/images/imgsProducts/'+ ${a.url1}}"
+                                         style="height: 50px;width: 50px">
+                                    <!--                                        <small><img src="/images/imgsProducts/product-1.4.png"></small>-->
+                                </td>
+                                <td th:text="${a.tenGiay}"></td>
+                                <td th:text="${a.soLuong}"></td>
 
-            </div>
-            <div class="col-lg-5 col-sm-12 col-12 d-flex">
-                <div class="card flex-fill">
-                    <div class="card-header pb-0 d-flex justify-content-between align-items-center">
 
-                        <h4 class="card-title mb-0 text-danger">Top 5 sản phẩm bán chạy trong tháng</h4>
-                        <div class="dropdown">
-                            <a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false"
-                               class="dropset">
-                                <i class="fa fa-ellipsis-v"></i>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li>
-                                    <a href="productlist.html" class="dropdown-item">Product List</a>
-                                </li>
-                                <li>
-                                    <a href="addproduct.html" class="dropdown-item">Product Add</a>
-                                </li>
-                            </ul>
-                        </div>
+                                </td>
+                            </tr>
 
-                    </div>
-
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table datanew">
-                                <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Hình ảnh</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Số lượng đã bán</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="a,index : ${spBanChay}">
-                                    <td th:text="${index.index+1}"></td>
-                                    <td>
-                                        <img th:src="@{'/images/imgsProducts/'+ ${a.url1}}"
-                                             style="height: 50px;width: 50px">
-                                        <!--                                        <small><img src="/images/imgsProducts/product-1.4.png"></small>-->
-                                    </td>
-                                    <td th:text="${a.tenGiay}"></td>
-                                    <td th:text="${a.soLuong}"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+</div>
+</div>
 </div>
 
+
 <script src="/js/jquery-3.6.0.min.js"></script>
+
 <script src="/js/feather.min.js"></script>
+
 <script src="/js/jquery.slimscroll.min.js"></script>
+
 <script src="/js/bootstrap.bundle.min.js"></script>
+
 <script src="/js/jquery.dataTables.min.js"></script>
 <script src="/js/dataTables.bootstrap4.min.js"></script>
+
 <script src="/plugins/select2/js/select2.min.js"></script>
+
 <script src="/plugins/owlcarousel/owl.carousel.min.js"></script>
+
 <script src="/plugins/sweetalert/sweetalert2.all.min.js"></script>
 <script src="/plugins/sweetalert/sweetalerts.min.js"></script>
+
 <script src="/plugins/flot/jquery.flot.js"></script>
 <script src="/plugins/flot/jquery.flot.fillbetween.js"></script>
 <script src="/plugins/flot/jquery.flot.pie.js"></script>
 <script src="/plugins/flot/chart-data.js"></script>
+
 <script src="/js/script.js"></script>
+
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
-
 <!--<script>-->
 <!--    document.getElementById('searchButton').addEventListener('click', function() {-->
 <!--        var startDate = document.getElementById('startDateData').value;-->
@@ -616,7 +624,6 @@
     }
 
 </script>
-
 <script th:inline="javascript">
     $(function () {
         Highcharts.chart('container', {
@@ -664,6 +671,7 @@
     function showCorrespondingValue() {
         var select = document.getElementById("mySelect");
         var selectedValue = select.value;
+
 
         // Kiểm tra nếu giá trị đã thay đổi, thì load lại trang
         switch (selectedValue) {
@@ -808,7 +816,6 @@
 
     }
 </script>
-
 
 </body>
 </html>
