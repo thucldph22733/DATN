@@ -225,6 +225,7 @@ public class BanHangController {
         HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
         hoaDon.setTongTienSanPham(tongTienSanPham);
         hoaDon.setTongTien(tongTien - giaTienGiam);
+        hoaDon.setTongSP(tongSanPham);
         hoaDonService.add(hoaDon);
 
         // Thông tin khách hàng
@@ -312,8 +313,9 @@ public class BanHangController {
             response.put("error", "Sản phẩm không tồn tại");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
+        int soGiay = hoaDonChiTiet.getChiTietGiay().getSoLuong();
 
-        if (quantity > chiTietGiay.getSoLuong()) {
+        if (soGiay <= 0) {
             response.put("error", "Số lượng trong kho không đủ");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } else {
@@ -491,28 +493,14 @@ public class BanHangController {
             return "redirect:/ban-hang/hien-thi";
         }
 
-        if (keyword.length() >= 3 && keyword.substring(0, 3).equals("CTG")) {
-
-                ChiTietGiay chiTietGiay = giayChiTietService.findByMa(keyword);
-                if (chiTietGiay == null) {
-                    redirectAttributes.addFlashAttribute("messageError", true);
-                    redirectAttributes.addFlashAttribute("tbaoError", "Không tìm thấy sản mã phẩm ");
-                    return "redirect:/ban-hang/cart/hoadon/" + this.idHoaDon;
-                }
-                model.addAttribute("quetQR", chiTietGiay);
-                model.addAttribute("idHoaDon", idHoaDon);
-                model.addAttribute("showModalQuetQR", true);
-
-        }
-        else {
             List<GiayViewModel> list = giayViewModelService.getAll(keyword);
             if (list.isEmpty()) {
                 redirectAttributes.addFlashAttribute("messageError", true);
                 redirectAttributes.addFlashAttribute("tbaoError", "Không tìm thấy sản phẩm");
-                return "redirect:/ban-hang/cart/hoadon/" + this.idHoaDon;
+                return "redirect:/ban-hang/cart/hoadon/" + idHoaDon;
             }
             model.addAttribute("listSanPham", list);
-        }
+
 
         model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
 
@@ -526,37 +514,39 @@ public class BanHangController {
     }
 
     @GetMapping("/xoa-gio-hang/{idChiTietGiay}")
-    public String xoaSanPham(@PathVariable("idChiTietGiay") UUID idChiTietGiay, RedirectAttributes redirectAttributes, Model model) {
-        model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
-        List<GiayViewModel> listG = giayViewModelService.getAllVm();
-        model.addAttribute("listSanPham", listG);
+    public String xoaSanPham(@PathVariable("idChiTietGiay") UUID idChiTietGiay, RedirectAttributes redirectAttributes,Model model) {
+
         ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idChiTietGiay);
         UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
+        HoaDon hoaDon =  hoaDonService.getOne(idHoaDon);
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHoaDon, idChiTietGiay);
 
-        // Cập nhật tổng tiền hóa đơn
-        HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
-        hoaDon.setTongTien(hoaDon.getTongTien() - hoaDonChiTiet.getDonGia());
-        hoaDon.setTongTienSanPham(hoaDon.getTongTienSanPham() - hoaDonChiTiet.getDonGia());
-        hoaDonService.add(hoaDon);
-
-        // Cập nhật số lượng sản phẩm và trạng thái của ChiTietGiay
         chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + hoaDonChiTiet.getSoLuong());
         chiTietGiay.setTrangThai(1);
         giayChiTietService.save(chiTietGiay);
 
-        // Xóa chi tiết hóa đơn
-        hoaDonChiTietService.delete(hoaDonChiTiet);
+        hoaDonChiTiet.setTrangThai(0);
+        hoaDonChiTiet.setSoLuong(0);
+        hoaDonChiTiet.setDonGia(0.0);
+        hoaDonChiTietService.add(hoaDonChiTiet);
 
         // Cập nhật số lượng sản phẩm trong giỏ hàng
-        tongSanPham--;
-        httpSession.setAttribute("tongSP", tongSanPham);
+        Integer tongSanPham = (Integer) httpSession.getAttribute("tongSP");
+        if (tongSanPham != null) {
+            tongSanPham--;
+            httpSession.setAttribute("tongSP", tongSanPham);
+        }
+        hoaDonService.add(hoaDon);
 
-        httpSession.removeAttribute("idChiTietGiay");
+        // Cập nhật lại danh sách giỏ hàng sau khi xóa sản phẩm
+        List<HoaDonChiTiet> gioHangMoi = hoaDonChiTietService.getListByHoaDon(idHoaDon);
+        model.addAttribute("gioHang", gioHangMoi);
+
         redirectAttributes.addFlashAttribute("messageSuccess", true);
         redirectAttributes.addFlashAttribute("tb", "Xóa thành công");
         return "redirect:/ban-hang/cart/hoadon/" + idHoaDon;
     }
+
 
 
     @GetMapping("/list-khach-hang")
@@ -571,9 +561,7 @@ public class BanHangController {
         model.addAttribute("showModalKhachHang", true);
 
         model.addAttribute("tongTienSanPham", hoaDonChiTietService.tongTienSanPham(findByIdHoaDon));
-        ;
         model.addAttribute("tongTien", hoaDonChiTietService.tongTien(findByIdHoaDon));
-        ;
         return "/manage/ban-hang";
     }
 
