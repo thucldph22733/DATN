@@ -246,6 +246,7 @@
         <!--                        </div>-->
         <!--                    </div>-->
         <!--                </div>-->
+
         <div class="row">
             <div class="col-lg-7 col-sm-12 col-12 d-flex" style="">
                 <div class="card flex-fill">
@@ -288,9 +289,13 @@
                     <div id="container" class="card-body">
                         <!--                         style="width: 550px; height: 400px; margin: 0 auto">-->
                     </div>
-                </div>
 
+                </div>
+                <div id="container" class="card-body">
+                    <!--                         style="width: 550px; height: 400px; margin: 0 auto">-->
+                </div>
             </div>
+
             <div class="col-lg-5 col-sm-12 col-12 d-flex">
                 <div class="card flex-fill">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
@@ -339,104 +344,18 @@
                                 </tbody>
                             </table>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!--        Hóa đơn chờ-->
-    <!--            <form method="get" th:action="@{/thongke/hoadoncho/filter}">-->
-    <!--                <div class="modal fade" id="create" tabindex="-1" aria-labelledby="create" aria-hidden="true">-->
-    <!--                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">-->
-    <!--                        <div class="modal-content">-->
-    <!--                            <div class="modal-header">-->
-    <!--                                <h5 class="modal-title">Sản phẩm đã bán trong ngày</h5>-->
-    <!--                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">-->
-    <!--                                    <span aria-hidden="true">×</span>-->
-    <!--                                </button>-->
-    <!--                            </div>-->
-    <!--                            <div class="modal-body">-->
-    <!--                                <div class="row">-->
-    <!--                                    <div class="col-4">-->
-    <!--                                        <div class="form-group">-->
-    <!--                                            <div class="addonset">-->
-
-    <!--                                            </div>-->
-    <!--                                        </div>-->
-    <!--                                    </div>-->
-
-    <!--                                </div>-->
-    <!--                                <div class="table-responsive a">-->
-    <!--                                    <table class="table datanew">-->
-    <!--                                        <thead>-->
-    <!--                                        <tr>-->
-    <!--                                            <th>Giày</th>-->
-    <!--                                            <th>Khách hàng</th>-->
-    <!--                                            <th></th>-->
-    <!--                                        </tr>-->
-    <!--                                        </thead>-->
-    <!--                                        <tbody>-->
-    <!--                                        <tr th:each="a : ${getN}">-->
-    <!--                                            <td>-->
-    <!--                                                <li>-->
-    <!--                                                    <div class="productimg">-->
-    <!--                                                        <div class="productimgs">-->
-    <!--                                                            <img th:src="@{'/images/imgsProducts/'+ ${a.url1}}"-->
-    <!--                                                                 alt="img">-->
-    <!--                                                        </div>-->
-    <!--                                                        <div class="productcontet">-->
-    <!--                                                            <h4 th:text="${a.tenGiay}">-->
-    <!--                                                                <a href="javascript:void(0);" class="ms-2"-->
-    <!--                                                                   data-bs-toggle="modal"-->
-    <!--                                                                   data-bs-target="#edit"><img-->
-    <!--                                                                        src="/images/img/icons/edit-5.svg"-->
-    <!--                                                                        alt="img"></a>-->
-    <!--                                                            </h4>-->
-    <!--                                                            <div>Śố lượng: x <span th:text="${a.soLuong}"-->
-    <!--                                                                                      style="color:#0a58ca;"></span>-->
-    <!--                                                            </div>-->
-    <!--                                                            <div>Giá bán: <span-->
-    <!--                                                                    th:text="${#numbers.formatDecimal(a.donGia, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"-->
-    <!--                                                                    style="color: #6a1a21"></span></div>-->
-
-    <!--                                                        </div>-->
-    <!--                                                    </div>-->
-    <!--                                                </li>-->
-    <!--                                            </td>-->
-    <!--                                            <td>-->
-    <!--                                                <div>Tên người nhận: <span th:text="${a.ten}"-->
-    <!--                                                                             class="text-info"></span></div>-->
-    <!--                                                <div>SĐT: <span th:text="${a.sdt}" class="text-info"></span></div>-->
-    <!--                                                <div>Địa chỉ: <span th:text="${a.diaChi}" class="text-info"></span>-->
-    <!--                                                </div>-->
-    <!--                                            </td>-->
-    <!--                                            <td>-->
-    <!--                                                <li>-->
-    <!--                                                    &lt;!&ndash;                                            <div th:text="${gioHang.donGia * gioHang.soLuong}"></div>&ndash;&gt;-->
-    <!--                                                    <span>Thành tiền: <div-->
-    <!--                                                            th:text=" ${#numbers.formatDecimal(a.donGia * a.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"-->
-    <!--                                                            style="color: #6a1a21"></div></span>-->
-    <!--                                                </li>-->
-    <!--                                            </td>-->
-
-    <!--                                        </tr>-->
-    <!--                                        </tbody>-->
-    <!--                                    </table>-->
-    <!--                                </div>-->
-    <!--                            </div>-->
-    <!--                        </div>-->
-    <!--                    </div>-->
-    <!--                </div>-->
-
-    <!--            </form>-->
-
-    <!--            Biểu đồ-->
-
 
 </div>
 </div>
 </div>
+
 
 
 <script src="/js/jquery-3.6.0.min.js"></script>
@@ -453,6 +372,7 @@
 <script src="/plugins/select2/js/select2.min.js"></script>
 
 <script src="/plugins/owlcarousel/owl.carousel.min.js"></script>
+
 <script src="/plugins/sweetalert/sweetalert2.all.min.js"></script>
 <script src="/plugins/sweetalert/sweetalerts.min.js"></script>
 
@@ -825,7 +745,6 @@
 
     }
 </script>
-
 
 </body>
 </html>

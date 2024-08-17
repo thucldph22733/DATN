@@ -707,7 +707,7 @@
                                             <form th:action="@{'/manage/changehd/add-to-hd/' + ${idHoaDon}}" method="get">
                                                 <input type="hidden" th:value="${idHoaDon}" name="idHoaDon"/>
                                                 <div class="">
-                                                    <input type="number" name="soLuong" value="1" min="1" class="form-control"/>
+                                                    <input type="number" name="soLuong" value="1" min="1" max="10" class="form-control"/>
                                                 </div>
                                                 <div class="row">
                                                     <div th:each="chiTiet : ${listChiTietGiay}" class="col-md-3">
@@ -942,6 +942,7 @@
     <script th:inline="javascript">
 
 
+
         function clearQuantity1(inputElement) {
             inputElement.setAttribute('data-original-value', inputElement.value);
             inputElement.value = '';
@@ -955,7 +956,7 @@
 
         function markQuantityChanged1(inputElement) {
             var quantity = parseInt(inputElement.value);
-            if (isNaN(quantity) || quantity < 1) {
+            if (isNaN(quantity) || quantity < 1 || quantity > 10) {
                 inputElement.value = inputElement.getAttribute('data-original-value');
             } else {
                 updateTotalAmountAndGrandTotal1(inputElement);
@@ -965,9 +966,11 @@
         function incrementQuantity1(button) {
             var quantityInput = button.parentNode.querySelector('.quantityInput');
             var currentQuantity = parseInt(quantityInput.value);
-            quantityInput.setAttribute('data-original-value', currentQuantity);
-            quantityInput.value = currentQuantity + 1;
-            markQuantityChanged1(quantityInput);
+            if (currentQuantity < 10) { // Limit to a maximum of 10
+                quantityInput.setAttribute('data-original-value', currentQuantity);
+                quantityInput.value = currentQuantity + 1;
+                markQuantityChanged1(quantityInput);
+            }
         }
 
         function decrementQuantity1(button) {

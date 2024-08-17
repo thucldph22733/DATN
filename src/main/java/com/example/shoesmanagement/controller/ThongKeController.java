@@ -25,7 +25,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
+
 @RequestMapping("/thong-ke")
+
 public class    ThongKeController {
     @Autowired
     private HttpSession session;
@@ -178,7 +180,9 @@ public class    ThongKeController {
         doanhSoNam.add(hoaDonChiTietRepository.Nam2024());
         model.addAttribute("Nam", listThemNam);
         model.addAttribute("listNam1", doanhSoNam);
+
         return "thongke/thong-ke";
+
 
     }
 
@@ -233,7 +237,9 @@ public class    ThongKeController {
         model.addAttribute("ctspNV",hoaDonChiTiets);
 
 
+
         return "manage/thong-ke/detailCTSPNV";
+
 
     }
 }

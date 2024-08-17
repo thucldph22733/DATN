@@ -407,7 +407,7 @@ public class SuaHoaDonOnline {
                 return ResponseEntity.status(404).body("Không tìm thấy chi tiết hóa đơn!");
             }
 
-            return ResponseEntity.ok("Sản phẩm đã được xoá khỏi hóa đơn thành công!");
+            return ResponseEntity.ok("Sản phẩm đã được xoá khỏi giỏ hàng thành công!");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Không thể xóa sản phẩm. Hóa đơn phải có ít nhất một sản phẩm.");
@@ -430,8 +430,9 @@ public class SuaHoaDonOnline {
             response.put("error", "Sản phẩm không tồn tại");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
+        int soluong = hoaDonChiTiet.getChiTietGiay().getSoLuong();
 
-        if (quantity > chiTietGiay.getSoLuong()) {
+        if (soluong <= 0) {
             response.put("error", "Số lượng trong kho không đủ");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } else {
@@ -468,9 +469,10 @@ public class SuaHoaDonOnline {
             response.put("tongTienSanPham", newTotalAmount);
             response.put("tongSoLuongSanPham", newTotalQuantity);
 
-            System.out.println("Updated HoaDonChiTiet: " + hoaDonChiTiet);
-            System.out.println("Updated ChiTietGiay: " + chiTietGiay);
-            System.out.println("Updated HoaDon: " + hoaDon);
+//            System.out.println("Updated HoaDonChiTiet: " + hoaDonChiTiet);
+//            System.out.println("Updated ChiTietGiay: " + chiTietGiay);
+//            System.out.println(sl);
+
 
             return ResponseEntity.ok(response);
         }
