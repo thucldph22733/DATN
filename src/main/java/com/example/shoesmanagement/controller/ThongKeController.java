@@ -1,3 +1,4 @@
+
 package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.HoaDonChiTiet;
@@ -24,7 +25,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/ThongKe")
+
+@RequestMapping("/thong-ke")
+
 public class    ThongKeController {
     @Autowired
     private HttpSession session;
@@ -177,7 +180,9 @@ public class    ThongKeController {
         doanhSoNam.add(hoaDonChiTietRepository.Nam2024());
         model.addAttribute("Nam", listThemNam);
         model.addAttribute("listNam1", doanhSoNam);
-        return "ThongKe/thong-ke";
+
+        return "thongke/thong-ke";
+
 
     }
 
@@ -232,7 +237,9 @@ public class    ThongKeController {
         model.addAttribute("ctspNV",hoaDonChiTiets);
 
 
-        return "manage/ThongKe/detailCTSPNV";
+
+        return "manage/thong-ke/detailCTSPNV";
+
 
     }
 }
