@@ -22,6 +22,8 @@ public interface HoaDonChiTietRepository  extends JpaRepository<HoaDonChiTiet, U
 
     List<HoaDonChiTiet> findByChiTietGiay(ChiTietGiay chiTietGiay);
 
+    List<HoaDonChiTiet> findByHoaDon_IdHD(UUID idHD);
+
     void deleteById(UUID id);
 
     @Modifying

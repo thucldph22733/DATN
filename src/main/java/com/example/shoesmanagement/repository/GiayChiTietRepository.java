@@ -20,7 +20,6 @@ public interface GiayChiTietRepository extends JpaRepository<ChiTietGiay, UUID> 
     HinhAnh findDistinctByGiay(Giay giay, MauSac mauSac);
     List<ChiTietGiay> findByMauSacAndGiayAndTrangThai(MauSac mauSac, Giay giay, int trangThai);
 
-
     List<ChiTietGiay> findBySize(Size size);
 
     List<ChiTietGiay> findByMauSac(MauSac mauSac);

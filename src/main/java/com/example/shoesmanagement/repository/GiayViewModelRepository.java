@@ -21,6 +21,7 @@ public interface GiayViewModelRepository extends JpaRepository<GiayViewModel, UU
             "AND ctg.trangThai = 1 " +
             "AND g.tenGiay LIKE %:keyword% " +
             "GROUP BY g.idGiay, g.tenGiay, a.url1, ms.tenMau")
+
     List<GiayViewModel> searchByTenGiay(@Param("keyword") String keyword);
 
     @Query(value = "SELECT ctg from ChiTietGiay ctg where ctg.giay.idGiay = ?1")
