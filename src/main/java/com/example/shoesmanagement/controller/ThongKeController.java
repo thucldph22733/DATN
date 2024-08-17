@@ -1,7 +1,11 @@
+
 package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.HoaDonChiTiet;
 import com.example.shoesmanagement.repository.*;
+import com.example.shoesmanagement.viewModel.CTHDViewModel;
+import com.example.shoesmanagement.viewModel.HieuSuatBanHang;
+import com.example.shoesmanagement.viewModel.SanPhamSapHet;
 import com.example.shoesmanagement.viewModel.Top5SPBanChayTrongThang;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,55 +18,43 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 
-
 import java.time.LocalDate;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.*;
-
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/ThongKe")
-public class ThongKeController {
+@RequestMapping("/thong-ke")
+public class    ThongKeController {
     @Autowired
     private HttpSession session;
-
     @Autowired
     private KhachHangRepository khachHangRepository;
-
     @Autowired
     private GiayChiTietRepository giayChiTietRepository;
-
     @Autowired
     private HoaDonRepository hoaDonRepository;
-
     @Autowired
     private HoaDonChiTietRepository hoaDonChiTietRepository;
-
     @Autowired
     private HinhAnhRepository hinhAnhRepository;
-
     @Autowired
     private GiayRepository giayRepository;
-
     @Autowired
     private CTGViewModelRepository ctgViewModelRepository;
-
     public NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
-
     @GetMapping("/thong-ke")
     public String hienThi(Model model, @ModelAttribute("message") String message
-                        , @ModelAttribute("error") String error, @ModelAttribute("Errormessage") String Errormessage,
+            , @ModelAttribute("error") String error, @ModelAttribute("Errormessage") String Errormessage,
                           @RequestParam(value = "tuNgay", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate tuNgay,
                           @RequestParam(value = "denNgay", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate denNgay) {
         model.addAttribute("tong", khachHangRepository.getTongKH());
-        model.addAttribute("doanhThuThangHienTaiOnl", hoaDonRepository.doanhThuOnl() != null ? hoaDonRepository.doanhThuOnl() : 0);
-        model.addAttribute("doanhThuThangHienTaiOff", hoaDonRepository.doanhThuOff() != null ? hoaDonRepository.doanhThuOff() : 0);
-        model.addAttribute("tongSanPhamOnl", hoaDonRepository.soLuongSPOnl() != null ? hoaDonRepository.soLuongSPOnl() : 0);
-        model.addAttribute("tongSanPhamOff", hoaDonRepository.soLuongSPOff() != null ? hoaDonRepository.soLuongSPOff() : 0);
+        model.addAttribute("tonggiay", giayChiTietRepository.getTongGiay());
 
         //làm tròn doanh thu
+
+
         Optional<Double> ltn = hoaDonChiTietRepository.getLaiThangNay();
 
         Optional<Double> tlbr = hoaDonChiTietRepository.getTongTienLaiCuaHang2();
@@ -71,8 +63,10 @@ public class ThongKeController {
         Optional<Double> dto = hoaDonChiTietRepository.getDoanhThuOnline();
         Optional<Double> dtf = hoaDonChiTietRepository.getDoanhThuTaiQuay();
 
+
         if (tongSPBanTrongNgay.isPresent()) {
             Integer a = tongSPBanTrongNgay.get();
+
             model.addAttribute("sptn", a);
         } else {
             model.addAttribute("sptn", "0");
@@ -184,9 +178,9 @@ public class ThongKeController {
         doanhSoNam.add(hoaDonChiTietRepository.Nam2024());
         model.addAttribute("Nam", listThemNam);
         model.addAttribute("listNam1", doanhSoNam);
-        return "ThongKe/thong-ke";
-    }
+        return "thongke/thong-ke";
 
+    }
 
     @GetMapping("/api/thong-ke")
     public ResponseEntity<Map<String, Object>> getThongKe(
@@ -227,18 +221,19 @@ public class ThongKeController {
     }
 
 
-
     @GetMapping("/thongke/{maNV}")
     public String getEmployeeDetail(@PathVariable("maNV") String maNV, Model model) {
         // Xử lý dữ liệu chi tiết nhân viên dựa trên maNv
         System.out.println("Đã sang tc");
         List<HoaDonChiTiet> hoaDonChiTiets = hoaDonChiTietRepository.getChiTietSPNhanVienBan(maNV);
-        model.addAttribute("giay", giayRepository.findAll());
-        model.addAttribute("chiTietGiay", giayChiTietRepository.findAll());
-        model.addAttribute("hinhAnh", hinhAnhRepository.findAll());
-        model.addAttribute("hoaDon", hoaDonRepository.findAll());
-        model.addAttribute("ctspNV", hoaDonChiTiets);
+        model.addAttribute("giay",giayRepository.findAll());
+        model.addAttribute("chiTietGiay",giayChiTietRepository.findAll());
+        model.addAttribute("hinhAnh",hinhAnhRepository.findAll());
+        model.addAttribute("hoaDon",hoaDonRepository.findAll());
+        model.addAttribute("ctspNV",hoaDonChiTiets);
 
-        return "manage/ThongKe/detailCTSPNV";
+
+        return "manage/thong-ke/detailCTSPNV";
+
     }
 }

@@ -31,160 +31,163 @@
 </head>
 <body class="mini-sidebar">
 <div th:replace="~{manage/activities :: main}"></div>
-    <form th:object="${nhanVien}" method="post"
-          th:action="@{/manage/nhan-vien/viewAdd/add}" onsubmit="return validateForm()">
-        <div class="page-wrapper">
-            <div class="content">
-                <div class="page-header">
-                    <div class="page-title">
-                        <h4>Thêm Nhân Viên</h4>
-                        <h6>Quản Lý Nhân Viên</h6>
-                    </div>
+<form th:object="${nhanVien}" method="post"
+      th:action="@{/manage/nhan-vien/viewAdd/add}" onsubmit="return validateForm()">
+    <div class="page-wrapper">
+        <div class="content">
+            <div class="page-header">
+                <div class="page-title">
+                    <h4>Thêm Nhân Viên</h4>
+                    <h6>Quản Lý Nhân Viên</h6>
                 </div>
+            </div>
 
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Ảnh NV <span style="color: red;">*</span></label>
-                                    <input th:field="*{AnhNV}" type="file"
-                                           id="imageInput"
-                                           accept="image/*"
-                                           onchange="previewImage(event)">
-                                    <br><br><img id="imagePreview" src="#" alt="Ảnh mô tả"
-                                                 style="display: none; max-width: 150px; max-height: 150px;"><br><br>
-                                </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Ảnh NV <span style="color: red;">*</span></label>
+                                <input th:field="*{AnhNV}" type="file"
+                                       id="imageInput"
+                                       accept="image/*"
+                                       onchange="previewImage(event)">
+                                <br><br><img id="imagePreview" src="#" alt="Ảnh mô tả"
+                                             style="display: none; max-width: 150px; max-height: 150px;"><br><br>
                             </div>
-                            <div class="col-lg-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Mã Nhân Viên <span style="color: red;">*</span></label>
-                                    <input type="text" th:field="*{maNV}">
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Mã Nhân Viên <span style="color: red;">*</span></label>
+                                <input type="text" th:field="*{maNV}">
+                                <br><br>
+                                <strong th:if="${#fields.hasErrors('maNV')}"
+                                        class="alert alert-danger alert-dismissible fade"
+                                        role="alert" th:errors="*{maNV}"></strong>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Tên Nhân Viên <span style="color: red;">*</span></label>
+                                <input type="text" th:field="*{hoTenNV}">
+                                <br><br>
+                                <strong th:if="${#fields.hasErrors('hoTenNV')}"
+                                        class="alert alert-danger alert-dismissible fade"
+                                        role="alert" th:errors="*{hoTenNV}"></strong>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Giới Tính <span style="color: red;">*</span></label>
+                                <select class="select" th:field="*{gioiTinh}" id="gioitinh" name="gioitinh">
+                                    <option th:each="loc : ${dsGioiTinh.entrySet()}" th:value="${loc.key}"
+                                            th:text="${loc.value}"></option>
+                                </select>
+                                <br><br>
+                                <strong th:if="${#fields.hasErrors('gioiTinh')}"
+                                        class="alert alert-danger alert-dismissible fade"
+                                        role="alert" th:errors="*{gioiTinh}"></strong>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Ngày Sinh <span style="color: red;">*</span></label>
+                                <div class="input-groupicon">
+                                    <input type="date" th:field="*{ngaySinh}"
+                                           style="width: 100%; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+              font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;"
+                                           th:pattern="yyyy-MM-dd" max="" id="ngaySinh"/>
+
                                     <br><br>
-                                    <strong th:if="${#fields.hasErrors('maNV')}"
+                                    <strong th:if="${#fields.hasErrors('ngaySinh')}"
                                             class="alert alert-danger alert-dismissible fade"
-                                            role="alert" th:errors="*{maNV}"></strong>
+                                            role="alert" th:errors="*{ngaySinh}"></strong>
+
+
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Tên Nhân Viên <span style="color: red;">*</span></label>
-                                    <input type="text" th:field="*{hoTenNV}">
-                                    <br><br>
-                                    <strong th:if="${#fields.hasErrors('hoTenNV')}"
-                                            class="alert alert-danger alert-dismissible fade"
-                                            role="alert" th:errors="*{hoTenNV}"></strong>
-                                </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>SDT Nhân Viên <span style="color: red;">*</span></label>
+                                <input type="text" th:field="*{sdtNV}">
+                                <br><br>
+                                <strong th:if="${#fields.hasErrors('sdtNV')}"
+                                        class="alert alert-danger alert-dismissible fade"
+                                        role="alert" th:errors="*{sdtNV}"></strong>
                             </div>
-                            <div class="col-lg-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Giới Tính <span style="color: red;">*</span></label>
-                                    <select class="select" th:field="*{gioiTinh}" id="gioitinh" name="gioitinh">
-                                        <option th:each="loc : ${dsGioiTinh.entrySet()}" th:value="${loc.key}"
-                                                th:text="${loc.value}"></option>
-                                    </select>
-                                    <br><br>
-                                    <strong th:if="${#fields.hasErrors('gioiTinh')}"
-                                            class="alert alert-danger alert-dismissible fade"
-                                            role="alert" th:errors="*{gioiTinh}"></strong>
-                                </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Email Nhân Viên <span style="color: red;">*</span></label>
+                                <input type="text" th:field="*{emailNV}">
+                                <br><br>
+                                <strong th:if="${#fields.hasErrors('emailNV')}"
+                                        class="alert alert-danger alert-dismissible fade"
+                                        role="alert" th:errors="*{emailNV}"></strong>
                             </div>
-                            <div class="col-lg-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Ngày Sinh <span style="color: red;">*</span></label>
-                                    <div class="input-groupicon">
-                                        <input type="date" th:field="*{ngaySinh}"
-                                               style="width: 100%; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                                       font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;"
-                                               th:pattern="yyyy-MM-dd"/>
-                                        <br><br>
-                                        <strong th:if="${#fields.hasErrors('ngaySinh')}"
-                                                class="alert alert-danger alert-dismissible fade"
-                                                role="alert" th:errors="*{ngaySinh}"></strong>
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Địa Chỉ <span style="color: red;">*</span></label>
+                                <input type="text" th:field="*{diaChi}">
+                                <br><br>
+                                <strong th:if="${#fields.hasErrors('diaChi')}"
+                                        class="alert alert-danger alert-dismissible fade"
+                                        role="alert" th:errors="*{diaChi}"></strong>
                             </div>
-                            <div class="col-lg-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>SDT Nhân Viên <span style="color: red;">*</span></label>
-                                    <input type="text" th:field="*{sdtNV}">
-                                    <br><br>
-                                    <strong th:if="${#fields.hasErrors('sdtNV')}"
-                                            class="alert alert-danger alert-dismissible fade"
-                                            role="alert" th:errors="*{sdtNV}"></strong>
-                                </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Căn Cước Công Dân <span style="color: red;">*</span></label>
+                                <input type="text" th:field="*{CCCDNV}">
+                                <br><br>
+                                <strong th:if="${#fields.hasErrors('CCCDNV')}"
+                                        class="alert alert-danger alert-dismissible fade"
+                                        role="alert" th:errors="*{CCCDNV}"></strong>
                             </div>
-                            <div class="col-lg-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Email Nhân Viên <span style="color: red;">*</span></label>
-                                    <input type="text" th:field="*{emailNV}">
-                                    <br><br>
-                                    <strong th:if="${#fields.hasErrors('emailNV')}"
-                                            class="alert alert-danger alert-dismissible fade"
-                                            role="alert" th:errors="*{emailNV}"></strong>
-                                </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Mật Khẩu <span style="color: red;">*</span></label>
+                                <input type="text" th:field="*{matKhau}">
+                                <br><br>
+                                <strong th:if="${#fields.hasErrors('matKhau')}"
+                                        class="alert alert-danger alert-dismissible fade"
+                                        role="alert" th:errors="*{matKhau}"></strong>
                             </div>
-                            <div class="col-lg-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Địa Chỉ <span style="color: red;">*</span></label>
-                                    <input type="text" th:field="*{diaChi}">
-                                    <br><br>
-                                    <strong th:if="${#fields.hasErrors('diaChi')}"
-                                            class="alert alert-danger alert-dismissible fade"
-                                            role="alert" th:errors="*{diaChi}"></strong>
-                                </div>
+                        </div>
+                        <div class="col-lg-5 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Chức Vụ <span style="color: red;">*</span></label>
+                                <select class="select" th:field="*{chucVu}" id="loc" name="loc">
+                                    <option th:each="loc : ${chucVu}" th:value="${loc.idCV}"
+                                            th:text="${loc.tenCV}"></option>
+                                </select>
+                                <br><br>
+                                <strong th:if="${#fields.hasErrors('chucVu')}"
+                                        class="alert alert-danger alert-dismissible fade"
+                                        role="alert" th:errors="*{chucVu}"></strong>
                             </div>
-                            <div class="col-lg-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Căn Cước Công Dân <span style="color: red;">*</span></label>
-                                    <input type="text" th:field="*{CCCDNV}">
-                                    <br><br>
-                                    <strong th:if="${#fields.hasErrors('CCCDNV')}"
-                                            class="alert alert-danger alert-dismissible fade"
-                                            role="alert" th:errors="*{CCCDNV}"></strong>
-                                </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-2 col-2 ps-0">
+                            <div class="add-icon" style="margin-top: 30px">
+                                <a href="javascript:void(0);" id="modal-chucVu" data-toggle="modal"
+                                   data-target="#myModal"><img
+                                        src="/images/img/icons/plus1.svg"
+                                        alt="img"></a>
                             </div>
-                            <div class="col-lg-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Mật Khẩu <span style="color: red;">*</span></label>
-                                    <input type="text" th:field="*{matKhau}">
-                                    <br><br>
-                                    <strong th:if="${#fields.hasErrors('matKhau')}"
-                                            class="alert alert-danger alert-dismissible fade"
-                                            role="alert" th:errors="*{matKhau}"></strong>
-                                </div>
-                            </div>
-                            <div class="col-lg-5 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Chức Vụ <span style="color: red;">*</span></label>
-                                    <select class="select" th:field="*{chucVu}" id="loc" name="loc">
-                                        <option th:each="loc : ${chucVu}" th:value="${loc.idCV}"
-                                                th:text="${loc.tenCV}"></option>
-                                    </select>
-                                    <br><br>
-                                    <strong th:if="${#fields.hasErrors('chucVu')}"
-                                            class="alert alert-danger alert-dismissible fade"
-                                            role="alert" th:errors="*{chucVu}"></strong>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-2 col-2 ps-0">
-                                <div class="add-icon" style="margin-top: 30px">
-                                    <a href="javascript:void(0);" id="modal-chucVu" data-toggle="modal"
-                                       data-target="#myModal"><img
-                                            src="/images/img/icons/plus1.svg"
-                                            alt="img"></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <button type="submit" class="btn btn-submit me-2">Submit</button>
-                                <a href="/manage/nhan-vien" class="btn btn-cancel">Cancel</a>
-                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <button type="submit" class="btn btn-submit me-2">Submit</button>
+                            <a href="/manage/nhan-vien" class="btn btn-cancel">Cancel</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+</form>
 </div>
 <!-- Modal ChucVu-->
 <div class="modal fade" id="myModal-chucVu" tabindex="-1" role="dialog"
@@ -313,6 +316,13 @@
 <script src="/js/script.js"></script>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var today = new Date().toISOString().split('T')[0]; // Lấy ngày hiện tại dưới dạng YYYY-MM-DD
+        document.getElementById("ngaySinh").setAttribute("max", today);
+    });
+
+</script>
+<script>
     function validateForm() {
         var maNV = document.getElementById("maNV").value;
         var hoTenNV = document.getElementById("hoTenNV").value;
@@ -324,7 +334,7 @@
         var AnhNV = document.getElementById("imageInput").value;
 
         // Kiểm tra không để trống các trường
-        if (maNV === "" || hoTenNV === "" || ngaySinh === "" || sdtNV === "" || emailNV === "" || CCCDNV === "" || matkhau === "" || AnhNV === "" ) {
+        if (maNV === "" || hoTenNV === "" || ngaySinh === "" || sdtNV === "" || emailNV === "" || CCCDNV === "" || matkhau === "" || AnhNV === "") {
             alert("Vui lòng điền đầy đủ thông tin");
             return false;
         }
