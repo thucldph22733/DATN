@@ -20,7 +20,6 @@ public interface GiayChiTietRepository extends JpaRepository<ChiTietGiay, UUID> 
     HinhAnh findDistinctByGiay(Giay giay, MauSac mauSac);
     List<ChiTietGiay> findByMauSacAndGiayAndTrangThai(MauSac mauSac, Giay giay, int trangThai);
 
-
     List<ChiTietGiay> findBySize(Size size);
 
     List<ChiTietGiay> findByMauSac(MauSac mauSac);
@@ -39,7 +38,7 @@ public interface GiayChiTietRepository extends JpaRepository<ChiTietGiay, UUID> 
     @Query("UPDATE ChiTietGiay c SET c.soLuong = :quantity WHERE c.idCTG = :id")
     void updateQuantity(@Param("id") UUID id, @Param("quantity") int quantity);
 
-    @Query(value = "select sum(tong_sp) from hoa_don where trang_thai = 4",nativeQuery = true)
+    @Query(value = "select sum(cthd.so_luong) from hoa_don_chi_tiet cthd  join hoa_don hd on hd.id_hd=cthd.id_hd where  ((hd.loai_hd=1 AND hd.trang_thai=1) OR (hd.loai_hd=0 AND hd.trang_thai=4))",nativeQuery = true)
     Integer getTongGiay();
 
 //    select sum(hd.tong_sp)
