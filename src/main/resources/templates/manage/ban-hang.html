@@ -606,7 +606,40 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-
+                                                    <div class="split-card">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div>
+                                                                    <label class="fw-semibold fs-3 m-3">Thông tin Khách hàng</label>
+                                                                    <a class="btn btn-primary m-3" style="float: right"
+                                                                       th:href="@{'/ban-hang/list-khach-hang'}">
+                                                                        Chọn Khách hàng
+                                                                    </a>
+                                                                </div>
+                                                                <div th:if="${khachHang==null}">
+                                                                    <label>Tên khách hàng : Khách lẻ</label>
+                                                                </div>
+                                                                <div th:if="${khachHang != null}" class="mt-5">
+                                                                    <div class="setvalue">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <h5>Họ tên :</h5>
+                                                                                <h5 th:text="${khachHang.hoTenKH}"></h5>
+                                                                            </li>
+                                                                            <li>
+                                                                                <h5>Số điện thoại:</h5>
+                                                                                <h5 th:text="${khachHang.sdtKH}"></h5>
+                                                                            </li>
+                                                                            <li>
+                                                                                <h5>Email : </h5>
+                                                                                <h5 th:text="${khachHang.emailKH}"></h5>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
                                                     <div class="split-card">
                                                         <div class="card-body pt-0 pb-2">

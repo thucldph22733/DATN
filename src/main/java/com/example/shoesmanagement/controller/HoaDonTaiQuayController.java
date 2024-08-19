@@ -146,4 +146,27 @@ public class HoaDonTaiQuayController {
         model.addAttribute("hoaDon", danhSachHoaDon);
         return "manage/manage-bill-off";
     }
+
+    @GetMapping("/offline/print/{idHD}")
+    public String printBillOffline(@PathVariable("idHD") UUID idHD, Model model) {
+        // Fetch the HoaDon and related details
+        List<HoaDonChiTiet> findByIdHoaDon = hoaDonChiTietService.findByIdHoaDon(idHD);
+        HoaDon hoaDon = hoaDonService.getOne(idHD);
+
+        // Calculate the discount for this specific HoaDon
+        double soTienGiam = 0;
+        KhuyenMai khuyenMai = hoaDon.getKhuyenMai();
+        if (khuyenMai != null) {
+            soTienGiam = khuyenMai.getGiaTienGiam();
+        }
+
+        // Pass the calculated discount to the view
+        model.addAttribute("soTienGiam", soTienGiam);
+        model.addAttribute("hoaDonChiTiet", findByIdHoaDon);
+        model.addAttribute("billPrint", hoaDon);
+
+        return "manage/printBillOffline";
+    }
+
+
 }
