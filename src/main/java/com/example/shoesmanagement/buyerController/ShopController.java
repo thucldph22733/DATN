@@ -113,21 +113,25 @@ public class ShopController {
     }
 
     @GetMapping("/shop/brand/{idHang}")
-    private String getShopBrandBuyer(Model model,@PathVariable UUID idHang){
+    private String getShopBrandBuyer(Model model, @PathVariable UUID idHang) {
         showDataBuyerShop(model);
         checkKhachHangLogged(model);
 
+        // Fetch and add filtered products by brand
         List<CTGViewModel> listCTGByBrand = ctgViewModelService.findByIDHang(idHang);
         int sumProductByHang = listCTGByBrand.size();
         model.addAttribute("sumProduct", sumProductByHang);
-
         model.addAttribute("listCTGModel", listCTGByBrand);
 
+        // Fetch and add sold-out products
         List<CTGViewModel> listCTGModelSoldOff = ctgViewModelService.getAllSoldOff();
         model.addAttribute("listCTGModelSoldOff", listCTGModelSoldOff);
+
+        // Pass the selected brand ID to the view
+        model.addAttribute("selectedBrandId", idHang);
+
         return "online/shop";
     }
-
     @GetMapping("/shop/highToLow")
     private String getShopByPriceHighToLow(Model model,
                                            @RequestParam(name= "pageSize", defaultValue = "9") Integer pageSize,
