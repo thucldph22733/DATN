@@ -488,7 +488,7 @@
                                                                 Reload Hóa Đơn
                                                             </button>
                                                             <h4 th:text="'Số sản phẩm: ' + ${tongSanPham}"></h4>
-                                                            <a href="javascript:void(0);">Clear all</a>
+
                                                         </div>
                                                         <div class="product-table">
                                                             <ul class="product-lists">
@@ -1455,6 +1455,7 @@
                     var grandTotalElement = document.querySelector('#tongTienSanPham');
                     var grandTotalElement2 = document.querySelector('#tienTamTinh');
                     var grandTotalElement3 = document.querySelector('#tongTienSauKhuyenMai');
+                    var grandTotalElement4 = document.querySelector('#apDungMaGiamGia');
                     var grandTotal = 0;
 
                     totalElements.forEach(function (element) {
@@ -1464,6 +1465,7 @@
                     grandTotalElement.innerText = formatCurrency(grandTotal) + ' đ';
                     grandTotalElement2.innerText = formatCurrency(grandTotal) + ' đ';
                     grandTotalElement3.innerText = formatCurrency(grandTotal) + ' đ';
+                    grandTotalElement4.innerText = formatCurrency(grandTotal) + ' đ';
 
                     document.getElementById('apDungMaGiamGia').innerHTML = '0 đ';
 
