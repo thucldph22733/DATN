@@ -79,16 +79,19 @@
 
                         <!--        Buyer FullName Begin    -->
                         <div class="header__top__hover">
-                            <span th:text="${fullNameLogin}"><i class="arrow_carrot-down" ></i></span>
-                            <ul>
-                                <li><a th:href="@{'/buyer/setting'}" >Cài đặt</a></li>
+                            <span th:text="${fullNameLogin}" th:if="${fullNameLogin != null}"><i class="arrow_carrot-down"></i></span>
+                            <ul th:if="${fullNameLogin != null}">
+                                <li><a th:href="@{'/buyer/setting'}">Cài đặt</a></li>
                                 <li><a th:href="@{'/buyer/logout'}">Đăng xuất</a></li>
                                 <li><a th:href="@{'/buyer/change-password'}">Đổi mật khẩu</a></li>
-
                             </ul>
-                            <a th:if="${messageLoginOrSignin}" th:href="@{'/buyer/login'}" style="color: #ffffff;font-size: 13px;text-transform: uppercase;letter-spacing: 2px;display: inline-block;cursor: pointer;">Đăng nhập</a>
+                            <a th:if="${messageLoginOrSignin}" th:href="@{'/buyer/login'}"
+                               style="color: #ffffff;font-size: 13px;text-transform: uppercase;letter-spacing: 2px;display: inline-block;cursor: pointer;">Đăng
+                                nhập</a>
                             <a><span> | | </span></a>
-                            <a th:if="${messageLoginOrSignin}" th:href="@{'/buyer/register'}" style="color: #ffffff;font-size: 13px;text-transform: uppercase;letter-spacing: 2px;display: inline-block;cursor: pointer;">Đăng ký </a>
+                            <a th:if="${messageLoginOrSignin}" th:href="@{'/buyer/register'}"
+                               style="color: #ffffff;font-size: 13px;text-transform: uppercase;letter-spacing: 2px;display: inline-block;cursor: pointer;">Đăng
+                                ký </a>
                         </div>
                         <!--            Buyer FullName End -->
 
