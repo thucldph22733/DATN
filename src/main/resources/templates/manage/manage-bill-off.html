@@ -170,7 +170,7 @@
                                                                            th:data-bs-toggle="modal"
                                                                            th:data-bs-target="'#modalDetailHD' + ${bill.idHD}"
                                                                            style="cursor: pointer; margin: 0 20px 0 20px; color: #ff9f43;"></i>
-                                                                        <a th:href="@{'http://localhost:8081/manage/bill/offline/print/' + ${bill.idHD}}"
+                                                                        <a th:href="@{'http://localhost:8080/manage/bill/offline/print/' + ${bill.idHD}}"
                                                                            onclick="window.open(this.href, '_blank'); return false;">
                                                                             <i class="fe fe-printer"
                                                                                data-bs-toggle="tooltip" title=""
@@ -250,6 +250,14 @@
                                         </td>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-3 col-sm-12 col-12" th:if="${bill.khachHang != null}">
+                                    <div class="form-group">
+                                        <label style="border: none; font-size: 12pt; font-weight: 600;">Khách hàng</label>
+                                        <p th:text="${bill.khachHang.getHoTenKH()}"></p>
+                                    </div>
+                                </div>
+
 
                                 <div class="col-lg-3 col-sm-12 col-12" th:if="${bill.nhanVien != null}">
                                     <div class="form-group">

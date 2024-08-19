@@ -12,6 +12,7 @@ import java.util.UUID;
 
 @Repository
 public interface NhanVienRepository extends JpaRepository<NhanVien, UUID> {
+
     NhanVien findByEmailNVAndMatKhauAndTrangThai(String email, String pass, int trangThai);
 
     NhanVien findBySdtNVAndMatKhauAndTrangThai(String sdt, String pass, int trangThai);

@@ -106,6 +106,7 @@ public class BanHangController {
         model.addAttribute("listKhachHang", khachHangService.findKhachHangByTrangThai());
         if (!"true".equals(messageSuccess)) {
             model.addAttribute("messageSuccess", false);
+            session.removeAttribute("idHoaDon");
         }
         if (!"true".equals(messageError)) {
             model.addAttribute("messageError", false);
@@ -120,6 +121,7 @@ public class BanHangController {
 
     @GetMapping("/add-cart")
     public String taoHoaDon(Model model, RedirectAttributes redirectAttributes) {
+        session.removeAttribute("idHoaDon");
         NhanVien nhanVien = (NhanVien) httpSession.getAttribute("staffLogged");
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
@@ -550,12 +552,20 @@ public class BanHangController {
 
 
     @GetMapping("/list-khach-hang")
-    public String listKH(Model model) {
+    public String listKH( RedirectAttributes redirectAttributes,Model model) {
+        UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
+        if (idHoaDon == null) {
+            redirectAttributes.addFlashAttribute("messageError", true);
+            redirectAttributes.addFlashAttribute("tbaoError", "Hiện chưa chọn hóa đơn!");
+            model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
+            return "redirect:/ban-hang/hien-thi";
+        }
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
         List<HoaDonChiTiet> findByIdHoaDon = hoaDonChiTietService.findByIdHoaDon(idHoaDon);
         model.addAttribute("gioHang", findByIdHoaDon);
         model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
+
         model.addAttribute("listKhachHang", khachHangService.findKhachHangByTrangThai());
         model.addAttribute("idHoaDon", idHoaDon);
         model.addAttribute("showModalKhachHang", true);
@@ -567,8 +577,6 @@ public class BanHangController {
 
     @GetMapping("/chon-khach-hang/{idKhachHang}")
     public String chonKhachHang(@PathVariable("idKhachHang") UUID idKhachHang, Model model) {
-        List<GiayViewModel> listG = giayViewModelService.getAllVm();
-        model.addAttribute("listSanPham", listG);
         List<HoaDonChiTiet> findByIdHoaDon = hoaDonChiTietService.findByIdHoaDon(idHoaDon);
         model.addAttribute("gioHang", findByIdHoaDon);
         model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
@@ -592,19 +600,24 @@ public class BanHangController {
         model.addAttribute("gioHang", findByIdHoaDon);
         model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
         model.addAttribute("showModalKhachHang", true);
+
         List<KhachHang> search = khachHangService.findKhachHangByKeyword(keyword);
+        UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
         if (search.isEmpty()) {
             redirectAttributes.addFlashAttribute("messageError", true);
             redirectAttributes.addFlashAttribute("tbaoError", "Không tìm thấy khách hàng");
             return "redirect:/ban-hang/cart/hoadon/" + idHoaDon;
         }
+
         model.addAttribute("listKhachHang", search);
         model.addAttribute("idHoaDon", idHoaDon);
         model.addAttribute("tongTienSanPham", tongTienSanPham);
         model.addAttribute("tongTien", tongTien);
         model.addAttribute("khuyenMai", this.giaTienGiam);
+
         return "/manage/ban-hang";
     }
+
 
     @GetMapping("/khach-hang/viewAdd")
     public String viewAdd(Model model) {
@@ -687,6 +700,7 @@ public class BanHangController {
             hoaDonService.deleteHoaDonCho(idHD);
             session.removeAttribute("idHoaDon");
             session.removeAttribute("tongSP");
+            session.removeAttribute("khachHang");
             session.removeAttribute("tongTien");
             session.removeAttribute("tongTienSanPham");
             session.removeAttribute("cart");
