@@ -880,7 +880,8 @@ public class CheckOutController {
 
 //            model.addAttribute("ngayDuKien", hoaDon.getTgNhanDK());
 
-            model.addAttribute("shippingFee", hoaDon.getTienShip());
+            Double shippingFee = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
+            model.addAttribute("shippingFee", shippingFee);
             model.addAttribute("billPlaceOrder", hoaDon);
             model.addAttribute("khuyenMai", khuyenMai);
 
@@ -904,7 +905,7 @@ public class CheckOutController {
 
 
             model.addAttribute("toTalOder", hoaDon.getTongTienSanPham()
-                    + hoaDon.getTienShip() - giaTienGiam);
+                    + shippingFee - giaTienGiam);
 
             model.addAttribute("tongTienDaGiamVoucherShip", hoaDon.getTongTienSanPham()
                     - hoaDon.getTienShip());
@@ -915,7 +916,7 @@ public class CheckOutController {
 
             hoaDon.setKhuyenMai(khuyenMai);
             hoaDon.setTongTien(hoaDon.getTongTienSanPham()
-                    + hoaDon.getTienShip() - giaTienGiam);
+                    + shippingFee - giaTienGiam);
             hoaDonService.save(hoaDon);
 
         }

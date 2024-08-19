@@ -38,6 +38,9 @@
                 width: 100%;
                 z-index: 100;
             }
+            .shop__sidebar__brand ul li.selected a {
+                color: red;
+            }
 
             .color-box {
                 display: inline-block;
@@ -270,12 +273,14 @@
                                 <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
                                     <div class="card-body">
                                         <div class="shop__sidebar__brand">
-                                            <ul>
-                                                <li class="active" data-filter="*"><a href="/buyer/shop">Tất cả hãng</a>
+                                            <ul id="brand-list">
+                                                <li th:class="${selectedBrandId == null} ? 'selected' : ''" data-filter="*">
+                                                    <a href="/buyer/shop">Tất cả hãng</a>
                                                 </li>
                                                 <th:block th:each="a : ${listBrand}">
-                                                    <li><a th:href="@{'/buyer/shop/brand/' + ${a.idHang}}"
-                                                           th:text="${a.tenHang}"> </a></li>
+                                                    <li th:class="${selectedBrandId == a.idHang} ? 'selected' : ''">
+                                                        <a th:href="@{'/buyer/shop/brand/' + ${a.idHang}}" th:text="${a.tenHang}"></a>
+                                                    </li>
                                                 </th:block>
                                             </ul>
                                         </div>
