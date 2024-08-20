@@ -4,14 +4,10 @@ import com.example.shoesmanagement.model.GioHang;
 import com.example.shoesmanagement.model.GioHangChiTiet;
 import com.example.shoesmanagement.model.KhachHang;
 import com.example.shoesmanagement.service.GHCTService;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.swing.text.AbstractDocument;
 import java.util.List;
 
 @Controller
@@ -59,31 +54,44 @@ public class ContactController {
     }
 
 
+//    @PostMapping("/contact/send")
+//    public String sendMess(@RequestParam String emailFrom,
+//                           @RequestParam String emailTo,
+//                           @RequestParam String subject,
+//                           @RequestParam String message) {
+////        Email from = new Email(emailFrom);
+////        Email to = new Email(emailTo);
+////        AbstractDocument.Content content = new Content("text/plain", message);
+////        Mail mail = new Mail(from, subject, to, content);
+////
+////        SendGrid sg = new SendGrid(sendGridApiKey);
+////        Request request = new Request();
+////        try {
+////            request.setMethod(Method.POST);
+////            request.setEndpoint("mail/send");
+////            request.setBody(mail.build());
+////            Response response = sg.api(request);
+////            if (response.getStatusCode() >= 200 && response.getStatusCode() < 300) {
+////                return "redirect:/buyer/contact";
+////            } else {
+////                return "redirect:/buyer/contact?error";
+////            }
+////        } catch (IOException ex) {
+////            // Xử lý lỗi nếu có
+//            return "redirect:/buyer/contact?error";
+//        }
+
     @PostMapping("/contact/send")
-    public String sendMess(@RequestParam String emailFrom,
-                           @RequestParam String emailTo,
+    public String sendMess(@RequestParam String email,
                            @RequestParam String subject,
                            @RequestParam String message) {
-//        Email from = new Email(emailFrom);
-//        Email to = new Email(emailTo);
-//        AbstractDocument.Content content = new Content("text/plain", message);
-//        Mail mail = new Mail(from, subject, to, content);
-//
-//        SendGrid sg = new SendGrid(sendGridApiKey);
-//        Request request = new Request();
-//        try {
-//            request.setMethod(Method.POST);
-//            request.setEndpoint("mail/send");
-//            request.setBody(mail.build());
-//            Response response = sg.api(request);
-//            if (response.getStatusCode() >= 200 && response.getStatusCode() < 300) {
-//                return "redirect:/buyer/contact";
-//            } else {
-//                return "redirect:/buyer/contact?error";
-//            }
-//        } catch (IOException ex) {
-//            // Xử lý lỗi nếu có
-            return "redirect:/buyer/contact?error";
-        }
+        SimpleMailMessage smm = new SimpleMailMessage();
+        smm.setFrom(email);
+        smm.setTo("ngocnmph25730@fpt.edu.vn");
+        smm.setSubject(subject);
+        smm.setText(message);
+        mailSender.send(smm);
+        return "redirect:/buyer/contact";
     }
+}
 

@@ -558,6 +558,22 @@
                                                                  class="alert alert-success text-center">
                                                                 <h3 th:text="${message}"></h3>
                                                             </div>
+
+                                                        </nav>
+                                                    </div>
+                                                </div>
+                                                <div class="card card-order">
+
+                                                    <div class="card-body pt-0 mt-3">
+                                                        <div class="totalitem">
+                                                            <label class="fw-semibold fs-3">Giỏ hàng</label>
+                                                            <button onclick="location.reload();"
+                                                                    class="btn btn-primary">
+                                                                Reload Hóa Đơn
+                                                            </button>
+                                                            <h4 th:text="'Số sản phẩm: ' + ${tongSanPham}"></h4>
+
+
                                                         </div>
                                                     </nav>
                                                 </div>
@@ -765,6 +781,7 @@
                                                                          aria-labelledby="staticBackdropLabel"
                                                                          aria-hidden="true">
 
+
                                                                         <div class="modal-dialog modal-lg">
                                                                             <div class="modal-content">
                                                                                 <div class="modal-header">
@@ -793,6 +810,7 @@
                                                                                                         Áp dụng
                                                                                                     </button>
                                                                                                     <br>
+
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -1538,6 +1556,7 @@
                     var grandTotalElement = document.querySelector('#tongTienSanPham');
                     var grandTotalElement2 = document.querySelector('#tienTamTinh');
                     var grandTotalElement3 = document.querySelector('#tongTienSauKhuyenMai');
+                    var grandTotalElement4 = document.querySelector('#apDungMaGiamGia');
                     var grandTotal = 0;
 
                     totalElements.forEach(function (element) {
@@ -1547,6 +1566,7 @@
                     grandTotalElement.innerText = formatCurrency(grandTotal) + ' đ';
                     grandTotalElement2.innerText = formatCurrency(grandTotal) + ' đ';
                     grandTotalElement3.innerText = formatCurrency(grandTotal) + ' đ';
+                    grandTotalElement4.innerText = formatCurrency(grandTotal) + ' đ';
 
                     document.getElementById('apDungMaGiamGia').innerHTML = '0 đ';
 
