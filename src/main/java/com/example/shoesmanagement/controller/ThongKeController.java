@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Timestamp;
 import java.text.NumberFormat;
@@ -47,14 +48,26 @@ public class    ThongKeController {
     private CTGViewModelRepository ctgViewModelRepository;
     public NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
     @GetMapping("/thong-ke")
-    public String hienThi(Model model, @ModelAttribute("message") String message
+    public String hienThi(Model model, @ModelAttribute("message") String message, RedirectAttributes redirectAttributes
             , @ModelAttribute("error") String error, @ModelAttribute("Errormessage") String Errormessage,
                           @RequestParam(value = "tuNgay", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate tuNgay,
                           @RequestParam(value = "denNgay", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate denNgay) {
         model.addAttribute("tong", khachHangRepository.getTongKH());
         model.addAttribute("tonggiay", giayChiTietRepository.getTongGiay());
 
-        //làm tròn doanh thu
+        if (session.getAttribute("staffLogged") != null) {
+            // Thêm thông báo vào RedirectAttributes
+            redirectAttributes.addFlashAttribute("messageLogin", "Chỉ Admin mới có quyền truy cập");
+            // Chuyển hướng về trang login
+            return "redirect:/login";
+        }
+
+        // Kiểm tra nếu không có managerLogged
+        if (session.getAttribute("managerLogged") == null) {
+            // Chuyển hướng về trang login nếu managerLogged là null
+            redirectAttributes.addFlashAttribute("messageLogin", "Vui lòng đăng nhập để tiếp tục");
+            return "redirect:/login";
+        }
 
 
         Optional<Double> ltn = hoaDonChiTietRepository.getLaiThangNay();

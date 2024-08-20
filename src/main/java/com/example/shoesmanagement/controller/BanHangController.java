@@ -111,9 +111,8 @@ public class BanHangController {
         if (!"true".equals(messageError)) {
             model.addAttribute("messageError", false);
         }
-        if (session.getAttribute("staffLogged") == null) {
-            // Nếu managerLogged bằng null, quay về trang login
-            return "/login";
+        if (session.getAttribute("staffLogged") == null && session.getAttribute("managerLogged") == null) {
+            return "redirect:/login";
         }
 
         return "/manage/ban-hang";

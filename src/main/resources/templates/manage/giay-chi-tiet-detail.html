@@ -35,7 +35,7 @@
     </style>
 </head>
 <body class="mini-sidebar">
-<div th:replace="~{manage/activities :: main}"></div>
+<div th:replace="~{manage/a :: main}"></div>
 <form th:object="${giayChiTietDetail}" method="post"
       th:action="@{'/manage/giay-chi-tiet/detail/'+ ${giayChiTietDetail.idCTG}}">
     <div class="page-wrapper">

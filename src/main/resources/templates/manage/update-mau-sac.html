@@ -73,7 +73,7 @@
     </style>
 </head>
 <body class="mini-sidebar">
-<div th:replace="~{manage/activities :: main}"></div>
+<div th:replace="~{manage/a :: main}"></div>
 <form th:object="${mauSac}" method="post" th:formaction="@{'/manage/mau-sac/update/' + ${mauSac.idMau}}" onsubmit="return validateMauSacForm()" name="mauSacForm">
     <div class="page-wrapper">
         <div class="content">

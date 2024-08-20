@@ -91,8 +91,8 @@ public class HoaDonOnlineController {
         model.addAttribute("reLoadPage", true);
         List<GiayViewModel> list = giayViewModelService.getAllVm();
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
-        if (session.getAttribute("managerLogged") == null) {
-            // Nếu managerLogged bằng null, quay về trang login
+
+        if (session.getAttribute("staffLogged") == null && session.getAttribute("managerLogged") == null) {
             return "redirect:/login";
         }
         if (listG != null && !listG.isEmpty()) {

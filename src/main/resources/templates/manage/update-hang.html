@@ -49,7 +49,7 @@
     </style>
 </head>
 <body class="mini-sidebar">
-<div th:replace="~{manage/activities :: main}"></div>
+<div th:replace="~{manage/a :: main}"></div>
 
 <form th:object="${hang}" method="post" th:action="@{'/manage/hang/viewUpdate/' + ${hang.idHang}}" enctype="multipart/form-data" onsubmit="return validateHangForm()" name="hangForm">
     <div class="page-wrapper">

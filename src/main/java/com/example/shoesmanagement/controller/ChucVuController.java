@@ -48,32 +48,48 @@ public class ChucVuController {
     }
 
     @GetMapping("/chuc-vu")
-    public String dsChucVu(Model model, @ModelAttribute("message") String message
-            , @ModelAttribute("error") String error
-            , @ModelAttribute("userInput") ChucVu userInput, @ModelAttribute("Errormessage") String Errormessage) {
-        List<ChucVu> chucVu = chucVuRepsitory.getAllChucVu();
-        model.addAttribute("chucVu", chucVu);
-        //
-        model.addAttribute("chucVuAdd", new ChucVu());
-
-        if (session.getAttribute("managerLogged") == null) {
-            // Nếu managerLogged bằng null, quay về trang login
+    public String dsChucVu(Model model, RedirectAttributes redirectAttributes,
+                           @ModelAttribute("message") String message,
+                           @ModelAttribute("error") String error,
+                           @ModelAttribute("userInput") ChucVu userInput,
+                           @ModelAttribute("Errormessage") String Errormessage) {
+        // Kiểm tra nếu có staffLogged và ngăn không cho truy cập
+        if (session.getAttribute("staffLogged") != null) {
+            // Thêm thông báo vào RedirectAttributes
+            redirectAttributes.addFlashAttribute("messageLogin", "Chỉ Admin mới có quyền truy cập");
+            // Chuyển hướng về trang login
             return "redirect:/login";
         }
-        //
+
+        // Kiểm tra nếu không có managerLogged
+        if (session.getAttribute("managerLogged") == null) {
+            // Chuyển hướng về trang login nếu managerLogged là null
+            redirectAttributes.addFlashAttribute("messageLogin", "Vui lòng đăng nhập để tiếp tục");
+            return "redirect:/login";
+        }
+
+        // Tiếp tục xử lý nếu người dùng là managerLogged
+        List<ChucVu> chucVu = chucVuRepsitory.getAllChucVu();
+        model.addAttribute("chucVu", chucVu);
+        model.addAttribute("chucVuAdd", new ChucVu());
+
         if (message == null || !"true".equals(message)) {
             model.addAttribute("message", false);
         }
-        // Kiểm tra xem có dữ liệu người dùng đã nhập không và điền lại vào trường nhập liệu
+
         if (userInput != null) {
             model.addAttribute("chucVuAdd", userInput);
         }
-        //
+
         if (Errormessage == null || !"true".equals(Errormessage)) {
             model.addAttribute("Errormessage", false);
         }
+
         return "manage/chuc-vu";
     }
+
+
+
 
     @PostMapping("/chuc-vu/viewAdd/add")
     public String addchucVu(@Valid @ModelAttribute("chucVu") ChucVu chucVu,

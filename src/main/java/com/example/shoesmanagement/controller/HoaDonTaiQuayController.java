@@ -56,8 +56,7 @@ public class HoaDonTaiQuayController {
 
     @GetMapping("/offline")
     public String getAll(Model model) {
-        if (session.getAttribute("managerLogged") == null) {
-            // Nếu managerLogged bằng null, quay về trang login
+        if (session.getAttribute("staffLogged") == null && session.getAttribute("managerLogged") == null) {
             return "redirect:/login";
         }
 
