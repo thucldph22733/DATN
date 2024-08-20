@@ -217,52 +217,8 @@
             </div>
             <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option" style="display: flex;justify-content: end;">
-                    <div class="nav user-menu" style="height: 30px;">
-                        <li class="nav-item dropdown" style="height: 30px;">
-                            <a data-bs-toggle="dropdown" href="#">
-                                <img style="margin-bottom: 42px; width: 18px; height: 18px;"
-                                     src="/images/img/icon/notification.png">
-                            </a>
-                            <span style="position: absolute; height:20px; width: 25px; top: -13px; left: 7px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;"
-                                  th:text="${soThongBao}"></span>
-                            <div class="dropdown-menu notifications"
-                                 style="width:300px; top: -80px; position: absolute;">
-                                <div class="topnav-dropdown-header">
-                                    <span class="notification-title">Thông báo</span>
-                                    <a class="clear-noti"> Xóa sạch </a>
-                                </div>
-                                <div class="vertical-scroll scroll-demo">
-                                    <th:block th:if="${x.trangThai != 3}" th:each="x : ${listThongBao}">
-                                        <a href="#" class="items-noticafitions">
-                                            <div class="items-notica">
-                                        <span class="avatar">
-                                            <img alt="" src="/images/img/blog/blog-1.jpg">
-                                        </span>
-                                                <div class="text-notica">
-                                                    <span class="notica-title" th:text="${fullNameLogin}"></span>
-                                                    <p class="notica-times">1 phút trước</p>
-                                                    <input th:if="x.trangThai == 1" checked class="notica-read"
-                                                           type="radio" name="" id="">
-                                                    <input th:if="x.trangThai == 0">
-                                                </div>
-                                                <p class="notica-status">---------</p>
-                                                <div class="text-contents">
-                                                    <p class="notica-contents" th:text="${x.noiDungTB}"></p>
-                                                </div>
 
 
-                                            </div>
-                                        </a>
-                                    </th:block>
-                                </div>
-                                <div class="topnav-dropdown-footer">
-                                    <a href="activities.html">Xem tất cả thông báo</a>
-                                </div>
-                            </div>
-
-                        </li>
-                    </div>
-                    <a th:href="@{'/buyer/fa&recently'}"><img src="/images/img/icon/heart2.png" alt=""></a>
 
                     <a th:href="@{'/buyer/cart'}" style="position: relative; display: inline-block; ">
                         <img src="/images/img/icon/cart.png" alt="">
@@ -294,7 +250,7 @@
                             <input onclick="selectAllItems(this)" style="height: 20px; width: 20px; margin-right: 10px;"
                                    type="checkbox" name="" id="checkAll"
                                    th:text="'Chọn tất cả ( ' +${sumProductInCart} +' sản phẩm )'"></p>
-                        <a style="margin: 10px 0 0 50px; color: red;" href="">Xóa</a>
+
 
                     </div>
                     <div class="col-lg-2">
@@ -307,7 +263,7 @@
 
                 <div class="row" style="background-color: #f3f2ee; height: 50px;width: 1170px; ">
                     <div class="col-lg-8">
-                        <a style="margin:10px 0 0 50px;" href="">Xóa khỏi giỏ hàng</a>
+
                     </div>
                     <div class="col-lg-4">
                         <button style="width: 300px; height: 35px; border: 0.5px solid rgb(61, 61, 61);" type="submit"
@@ -365,7 +321,7 @@
                                                     th:text="${x.chiTietGiay.giay.tenGiay}"></h6>
                                             </a>
                                             <h5 class="cart__price"
-                                                th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
+                                                th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 0, 'POINT')}"></h5>
                                         </div>
 
                                     </td>
@@ -396,7 +352,7 @@
 
 
                                     <td style="width: 140px;" class="cart__price totalAmount"
-                                        th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+                                        th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 0, 'POINT')}"></td>
                                     <!--                                    <td class="cart__close"><a th:href="@{'/buyer/cart/delete/' + ${x.chiTietGiay.idCTG}}" id="deleteToCartButton" style="border-radius: 20% ; " ><i class="fa fa-close"></i></a></td>-->
                                     <!--                                    <td class="cart__close"> <a th:href="@{/buyer/cart/delete/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}" id="deleteToCartButton" style="border-radius: 20%;" onclick="return confirm('Bạn có chắc chắn muốn xoá sản phẩm này khỏi giỏ hàng không?')" class="confirmation-box"> <i class="fa fa-close"></i> </a> </td>-->
                                     <td class="cart__close">

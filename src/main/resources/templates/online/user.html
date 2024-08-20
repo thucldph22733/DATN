@@ -680,10 +680,10 @@
                                 <p style="font-size: 13pt; font-weight: 600;">Thành tiền</p>
                             </div>
                             <div class="col-sm-2" style="display: block;">
-                                <p th:text="'₫' + ${#numbers.formatDecimal(billDetailPay.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                <p th:text="'+ ₫' + ${#numbers.formatDecimal(billDetailPay.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                <p class="grandTotal" th:text="'₫' + ${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}">
-                                <p th:text="'₫' + ${#numbers.formatDecimal(billDetailPay.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 13pt; font-weight: 600;"></p>
+                                <p th:text="'₫' + ${#numbers.formatDecimal(billDetailPay.tongTienSanPham, 0, 'COMMA', 0, 'POINT')}"></p>
+                                <p th:text="'+ ₫' + ${#numbers.formatDecimal(billDetailPay.tienShip, 0, 'COMMA', 0, 'POINT')}"></p>
+                                <p class="grandTotal" th:text="'₫' + ${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 0, 'POINT')}">
+                                <p th:text="'₫' + ${#numbers.formatDecimal(billDetailPay.tongTien, 0, 'COMMA', 0, 'POINT')}" style="font-size: 13pt; font-weight: 600;"></p>
                             </div>
                         </div>
 
@@ -952,9 +952,9 @@
                             <p style="font-size: 10pt; margin-top: 100px;">Mọi chi tiết xin liên hệ tới tổng đài <b>0362965179</b> để được nhân viên CSKH tư vấn</p>   </div>
                         <div class="col-lg-4">
                             <div style="display: grid;">
-                                <button style="border: 0.3px solid black; height: 40px; background-color: #e4e1db;">Chờ</button>
-                                <button data-toggle="modal" data-target="#modalHuyHoaDon" style="border: 0.3px solid black; margin: 20px 0 20px 0; height: 40px;">Hủy Đơn Hàng</button>
-                                <button th:if="${billShipConfirm.hinhThucThanhToan==0}" data-toggle="modal" data-target="#modalThayDoiPhuongThucThanhToan" style="border: 0.3px solid black; height: 40px;">Thay Đổi Phương Thức Thanh Toán</button>
+                                <button style="border: 0.3px solid black; height: 100px; background-color: #e4e1db;">Hiện đơn đang trong quá trình xử lí đơn hàng nếu khách hàng có nhu cầu thay đổi sản phẩm hãy liên hệ nhân viên CSKH</button>
+<!--                                <button data-toggle="modal" data-target="#modalHuyHoaDon" style="border: 0.3px solid black; margin: 20px 0 20px 0; height: 40px;">Hủy Đơn Hàng</button>-->
+<!--                                <button th:if="${billShipConfirm.hinhThucThanhToan==0}" data-toggle="modal" data-target="#modalThayDoiPhuongThucThanhToan" style="border: 0.3px solid black; height: 40px;">Thay Đổi Phương Thức Thanh Toán</button>-->
                             </div>
                         </div>
                     </div>
@@ -1688,7 +1688,7 @@
                                                style=" color: black; text-align: center; padding-top: 12px; align-items:
                                                center; height: 50px; width: 130px; border: 0.5px solid black; margin-right: 20px;
                                                background-color: #f0f0f0;">Thanh toán</a>
-                                            <a th:if="${x.trangThai == 3 or x.trangThai == 4 }" th:href="@{'/buyer/purchaser/bill/buy/again/' + ${x.idHD}}"  style=" color: black; text-align: center; padding-top: 12px; align-items: center; height: 50px; width: 130px; border: 0.5px solid black; margin-right: 20px; background-color: #f0f0f0;">Mua lại</a>
+                                            <a th:if="${x.trangThai == 4 or x.trangThai == 5 }" th:href="@{'/buyer/purchaser/bill/buy/again/' + ${x.idHD}}"  style=" color: black; text-align: center; padding-top: 12px; align-items: center; height: 50px; width: 130px; border: 0.5px solid black; margin-right: 20px; background-color: #f0f0f0;">Mua lại</a>
 
                                             <a th:if="${x.trangThai == 1 or x.trangThai == 0}" th:href="@{'/buyer/purchase/bill/detail/cancel/' + ${x.idHD}}"
                                                style=" color: black; text-align: center; padding-top: 12px; align-items: center;

@@ -407,6 +407,11 @@ public class CheckOutController {
         Date ngayDuKien = calendar.getTime();
         model.addAttribute("ngayDuKien", ngayDuKien);
 
+        List<KhuyenMai> listKM = hoaDonRepository.listDieuKienKhuyenMai(total);
+        model.addAttribute("giaTienGiam", giaTienGiam);
+        model.addAttribute("dieuKienKhuyenMai", listKM);
+
+
         model.addAttribute("sumQuantity", sumQuantity);
         model.addAttribute("total", total);
         model.addAttribute("diaChiKHDefault", diaChiKHChange);
@@ -424,8 +429,8 @@ public class CheckOutController {
 
         showData(model);
 
-        return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
-//        return "online/checkout";
+//        return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
+        return "online/checkout";
     }
 
     @PostMapping("/buyer/checkout/placeoder")
@@ -890,7 +895,11 @@ public class CheckOutController {
                 KhuyenMai voucher = khuyenMaiRepository.findById(idKM).get();
                 giaTienGiam = voucher.getGiaTienGiam();
                 hoaDon.setKhuyenMai(voucher);
-
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            calendar.add(Calendar.DATE, shippingFeeService.tinhNgayNhanDuKien(diaChiKHDefault.getDiaChiChiTiet()));
+            Date ngayDuKien = calendar.getTime();
+            model.addAttribute("ngayDuKien", ngayDuKien);
 
 
             List<KhuyenMai> listKM = hoaDonRepository.listDieuKienKhuyenMai(hoaDon.getTongTienSanPham());
