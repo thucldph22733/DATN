@@ -50,11 +50,20 @@ public class KhachHangController {
     }
 
     @GetMapping("/khach-hang")
-    public String dsKhachHang(Model model, @ModelAttribute("message") String message) {
+    public String dsKhachHang(Model model, @ModelAttribute("message") String message,RedirectAttributes redirectAttributes) {
         List<KhachHang> khachHangs = khachHangService.getAllKhachHang();
         model.addAttribute("khachHang", khachHangs);
+        if (session.getAttribute("staffLogged") != null) {
+            // Thêm thông báo vào RedirectAttributes
+            redirectAttributes.addFlashAttribute("messageLogin", "Chỉ Admin mới có quyền truy cập");
+            // Chuyển hướng về trang login
+            return "redirect:/login";
+        }
+
+        // Kiểm tra nếu không có managerLogged
         if (session.getAttribute("managerLogged") == null) {
-            // Nếu managerLogged bằng null, quay về trang login
+            // Chuyển hướng về trang login nếu managerLogged là null
+            redirectAttributes.addFlashAttribute("messageLogin", "Vui lòng đăng nhập để tiếp tục");
             return "redirect:/login";
         }
         if (message == null || !"true".equals(message)) {

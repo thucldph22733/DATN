@@ -49,7 +49,7 @@
     </style>
 </head>
 <body class="mini-sidebar">
-<div th:replace="~{manage/activities :: main}"></div>
+<div th:replace="~{manage/a :: main}"></div>
 
 <!--Form chính-->
 <form th:object="${size}" method="post" th:formaction="@{'/manage/size/update/' + ${size.idSize}}"  onsubmit="return validateSizeForm()" name="sizeForm">
@@ -76,15 +76,7 @@
                                 <input type="text" th:field="*{soSize}">
                             </div>
                         </div>
-<!--                        <div class="col-lg-6 col-sm-6 col-12">-->
-<!--                            <div class="form-group" >-->
-<!--                                <label>Thời Gian Thêm</label>-->
-<!--                                <input disabled="true" type="text" id="tgThem"-->
-<!--                                       name="tgThem"-->
-<!--                                       th:value="${currentTime}"-->
-<!--                                       readonly="readonly" th:field="*{tgThem}"/>-->
-<!--                            </div>-->
-<!--                        </div>-->
+
                         <div class="col-lg-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label>Trạng Thái</label>

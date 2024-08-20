@@ -69,7 +69,7 @@ public class DiaChiKHController {
 
 
     @GetMapping("/dia-chi")
-    public String dsDiaChiKH(Model model, @ModelAttribute("message") String message) {
+    public String dsDiaChiKH(Model model, @ModelAttribute("message") String message,RedirectAttributes redirectAttributes) {
         List<DiaChiKH> diaChiKHS = diaChiRepsitory.getAllDiaChi();
         List<KhachHang> khachHangs = khachHangService.getAllKhachHang();
         for (DiaChiKH diaChiItem : diaChiKHS) {
@@ -84,11 +84,18 @@ public class DiaChiKHController {
         if (message == null || !"true".equals(message)) {
             model.addAttribute("message", false);
         }
-        if (session.getAttribute("managerLogged") == null) {
-            // Nếu managerLogged bằng null, quay về trang login
-
+        if (session.getAttribute("staffLogged") != null) {
+            // Thêm thông báo vào RedirectAttributes
+            redirectAttributes.addFlashAttribute("messageLogin", "Chỉ Admin mới có quyền truy cập");
+            // Chuyển hướng về trang login
             return "redirect:/login";
+        }
 
+        // Kiểm tra nếu không có managerLogged
+        if (session.getAttribute("managerLogged") == null) {
+            // Chuyển hướng về trang login nếu managerLogged là null
+            redirectAttributes.addFlashAttribute("messageLogin", "Vui lòng đăng nhập để tiếp tục");
+            return "redirect:/login";
         }
         return "manage/dia-chi";
     }

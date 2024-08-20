@@ -190,291 +190,375 @@
     }
 
 </style>
-<body>
-<div class="main-wrapper">
-    <div class="header">
-        <div class="header-left active">
-            <a href="/manage" class="logo">
-                <img src="/images/img/logo.png" alt="">
-            </a>
-            <a href="/manage" class="logo-small">
-                <img src="/images/img/logo-small.png" alt="">
-            </a>
-            <a id="toggle_btn" href="javascript:void(0);">
-            </a>
-        </div>
 
-        <a id="mobile_btn" class="mobile_btn" href="#sidebar">
+
+<body class="mini-sidebar">
+
+<div th:fragment="main">
+
+    <div class="main-wrapper">
+        <div class="header">
+            <div class="header-left active">
+                <a href="/manage" class="logo">
+                    <img src="/images/img/logo.png" alt="">
+                </a>
+                <a href="/manage" class="logo-small">
+                    <img src="/images/img/logo-small.png" alt="">
+                </a>
+                <a id="toggle_btn" href="javascript:void(0);">
+                </a>
+            </div>
+
+            <a id="mobile_btn" class="mobile_btn" href="#sidebar">
             <span class="bar-icon">
             <span></span>
             <span></span>
             <span></span>
             </span>
-        </a>
+            </a>
 
-        <ul class="nav user-menu">
+            <ul class="nav user-menu">
 
-            <li class="nav-item dropdown has-arrow flag-nav">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button">
-                    <i class="flag flag-vn"></i>
-                </a>
-            </li>
+                <li class="nav-item dropdown has-arrow flag-nav">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button">
+                        <i class="flag flag-vn"></i>
+                    </a>
+                </li>
 
 
-            <li class="nav-item dropdown has-arrow main-drop">
-                <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
-                        <span class="user-img"><img
-                                th:src="@{'/images/imgsNhanVien/'+${session.staffLogged.AnhNV}}"
-                                alt="">
-                        <span class="status online"></span></span>
-                </a>
-                <div class="dropdown-menu menu-drop-user">
-                    <div class="profilename">
-                        <div class="profileset">
-                                <span class="user-img"><img
-                                        th:src="@{'/images/imgsNhanVien/'+${session.staffLogged.AnhNV}}"
-                                        alt="">
-                                    <span class="status online"></span></span>
-                            <div class="profilesets">
-                                <h6 th:text="${session.staffLogged.hoTenNV}"></h6>
-                                <h5 th:text="${session.staffLogged.chucVu.tenCV}"></h5>
+                <li class="nav-item dropdown has-arrow main-drop">
+                    <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
+                        <span class="user-img">
+    <img th:src="@{'/images/imgsNhanVien/' + (${session.managerLogged != null} ? ${session.managerLogged.AnhNV} : ${session.staffLogged.AnhNV})}"
+         alt="">
+    <span class="status online"></span>
+</span>
+
+                    </a>
+                    <div class="dropdown-menu menu-drop-user">
+                        <div class="profilename">
+                            <div class="profileset">
+    <span class="user-img">
+        <img th:src="@{'/images/imgsNhanVien/' + (${session.managerLogged != null} ? ${session.managerLogged.AnhNV} : ${session.staffLogged.AnhNV})}"
+             alt="">
+        <span class="status online"></span>
+    </span>
+                                <div class="profilesets">
+                                    <h6 th:text="${session.managerLogged != null} ? ${session.managerLogged.hoTenNV} : ${session.staffLogged.hoTenNV}"></h6>
+                                    <h5 th:text="${session.managerLogged != null} ? ${session.managerLogged.chucVu.tenCV} : ${session.staffLogged.chucVu.tenCV}"></h5>
+                                </div>
                             </div>
-                        </div>
-                        <hr class="m-0">
-                        <a class="dropdown-item me-2 delete-button2" th:data-ql-url="@{'/logout'}">Quản lý Cửa
-                            Hàng</a>
-                        <a class="dropdown-item" href="profile.html">
-                            <i class="me-2" data-feather="user"></i> My Profile
-                        </a>
-                        <a class="dropdown-item" href="/manage/change-password"><i class="me-2"
-                                                                                   data-feather="settings"></i>Change
-                            passwoord</a>
-                        <hr class="m-0">
-                        <a class="dropdown-item logout pb-0" href="/logout"><img src="/images/img/icons/log-out.svg"
-                                                                                 class="me-2" alt="img">Logout</a>
-                    </div>
-                </div>
-            </li>
-        </ul>
 
-        <div class="dropdown mobile-user-menu">
-            <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-               aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-            <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" th:data-ql-url="@{'/logout'}">Quản lý Cửa Hàng</a>
-                <a class="dropdown-item" href="profile.html">Thông tin cá nhân</a>
-                <a class="dropdown-item" href="/manage/change-password">Cài đặt</a>
-                <a class="dropdown-item" href="signin.html">Đăng xuất</a>
+                            <hr class="m-0">
+                            <a class="dropdown-item me-2 delete-button2" th:data-ql-url="@{'/logout'}">Quản lý Cửa
+                                Hàng</a>
+                            <a class="dropdown-item" href="profile.html">
+                                <i class="me-2" data-feather="user"></i> My Profile
+                            </a>
+                            <a class="dropdown-item" href="/manage/change-password"><i class="me-2"
+                                                                                       data-feather="settings"></i>Change
+                                passwoord</a>
+                            <hr class="m-0">
+                            <a class="dropdown-item logout pb-0" href="/logout"><img src="/images/img/icons/log-out.svg"
+                                                                                     class="me-2" alt="img">Logout</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="dropdown mobile-user-menu">
+                <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                   aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" th:data-ql-url="@{'/logout'}">Quản lý Cửa Hàng</a>
+                    <a class="dropdown-item" href="profile.html">Thông tin cá nhân</a>
+                    <a class="dropdown-item" href="/manage/change-password">Cài đặt</a>
+                    <a class="dropdown-item" href="signin.html">Đăng xuất</a>
+                </div>
             </div>
         </div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li>
+                            <a href="/manage/" data-link="link1" onclick="setActiveLink()">
+                                <img src="/images/iconlogo.png" alt="img">
+                                <span>Trang chủ nè</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/ban-hang/hien-thi">
+                                <img src="/images/img/icons/quotation1.svg" alt="img">
+                                <span> Bán hàng</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/thong-ke/thong-ke">
+                                <img src="/images/img/icons/dashboard.svg" alt="img">
+                                <span> Thống Kê</span>
+                            </a>
+                        </li>
+                        <li class="submenu">
+                            <a href="javascript:void(0);"><img src="/images/img/icons/product.svg" alt="img">
+                                <span> Quản lý Giày</span>
+                                <span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="/manage/chat-lieu" data-link="link3">Chất Liệu</a></li>
+                                <li><a href="/manage/giay" data-link="link4">Giày</a></li>
+                                <li><a href="/manage/hang">Hãng</a></li>
+                                <li><a href="/manage/hinh-anh">Hình Ảnh</a></li>
+                                <li><a href="/manage/mau-sac">Màu Sắc</a></li>
+                                <li><a href="/manage/size">Size</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="javascript:void(0);"><img src="/images/img/icons/expense1.svg" alt="img"><span> Quản Lý Hóa Đơn</span>
+                                <span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="/manage/bill/offline">Hóa đơn tại quầy</a></li>
+                                <li><a href="/manage/bill/online">Quản lý hóa đơn online</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="submenu">
+                            <a href="javascript:void(0);"><img src="/images/img/icons/users1.svg" alt="img"><span> Quản Lý Khách Hàng</span>
+                                <span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="/manage/khach-hang">Khách Hàng</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="submenu">
+                            <a href="javascript:void(0);"><img src="/images/img/icons/users1.svg" alt="img"><span> Quản Lý Nhân Viên</span>
+                                <span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="/manage/chuc-vu">Chức Vụ</a></li>
+                                <li><a href="/manage/nhan-vien">Nhân Viên</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/manage/khuyen-mai" data-link="link1" onclick="setActiveLink()">
+                                <img src="/images/iconKhuyenMai.png" alt="img"/>
+                                <span>Khuyến Mãi</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--CODE TỪ DƯỚI NÀY-->
     </div>
-    <div class="page-wrapper ms-0">
-        <div class="content">
-            <section class="comp-section">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card bg-white">
-                            <div class="card-body">
-                                <ul class="nav nav-tabs nav-tabs-solid nav-tabs-rounded nav-justified">
-                                    <li class="nav-item">
-                                        <a class="nav-link active"
-                                           href="#solid-rounded-justified-tab1"
-                                           data-bs-toggle="tab">Bán hàng tại quầy</a>
-                                    </li>
+</div>
 
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane show active" id="solid-rounded-justified-tab1">
-                                        <div class="row">
-                                            <div class="col-lg-6 col-sm-12 tabs_wrapper">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="table-top">
 
-                                                            <form method="get" action="/ban-hang/search">
+<div class="page-wrapper">
+    <div class="content">
+        <section class="comp-section">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card bg-white">
+                        <div class="card-body">
+                            <ul class="nav nav-tabs nav-tabs-solid nav-tabs-rounded nav-justified">
+                                <li class="nav-item">
+                                    <a class="nav-link active"
+                                       href="#solid-rounded-justified-tab1"
+                                       data-bs-toggle="tab">Bán hàng tại quầy</a>
+                                </li>
 
-                                                                <div class="search-set">
-                                                                    <div class="search-path">
-                                                                        <button class="btn btn-searchset" type="submit">
-                                                                            <img
-                                                                                    src="/images/img/icons/search-white.svg"
-                                                                                    alt="img"></button>
-                                                                    </div>
-                                                                    <div class="flex-container">
-                                                                        <div>
-                                                                            <input type="search"
-                                                                                   class="form-control form-control-sm"
-                                                                                   name="keyword"
-                                                                                   placeholder="Tìm kiếm...">
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane show active" id="solid-rounded-justified-tab1">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-12 tabs_wrapper">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="table-top">
 
-                                                                        </div>
+                                                        <form method="get" action="/ban-hang/search">
+
+                                                            <div class="search-set">
+                                                                <div class="search-path">
+                                                                    <button class="btn btn-searchset" type="submit">
+                                                                        <img
+                                                                                src="/images/img/icons/search-white.svg"
+                                                                                alt="img"></button>
+                                                                </div>
+                                                                <div class="flex-container">
+                                                                    <div>
+                                                                        <input type="search"
+                                                                               class="form-control form-control-sm"
+                                                                               name="keyword"
+                                                                               placeholder="Tìm kiếm...">
+
                                                                     </div>
                                                                 </div>
-                                                            </form>
+                                                            </div>
+                                                        </form>
 
-                                                            <div class="wordset text-center">
-                                                                <ul>
-                                                                    <li>
-                                                                        <video
-                                                                                style="border: 1px solid"
-                                                                                id="video"
-                                                                                autoplay="true"
-                                                                                width="200px"
-                                                                                height="120px"
-                                                                        ></video>
-                                                                    </li>
-                                                                </ul>
-                                                                <div>
-                                                                    <button id="scanButton"
-                                                                            class="btn btn-outline-dark">Quét QR
-                                                                    </button>
-                                                                    <button id="stopButton" class="btn btn-danger mt-2">
-                                                                        Tắt Video
-                                                                    </button>
-                                                                </div>
+                                                        <div class="wordset text-center">
+                                                            <ul>
+                                                                <li>
+                                                                    <video
+                                                                            style="border: 1px solid"
+                                                                            id="video"
+                                                                            autoplay="true"
+                                                                            width="200px"
+                                                                            height="120px"
+                                                                    ></video>
+                                                                </li>
+                                                            </ul>
+                                                            <div>
+                                                                <button id="scanButton"
+                                                                        class="btn btn-outline-dark">Quét QR
+                                                                </button>
+                                                                <button id="stopButton" class="btn btn-danger mt-2">
+                                                                    Tắt Video
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-
-                                                <div class="tabs_container">
-                                                    <div class="row">
-                                                        <div th:if="${nullHoaDon}"
-                                                             class="alert alert-success text-center">
-                                                            <h3 th:text="${nullHoaDon}"></h3>
-                                                        </div>
-                                                    </div>
-                                                    <table id="data-table" class="table datanew">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>Hình Ảnh</th>
-                                                            <th>Số Lượng</th>
-                                                            <th>Tên Giày</th>
-                                                            <th>Giá Bán</th>
-                                                            <th>Màu Sắc</th>
-                                                            <th>Hành Động</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <th:block th:each="product : ${listSanPham}">
-                                                            <tr>
-                                                                <td>
-                                                                    <img style="height: 90px;width: 90px"
-                                                                         th:src="@{'/images/imgsProducts/'+ ${product.hinhAnh}}"
-                                                                         alt="img">
-                                                                </td>
-                                                                <td>
-                                                                    <h6>[[${product.soLuong}]]</h6>
-                                                                </td>
-                                                                <td>
-                                                                    <h3 style="font-size: 12pt">
-                                                                        [[${product.tenGiay}]]</h3>
-                                                                </td>
-                                                                <td>
-                                                                    <h3 style="font-size: 12pt"
-                                                                        th:text=" ${#numbers.formatDecimal(product.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h3>
-                                                                </td>
-                                                                <td>
-                                                                    <h4 style="font-size: 12pt"
-                                                                        th:text="${product.mauSac}"></h4>
-                                                                </td>
-                                                                <td>
-                                                                    <a style="  font-size: 11pt"
-                                                                       th:href="@{'/ban-hang/chon-size/' + ${product.idGiay}+'/'+${product.mauSac} }"
-                                                                       class="btn btn-outline-warning">Chọn</a>
-                                                                </td>
-                                                            </tr>
-                                                        </th:block>
-                                                        </tbody>
-                                                    </table>
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-6 col-sm-12 ">
-                                                <div class="order-list">
-                                                    <div class="orderid">
-                                                        <nav class="navbar navbar-expand-lg">
-                                                            <a class="btn" th:href="@{/ban-hang/add-cart}">
-                                                                <i class="bi bi-file-earmark-plus icon-large"></i>
-                                                            </a>
+                                            <div class="tabs_container">
+                                                <div class="row">
+                                                    <div th:if="${nullHoaDon}"
+                                                         class="alert alert-success text-center">
+                                                        <h3 th:text="${nullHoaDon}"></h3>
+                                                    </div>
+                                                </div>
+                                                <table id="data-table" class="table datanew">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Hình Ảnh</th>
+                                                        <th>Số Lượng</th>
+                                                        <th>Tên Giày</th>
+                                                        <th>Giá Bán</th>
+                                                        <th>Màu Sắc</th>
+                                                        <th>Hành Động</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <th:block th:each="product : ${listSanPham}">
+                                                        <tr>
+                                                            <td>
+                                                                <img style="height: 90px;width: 90px"
+                                                                     th:src="@{'/images/imgsProducts/'+ ${product.hinhAnh}}"
+                                                                     alt="img">
+                                                            </td>
+                                                            <td>
+                                                                <h6>[[${product.soLuong}]]</h6>
+                                                            </td>
+                                                            <td>
+                                                                <h3 style="font-size: 12pt">
+                                                                    [[${product.tenGiay}]]</h3>
+                                                            </td>
+                                                            <td>
+                                                                <h3 style="font-size: 12pt"
+                                                                    th:text=" ${#numbers.formatDecimal(product.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></h3>
+                                                            </td>
+                                                            <td>
+                                                                <h4 style="font-size: 12pt"
+                                                                    th:text="${product.mauSac}"></h4>
+                                                            </td>
+                                                            <td>
+                                                                <a style="  font-size: 11pt"
+                                                                   th:href="@{'/ban-hang/chon-size/' + ${product.idGiay}+'/'+${product.mauSac} }"
+                                                                   class="btn btn-outline-warning">Chọn</a>
+                                                            </td>
+                                                        </tr>
+                                                    </th:block>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 ">
+                                            <div class="order-list">
+                                                <div class="orderid">
+                                                    <nav class="navbar navbar-expand-lg">
+                                                        <a class="btn" th:href="@{/ban-hang/add-cart}">
+                                                            <i class="bi bi-file-earmark-plus icon-large"></i>
+                                                        </a>
 
 
-                                                            <div class="collapse navbar-collapse shop__sidebar__size">
-                                                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                                                    <div th:each="items : ${listHoaDon}"
-                                                                         class="position-relative mb-3">
+                                                        <div class="collapse navbar-collapse shop__sidebar__size">
+                                                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                                                <div th:each="items : ${listHoaDon}"
+                                                                     class="position-relative mb-3">
 
-                                                                        <button data-bs-toggle="modal"
-                                                                                data-bs-target="#exampleModal2"
-                                                                                class="btn btn-danger btn-sm position-absolute top-minus-10 end-0"
-                                                                                aria-label="Delete">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                 width="12" height="12"
-                                                                                 fill="currentColor" class="bi bi-x"
-                                                                                 viewBox="0 0 16 16">
-                                                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                                                                            </svg>
-                                                                        </button>
+                                                                    <button data-bs-toggle="modal"
+                                                                            data-bs-target="#exampleModal2"
+                                                                            class="btn btn-danger btn-sm position-absolute top-minus-10 end-0"
+                                                                            aria-label="Delete">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             width="12" height="12"
+                                                                             fill="currentColor" class="bi bi-x"
+                                                                             viewBox="0 0 16 16">
+                                                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                                                        </svg>
+                                                                    </button>
 
-                                                                        <div class="modal fade"
-                                                                             id="exampleModal2"
-                                                                             tabindex="-1"
-                                                                             aria-labelledby="exampleModalLabel7"
-                                                                             aria-hidden="true">
-                                                                            <div class="modal-dialog modal-md text-center"
-                                                                                 style="width: 550px;">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h1 class="modal-title fs-5"
-                                                                                            id="exampleModalLabel7">
-                                                                                            Xác
-                                                                                            nhận</h1>
-                                                                                        <button type="button"
-                                                                                                class="btn-close"
-                                                                                                data-bs-dismiss="modal"
-                                                                                                aria-label="Close"></button>
+                                                                    <div class="modal fade"
+                                                                         id="exampleModal2"
+                                                                         tabindex="-1"
+                                                                         aria-labelledby="exampleModalLabel7"
+                                                                         aria-hidden="true">
+                                                                        <div class="modal-dialog modal-md text-center"
+                                                                             style="width: 550px;">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h1 class="modal-title fs-5"
+                                                                                        id="exampleModalLabel7">
+                                                                                        Xác
+                                                                                        nhận</h1>
+                                                                                    <button type="button"
+                                                                                            class="btn-close"
+                                                                                            data-bs-dismiss="modal"
+                                                                                            aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="text-center"
+                                                                                         type="">Bạn
+                                                                                        có chắc
+                                                                                        muốn Xóa
                                                                                     </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="text-center"
-                                                                                             type="">Bạn
-                                                                                            có chắc
-                                                                                            muốn Xóa
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="modal-footer text-center">
-                                                                                        <a type="button"
-                                                                                           class="btn btn-warning"
-                                                                                           th:href="@{'/ban-hang/delete-hoa-don-cho/' + ${items.idHD}}"
-                                                                                           style="background-color: #37517E;height: 50px;cursor: pointer;color: white;padding: 10px 20px;border-radius: 10px;margin: auto; display: inline-block;"
-                                                                                        >Xóa</a>
-                                                                                        <button type="button"
-                                                                                                style="background-color: #bb2d3b;height: 50px;color: white;;cursor: pointer;border: none;border-radius: 10px;margin: auto; display: inline-block"
-                                                                                                class="btn btn-warning"
-                                                                                                data-bs-dismiss="modal">
-                                                                                            Hủy
-                                                                                        </button>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer text-center">
+                                                                                    <a type="button"
+                                                                                       class="btn btn-warning"
+                                                                                       th:href="@{'/ban-hang/delete-hoa-don-cho/' + ${items.idHD}}"
+                                                                                       style="background-color: #37517E;height: 50px;cursor: pointer;color: white;padding: 10px 20px;border-radius: 10px;margin: auto; display: inline-block;"
+                                                                                    >Xóa</a>
+                                                                                    <button type="button"
+                                                                                            style="background-color: #bb2d3b;height: 50px;color: white;;cursor: pointer;border: none;border-radius: 10px;margin: auto; display: inline-block"
+                                                                                            class="btn btn-warning"
+                                                                                            data-bs-dismiss="modal">
+                                                                                        Hủy
+                                                                                    </button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <li class="nav-item">
-                                                                            <label class="text-center ms-2">
-                                                                                <a class="btn btn-outline-dark"
-                                                                                   th:href="@{'/ban-hang/cart/hoadon/'+ ${items.getIdHD()}}"
-                                                                                   th:text="${items.maHD}">
-                                                                                </a>
-                                                                            </label>
-                                                                        </li>
                                                                     </div>
-                                                                </ul>
+                                                                    <li class="nav-item">
+                                                                        <label class="text-center ms-2">
+                                                                            <a class="btn btn-outline-dark"
+                                                                               th:href="@{'/ban-hang/cart/hoadon/'+ ${items.getIdHD()}}"
+                                                                               th:text="${items.maHD}">
+                                                                            </a>
+                                                                        </label>
+                                                                    </li>
+                                                                </div>
+                                                            </ul>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div th:if="${message}"
+                                                                 class="alert alert-success text-center">
+                                                                <h3 th:text="${message}"></h3>
                                                             </div>
 
-                                                            <div class="row">
-                                                                <div th:if="${message}"
-                                                                     class="alert alert-success text-center">
-                                                                    <h3 th:text="${message}"></h3>
-                                                                </div>
-                                                            </div>
                                                         </nav>
                                                     </div>
                                                 </div>
@@ -489,347 +573,364 @@
                                                             </button>
                                                             <h4 th:text="'Số sản phẩm: ' + ${tongSanPham}"></h4>
 
+
                                                         </div>
-                                                        <div class="product-table">
+                                                    </nav>
+                                                </div>
+                                            </div>
+                                            <div class="card card-order">
+
+                                                <div class="card-body pt-0 mt-3">
+                                                    <div class="totalitem">
+                                                        <label class="fw-semibold fs-3">Giỏ hàng</label>
+                                                        <button onclick="location.reload();"
+                                                                class="btn btn-primary">
+                                                            Reload Hóa Đơn
+                                                        </button>
+                                                        <h4 th:text="'Số sản phẩm: ' + ${tongSanPham}"></h4>
+                                                        <a href="javascript:void(0);">Clear all</a>
+                                                    </div>
+                                                    <div class="product-table">
+                                                        <ul class="product-lists">
+                                                            <li>
+                                                                <div></div>
+                                                            </li>
+                                                            <li>
+                                                                <div>Sản phẩm</div>
+                                                            </li>
+                                                            <li>
+                                                                <div>Giá</div>
+                                                            </li>
+                                                            <li>
+                                                                <div>Màu sắc</div>
+                                                            </li>
+                                                            <li>
+                                                                <div>Thành tiền</div>
+                                                            </li>
+                                                            <li>
+                                                                <div>Action</div>
+                                                            </li>
+                                                        </ul>
+                                                        <ul>
+                                                            <li>
+                                                                <div class="row">
+                                                                    <div th:if="${messageGioHang}"
+                                                                         class="alert alert-success text-center">
+                                                                        <h3 th:text="${messageGioHang}"></h3>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                        <th:block th:each="gioHang : ${gioHang}">
                                                             <ul class="product-lists">
                                                                 <li>
-                                                                    <div></div>
-                                                                </li>
-                                                                <li>
-                                                                    <div>Sản phẩm</div>
-                                                                </li>
-                                                                <li>
-                                                                    <div>Giá</div>
-                                                                </li>
-                                                                <li>
-                                                                    <div>Màu sắc</div>
-                                                                </li>
-                                                                <li>
-                                                                    <div>Thành tiền</div>
-                                                                </li>
-                                                                <li>
-                                                                    <div>Action</div>
-                                                                </li>
-                                                            </ul>
-                                                            <ul>
-                                                                <li>
-                                                                    <div class="row">
-                                                                        <div th:if="${messageGioHang}"
-                                                                             class="alert alert-success text-center">
-                                                                            <h3 th:text="${messageGioHang}"></h3>
+                                                                    <div class="productimg">
+                                                                        <div class="productimgs">
+                                                                            <img th:src="@{'/images/imgsProducts/' + ${gioHang.chiTietGiay.hinhAnh.url1}}"
+                                                                                 alt="img">
+                                                                        </div>
+                                                                        <div class="productcontet">
+                                                                            <h4 th:text="${gioHang.chiTietGiay.giay.tenGiay}">
+                                                                                <a href="javascript:void(0);"
+                                                                                   class="ms-2"
+                                                                                   data-bs-toggle="modal"
+                                                                                   data-bs-target="#edit">
+                                                                                    <img src="/images/img/icons/edit-5.svg"
+                                                                                         alt="img">
+                                                                                </a>
+                                                                            </h4>
+                                                                            <div class="row">
+                                                                                <div class="productlinkset col-6">
+                                                                                    <h5 th:text="${gioHang.chiTietGiay.size.soSize}"></h5>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="increment-decrement">
+                                                                                <div class="input-groups">
+                                                                                    <input style="margin-top: 3px; border: none; font-weight: 700; font-size: 18pt; background-color: white;"
+                                                                                           type="button" value="-"
+                                                                                           class="button-minus dec button"
+                                                                                           onclick="decrementQuantity(this)">
+
+                                                                                    <input class="quantityInput"
+                                                                                           onfocus="clearQuantity(this)"
+                                                                                           onblur="restoreQuantity(this)"
+                                                                                           onchange="markQuantityChanged(this)"
+                                                                                           th:value="${gioHang.soLuong}"
+                                                                                           style="width: 30px; text-align: center; border: none;"
+                                                                                           type="text"
+                                                                                           th:data-id="${gioHang.chiTietGiay.idCTG}"
+                                                                                           min="1"
+                                                                                           oninput="validateNumberInput(this)">
+
+
+                                                                                    <input style="border: none; font-weight: 700; font-size: 14pt; background-color: white;"
+                                                                                           type="button" value="+"
+                                                                                           class="button-plus inc button"
+                                                                                           onclick="incrementQuantity(this)">
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </li>
+                                                                <li>
+                                                                    <div class="cart__price"
+                                                                         th:text="${#numbers.formatDecimal(gioHang.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
+                                                                </li>
+                                                                <li>
+                                                                    <h5 style="font-size:12px"
+                                                                        th:text="${gioHang.chiTietGiay.mauSac.tenMau}"></h5>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="cart__price totalAmount"
+                                                                         id="thanhTien"
+                                                                         th:text="${#numbers.formatDecimal(gioHang.chiTietGiay.giaBan * gioHang.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="btn"
+                                                                       th:href="@{'/ban-hang/xoa-gio-hang/' + ${gioHang.chiTietGiay.idCTG}}"
+                                                                       onclick="return confirm('Bạn có muốn xóa sản phẩm không?');">
+                                                                        <img src="/images/img/icons/delete-2.svg"
+                                                                             alt="img">
+                                                                    </a>
+                                                                </li>
                                                             </ul>
-                                                            <th:block th:each="gioHang : ${gioHang}">
-                                                                <ul class="product-lists">
-                                                                    <li>
-                                                                        <div class="productimg">
-                                                                            <div class="productimgs">
-                                                                                <img th:src="@{'/images/imgsProducts/' + ${gioHang.chiTietGiay.hinhAnh.url1}}"
-                                                                                     alt="img">
-                                                                            </div>
-                                                                            <div class="productcontet">
-                                                                                <h4 th:text="${gioHang.chiTietGiay.giay.tenGiay}">
-                                                                                    <a href="javascript:void(0);"
-                                                                                       class="ms-2"
-                                                                                       data-bs-toggle="modal"
-                                                                                       data-bs-target="#edit">
-                                                                                        <img src="/images/img/icons/edit-5.svg"
-                                                                                             alt="img">
-                                                                                    </a>
-                                                                                </h4>
-                                                                                <div class="row">
-                                                                                    <div class="productlinkset col-6">
-                                                                                        <h5 th:text="${gioHang.chiTietGiay.size.soSize}"></h5>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="increment-decrement">
-                                                                                    <div class="input-groups">
-                                                                                        <input style="margin-top: 3px; border: none; font-weight: 700; font-size: 18pt; background-color: white;"
-                                                                                               type="button" value="-"
-                                                                                               class="button-minus dec button"
-                                                                                               onclick="decrementQuantity(this)">
-
-                                                                                        <input class="quantityInput"
-                                                                                               onfocus="clearQuantity(this)"
-                                                                                               onblur="restoreQuantity(this)"
-                                                                                               onchange="markQuantityChanged(this)"
-                                                                                               th:value="${gioHang.soLuong}"
-                                                                                               style="width: 30px; text-align: center; border: none;"
-                                                                                               type="text"
-                                                                                               th:data-id="${gioHang.chiTietGiay.idCTG}"
-                                                                                               min="1"
-                                                                                               oninput="validateNumberInput(this)">
-
-
-                                                                                        <input style="border: none; font-weight: 700; font-size: 14pt; background-color: white;"
-                                                                                               type="button" value="+"
-                                                                                               class="button-plus inc button"
-                                                                                               onclick="incrementQuantity(this)">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </li>
-                                                                    <li>
-                                                                        <div class="cart__price"
-                                                                             th:text="${#numbers.formatDecimal(gioHang.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
-                                                                    </li>
-                                                                    <li>
-                                                                        <h5 style="font-size:12px"
-                                                                            th:text="${gioHang.chiTietGiay.mauSac.tenMau}"></h5>
-                                                                    </li>
-                                                                    <li>
-                                                                        <div class="cart__price totalAmount"
-                                                                             id="thanhTien"
-                                                                             th:text="${#numbers.formatDecimal(gioHang.chiTietGiay.giaBan * gioHang.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a class="btn"
-                                                                           th:href="@{'/ban-hang/xoa-gio-hang/' + ${gioHang.chiTietGiay.idCTG}}"
-                                                                           onclick="return confirm('Bạn có muốn xóa sản phẩm không?');">
-                                                                            <img src="/images/img/icons/delete-2.svg"
-                                                                                 alt="img">
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </th:block>
+                                                        </th:block>
+                                                    </div>
+                                                    <div class="setvalue">
+                                                        <ul>
+                                                            <li>
+                                                                <h5>Tổng tiền</h5>
+                                                                <div class="grandTotal" id="tongTienSanPham"
+                                                                     th:text="${#numbers.formatDecimal(tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="split-card">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div>
+                                                                <label class="fw-semibold fs-3 m-3">Thông tin Khách
+                                                                    hàng</label>
+                                                                <a class="btn btn-primary m-3" style="float: right"
+                                                                   th:href="@{'/ban-hang/list-khach-hang'}">
+                                                                    Chọn Khách hàng
+                                                                </a>
+                                                            </div>
+                                                            <div th:if="${khachHang==null}">
+                                                                <label>Tên khách hàng : Khách lẻ</label>
+                                                            </div>
+                                                            <div th:if="${khachHang != null}" class="mt-5">
+                                                                <div class="setvalue">
+                                                                    <ul>
+                                                                        <li>
+                                                                            <h5>Họ tên :</h5>
+                                                                            <h5 th:text="${khachHang.hoTenKH}"></h5>
+                                                                        </li>
+                                                                        <li>
+                                                                            <h5>Số điện thoại:</h5>
+                                                                            <h5 th:text="${khachHang.sdtKH}"></h5>
+                                                                        </li>
+                                                                        <li>
+                                                                            <h5>Email : </h5>
+                                                                            <h5 th:text="${khachHang.emailKH}"></h5>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
                                                         </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="split-card">
+                                                    <div class="card-body pt-0 pb-2">
+                                                        <div><label class="fw-semibold fs-3 m-3">Thanh toán</label>
+                                                        </div>
+                                                        <br>
                                                         <div class="setvalue">
                                                             <ul>
-                                                                <li>
-                                                                    <h5>Tổng tiền</h5>
-                                                                    <div class="grandTotal" id="tongTienSanPham"
-                                                                         th:text="${#numbers.formatDecimal(tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
+
+                                                                <li style="margin-bottom: 20px;">
+                                                                    <div>Tạm tính</div>
+                                                                    <div class="grandTotal" id="tienTamTinh"
+                                                                         th:text=" ${#numbers.formatDecimal(tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
                                                                 </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="split-card">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div>
-                                                                    <label class="fw-semibold fs-3 m-3">Thông tin Khách hàng</label>
-                                                                    <a class="btn btn-primary m-3" style="float: right"
-                                                                       th:href="@{'/ban-hang/list-khach-hang'}">
-                                                                        Chọn Khách hàng
-                                                                    </a>
-                                                                </div>
-                                                                <div th:if="${khachHang==null}">
-                                                                    <label>Tên khách hàng : Khách lẻ</label>
-                                                                </div>
-                                                                <div th:if="${khachHang != null}" class="mt-5">
-                                                                    <div class="setvalue">
-                                                                        <ul>
-                                                                            <li>
-                                                                                <h5>Họ tên :</h5>
-                                                                                <h5 th:text="${khachHang.hoTenKH}"></h5>
-                                                                            </li>
-                                                                            <li>
-                                                                                <h5>Số điện thoại:</h5>
-                                                                                <h5 th:text="${khachHang.sdtKH}"></h5>
-                                                                            </li>
-                                                                            <li>
-                                                                                <h5>Email : </h5>
-                                                                                <h5 th:text="${khachHang.emailKH}"></h5>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="split-card">
-                                                        <div class="card-body pt-0 pb-2">
-                                                            <div><label class="fw-semibold fs-3 m-3">Thanh toán</label>
-                                                            </div>
-                                                            <br>
-                                                            <div class="setvalue">
-                                                                <ul>
+                                                                <li style="margin-bottom: 20px;">
+                                                                    <h5>
 
-                                                                    <li style="margin-bottom: 20px;">
-                                                                        <div>Tạm tính</div>
-                                                                        <div class="grandTotal" id="tienTamTinh"
-                                                                             th:text=" ${#numbers.formatDecimal(tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
-                                                                    </li>
+                                                                        <a type="button" class="btn btn-primary"
+                                                                           data-bs-toggle="modal"
+                                                                           data-bs-target="#staticBackdrop">Chọn
+                                                                            khuyến mãi</a>
+                                                                    </h5>
 
-                                                                    <li style="margin-bottom: 20px;">
-                                                                        <h5>
+                                                                <li style="margin-bottom: 20px;">
+                                                                    <h5>Số tiền giảm:</h5>
+                                                                    <h5 id="apDungMaGiamGia"
+                                                                        th:text="${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 0, 'POINT')} + '₫'"></h5>
+                                                                    <input type="text" th:value="${giaTienGiam}"
+                                                                           id="tienGiam" style="display: none">
+                                                                </li>
 
-                                                                            <a type="button" class="btn btn-primary"
-                                                                               data-bs-toggle="modal"
-                                                                               data-bs-target="#staticBackdrop">Chọn
-                                                                                khuyến mãi</a>
-                                                                        </h5>
+                                                                <form method="get">
+                                                                    <div class="modal fade" id="staticBackdrop"
 
-                                                                    <li style="margin-bottom: 20px;">
-                                                                        <h5>Số tiền giảm:</h5>
-                                                                        <h5 id="apDungMaGiamGia"
-                                                                            th:text="${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 0, 'POINT')} + '₫'"></h5>
-                                                                        <input type="text" th:value="${giaTienGiam}"
-                                                                               id="tienGiam" style="display: none">
-                                                                    </li>
+                                                                         data-bs-backdrop="static"
+                                                                         data-bs-keyboard="false"
+                                                                         aria-labelledby="staticBackdropLabel"
+                                                                         aria-hidden="true">
 
-                                                                    <form method="get">
-                                                                        <div class="modal fade" id="staticBackdrop"
 
-                                                                             data-bs-backdrop="static"
-                                                                             data-bs-keyboard="false"
-                                                                             aria-labelledby="staticBackdropLabel"
-                                                                             aria-hidden="true">
+                                                                        <div class="modal-dialog modal-lg">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="staticBackdropLabel"
+                                                                                        for="promotion-select">
+                                                                                        Danh sách Khuyễn mãi
+                                                                                    </h5>
+                                                                                </div>
 
-                                                                            <div class="modal-dialog modal-lg">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title"
-                                                                                            id="staticBackdropLabel"
-                                                                                            for="promotion-select">
-                                                                                            Danh sách Khuyễn mãi
-                                                                                        </h5>
-                                                                                    </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="card"
+                                                                                         th:each="items : ${dieuKienKhuyenMai}">
+                                                                                        <div class="card-body">
+                                                                                            <div class="grid gap-3">
+                                                                                                <div class="p-2 g-col-4">
+                                                                                                    <h5 class="card-title"
+                                                                                                        th:text="${items.tenKM}"></h5>
+                                                                                                    <p class="card-text"
+                                                                                                       th:text="'Điều kiện: Hóa đơn tối thiểu ' + ${items.dieuKienKMBill}"></p>
+                                                                                                    <p class="card-text"
+                                                                                                       th:text="'Số lượng còn lại: ' + ${items.soLuong - items.soLuongDaDung}"></p>
+                                                                                                    <button type="submit"
+                                                                                                            class="btn btn-primary"
+                                                                                                            th:formaction="@{'/ban-hang/chon-khuyen-mai/' + ${items.idKM}}">
+                                                                                                        Áp dụng
+                                                                                                    </button>
+                                                                                                    <br>
 
-                                                                                    <div class="modal-body">
-                                                                                        <div class="card"
-                                                                                             th:each="items : ${dieuKienKhuyenMai}">
-                                                                                            <div class="card-body">
-                                                                                                <div class="grid gap-3">
-                                                                                                    <div class="p-2 g-col-4">
-                                                                                                        <h5 class="card-title"
-                                                                                                            th:text="${items.tenKM}"></h5>
-                                                                                                        <p class="card-text"
-                                                                                                           th:text="'Điều kiện: Hóa đơn tối thiểu ' + ${items.dieuKienKMBill}"></p>
-                                                                                                        <p class="card-text"
-                                                                                                           th:text="'Số lượng còn lại: ' + ${items.soLuong - items.soLuongDaDung}"></p>
-                                                                                                        <p class="card-text"
-                                                                                                           th:text="'Chi tiết: ' + ${items.moTa}"></p>
-                                                                                                        <button type="submit"
-                                                                                                                class="btn btn-primary"
-                                                                                                                th:formaction="@{'/ban-hang/chon-khuyen-mai/' + ${items.idKM}}">
-                                                                                                            Áp dụng
-                                                                                                        </button>
-                                                                                                        <br>
-                                                                                                    </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                                class="btn btn-secondary"
-                                                                                                data-bs-dismiss="modal">
-                                                                                            Đóng
-                                                                                        </button>
-                                                                                    </div>
-
                                                                                 </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>
-                                                                    </li>
 
-                                                                    <li style="margin-bottom: 20px;">
-                                                                        <h5>Tổng tiền sau khuyến mãi : </h5>
-                                                                        <h5 class="grandTotal" style="font-size: 13pt;"
-                                                                            th:text="${tongTien} + ' đ'"
-                                                                            id="tongTienSauKhuyenMai"></h5>
-
-                                                                        <input id="tongtienKM" th:value="${tongTien}"
-                                                                               style="display: none">
-                                                                        <input class="text-danger" id="tongTienSP"
-                                                                               th:value="${tongTien}"
-                                                                               style="font-size: 13pt; display: none">
-                                                                    </li>
-
-                                                                    <li style="margin-bottom: 20px;">
-                                                                        <h5>Tiền khách đưa : </h5>
-                                                                        <input type="number" name="tienKhachDua" min="1"
-                                                                               id="tienKhachDua" class="form-control"
-                                                                               oninput="tinhTienThua()"
-                                                                               onkeypress="restrictToNumbers(event)"
-                                                                               style="width: 300px;" disabled>
-
-                                                                    </li>
-                                                                    <li style="margin-bottom: 20px;">
-                                                                        <h5><b>Tiền thừa:</b></h5>
-                                                                        <h5>
-                                                                            <label style="font-size: 13pt;"
-                                                                                   id="tienThua"
-                                                                                   name="tienThua"></label>
-                                                                        </h5>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-
-                                                            <div class="text-center">
-                                                                <div class="dropdown mt-3">
-                                                                    <button id="nutThanhToan" disabled
-                                                                            class="btn btn-primary"
-                                                                            style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal">
-                                                                        Thanh toán
-                                                                    </button>
-                                                                    <!-- Modal -->
-                                                                    <div class="modal fade" id="exampleModal"
-                                                                         tabindex="-1"
-                                                                         aria-labelledby="exampleModalLabel6"
-                                                                         aria-hidden="true">
-                                                                        <div class="modal-dialog modal-md text-center"
-                                                                             style="width: 550px;">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-header">
-                                                                                    <h1 class="modal-title fs-5"
-                                                                                        id="exampleModalLabel6">Xác
-                                                                                        nhận</h1>
+                                                                                <div class="modal-footer">
                                                                                     <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                </div>
-                                                                                <div class="modal-body">
-                                                                                    <div class="text-center" type="">Bạn
-                                                                                        có chắc
-                                                                                        muốn thanh toán
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="modal-footer text-center">
-                                                                                    <a type="button"
-                                                                                       class="btn btn-warning"
-                                                                                       th:href="@{'/ban-hang/thanh-toan'}"
-                                                                                       style="background-color: #37517E;height: 50px;cursor: pointer;color: white;padding: 10px 20px;border-radius: 10px;margin: auto; display: inline-block;"
-                                                                                    >Thanh toán</a>
-                                                                                    <button type="button"
-                                                                                            style="background-color: #bb2d3b;height: 50px;color: white;;cursor: pointer;border: none;border-radius: 10px;margin: auto; display: inline-block"
-                                                                                            class="btn btn-warning"
-                                                                                            data-bs-dismiss="modal">Hủy
+                                                                                            class="btn btn-secondary"
+                                                                                            data-bs-dismiss="modal">
+                                                                                        Đóng
                                                                                     </button>
                                                                                 </div>
+
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                </form>
+                                                                </li>
 
-                                                                </div>
-                                                            </div>
+                                                                <li style="margin-bottom: 20px;">
+                                                                    <h5>Tổng tiền sau khuyến mãi : </h5>
+                                                                    <h5 class="grandTotal" style="font-size: 13pt;"
+                                                                        th:text="${tongTien} + ' đ'"
+                                                                        id="tongTienSauKhuyenMai"></h5>
 
+                                                                    <input id="tongtienKM" th:value="${tongTien}"
+                                                                           style="display: none">
+                                                                    <input class="text-danger" id="tongTienSP"
+                                                                           th:value="${tongTien}"
+                                                                           style="font-size: 13pt; display: none">
+                                                                </li>
 
+                                                                <li style="margin-bottom: 20px;">
+                                                                    <h5>Tiền khách đưa : </h5>
+                                                                    <input type="number" name="tienKhachDua" min="1"
+                                                                           id="tienKhachDua" class="form-control"
+                                                                           oninput="tinhTienThua()"
+                                                                           onkeypress="restrictToNumbers(event)"
+                                                                           style="width: 300px;" disabled>
+
+                                                                </li>
+                                                                <li style="margin-bottom: 20px;">
+                                                                    <h5><b>Tiền thừa:</b></h5>
+                                                                    <h5>
+                                                                        <label style="font-size: 13pt;"
+                                                                               id="tienThua"
+                                                                               name="tienThua"></label>
+                                                                    </h5>
+                                                                </li>
+                                                            </ul>
                                                         </div>
+
+                                                        <div class="text-center">
+                                                            <div class="dropdown mt-3">
+                                                                <button id="nutThanhToan" disabled
+                                                                        class="btn btn-primary"
+                                                                        style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal">
+                                                                    Thanh toán
+                                                                </button>
+                                                                <!-- Modal -->
+                                                                <div class="modal fade" id="exampleModal"
+                                                                     tabindex="-1"
+                                                                     aria-labelledby="exampleModalLabel6"
+                                                                     aria-hidden="true">
+                                                                    <div class="modal-dialog modal-md text-center"
+                                                                         style="width: 550px;">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h1 class="modal-title fs-5"
+                                                                                    id="exampleModalLabel6">Xác
+                                                                                    nhận</h1>
+                                                                                <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="text-center" type="">Bạn
+                                                                                    có chắc
+                                                                                    muốn thanh toán
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer text-center">
+                                                                                <a type="button"
+                                                                                   class="btn btn-warning"
+                                                                                   th:href="@{'/ban-hang/thanh-toan'}"
+                                                                                   style="background-color: #37517E;height: 50px;cursor: pointer;color: white;padding: 10px 20px;border-radius: 10px;margin: auto; display: inline-block;"
+                                                                                >Thanh toán</a>
+                                                                                <button type="button"
+                                                                                        style="background-color: #bb2d3b;height: 50px;color: white;;cursor: pointer;border: none;border-radius: 10px;margin: auto; display: inline-block"
+                                                                                        class="btn btn-warning"
+                                                                                        data-bs-dismiss="modal">Hủy
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
     </div>
+</div>
 </div>
 
 <style>
