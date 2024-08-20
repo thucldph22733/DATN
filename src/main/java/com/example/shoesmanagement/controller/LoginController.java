@@ -25,7 +25,8 @@ public class    LoginController {
 
     @GetMapping("/login")
     private String getLoginAll() {
-
+        session.invalidate();
+        request.getSession().invalidate();
         return "/login";
     }
 
