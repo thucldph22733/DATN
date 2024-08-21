@@ -237,6 +237,16 @@ public class    ThongKeController {
         return ResponseEntity.ok(response);
     }
 
+    public void validateDateRange(Timestamp startDate, Timestamp endDate) {
+        if (startDate == null || endDate == null) {
+            throw new IllegalArgumentException("Ngày bắt đầu và ngày kết thúc không được để trống.");
+        }
+
+        if (startDate.after(endDate)) {
+            throw new IllegalArgumentException("Ngày bắt đầu không được lớn hơn ngày kết thúc.");
+        }
+    }
+
 
     @GetMapping("/thongke/{maNV}")
     public String getEmployeeDetail(@PathVariable("maNV") String maNV, Model model) {

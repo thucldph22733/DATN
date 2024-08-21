@@ -1,6 +1,7 @@
 package com.example.shoesmanagement.service;
 
 import com.example.shoesmanagement.model.ChiTietGiay;
+import com.example.shoesmanagement.model.GioHangChiTiet;
 import com.example.shoesmanagement.model.HoaDon;
 import com.example.shoesmanagement.model.HoaDonChiTiet;
 
@@ -9,6 +10,8 @@ import java.util.UUID;
 
 public interface HoaDonChiTIetService {
     HoaDonChiTiet getOne(UUID idHoaDon, UUID idChiTietGiay);
+
+    HoaDonChiTiet findByCTSPActive(ChiTietGiay chiTietGiay);
 
     public void delete(HoaDonChiTiet hoaDonChiTiet);
 

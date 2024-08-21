@@ -96,43 +96,16 @@ public class CartController {
 
     @GetMapping("/cart/delete/{idCTG}")
     private String deleteInCard(Model model, @PathVariable UUID idCTG, RedirectAttributes redirectAttribute) {
-        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         ChiTietGiay chiTietGiay = gctService.getByIdChiTietGiay(idCTG);
-        GioHang gioHang = gioHangService.findByKhachHang(khachHang);
-        GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(chiTietGiay, gioHang);
+        GioHangChiTiet gioHangChiTiet = ghctService.findByCTSPActive(chiTietGiay);
         gioHangChiTiet.setTrangThai(0);
         ghctService.addNewGHCT(gioHangChiTiet);
-
         showDataBuyer(model);
         redirectAttribute.addFlashAttribute("successMessage", "Sản phẩm đã được xoá khỏi giỏ hàng thành công!");
-
         return "redirect:/buyer/cart";
     }
 
 
-    //    private void showDataBuyer(Model model){
-//        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-//        GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
-//        List<GioHangChiTiet> listGHCTActiveOriginal = ghctService.findByGHActive(gioHang);
-//        // Khởi tạo một danh sách rỗng nếu kết quả là null để tránh NullPointerException
-//
-//        List<GioHangChiTiet> listGHCTActive = ghctService.findByGHActive(gioHang);
-//        Integer sumProductInCart = listGHCTActive.size();
-//
-//        Double sumAllProduct = listGHCTActive.stream().mapToDouble(GioHangChiTiet::getDonGia).sum();
-//
-//        if (listGHCTActive != null){
-//            for (GioHangChiTiet gioHangChiTiet: listGHCTActive) {
-//                gioHangChiTiet.setDonGia(gioHangChiTiet.getChiTietGiay().getGiaBan()* gioHangChiTiet.getSoLuong());
-//                gioHangChiTiet.setDonGiaTruocKhiGiam(gioHangChiTiet.getChiTietGiay().getSoTienTruocKhiGiam()* gioHangChiTiet.getSoLuong());
-//                ghctService.addNewGHCT(gioHangChiTiet);
-//            }
-//        }
-//        model.addAttribute("fullNameLogin", khachHang.getHoTenKH());
-//        model.addAttribute("sumProductInCart", sumProductInCart);
-//        model.addAttribute("listCartDetail", listGHCTActive);
-//        model.addAttribute("totalPrice", sumAllProduct);
-//    }
 
     private void showDataBuyer(Model model) {
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");

@@ -1,6 +1,7 @@
 package com.example.shoesmanagement.service.impl;
 
 import com.example.shoesmanagement.model.ChiTietGiay;
+import com.example.shoesmanagement.model.GioHangChiTiet;
 import com.example.shoesmanagement.model.HoaDon;
 import com.example.shoesmanagement.model.HoaDonChiTiet;
 import com.example.shoesmanagement.repository.HoaDonChiTietRepository;
@@ -30,6 +31,12 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTIetService {
     public HoaDonChiTiet getOne(UUID idHoaDon, UUID idChiTietGiay) {
         return hoaDonChiTietRepository.findByIdHoaDonAndIdChiTietGiay(idHoaDon, idChiTietGiay);
     }
+
+    @Override
+    public HoaDonChiTiet findByCTSPActive(ChiTietGiay chiTietGiay) {
+        return hoaDonChiTietRepository.findByChiTietGiayAndTrangThai(chiTietGiay,1);
+    }
+
 
     @Override
     public void delete(HoaDonChiTiet hoaDonChiTiet) {

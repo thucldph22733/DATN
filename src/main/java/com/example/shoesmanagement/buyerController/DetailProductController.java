@@ -122,7 +122,11 @@ public class DetailProductController {
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
 
         GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(ctg,gioHang);
-        if(quantity > ctg.getSoLuong()) { // Giả sử ctg.getSoLuong() là phương thức lấy số lượng hiện có của sản phẩm
+        int sl = ctg.getSoLuong();
+        int currentCartQuantity = gioHangChiTiet != null ? gioHangChiTiet.getSoLuong() : 0;
+        int totalRequestedQuantity = currentCartQuantity + quantity;
+
+        if(totalRequestedQuantity > sl) { // Giả sử ctg.getSoLuong() là phương thức lấy số lượng hiện có của sản phẩm
             // Thêm thông báo lỗi vào redirectAttributes
             redirectAttribute.addFlashAttribute("successMessage", "Số lượng sản phẩm không đủ. Vui lòng giảm số lượng.");
             // Chuyển hướng người dùng trở lại trang chi tiết sản phẩm hoặc có thể là trang trước đó
@@ -130,27 +134,29 @@ public class DetailProductController {
             String idMau = String.valueOf(ctg.getMauSac().getIdMau());
             String linkBack = idGiay + "/" +idMau;
             return "redirect:/buyer/shop-details/" + linkBack;
-        }
-
-        if (gioHangChiTiet != null){
-            gioHangChiTiet.setSoLuong(gioHangChiTiet.getSoLuong() + quantity);
-            gioHangChiTiet.setTgThem(new Date());
-            gioHangChiTiet.setDonGia(quantity*ctg.getGiaBan());
-            ghctService.addNewGHCT(gioHangChiTiet);
         }else {
-            GioHangChiTiet gioHangChiTietNew = new GioHangChiTiet();
+            if (gioHangChiTiet != null){
+                gioHangChiTiet.setSoLuong(gioHangChiTiet.getSoLuong() + quantity);
+                gioHangChiTiet.setTgThem(new Date());
+                gioHangChiTiet.setDonGia(quantity*ctg.getGiaBan());
+                ghctService.addNewGHCT(gioHangChiTiet);
+            }else {
+                GioHangChiTiet gioHangChiTietNew = new GioHangChiTiet();
 
-            gioHangChiTietNew.setChiTietGiay(ctg);
-            gioHangChiTietNew.setGioHang(gioHang);
-            gioHangChiTietNew.setSoLuong(quantity);
-            gioHangChiTietNew.setTgThem(new Date());
-            gioHangChiTietNew.setDonGia(quantity * ctg.getGiaBan());
+                gioHangChiTietNew.setChiTietGiay(ctg);
+                gioHangChiTietNew.setGioHang(gioHang);
+                gioHangChiTietNew.setSoLuong(quantity);
+                gioHangChiTietNew.setTgThem(new Date());
+                gioHangChiTietNew.setDonGia(quantity * ctg.getGiaBan());
 //            gioHangChiTiet.setDonGiaTruocKhiGiam(quantity*ctg.getSoTienTruocKhiGiam());
-            gioHangChiTietNew.setTrangThai(1);
+                gioHangChiTietNew.setTrangThai(1);
 
-            ghctService.addNewGHCT(gioHangChiTietNew);
-            redirectAttribute.addFlashAttribute("successMessage", "Sản phẩm đã được thêm vào giỏ hàng thành công!");
+                ghctService.addNewGHCT(gioHangChiTietNew);
+                redirectAttribute.addFlashAttribute("successMessage", "Sản phẩm đã được thêm vào giỏ hàng thành công!");
+            }
         }
+
+
 
         String idGiay = String.valueOf(ctg.getGiay().getIdGiay());
 

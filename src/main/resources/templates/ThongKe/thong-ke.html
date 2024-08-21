@@ -48,6 +48,7 @@
 <div th:replace="~{manage/activities :: main}"></div>
 <div class="main-wrapper">
     <div class="page-wrapper">
+
         <div class="content">
             <form id="dateRangeForm" class="d-flex align-items-center mb-3">
                 <div class="col-md-3">
@@ -291,9 +292,6 @@
                     </div>
 
                 </div>
-                <div id="container" class="card-body">
-                    <!--                         style="width: 550px; height: 400px; margin: 0 auto">-->
-                </div>
             </div>
 
             <div class="col-lg-5 col-sm-12 col-12 d-flex">
@@ -416,9 +414,17 @@
         }
 
         const today = new Date();
+        const maxDate = today.toISOString().split('.')[0]; // Format as "yyyy-MM-ddThh:mm"
+
         startDateInput.value = formatDate(today, true);
         endDateInput.value = formatDate(today, false);
+
+
+        // Set max attribute to prevent selecting dates in the future
+        startDateInput.setAttribute('max', maxDate);
+        endDateInput.setAttribute('max', maxDate);
     });
+
 
     document.getElementById('searchButton').addEventListener('click', function() {
         var startDate = document.getElementById('startDateData').value;
@@ -432,7 +438,9 @@
             document.getElementById('errorMessage').style.display = 'none';
         }
 
-        fetch(`/thong-ke/api/thong-ke?tuNgay=${startDate}&denNgay=${endDate}`)
+
+        fetch(`/ThongKe/api/thong-ke?tuNgay=${startDate}&denNgay=${endDate}`)
+
             .then(response => response.json())
             .then(data => {
                 var doanhThu = data.tlbr !== undefined && data.tlbr !== null ? data.tlbr : 'Không có dữ liệu';
@@ -745,6 +753,7 @@
 
     }
 </script>
+
 
 </body>
 </html>
