@@ -170,7 +170,9 @@ public interface CTGViewModelRepository extends JpaRepository< CTGViewModel,UUID
     List<CTGViewModel> getAllOrderBestSeller();
 
     @Query(value = "\t\t\tSELECT \n" +
-            "           top 5 g.ten_giay, a.url1 ,COALESCE(SUM(cthd.so_luong), 0)\n" +
+
+            "           top 7 g.ten_giay, a.url1 ,COALESCE(SUM(hd.tong_sp), 0)\n" +
+
             "            FROM chi_tiet_giay ctg \n" +
             "            JOIN Giay g ON g.id_giay = ctg.id_giay\n" +
             "            JOIN hinh_anh a ON a.id_hinh_anh = ctg.id_hinh_anh\n" +

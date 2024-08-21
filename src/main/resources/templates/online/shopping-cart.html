@@ -34,6 +34,13 @@
         <!-- Include Bootstrap JS -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+
 
         <style>
             header {
@@ -70,6 +77,66 @@
             input[type="number"]::down-button {
                 display: block !important;
             }
+
+            /* Modal */
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgba(0, 0, 0, 0.4);
+            }
+
+            /* Modal Content */
+            .modal-content {
+                background-color: #fefefe;
+                margin: 15% auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%;
+                max-width: 400px;
+                text-align: center;
+                border-radius: 10px;
+            }
+
+            /* Close Button */
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            /* Buttons */
+            .cancelbtn, .deletebtn {
+                padding: 10px 20px;
+                margin: 10px;
+                border: none;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+
+            .cancelbtn {
+                background-color: #ccc;
+                color: black;
+            }
+
+            .deletebtn {
+                background-color: #f44336;
+                color: white;
+            }
+
 
         </style>
     </head>
@@ -355,32 +422,13 @@
                                         th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 0, 'POINT')}"></td>
                                     <!--                                    <td class="cart__close"><a th:href="@{'/buyer/cart/delete/' + ${x.chiTietGiay.idCTG}}" id="deleteToCartButton" style="border-radius: 20% ; " ><i class="fa fa-close"></i></a></td>-->
                                     <!--                                    <td class="cart__close"> <a th:href="@{/buyer/cart/delete/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}" id="deleteToCartButton" style="border-radius: 20%;" onclick="return confirm('Bạn có chắc chắn muốn xoá sản phẩm này khỏi giỏ hàng không?')" class="confirmation-box"> <i class="fa fa-close"></i> </a> </td>-->
+                                    <!-- Nút xóa -->
                                     <td class="cart__close">
-                                        <a th:href="@{/buyer/cart/delete/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}"
-                                           id="deleteToCartButton" style="border-radius: 20%;" data-toggle="modal"
-                                           data-target="#confirmationModal">
+                                        <a th:href="@{'/buyer/cart/delete/' + ${x.chiTietGiay.idCTG}}" id="deleteToCartButton" style="border-radius: 20%;" onclick="return confirmDelete();">
                                             <i class="fa fa-close"></i>
                                         </a>
                                     </td>
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog"
-                                         aria-labelledby="confirmationModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-body">
-                                                    Bạn có chắc chắn muốn xoá sản phẩm này khỏi giỏ hàng không?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Hủy
-                                                    </button>
-                                                    <a th:href="@{/buyer/cart/delete/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}"
-                                                       class="btn btn-primary">Xoá</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                 </tr>
 
@@ -1131,27 +1179,9 @@
 </script>
 
 
-<script>
-    var deleteUrl = /*[[@{/buyer/cart/delete/}]]*/;
 
-    function deleteFromCart(idCTG) {
-        Swal.fire({
-            title: 'Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?',
-            text: "Bạn không thể hoàn tác hành động này!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Đồng ý',
-            cancelButtonText: 'Hủy'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = deleteUrl + idCTG;
-            }
-        });
-    }
 
-</script>
+
 <script>
     // Hàm sẽ được gọi ngay khi trang được tải xong
     window.onload = function() {
@@ -1165,6 +1195,41 @@
         }
     };
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('#deleteToCartButton');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default link behavior
+
+                Swal.fire({
+                    title: 'Bạn có chắc chắn muốn xóa?',
+                    text: "Sản phẩm sẽ bị xóa khỏi giỏ hàng của bạn!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Xóa',
+                    cancelButtonText: 'Hủy bỏ'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = button.href; // Manually redirect if confirmed
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+<!--<script type="text/javascript">-->
+<!--    function confirmDelete() {-->
+<!--        return confirm("Bạn có chắc chắn muốn xoá sản phẩm này khỏi giỏ hàng?");-->
+<!--    }-->
+<!--</script>-->
+
+
 
 <!--Receive mail end-->
 <!--aaaa-->

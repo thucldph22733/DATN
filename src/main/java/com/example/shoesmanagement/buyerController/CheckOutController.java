@@ -163,12 +163,13 @@ public class CheckOutController {
 //                return "redirect:/buyer/cart" ;
 //            }
 
+
             if (entry.getValue() > chiTietGiay.getSoLuong()) {
                 redirectAttribute.addFlashAttribute("successMessage", "Số lượng sản phẩm hiện còn: " + chiTietGiay.getSoLuong() + " đôi. Vui lòng giảm số lượng");
                 String idGiay = String.valueOf(chiTietGiay.getGiay().getIdGiay());
                 String idMau = String.valueOf(chiTietGiay.getMauSac().getIdMau());
                 String linkBack = idGiay + "/" + idMau;
-                return "redirect:/buyer/shop-details/" + linkBack;
+                return "redirect:/buyer/cart" ;
             } else {
                 // Xử lý trường hợp số lượng trong giỏ hàng lớn hơn số lượng tồn
                 // Có thể bắn lỗi, thông báo cho người dùng hoặc xử lý theo cách khác
