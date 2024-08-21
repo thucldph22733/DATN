@@ -62,6 +62,8 @@
                     <button type="button" id="searchButton" class="btn btn-primary mt-4">Tìm kiếm</button>
                 </div>
             </form>
+            <div id="errorMessage" style="color: red; display: none;">Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.</div>
+
 
             <div class="row">
                 <div class="col-lg-4 col-sm-6 col-12">
@@ -494,14 +496,27 @@
         }
 
         const today = new Date();
+        const maxDate = today.toISOString().split('.')[0]; // Format as "yyyy-MM-ddThh:mm"
+
         startDateInput.value = formatDate(today, true);
         endDateInput.value = formatDate(today, false);
-    });
 
+        // Set max attribute to prevent selecting dates in the future
+        startDateInput.setAttribute('max', maxDate);
+        endDateInput.setAttribute('max', maxDate);
+    });
 
     document.getElementById('searchButton').addEventListener('click', function() {
         var startDate = document.getElementById('startDateData').value;
         var endDate = document.getElementById('endDateData').value;
+
+        // Validate the date range
+        if (new Date(startDate) > new Date(endDate)) {
+            document.getElementById('errorMessage').style.display = 'block';
+            return;
+        } else {
+            document.getElementById('errorMessage').style.display = 'none';
+        }
 
         fetch(`/ThongKe/api/thong-ke?tuNgay=${startDate}&denNgay=${endDate}`)
             .then(response => response.json())
@@ -816,6 +831,7 @@
 
     }
 </script>
+
 
 </body>
 </html>

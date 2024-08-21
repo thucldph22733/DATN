@@ -20,6 +20,9 @@ public interface HoaDonChiTietRepository  extends JpaRepository<HoaDonChiTiet, U
 
     void deleteByChiTietGiay(ChiTietGiay chiTietGiay);
 
+    HoaDonChiTiet findByChiTietGiayAndTrangThai(ChiTietGiay chiTietGiay, int trangThai);
+
+
     List<HoaDonChiTiet> findByChiTietGiay(ChiTietGiay chiTietGiay);
 
     void deleteById(UUID id);
