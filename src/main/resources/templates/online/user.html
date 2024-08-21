@@ -1581,7 +1581,7 @@
                                             <input class="form-control" type="text" placeholder="Tên người nhận" name="fullName">
                                         </div>
                                         <div class="row mb-3">
-                                            <input class="form-control" type="text" placeholder="SDT người nhận" name="phoneAddress">
+                                            <input class="form-control" type="text" placeholder="SDT người nhận" name="phoneAddress" id="phoneAddress" onblur="validatePhoneNumber()">
                                             <select class="form-control" id="city" name="city">
                                                 <option value="" selected>Chọn thành phố</option>
                                             </select>
@@ -3193,6 +3193,17 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    function validatePhoneNumber() {
+        var phone = document.getElementById("phoneAddress").value;
+        var phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})$/;
+
+        if (!phoneRegex.test(phone)) {
+            alert("Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng số điện thoại.");
+            document.getElementById("phoneAddress").focus();
+        }
+    }
+</script>
 <script>
     function submitForm() {
         // Gửi form khi nhấn nút "Lưu thay đổi"
