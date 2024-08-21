@@ -636,7 +636,7 @@
                                                         </thead>
                                                         <tbody>
                                                         <th:block th:each="x, i: ${hoaDonDGList}">
-                                                            <tr th:unless="${x.trangThai == 1 or x.trangThai == 4 or x.trangThai == 5  or x.trangThai == 6}">
+                                                            <tr th:unless="${ x.trangThai == 0 or x.trangThai == 1 or x.trangThai == 4 or x.trangThai == 5  or x.trangThai == 6}">
                                                                 <td th:text="${i.index}"></td>
                                                                 <td th:text="${x.maHD}"></td>
                                                                 <td th:text="${x.tgTao}"></td>
@@ -683,7 +683,7 @@
                                                 </thead>
                                                 <tbody>
                                                 <th:block th:each="x, i: ${allHoaDonList}">
-                                                    <tr th:unless="${x.trangThai == 1 or x.trangThai == 2  or x.trangThai == 6}">
+                                                    <tr th:unless="${x.trangThai ==0 or x.trangThai == 1 or x.trangThai == 2 or x.trangThai==3 or x.trangThai == 6}">
                                                         <td th:text="${i.index}"></td>
                                                         <td th:text="${x.maHD}"></td>
                                                         <td th:text="${x.tgTao}"></td>

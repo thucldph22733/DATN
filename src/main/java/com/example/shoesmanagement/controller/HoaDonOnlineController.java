@@ -343,7 +343,7 @@ public class HoaDonOnlineController {
                 if (x.getTrangThai() == 6 || x.getTrangThai() == 7) {
 
                 } else {
-                    if (x.getHinhThucThanhToan() == 1) {
+                    if (x.getHinhThucThanhToan() == 1 && x.getTrangThai() == 0) {
                         soLuongHoaDonBanking++;
                         listHoaDonOnlineBaking.add(x);
                     }
