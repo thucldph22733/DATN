@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -82,22 +81,19 @@
                 <li class="nav-item dropdown has-arrow main-drop">
                     <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
                         <span class="user-img">
- <img th:src="@{'/images/imgsNhanVien/' + ${session.managerLogged.AnhNV} : ${session.staffLogged.AnhNV}}"
-      alt="">
-
-
-    <span class="status online"></span>
-</span>
-
+                            <img th:src="@{'/images/imgsNhanVien/' + ${session.managerLogged.AnhNV} : ${session.staffLogged.AnhNV}}" alt="">
+                            <span class="status online"></span>
+                        </span>
                     </a>
+
                     <div class="dropdown-menu menu-drop-user">
                         <div class="profilename">
                             <div class="profileset">
-    <span class="user-img">
-    <img th:src="@{'/images/imgsNhanVien/' + ${session.managerLogged.AnhNV} : ${session.staffLogged.AnhNV}}"
-         alt="">
-        <span class="status online"></span>
-    </span>
+                                <span class="user-img">
+                                    <img th:src="@{'/images/imgsNhanVien/' + ${session.managerLogged.AnhNV} : ${session.staffLogged.AnhNV}}" alt="">
+                                    <span class="status online"></span>
+                                </span>
+
                                 <div class="profilesets">
                                     <h6 th:text="${session.managerLogged != null} ? ${session.managerLogged.hoTenNV} : ${session.staffLogged.hoTenNV}"></h6>
                                     <h5 th:text="${session.managerLogged != null} ? ${session.managerLogged.chucVu.tenCV} : ${session.staffLogged.chucVu.tenCV}"></h5>
@@ -108,12 +104,12 @@
 
                             <a class="dropdown-item me-2 delete-button2" th:data-ql-url="@{'/logout'}">Quản lý Cửa
                                 Hàng</a>
-                            <a class="dropdown-item" href="profile.html">
-                                <i class="me-2" data-feather="user"></i> My Profile
+<!--                            <a class="dropdown-item" href="profile.html">-->
+<!--                                <i class="me-2" data-feather="user"></i> My Profile-->
+<!--                            </a>-->
+                            <a class="dropdown-item" href="/manage/change-password">
+                                <i class="me-2" data-feather="settings"></i>Change passwoord
                             </a>
-                            <a class="dropdown-item" href="/manage/change-password"><i class="me-2"
-                                                                                       data-feather="settings"></i>Change
-                                passwoord</a>
 
                             <hr class="m-0">
                             <a class="dropdown-item logout pb-0" href="/logout"><img src="/images/img/icons/log-out.svg"
@@ -129,7 +125,7 @@
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="/logout">Bán hàng tại quầy</a>
                     <a class="dropdown-item" href="/order/">Vận chuyển</a>
-<!--                    <a class="dropdown-item" href="profile.html">Thông tin cá nhân</a>-->
+                    <!--                    <a class="dropdown-item" href="profile.html">Thông tin cá nhân</a>-->
                     <a class="dropdown-item" href="/manage/change-password">Cài đặt</a>
                     <a class="dropdown-item" href="signin.html">Đăng xuất</a>
                 </div>
@@ -183,13 +179,13 @@
                             </ul>
                         </li>
 
-<!--                        <li class="submenu">-->
-<!--                            <a href="javascript:void(0);"><img src="/images/img/icons/users1.svg" alt="img"><span> Quản Lý Khách Hàng</span>-->
-<!--                                <span class="menu-arrow"></span></a>-->
-<!--                            <ul>-->
-<!--                                <li><a href="/manage/khach-hang">Khách Hàng</a></li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
+                        <!--                        <li class="submenu">-->
+                        <!--                            <a href="javascript:void(0);"><img src="/images/img/icons/users1.svg" alt="img"><span> Quản Lý Khách Hàng</span>-->
+                        <!--                                <span class="menu-arrow"></span></a>-->
+                        <!--                            <ul>-->
+                        <!--                                <li><a href="/manage/khach-hang">Khách Hàng</a></li>-->
+                        <!--                            </ul>-->
+                        <!--                        </li>-->
 
                         <li>
                             <a href="/manage/khach-hang">
@@ -224,7 +220,8 @@
 <div class="page-wrapper">
     <!--    <div th:replace="manage/main :: main"></div>-->
     <div class="welcome-message" style="margin-top: 13%;">
-         Teezy Shop xin chào !  <h2 th:text="${session.managerLogged != null} ? ${session.managerLogged.hoTenNV} : ${session.staffLogged.hoTenNV}"></h2>
+        Teezy Shop xin chào ! <h2
+            th:text="${session.managerLogged != null} ? ${session.managerLogged.hoTenNV} : ${session.staffLogged.hoTenNV}"></h2>
 
     </div>
 </div>
