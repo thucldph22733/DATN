@@ -15,8 +15,7 @@ public class AdminController {
 
     @RequestMapping(value = {"", "/", "/home"})
     public String hienThi(Model model) {
-        if (session.getAttribute("managerLogged") == null) {
-            // Nếu managerLogged bằng null, quay về trang login
+        if (session.getAttribute("staffLogged") == null && session.getAttribute("managerLogged") == null) {
             return "redirect:/login";
         }
         return "manage/activities";

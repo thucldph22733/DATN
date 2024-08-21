@@ -35,6 +35,7 @@ public interface HoaDonChiTIetService {
 
     public void deleteCTG(UUID idCTG);
 
+   List<HoaDonChiTiet> getListByHoaDon(UUID idHD) ;
 
     void deleteChiTietGiay(UUID idHDCT);
 }

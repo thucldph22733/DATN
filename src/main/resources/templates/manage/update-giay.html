@@ -48,7 +48,7 @@
     </style>
 </head>
 <body class="mini-sidebar">
-<div th:replace="~{manage/activities :: main}"></div>
+<div th:replace="~{manage/a :: main}"></div>
 
     <form th:object="${giay}" method="post" th:action="@{'/manage/giay/viewUpdate/' + ${giay.idGiay}}" onsubmit="return validateGiayForm()" name="giayForm">
         <div class="page-wrapper">

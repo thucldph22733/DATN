@@ -1,3 +1,4 @@
+
 package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.HoaDonChiTiet;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Timestamp;
 import java.text.NumberFormat;
@@ -24,7 +26,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/ThongKe")
+
+@RequestMapping("/thong-ke")
+
 public class    ThongKeController {
     @Autowired
     private HttpSession session;
@@ -44,14 +48,26 @@ public class    ThongKeController {
     private CTGViewModelRepository ctgViewModelRepository;
     public NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
     @GetMapping("/thong-ke")
-    public String hienThi(Model model, @ModelAttribute("message") String message
+    public String hienThi(Model model, @ModelAttribute("message") String message, RedirectAttributes redirectAttributes
             , @ModelAttribute("error") String error, @ModelAttribute("Errormessage") String Errormessage,
                           @RequestParam(value = "tuNgay", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate tuNgay,
                           @RequestParam(value = "denNgay", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate denNgay) {
         model.addAttribute("tong", khachHangRepository.getTongKH());
         model.addAttribute("tonggiay", giayChiTietRepository.getTongGiay());
 
-        //làm tròn doanh thu
+        if (session.getAttribute("staffLogged") != null) {
+            // Thêm thông báo vào RedirectAttributes
+            redirectAttributes.addFlashAttribute("messageLogin", "Chỉ Admin mới có quyền truy cập");
+            // Chuyển hướng về trang login
+            return "redirect:/login";
+        }
+
+        // Kiểm tra nếu không có managerLogged
+        if (session.getAttribute("managerLogged") == null) {
+            // Chuyển hướng về trang login nếu managerLogged là null
+            redirectAttributes.addFlashAttribute("messageLogin", "Vui lòng đăng nhập để tiếp tục");
+            return "redirect:/login";
+        }
 
 
         Optional<Double> ltn = hoaDonChiTietRepository.getLaiThangNay();
@@ -177,7 +193,9 @@ public class    ThongKeController {
         doanhSoNam.add(hoaDonChiTietRepository.Nam2024());
         model.addAttribute("Nam", listThemNam);
         model.addAttribute("listNam1", doanhSoNam);
-        return "ThongKe/thong-ke";
+
+        return "thongke/thong-ke";
+
 
     }
 
@@ -242,7 +260,9 @@ public class    ThongKeController {
         model.addAttribute("ctspNV",hoaDonChiTiets);
 
 
-        return "manage/ThongKe/detailCTSPNV";
+
+        return "manage/thong-ke/detailCTSPNV";
+
 
     }
 }

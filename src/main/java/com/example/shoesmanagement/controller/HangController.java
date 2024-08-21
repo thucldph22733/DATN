@@ -64,11 +64,8 @@ public class HangController {
         List<Hang> hang = hangService.getALlHang();
         model.addAttribute("hang", hang);
         model.addAttribute("addHang", new Hang());
-        if (session.getAttribute("managerLogged") == null) {
-            // Nếu managerLogged bằng null, quay về trang login
-
+        if (session.getAttribute("staffLogged") == null && session.getAttribute("managerLogged") == null) {
             return "redirect:/login";
-
         }
         if (message == null || !"true".equals(message)) {
             model.addAttribute("message", false);

@@ -116,39 +116,21 @@ public class HomeOrder {
 
             String donViVanChuyen = request.getParameter("donViVanChuyen");
 
-            giaoHang.setTenDVVC("Human Express");
+            giaoHang.setTenDVVC("Giao hàng tiết kiệm");
             giaoHangService.saveGiaoHang(giaoHang);
 
-            if (!donViVanChuyen.equals("humanExpress")) {
+            if (!donViVanChuyen.equals("Giao hàng tiết kiệm")) {
                 String maVanDonGH = "MVD_" + strDate + "_" + sequenceNumber;
 
                 // Tăng số thứ tự và lưu lại trong session
                 sequenceNumber++;
                 session.setAttribute("sequenceNumber", sequenceNumber);
-                if (donViVanChuyen.equals("ghn")) {
-                    giaoHang.setTenDVVC("Giao hàng nhanh");
+
+                    if (donViVanChuyen.equals("ghtk")) {
+                    giaoHang.setTenDVVC("Giao hàng tiết kiệm");
                     giaoHang.setMaVanDon(maVanDonGH);
                 }
-                if (donViVanChuyen.equals("ghtk")) {
-                    giaoHang.setTenDVVC("Giao Hàng Tiết Kiệm");
-                    giaoHang.setMaVanDon(maVanDonGH);
-                }
-                if (donViVanChuyen.equals("viettelPost")) {
-                    giaoHang.setTenDVVC("Viettel Post");
-                    giaoHang.setMaVanDon(maVanDonGH);
-                }
-                if (donViVanChuyen.equals("ahamove")) {
-                    giaoHang.setTenDVVC("Ahamove");
-                    giaoHang.setMaVanDon(maVanDonGH);
-                }
-                if (donViVanChuyen.equals("grab")) {
-                    giaoHang.setTenDVVC("Grab");
-                    giaoHang.setMaVanDon(maVanDonGH);
-                }
-                if (donViVanChuyen.equals("be")) {
-                    giaoHang.setTenDVVC("Be");
-                    giaoHang.setMaVanDon(maVanDonGH);
-                }
+
                 giaoHangService.saveGiaoHang(giaoHang);
             }
             ViTriDonHang viTriDonHang = new ViTriDonHang();
@@ -242,7 +224,8 @@ public class HomeOrder {
                 lichSuThanhToan.setNoiDungThanhToan("Khách hàng không nhận hàng");
                 lichSuThanhToan.setTrangThai(5);
                 lsThanhToanService.addLSTT(lichSuThanhToan);
-
+                hoaDon.setLyDoHuy(moTa);
+                hoaDonService.add(hoaDon);
                 showDataTab2(model);
                 showData(model);
                 model.addAttribute("messageHuy", "Giao hàng thất bại.");
@@ -298,7 +281,7 @@ public class HomeOrder {
 
     private void showData(Model model) {
         NhanVien nhanVien = (NhanVien) session.getAttribute("shipperLogged");
-        List<HoaDon> test = hoaDonService.listHoaDonOnline();
+        List<HoaDon> test = hoaDonService.listAllHoaDonByNhanVien(nhanVien);
 //        List<HoaDon> allHoaDonList = hoaDonService.listAllHoaDonByNhanVien(nhanVien);
 //        List<HoaDon> hoaDonDGList = hoaDonService.listHoaDonByNhanVienAndTrangThai(nhanVien, 2);
 //        List<HoaDon> hoaDonDoneList = hoaDonService.listHoaDonHuyAndThanhCongByNhanVien(nhanVien);

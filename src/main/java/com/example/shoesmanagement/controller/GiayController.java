@@ -70,8 +70,7 @@ public class GiayController {
 
     @GetMapping("/giay")
     public String getAllGiay(Model model, @ModelAttribute("message") String message) {
-        if (session.getAttribute("managerLogged") == null) {
-            // Nếu managerLogged bằng null, quay về trang login
+        if (session.getAttribute("staffLogged") == null && session.getAttribute("managerLogged") == null) {
             return "redirect:/login";
         }
 

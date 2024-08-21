@@ -62,12 +62,22 @@ public class NhanVienController {
     }
 
     @GetMapping("/nhan-vien")
-    public String dsNhanVien(Model model, @ModelAttribute("message") String message) {
+    public String dsNhanVien(Model model, @ModelAttribute("message") String message,RedirectAttributes redirectAttributes) {
         List<NhanVien> nhanViens = nhanVienRepsitory.getAllNhanVien();
         List<ChucVu> chucVus = chucVuService.getAllChucVu();
         model.addAttribute("nhanVien", nhanViens);
         model.addAttribute("chucVu", chucVus);
+        if (session.getAttribute("staffLogged") != null) {
+            // Thêm thông báo vào RedirectAttributes
+            redirectAttributes.addFlashAttribute("messageLogin", "Chỉ Admin mới có quyền truy cập");
+            // Chuyển hướng về trang login
+            return "redirect:/login";
+        }
+
+        // Kiểm tra nếu không có managerLogged
         if (session.getAttribute("managerLogged") == null) {
+            // Chuyển hướng về trang login nếu managerLogged là null
+            redirectAttributes.addFlashAttribute("messageLogin", "Vui lòng đăng nhập để tiếp tục");
             return "redirect:/login";
         }
         if (message == null || !"true".equals(message)) {

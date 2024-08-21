@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -31,12 +32,21 @@ public class KhuyenMaiController {
     private HoaDonService hoaDonService;
 
     @GetMapping("/khuyen-mai")
-    public String hienThi(Model model) {
+    public String hienThi(Model model, RedirectAttributes redirectAttributes) {
         List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
         model.addAttribute("khuyenMai", khuyenMai);
         model.addAttribute("addKhuyenMai", new KhuyenMai());
+        if (session.getAttribute("staffLogged") != null) {
+            // Thêm thông báo vào RedirectAttributes
+            redirectAttributes.addFlashAttribute("messageLogin", "Chỉ Admin mới có quyền truy cập");
+            // Chuyển hướng về trang login
+            return "redirect:/login";
+        }
+
+        // Kiểm tra nếu không có managerLogged
         if (session.getAttribute("managerLogged") == null) {
-            // Nếu managerLogged bằng null, quay về trang login
+            // Chuyển hướng về trang login nếu managerLogged là null
+            redirectAttributes.addFlashAttribute("messageLogin", "Vui lòng đăng nhập để tiếp tục");
             return "redirect:/login";
         }
         return "manage/khuyen-mai";

@@ -228,7 +228,7 @@
                                 <li class="nav-item">
                                     <a th:class="${activeVanChuyen}"
                                        href="#solid-rounded-justified-tab2"
-                                       data-bs-toggle="tab">Đang vận chuyển</a></li>
+                                       data-bs-toggle="tab">Xử lý đơn giao</a></li>
                                 <li class="nav-item">
                                     <a th:class="${activeDone}"
                                        href="#solid-rounded-justified-tab3"
@@ -406,7 +406,6 @@
                                                     <th>STT</th>
                                                     <th>Mã Hóa Đơn</th>
                                                     <th>Thời gian tạo</th>
-                                                    f
                                                     <th>Thanh Toán</th>
                                                     <th>Trạng thái</th>
                                                     <th>Khách hàng</th>
@@ -521,7 +520,7 @@
                                                             <select th:if="${HoaDonVanChuyen.giaoHang.tenDVVC == null}"
                                                                     id="deliveryOptions" class="form-control"
                                                                     name="donViVanChuyen">
-                                                                <option value="ghn" selected>Giao hàng TeeZy</option>
+                                                                <option value="ghn" selected>Giao hàng tiết kiệm</option>
 
                                                             </select>
                                                         </div>
@@ -637,7 +636,7 @@
                                                         </thead>
                                                         <tbody>
                                                         <th:block th:each="x, i: ${hoaDonDGList}">
-                                                            <tr th:unless="${x.trangThai == 1 or x.trangThai == 4 or x.trangThai == 5  or x.trangThai == 6}">
+                                                            <tr th:unless="${ x.trangThai == 0 or x.trangThai == 1 or x.trangThai == 4 or x.trangThai == 5  or x.trangThai == 6}">
                                                                 <td th:text="${i.index}"></td>
                                                                 <td th:text="${x.maHD}"></td>
                                                                 <td th:text="${x.tgTao}"></td>
@@ -684,7 +683,7 @@
                                                 </thead>
                                                 <tbody>
                                                 <th:block th:each="x, i: ${allHoaDonList}">
-                                                    <tr th:unless="${x.trangThai == 1 or x.trangThai == 2  or x.trangThai == 6}">
+                                                    <tr th:unless="${x.trangThai ==0 or x.trangThai == 1 or x.trangThai == 2 or x.trangThai==3 or x.trangThai == 6}">
                                                         <td th:text="${i.index}"></td>
                                                         <td th:text="${x.maHD}"></td>
                                                         <td th:text="${x.tgTao}"></td>

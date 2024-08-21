@@ -170,7 +170,9 @@ public interface CTGViewModelRepository extends JpaRepository< CTGViewModel,UUID
     List<CTGViewModel> getAllOrderBestSeller();
 
     @Query(value = "\t\t\tSELECT \n" +
+
             "           top 7 g.ten_giay, a.url1 ,COALESCE(SUM(hd.tong_sp), 0)\n" +
+
             "            FROM chi_tiet_giay ctg \n" +
             "            JOIN Giay g ON g.id_giay = ctg.id_giay\n" +
             "            JOIN hinh_anh a ON a.id_hinh_anh = ctg.id_hinh_anh\n" +
@@ -182,7 +184,7 @@ public interface CTGViewModelRepository extends JpaRepository< CTGViewModel,UUID
             "\t\t\ta.id_hinh_anh IS NOT NULL\n" +
             "\t\t\tAND MONTH(tg_thanh_toan)= MONTH(GETDATE())\n" +
             "            AND g.trang_thai = 1 \n" +
-            "\t\t\tAND hd.trang_thai=4\n" +
+            "\t\t\tAND ((hd.loai_hd=1 AND hd.trang_thai=1) OR (hd.loai_hd=0 AND hd.trang_thai=4))\n" +
             "            AND ctg.trang_thai = 1 \n" +
             "            GROUP BY  g.ten_giay, a.url1\n" +
             "            ORDER BY COALESCE(SUM(cthd.so_luong), 0) DESC",nativeQuery = true)

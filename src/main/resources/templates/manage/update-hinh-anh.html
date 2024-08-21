@@ -49,7 +49,7 @@
     </style>
 </head>
 <body class="mini-sidebar">
-<div th:replace="~{manage/activities :: main}"></div>
+<div th:replace="~{manage/a :: main}"></div>
 
 <form th:object="${hinhAnh}" method="post" th:action="@{'/manage/hinh-anh/viewUpdate/' + ${hinhAnh.idHinhAnh}}" enctype="multipart/form-data" onsubmit="return validateHinhAnhForm()" name="hinhAnhForm">
     <div class="page-wrapper">

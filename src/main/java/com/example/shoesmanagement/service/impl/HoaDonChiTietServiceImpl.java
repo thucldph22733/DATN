@@ -19,6 +19,11 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTIetService {
     @Autowired
     private HoaDonChiTietRepository hoaDonChiTietRepository;
 
+    // Phương thức để lấy danh sách HoaDonChiTiet theo idHoaDon
+    public List<HoaDonChiTiet> getListByHoaDon(UUID idHD) {
+        return hoaDonChiTietRepository.findByHoaDon_IdHD(idHD);
+    }
+
     @Autowired
     private HoaDonRepository hoaDonRepository;
 

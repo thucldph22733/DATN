@@ -1,15 +1,15 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Control Shop</title>
+    <title>Teezy Shop</title>
     <head>
         <meta charset="UTF-8">
         <meta name="description" content="Male_Fashion Template">
         <meta name="keywords" content="Male_Fashion, unica, creative, html">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Control Shop</title>
+        <title>Teezy Shop</title>
 
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
@@ -171,11 +171,12 @@
 
                         <!--        Buyer FullName Begin    -->
                         <div class="header__top__hover">
-                            <span th:text="${fullNameLogin}"><i class="arrow_carrot-down"></i></span>
-                            <ul>
+                            <span th:text="${fullNameLogin}" th:if="${fullNameLogin != null}"><i
+                                    class="arrow_carrot-down"></i></span>
+                            <ul th:if="${fullNameLogin != null}">
                                 <li><a th:href="@{'/buyer/setting'}">Cài đặt</a></li>
                                 <li><a th:href="@{'/buyer/logout'}">Đăng xuất</a></li>
-
+                                <li><a th:href="@{'/buyer/change-password'}">Đổi mật khẩu</a></li>
                             </ul>
                             <a th:if="${messageLoginOrSignin}" th:href="@{'/buyer/login'}"
                                style="color: #ffffff;font-size: 13px;text-transform: uppercase;letter-spacing: 2px;display: inline-block;cursor: pointer;">Đăng
@@ -359,8 +360,17 @@
                         <div class="product__details__text">
                             <h4 th:text="${product.tenGiay}"></h4>
                             <h3 id="price-range" class="price-range"
-                                th:text="'₫' + ${#numbers.formatDecimal(minPrice, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('[,.]$', '')} + ' - ₫' + ${#numbers.formatDecimal(maxPrice, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('[,.]$', '')}"></h3>         <h3 id="price_product"></h3>
+                                th:text="'₫' + ${#numbers.formatDecimal(minPrice, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('[,.]$', '')} + ' - ₫' + ${#numbers.formatDecimal(maxPrice, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('[,.]$', '')}"></h3>
+                            <h3 id="price_product"></h3>
                             <p th:text="${product.moTa}"></p>
+
+                            <h5>
+                                <strong>Chất liệu:</strong>
+                                <span th:text="${product.chatLieu.tenChatLieu}"></span> -
+                                <strong>Hãng:</strong>
+                                <span th:text="${product.hang.tenHang}"></span>
+                            </h5>
+
 
                             <div class="product__details__option 2">
                                 <div class="product__details__option__size 2" style="margin-left: 50px">
@@ -502,27 +512,27 @@
         }
     }
 </script>
-    <script>
-        function capNhatGia(event) {
-            // Lấy giá trị của label
-            var giaTriLabel = event.target.textContent || event.target.innerText;
+<script>
+    function capNhatGia(event) {
+        // Lấy giá trị của label
+        var giaTriLabel = event.target.textContent || event.target.innerText;
 
-            // Tìm phần ẩn tương ứng cho kích thước đã chọn
-            var phanAn = document.querySelector('section div[value="' + giaTriLabel + '"]');
+        // Tìm phần ẩn tương ứng cho kích thước đã chọn
+        var phanAn = document.querySelector('section div[value="' + giaTriLabel + '"]');
 
-            // Lấy giá trị giá từ phần ẩn
-            var gia = phanAn.querySelector('input:first-child').value;
+        // Lấy giá trị giá từ phần ẩn
+        var gia = phanAn.querySelector('input:first-child').value;
 
-            var giaDinhDang = gia.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
+        var giaDinhDang = gia.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
 
-            // Cập nhật giá hiển thị
-            var hienThiGia = document.getElementById('price-range');
-            hienThiGia.textContent = giaDinhDang;
-            // Cập nhật giá hiển thị
-            var hienThiGia = document.getElementById('price-range');
-            hienThiGia.textContent = '₫' + gia;
-        }
-    </script>
+        // Cập nhật giá hiển thị
+        var hienThiGia = document.getElementById('price-range');
+        hienThiGia.textContent = giaDinhDang;
+        // Cập nhật giá hiển thị
+        var hienThiGia = document.getElementById('price-range');
+        hienThiGia.textContent = '₫' + gia;
+    }
+</script>
 
 <script>
     document.getElementById("addToCartButton").addEventListener("click", function () {

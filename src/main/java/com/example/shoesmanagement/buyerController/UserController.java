@@ -154,7 +154,6 @@ public class UserController {
         return "online/user";
     }
 
-
     @PostMapping("/addresses/add")
     private String addNewAddress(Model model, @RequestParam(name = "defaultSelected", defaultValue = "false") boolean defaultSelected) {
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
@@ -170,6 +169,13 @@ public class UserController {
         String district = request.getParameter("district");
         String ward = request.getParameter("ward");
         String description = request.getParameter("description");
+
+        // Kiểm tra định dạng số điện thoại
+        String phoneRegex = "^(0[3|5|7|8|9])+([0-9]{8})$";
+        if (!phoneAddress.matches(phoneRegex)) {
+            model.addAttribute("messageError", "Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng số điện thoại.");
+            return "redirect:/buyer/addresses";
+        }
 
         String diaChiChiTiet = description + ", " + ward + ", " + district + ", " + city;
 
@@ -203,6 +209,7 @@ public class UserController {
 
         return "redirect:/buyer/addresses";
     }
+
 
 
     @GetMapping("/addresses/viewEdit/{id}")
