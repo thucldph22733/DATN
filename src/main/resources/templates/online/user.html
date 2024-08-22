@@ -44,6 +44,7 @@
 
 
         <style>
+
             header {
                 position: fixed;
                 width: 100%;
@@ -1563,11 +1564,10 @@
                 </div>
 
 
-
                 <div th:if="${addNewAddressSetting}" class="modal fade" id="modalThemDiaChi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document" style="width: 500px">
                         <div class="modal-content">
-                            <form action="/buyer/addresses/add" method="post">
+                            <form action="/buyer/addresses/add" method="post" onsubmit="return validateAddNewAddress()">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLongTitle">Thêm địa chỉ mới</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -1577,20 +1577,20 @@
                                 <div class="modal-body">
                                     <div>
                                         <div class="row mb-3">
-                                            <input class="form-control" type="text" placeholder="Tên địa chỉ" name="nameAddress">
-                                            <input class="form-control" type="text" placeholder="Tên người nhận" name="fullName">
+                                            <input class="form-control" type="text" placeholder="Tên địa chỉ" name="nameAddress"  id ="nameAddress"  required>
+                                            <input class="form-control" type="text" placeholder="Tên người nhận" name="fullName" id="fullName" required>
                                         </div>
                                         <div class="row mb-3">
-                                            <input class="form-control" type="text" placeholder="SDT người nhận" name="phoneAddress" id="phoneAddress" onblur="validatePhoneNumber()">
-                                            <select class="form-control" id="city" name="city">
+                                            <input class="form-control" type="text" placeholder="SDT người nhận" name="phoneAddress" id="phoneAddress" required>
+                                            <select class="form-control" id="city" name="city" required>
                                                 <option value="" selected>Chọn thành phố</option>
                                             </select>
                                         </div>
                                         <div class="row mb-3">
-                                            <select class="form-control" id="district" name="district">
+                                            <select class="form-control" id="district" name="district" required>
                                                 <option value="" selected>Chọn quận huyện</option>
                                             </select>
-                                            <select class="form-control" id="ward" name="ward">
+                                            <select class="form-control" id="ward" name="ward" required>
                                                 <option value="" selected>Chọn phường/xã</option>
                                             </select>
                                         </div>
@@ -1605,12 +1605,14 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                                    <button type="submit" class="btn btn-primary">Thêm địa chỉ</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
+
+
 
 
 
@@ -2135,6 +2137,10 @@
             <!--        Modal thay đổi phương thức thanh toán (chờ thanh toán) begin-->
             <div th:if="${detailBillPay}" class="modal-dialog modal-dialog-centered" role="document" style="width: 550px;" th:object="${billDetailPay}" >
                 <form th:action="@{'/buyer/purchase/pay/change/payment/' + ${billDetailPay.idHD}}" method="post">
+                    <div th:if="${error}" class="alert alert-danger" role="alert">
+                        <span th:text="${error}"></span>
+                    </div>
+
                     <div class="modal-content" >
 
                         <div class="modal-header">
@@ -2567,7 +2573,7 @@
         <div th:if="${billDetailPay}" class="modal fade" id="addNewAddressNhanHang" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document" style="width: 500px">
                 <div class="modal-content">
-                    <form th:action="'/buyer/purchase/bill/add/address/get/' + ${billDetailPay.idHD}" method="post">
+                    <form th:action="'/buyer/purchase/bill/add/address/get/' + ${billDetailPay.idHD}" method="post" onsubmit="return validateAddNewAddress()">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLongTitle">Thêm địa chỉ nhận hàng mới</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -2578,14 +2584,14 @@
                             <div>
                                 <div class="row" style="margin-bottom: 20px;">
                                     <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên địa chỉ" name="nameAddress">
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên địa chỉ" name="nameAddress" id="nameAddress">
 
                                     <input style="height: 40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên người nhận" name="fullName" >
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên người nhận" name="fullName" id="fullName">
                                 </div>
                                 <div class="row" style="margin-bottom: 20px;">
                                     <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="SDT người nhận" name="phoneAddress">
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="SDT người nhận" name="phoneAddress" id="phoneAddress">
 
                                     <select class="select" id="city" name="city"
                                             style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
@@ -2701,7 +2707,7 @@
         <div th:if="${detailBillShip}" class="modal fade" id="addNewAddressNhanHangDelivery" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document" style="width: 500px">
                 <div class="modal-content">
-                    <form th:action="'/buyer/purchase/bill/add/address/get/' + ${billDetailShip.idHD}" method="post">
+                    <form th:action="'/buyer/purchase/bill/add/address/get/' + ${billDetailShip.idHD}" method="post" onsubmit="return validateAddNewAddress()">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLongTitle">Thêm địa chỉ nhận hàng mới</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -2712,14 +2718,14 @@
                             <div>
                                 <div class="row" style="margin-bottom: 20px;">
                                     <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên địa chỉ" name="nameAddress">
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên địa chỉ" name="nameAddress" id="nameAddress">
 
                                     <input style="height: 40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên người nhận" name="fullName" >
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên người nhận" name="fullName"  id="fullName">
                                 </div>
                                 <div class="row" style="margin-bottom: 20px;">
                                     <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="SDT người nhận" name="phoneAddress">
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="SDT người nhận" name="phoneAddress" id="phoneAddress">
 
                                     <select class="select" id="city" name="city"
                                             style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
@@ -3081,8 +3087,8 @@
         <div th:if="${addNewAddressNotNull}" class="modal fade" id="addNewAddress" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document" style="width: 500px">
                 <div class="modal-content">
-                    <form action="/buyer/purchase/refund/add/address" method="post">
-                        <div class="modal-header">
+                    <form action="/buyer/purchase/refund/add/address" method="post"  onsubmit="return validateAddNewAddress()">
+                    <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLongTitle">Thêm địa chỉ mới</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -3091,64 +3097,59 @@
                         <div class="modal-body">
                             <div>
                                 <div class="row" style="margin-bottom: 20px;">
-                                    <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                    <input id="nameAddress" style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
                                 font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên địa chỉ" name="nameAddress">
 
-                                    <input style="height: 40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên người nhận" name="fullName" >
+                                    <input id="fullName" style="height: 40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="Tên người nhận" name="fullName">
                                 </div>
                                 <div class="row" style="margin-bottom: 20px;">
-                                    <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                    <input id="phoneAddress" style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
                                 font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text" placeholder="SDT người nhận" name="phoneAddress">
 
                                     <select class="select" id="city" name="city"
                                             style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                                       font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
+                                    font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
                                         <option value="" selected>Chọn thành phố</option>
                                     </select>
                                 </div>
 
                                 <div class="row" style="margin-bottom: 20px;">
-
                                     <select class="select" id="district" name="district" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; margin-left: 38px; margin-right: 30px; ">
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; margin-left: 38px; margin-right: 30px;">
                                         <option value="" selected>Chọn quận huyện</option>
                                     </select>
 
                                     <select class="select" id="ward" name="ward" style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; ">
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
                                         <option value="" selected>Chọn phường/xã</option>
                                     </select>
-
                                 </div>
 
-                                <div class="row" style="margin-bottom: 20px;" >
-
-                                    <input name="description" style="height: 40px;width: 410px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381;  padding: 10px 15px; margin-left: 38px;" type="text" placeholder="Mô tả";  >
-
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <input id="description" name="description" style="height: 40px;width: 410px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
+                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px; margin-left: 38px;" type="text" placeholder="Mô tả">
                                 </div>
 
                                 <div style="width: 100%; height:15px;"></div>
-                                <div style="width: 100%; height: 0.5px; background-color: rgb(64, 64, 64) ;"></div>
+                                <div style="width: 100%; height: 0.5px; background-color: rgb(64, 64, 64);"></div>
                                 <div style="width: 100%; height:15px;"></div>
 
                                 <div class="row">
-                                    <input style="margin: 0 10px 0 38px;" type="checkbox" name="defaultSelected">  Đặt làm mặc định
+                                    <input style="margin: 0 10px 0 38px;" type="checkbox" name="defaultSelected"> Đặt làm mặc định
                                 </div>
-
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            <button type="submit" class="btn btn-primary">Thêm Địa Chỉ</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
         <!--    Modal thêm địa chỉ lấy hàng end-->
-
+    </div>
 </section>
 <!-- Shop Section End -->
 
@@ -3184,17 +3185,29 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-<script>
-    function validatePhoneNumber() {
-        var phone = document.getElementById("phoneAddress").value;
-        var phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})$/;
 
-        if (!phoneRegex.test(phone)) {
-            alert("Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng số điện thoại.");
-            document.getElementById("phoneAddress").focus();
+<script>
+    function validateAddNewAddress() {
+        var nameAddress = document.getElementById("nameAddress").value;
+        var fullName = document.getElementById("fullName").value;
+        var soDienThoai = document.getElementById("phoneAddress").value;
+        var phoneRegex = /^0\d{9}$/;
+
+        if (nameAddress === "" || fullName === "" || soDienThoai === "") {
+            alert("Vui lòng điền đầy đủ thông tin");
+            return false;
         }
+        if (!phoneRegex.test(soDienThoai)) {
+            alert("Số điện thoại phải bắt đầu bằng số 0 và đủ 10 số");
+            return false;
+        }
+        return true;
     }
 </script>
+
+
+
+
 <script>
     function submitForm() {
         // Gửi form khi nhấn nút "Lưu thay đổi"

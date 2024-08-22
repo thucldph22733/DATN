@@ -558,22 +558,6 @@
                                                                  class="alert alert-success text-center">
                                                                 <h3 th:text="${message}"></h3>
                                                             </div>
-
-                                                        </nav>
-                                                    </div>
-                                                </div>
-                                                <div class="card card-order">
-
-                                                    <div class="card-body pt-0 mt-3">
-                                                        <div class="totalitem">
-                                                            <label class="fw-semibold fs-3">Giỏ hàng</label>
-                                                            <button onclick="location.reload();"
-                                                                    class="btn btn-primary">
-                                                                Reload Hóa Đơn
-                                                            </button>
-                                                            <h4 th:text="'Số sản phẩm: ' + ${tongSanPham}"></h4>
-
-
                                                         </div>
                                                     </nav>
                                                 </div>
@@ -1280,17 +1264,27 @@
         var hoTen = document.getElementById("hoTenKH").value;
         var soDienThoai = document.getElementById("sdtKH").value;
         var phoneRegex = /^0\d{9}$/;
+        var nameRegex = /^[^\d]+$/;
+
         if (hoTen === "" || soDienThoai === "") {
             alert("Vui lòng điền đầy đủ thông tin");
             return false;
         }
-        if (!phoneRegex.test(soDienThoai)) {
-            alert("số điện thoại phải bắt đầu bằng số 0 và đủ 10 số");
+
+        if (!nameRegex.test(hoTen)) {
+            alert("Họ tên không được chứa số");
             return false;
         }
+
+        if (!phoneRegex.test(soDienThoai)) {
+            alert("Số điện thoại phải bắt đầu bằng số 0 và đủ 10 số");
+            return false;
+        }
+
         return true;
     }
 </script>
+
 
 <script>
     function tinhTienThua() {

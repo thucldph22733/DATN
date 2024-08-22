@@ -1,4 +1,5 @@
 package com.example.shoesmanagement.controller;
+
 import com.example.shoesmanagement.model.*;
 import com.example.shoesmanagement.repository.*;
 import com.example.shoesmanagement.service.*;
@@ -253,8 +254,7 @@ public class BanHangController {
             redirectAttributes.addFlashAttribute("messageError", true);
             redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
             return "redirect:/ban-hang/hien-thi";
-        }
-        else {
+        } else {
 
             if (chiTietGiay == null) {
                 redirectAttributes.addFlashAttribute("messageError", true);
@@ -441,11 +441,11 @@ public class BanHangController {
         hoaDon.setTongSP(tongSanPham);
         hoaDon.setHinhThucThanhToan(0);
 
-        if(hoaDon.getKhuyenMai() != null){   // nếu hoá đơn có dùng khuyến mãi
+        if (hoaDon.getKhuyenMai() != null) {   // nếu hoá đơn có dùng khuyến mãi
             KhuyenMai kmcsdl = khuyenMaiRepository.findById(hoaDon.getKhuyenMai().getIdKM()).get();
             int slmax = kmcsdl.getSoLuong();
             int sl = kmcsdl.getSoLuongDaDung();
-            if(sl == slmax){    // nếu số lượng khuyến mãi đã hết thì xoá mã khuyến mãi ra khỏi hoá đơn và trả về trang thanh toán
+            if (sl == slmax) {    // nếu số lượng khuyến mãi đã hết thì xoá mã khuyến mãi ra khỏi hoá đơn và trả về trang thanh toán
                 hoaDon.setKhuyenMai(null);
                 hoaDonRepository.saveAndFlush(hoaDon);
 //                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
@@ -494,13 +494,13 @@ public class BanHangController {
             return "redirect:/ban-hang/hien-thi";
         }
 
-            List<GiayViewModel> list = giayViewModelService.getAll(keyword);
-            if (list.isEmpty()) {
-                redirectAttributes.addFlashAttribute("messageError", true);
-                redirectAttributes.addFlashAttribute("tbaoError", "Không tìm thấy sản phẩm");
-                return "redirect:/ban-hang/cart/hoadon/" + idHoaDon;
-            }
-            model.addAttribute("listSanPham", list);
+        List<GiayViewModel> list = giayViewModelService.getAll(keyword);
+        if (list.isEmpty()) {
+            redirectAttributes.addFlashAttribute("messageError", true);
+            redirectAttributes.addFlashAttribute("tbaoError", "Không tìm thấy sản phẩm");
+            return "redirect:/ban-hang/cart/hoadon/" + idHoaDon;
+        }
+        model.addAttribute("listSanPham", list);
 
 
         model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
@@ -515,11 +515,11 @@ public class BanHangController {
     }
 
     @GetMapping("/xoa-gio-hang/{idChiTietGiay}")
-    public String xoaSanPham(@PathVariable("idChiTietGiay") UUID idChiTietGiay, RedirectAttributes redirectAttributes,Model model) {
+    public String xoaSanPham(@PathVariable("idChiTietGiay") UUID idChiTietGiay, RedirectAttributes redirectAttributes, Model model) {
 
         ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idChiTietGiay);
         UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
-        HoaDon hoaDon =  hoaDonService.getOne(idHoaDon);
+        HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHoaDon, idChiTietGiay);
 
         chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + hoaDonChiTiet.getSoLuong());
@@ -549,9 +549,8 @@ public class BanHangController {
     }
 
 
-
     @GetMapping("/list-khach-hang")
-    public String listKH( RedirectAttributes redirectAttributes,Model model) {
+    public String listKH(RedirectAttributes redirectAttributes, Model model) {
         UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
         if (idHoaDon == null) {
             redirectAttributes.addFlashAttribute("messageError", true);
@@ -693,6 +692,7 @@ public class BanHangController {
         redirectAttributes.addFlashAttribute("messageSuccess", true);
         return "redirect:/ban-hang/cart/hoadon/" + idHoaDon;
     }
+
     @GetMapping("/delete-hoa-don-cho/{idHD}")
     public String deleteHoaDonChoByIdHD(@PathVariable UUID idHD, RedirectAttributes redirectAttributes) {
         try {
