@@ -424,10 +424,19 @@
                                                         <td th:text="${#dates.format(bill.tgTao, 'HH:mm yyyy-MM-dd')}"></td>
 
                                                         <!--                                                         Hóa đơn thường begin-->
-                                                        <td th:if="${bill.trangThai == 2 }">Chưa Thanh toán</td>
-                                                        <td th:if="${bill.trangThai == 3 }">Chưa Thanh toán</td>
-                                                        <td th:if="${bill.trangThai == 5 }">Chưa Thanh toán</td>
-                                                        <td th:if="${bill.trangThai == 4 }">Đã Thanh toán</td>
+
+                                                        <td th:if="${bill.hinhThucThanhToan == 1 && bill.trangThai == 2 }">VNPay</td>
+                                                        <td th:if="${bill.hinhThucThanhToan == 1 && bill.trangThai == 3 }">VNPay</td>
+                                                        <td th:if="${bill.hinhThucThanhToan == 1 && bill.trangThai == 4 }">VNPay</td>
+                                                        <td th:if="${bill.hinhThucThanhToan == 1 && bill.trangThai == 5 }">VNPay</td>
+                                                        <td th:if="${bill.hinhThucThanhToan == 0 && bill.trangThai == 2 }">TT khi nhận hàng</td>
+                                                        <td th:if="${bill.hinhThucThanhToan == 0 && bill.trangThai == 3 }">TT khi nhận hàng</td>
+                                                        <td th:if="${bill.hinhThucThanhToan == 0 && bill.trangThai == 4 }">TT khi nhận hàng</td>
+                                                        <td th:if="${bill.hinhThucThanhToan == 0 && bill.trangThai == 5 }">TT khi nhận hàng</td>
+
+
+
+
 
 
                                                         <td th:if="${bill.trangThai == 2 }">Chờ lấy hàng</td>
@@ -447,13 +456,7 @@
                                                             <i class="fe fe-eye" th:data-bs-toggle="modal"
                                                                th:data-bs-target="'#modalAll' + ${bill.idHD}"
                                                                style="cursor: pointer; margin: 0 10px 0 20px; color: #ff9f43;"></i>
-                                                            <a th:href="@{'http://localhost:8080/order/bill/print/' + ${bill.idHD}}"
-                                                               onclick="window.open(this.href, '_blank'); return false;">
-                                                                <i class="fe fe-printer" data-bs-toggle="tooltip"
-                                                                   title="" style="cursor: pointer; color: #ff9f43;"
-                                                                   data-bs-original-title="In hóa đơn"
-                                                                   aria-label="fe fe-printer"></i>
-                                                            </a>
+
 
                                                         </th>
                                                     </tr>

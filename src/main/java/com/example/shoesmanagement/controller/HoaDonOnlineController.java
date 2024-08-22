@@ -318,7 +318,7 @@ public class HoaDonOnlineController {
         int soLuongHoaDonOnline = 0;
         int soLuongHoaDonHuy = 0;
         int soLuongHoaDonDaThanhToan = 0;
-        int soLuongHoaDonChuaThanhToanNhanHang = 0;
+        int soLuongHoaDonChuaThanhToan = 0;
         int soLuongHoaDonDangGiao = 0;
         int soLuongHoaDonBanking = 0;
         int soLuongHoaDonDaNhan = 0;
@@ -343,16 +343,20 @@ public class HoaDonOnlineController {
                 if (x.getTrangThai() == 6 || x.getTrangThai() == 7) {
 
                 } else {
-                    if (x.getHinhThucThanhToan() == 1 && x.getTrangThai() == 0) {
+                    if (x.getHinhThucThanhToan() == 1 &&
+                            (x.getTrangThai() == 1 || x.getTrangThai() == 2 || x.getTrangThai() == 3 || x.getTrangThai() == 4 || x.getTrangThai() == 5)) {
                         soLuongHoaDonBanking++;
                         listHoaDonOnlineBaking.add(x);
                     }
-                    if (x.getHinhThucThanhToan() == 0) {
-                        soLuongHoaDonThanhToanKhiNhanHang++;
+                    if (x.getLoaiHD() == 0) {
+                        soLuongHoaDonOnline++;
+
                     }
 
                     if (x.getTrangThai() == 1 && x.getHinhThucThanhToan() == 1) {
                         soLuongHoaDonDaThanhToan++;
+                    } if (x.getTrangThai() == 0 && x.getHinhThucThanhToan() == 1) {
+                        soLuongHoaDonChuaThanhToan++;
                     }
                     if (x.getTrangThai() == 4 && x.getHinhThucThanhToan() == 0) {
                         soLuongHoaDonDaThanhToan++;
@@ -379,7 +383,7 @@ public class HoaDonOnlineController {
             }
         }
 
-        int soLuongHoaDonChuaThanhToan = soLuongHoaDonChuaThanhToanNhanHang + soLuongHoaDonBanking;
+
 
         int soLuongHdHoanChoXacNhan = 0;
         int soLuongHdHoanKhachHuy = 0;

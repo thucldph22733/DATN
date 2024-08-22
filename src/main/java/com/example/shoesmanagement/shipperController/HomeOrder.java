@@ -236,7 +236,7 @@ public class HomeOrder {
             showDataTab2(model);
             return "transportation/index";
         } else {
-            String viTri = "Đơn hàng đã đến" + ", " + ward + ", " + district + " , " + thanhPho;
+            String viTri = "Đơn hàng đang giao" ;
             ViTriDonHang viTriDonHang = new ViTriDonHang();
 
             viTriDonHang.setViTri(viTri);
