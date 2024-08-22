@@ -31,6 +31,7 @@
 </head>
 <body class="mini-sidebar">
 <div th:replace="~{manage/activities :: main}"></div>
+
 <form th:object="${nhanVien}" method="post"
       th:action="@{/manage/nhan-vien/viewAdd/add}" onsubmit="return validateForm()">
     <div class="page-wrapper">
@@ -238,10 +239,10 @@
         </div>
     </div>
 </div>
-//
 
 
-//Chức Vụ
+
+
 <div th:if="${messageCV}" id="successCV" class="toast-container toast-top-right">
     <div class="toast toast-success" aria-live="polite" style="display: block;">
         <button type="button" class="toast-close-button" role="button"></button>
@@ -250,7 +251,7 @@
     </div>
 </div>
 
-//
+
 <div th:if="${ErrormessageCV}" id="checkMaCV" class="toast-container toast-top-right">
     <div class="toast toast-error" aria-live="assertive" style="display: block;">
         <button type="button" class="toast-close-button" role="button"></button>
@@ -286,7 +287,6 @@
         <div class="toast-message">Sdt đã tồn tại.</div>
     </div>
 </div>
-//
 
 <script src="/js/jquery-3.6.0.min.js"></script>
 
@@ -322,6 +322,7 @@
     });
 
 </script>
+
 <script>
     function validateForm() {
         var maNV = document.getElementById("maNV").value;

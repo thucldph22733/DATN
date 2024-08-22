@@ -1262,17 +1262,27 @@
         var hoTen = document.getElementById("hoTenKH").value;
         var soDienThoai = document.getElementById("sdtKH").value;
         var phoneRegex = /^0\d{9}$/;
+        var nameRegex = /^[^\d]+$/;
+
         if (hoTen === "" || soDienThoai === "") {
             alert("Vui lòng điền đầy đủ thông tin");
             return false;
         }
-        if (!phoneRegex.test(soDienThoai)) {
-            alert("số điện thoại phải bắt đầu bằng số 0 và đủ 10 số");
+
+        if (!nameRegex.test(hoTen)) {
+            alert("Họ tên không được chứa số");
             return false;
         }
+
+        if (!phoneRegex.test(soDienThoai)) {
+            alert("Số điện thoại phải bắt đầu bằng số 0 và đủ 10 số");
+            return false;
+        }
+
         return true;
     }
 </script>
+
 
 <script>
     function tinhTienThua() {

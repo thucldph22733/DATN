@@ -155,28 +155,28 @@ public class UserController {
     }
 
     @PostMapping("/addresses/add")
-    private String addNewAddress(Model model, @RequestParam(name = "defaultSelected", defaultValue = "false") boolean defaultSelected) {
-        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-        if (khachHang != null) {
-            KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
-            model.addAttribute("khachHang1", khachHang1);
-        }
-
-        String nameAddress = request.getParameter("nameAddress");
-        String fullName = request.getParameter("fullName");
-        String phoneAddress = request.getParameter("phoneAddress");
-        String city = request.getParameter("city");
-        String district = request.getParameter("district");
-        String ward = request.getParameter("ward");
-        String description = request.getParameter("description");
-
-        // Kiểm tra định dạng số điện thoại
-        String phoneRegex = "^(0[3|5|7|8|9])+([0-9]{8})$";
-        if (!phoneAddress.matches(phoneRegex)) {
-            model.addAttribute("messageError", "Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng số điện thoại.");
+    private String addnewAddress(Model model,
+                                 @RequestParam(name = "defaultSelected", defaultValue = "false") boolean defaultSelected,
+                                 @RequestParam("nameAddress") String nameAddress,
+                                 @RequestParam("fullName") String fullName,
+                                 @RequestParam("phoneAddress") String phoneAddress,
+                                 @RequestParam("city") String city,
+                                 @RequestParam("district") String district,
+                                 @RequestParam("ward") String ward,
+                                 @RequestParam("description") String description,RedirectAttributes redirectAttributes) {
+        // Kiểm tra các tham số
+        if (nameAddress.isEmpty() || fullName.isEmpty() || phoneAddress.isEmpty() || city.isEmpty() || district.isEmpty() || ward.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tất cả các trường bắt buộc phải được điền.");
             return "redirect:/buyer/addresses";
         }
 
+        String phonePattern = "^(?:\\+84|0)[3|5|7|8|9]\\d{8}$"; // Định dạng số điện thoại Việt Nam
+        if (!phoneAddress.matches(phonePattern)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Số điện thoại không hợp lệ.");
+            return "redirect:/buyer/addresses";
+        }
+        // Tiến hành lưu địa chỉ
+        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         String diaChiChiTiet = description + ", " + ward + ", " + district + ", " + city;
 
         DiaChiKH diaChiKH = new DiaChiKH();
@@ -192,6 +192,7 @@ public class UserController {
         diaChiKH.setTenNguoiNhan(fullName);
         diaChiKH.setXaPhuong(ward);
         diaChiKH.setTgThem(new Date());
+        diaChiKH.setLoai(defaultSelected);
 
         // Kiểm tra nếu người dùng đã có địa chỉ mặc định
         List<DiaChiKH> diaChiKHDefaultList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, true, 1);
