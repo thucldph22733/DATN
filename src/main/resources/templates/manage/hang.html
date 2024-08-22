@@ -165,7 +165,8 @@
                             <tbody>
                             <tr th:each="items : ${hang}">
                                 <td><img width="80px" height="90px"
-                                         th:src="@{'/images/logoBrands/'+ ${items.logoHang}}"></td>
+                                         th:src="@{'/images/imgsProducts/'+ ${items.logoHang}}"></td>
+
                                 <td th:text="${items.maHang}"></td>
                                 <td th:text="${items.tenHang}"></td>
                                 <td>

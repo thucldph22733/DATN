@@ -71,52 +71,58 @@ public class HinhAnhController {
         return "manage/hinh-anh";
     }
 
-    @PostMapping("/hinh-anh/viewAdd/add")
-    public String addHinhAnh(@RequestParam("maAnh") String maAnh,
-                             @RequestParam("anh1") MultipartFile anh1,
-                             @RequestParam("anh2") MultipartFile anh2,
-                             @RequestParam("anh3") MultipartFile anh3,
-                             @RequestParam("anh4") MultipartFile anh4,
-                             @Valid @ModelAttribute("hinhAnh") HinhAnh hinhAnh, BindingResult bindingResult,
-                             RedirectAttributes redirectAttributes){
-        HinhAnh existingAnh = hinhAnhRepository.findByMaAnh(hinhAnh.getMaAnh());
-        if (existingAnh != null) {
-            redirectAttributes.addFlashAttribute("userInput", hinhAnh);
-            redirectAttributes.addFlashAttribute("Errormessage", true);
+        @PostMapping("/hinh-anh/viewAdd/add")
+        public String addHinhAnh(@RequestParam("maAnh") String maAnh,
+                                 @RequestParam("anh1") MultipartFile anh1,
+                                 @RequestParam("anh2") MultipartFile anh2,
+                                 @RequestParam("anh3") MultipartFile anh3,
+                                 @RequestParam("anh4") MultipartFile anh4,
+                                 @Valid @ModelAttribute("hinhAnh") HinhAnh hinhAnh, BindingResult bindingResult,
+                                 RedirectAttributes redirectAttributes){
+            HinhAnh existingAnh = hinhAnhRepository.findByMaAnh(hinhAnh.getMaAnh());
+            if (existingAnh != null) {
+                redirectAttributes.addFlashAttribute("userInput", hinhAnh);
+                redirectAttributes.addFlashAttribute("Errormessage", true);
+                return "redirect:/manage/hinh-anh";
+            }
+            HinhAnh hinhAnh1 = new HinhAnh();
+            hinhAnh1.setMaAnh(maAnh);
+            if (anh1.isEmpty() || anh2.isEmpty() || anh3.isEmpty() || anh4.isEmpty()) {
+                return "redirect:/manage/hinh-anh";
+            }
+            Path path = Paths.get("img2/");
+            try {
+                InputStream inputStream = anh1.getInputStream();
+                Files.copy(inputStream, path.resolve(anh1.getOriginalFilename()),
+                        StandardCopyOption.REPLACE_EXISTING);
+                hinhAnh1.setUrl1(anh1.getOriginalFilename().toLowerCase());
+
+                inputStream = anh2.getInputStream();
+                Files.copy(inputStream, path.resolve(anh2.getOriginalFilename()),
+                        StandardCopyOption.REPLACE_EXISTING);
+                hinhAnh1.setUrl2(anh2.getOriginalFilename().toLowerCase());
+
+                inputStream = anh3.getInputStream();
+                Files.copy(inputStream, path.resolve(anh3.getOriginalFilename()),
+                        StandardCopyOption.REPLACE_EXISTING);
+                hinhAnh1.setUrl3(anh3.getOriginalFilename().toLowerCase());
+
+                inputStream = anh4.getInputStream();
+                Files.copy(inputStream, path.resolve(anh4.getOriginalFilename()),
+                        StandardCopyOption.REPLACE_EXISTING);
+                hinhAnh1.setUrl4(anh4.getOriginalFilename().toLowerCase());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            hinhAnh1.setTgThem(new Date());
+            hinhAnh1.setTrangThai(1);
+            hinhAnhService.save(hinhAnh1);
+            redirectAttributes.addFlashAttribute("message", true);
             return "redirect:/manage/hinh-anh";
         }
-        HinhAnh hinhAnh1 = new HinhAnh();
-        hinhAnh1.setMaAnh(maAnh);
-        if (anh1.isEmpty() || anh2.isEmpty() || anh3.isEmpty() || anh4.isEmpty()) {
-            return "redirect:/manage/hinh-anh";
-        }
-        Path path = Paths.get("src/main/resources/static/images/imgsProducts/");
-        try {
-            InputStream inputStream = anh1.getInputStream();
-            Files.copy(inputStream, path.resolve(anh1.getOriginalFilename()),
-                    StandardCopyOption.REPLACE_EXISTING);
-            hinhAnh1.setUrl1(anh1.getOriginalFilename().toLowerCase());
-            inputStream = anh2.getInputStream();
-            Files.copy(inputStream, path.resolve(anh2.getOriginalFilename()),
-                    StandardCopyOption.REPLACE_EXISTING);
-            hinhAnh1.setUrl2(anh2.getOriginalFilename().toLowerCase());
-            inputStream = anh3.getInputStream();
-            Files.copy(inputStream, path.resolve(anh3.getOriginalFilename()),
-                    StandardCopyOption.REPLACE_EXISTING);
-            hinhAnh1.setUrl3(anh3.getOriginalFilename().toLowerCase());
-            inputStream = anh4.getInputStream();
-            Files.copy(inputStream, path.resolve(anh4.getOriginalFilename()),
-                    StandardCopyOption.REPLACE_EXISTING);
-            hinhAnh1.setUrl4(anh4.getOriginalFilename().toLowerCase());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        hinhAnh1.setTgThem(new Date());
-        hinhAnh1.setTrangThai(1);
-        hinhAnhService.save(hinhAnh1);
-        redirectAttributes.addFlashAttribute("message", true);
-        return "redirect:/manage/hinh-anh";
-    }
+
+
     @GetMapping("/hinh-anh/delete/{id}")
     public String deleteHinhAnh(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         HinhAnh hinhAnh = hinhAnhService.getByIdHinhAnh(id);
@@ -179,7 +185,7 @@ public class HinhAnhController {
             return link;
         }
         //
-        Path path = Paths.get("src/main/resources/static/images/imgsProducts/");
+        Path path = Paths.get("img2/");
         //
         if (hinhAnhDb != null) {
             hinhAnhDb.setMaAnh(maAnh);

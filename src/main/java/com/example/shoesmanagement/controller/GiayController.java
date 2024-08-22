@@ -234,7 +234,7 @@ public class GiayController {
             redirectAttributes.addFlashAttribute("ErrormessageHang", true);
             return "redirect:/manage/giay/viewAdd";
         }
-        Path path = Paths.get("src/main/resources/static/images/logoBrands/");
+        Path path = Paths.get("imgBrand/");
         Hang hang1 = new Hang();
         hang1.setMaHang(maHang);
         hang1.setTenHang(tenHang);

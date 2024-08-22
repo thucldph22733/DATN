@@ -736,7 +736,7 @@
                                                                 <li style="margin-bottom: 20px;">
                                                                     <div>Tạm tính</div>
                                                                     <div class="grandTotal" id="tienTamTinh"
-                                                                         th:text=" ${#numbers.formatDecimal(tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' đ'"></div>
+                                                                         th:text=" ${#numbers.formatDecimal(tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' '"></div>
                                                                 </li>
 
                                                                 <li style="margin-bottom: 20px;">
@@ -751,7 +751,7 @@
                                                                 <li style="margin-bottom: 20px;">
                                                                     <h5>Số tiền giảm:</h5>
                                                                     <h5 id="apDungMaGiamGia"
-                                                                        th:text="${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 0, 'POINT')} + '₫'"></h5>
+                                                                        th:text="${#numbers.formatDecimal(giaTienGiam, 0, 'COMMA', 0, 'POINT')} + ''"></h5>
                                                                     <input type="text" th:value="${giaTienGiam}"
                                                                            id="tienGiam" style="display: none">
                                                                 </li>
@@ -817,7 +817,7 @@
                                                                 <li style="margin-bottom: 20px;">
                                                                     <h5>Tổng tiền sau khuyến mãi : </h5>
                                                                     <h5 class="grandTotal" style="font-size: 13pt;"
-                                                                        th:text="${tongTien} + ' đ'"
+                                                                        th:text="${tongTien} + ' '"
                                                                         id="tongTienSauKhuyenMai"></h5>
 
                                                                     <input id="tongtienKM" th:value="${tongTien}"
