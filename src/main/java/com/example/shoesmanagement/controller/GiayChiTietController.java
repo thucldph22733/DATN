@@ -797,7 +797,7 @@ public class GiayChiTietController {
             return "redirect:/manage/hang";
         }
         //
-        Path path = Paths.get("src/main/resources/static/images/logoBrands/");
+        Path path = Paths.get("imgBrand/");
         //
         Hang hang1 = new Hang();
         hang1.setMaHang(maHang);
@@ -1013,7 +1013,7 @@ public class GiayChiTietController {
         if (anh1.isEmpty() || anh2.isEmpty() || anh3.isEmpty() || anh4.isEmpty()) {
             return "redirect:/manage/hinh-anh";
         }
-        Path path = Paths.get("src/main/resources/static/images/imgsProducts/");
+        Path path = Paths.get("img2/");
         try {
             InputStream inputStream = anh1.getInputStream();
             Files.copy(inputStream, path.resolve(anh1.getOriginalFilename()),
@@ -1063,7 +1063,7 @@ public class GiayChiTietController {
         if (anh1.isEmpty() || anh2.isEmpty() || anh3.isEmpty() || anh4.isEmpty()) {
             return "redirect:/manage/hinh-anh";
         }
-        Path path = Paths.get("src/main/resources/static/images/imgsProducts/");
+        Path path = Paths.get("img2/");
         try {
             InputStream inputStream = anh1.getInputStream();
             Files.copy(inputStream, path.resolve(anh1.getOriginalFilename()),

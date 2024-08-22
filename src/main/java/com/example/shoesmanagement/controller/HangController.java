@@ -95,18 +95,20 @@ public class HangController {
                           @Valid @ModelAttribute("hang") Hang hang, BindingResult bindingResult,
                           RedirectAttributes redirectAttributes) {
         Hang existingHang = hangRepository.findByMaHang(hang.getMaHang());
+
         if (existingHang != null) {
             redirectAttributes.addFlashAttribute("useInput", hang);
             redirectAttributes.addFlashAttribute("errorMessage",true);
             return "redirect:/manage/hang";
         }
-        Path path = Paths.get("src/main/resources/static/images/logoBrands/");
         Hang hang1 = new Hang();
         hang1.setMaHang(maHang);
         hang1.setTenHang(tenHang);
         if (logoHang.isEmpty()){
             return "redirect:/manage/hang";
         }
+        Path path = Paths.get("imgBrand/");
+
         try{
             InputStream inputStream = logoHang.getInputStream();
             Files.copy(inputStream,path.resolve(logoHang.getOriginalFilename()),
@@ -176,7 +178,7 @@ public class HangController {
             redirectAttributes.addFlashAttribute("Errormessage", true);
             return link;
         }
-        Path path = Paths.get("src/main/resources/static/images/logoBrands/");
+        Path path = Paths.get("imgBrand/");
         if (hangDb != null) {
             hangDb.setMaHang(maHang);
             hangDb.setTenHang(tenHang);

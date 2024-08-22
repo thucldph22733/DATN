@@ -50,6 +50,7 @@
 <body class="mini-sidebar">
 <div th:replace="~{manage/a :: main}"></div>
 <div class="main-wrapper">
+
     <div class="page-wrapper">
         <div class="content">
             <div class="page-header">
@@ -122,6 +123,7 @@
                             </div>
                         </form>
                     </div>
+
                     <br>
                     <div class="table-top">
                         <div class="search-set">
@@ -174,7 +176,6 @@
                                 <th>Action</th>
                                 <th>Thời Gian Thêm</th>
                                 <th>Thời Gian Sửa</th>
-
                             </tr>
                             </thead>
                             <tbody>
@@ -217,6 +218,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
@@ -261,6 +263,7 @@
 <script src="/js/script.js"></script>
 <script src="/plugins/alertify/custom-alertify.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Lấy thẻ nút in bằng id
@@ -324,6 +327,7 @@
         }
     });
 </script>
+
 <script>
     function previewImage(event) {
         const imageInput = document.getElementById('imageInput');
@@ -380,6 +384,7 @@
         }
     }
 </script>
+
 <script>
     setTimeout(function () {
         var successToast = document.getElementById('toast-container');
