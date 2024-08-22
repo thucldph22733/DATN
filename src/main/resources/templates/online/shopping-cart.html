@@ -34,6 +34,13 @@
         <!-- Include Bootstrap JS -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+
 
         <style>
             header {
@@ -70,6 +77,66 @@
             input[type="number"]::down-button {
                 display: block !important;
             }
+
+            /* Modal */
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgba(0, 0, 0, 0.4);
+            }
+
+            /* Modal Content */
+            .modal-content {
+                background-color: #fefefe;
+                margin: 15% auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%;
+                max-width: 400px;
+                text-align: center;
+                border-radius: 10px;
+            }
+
+            /* Close Button */
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            /* Buttons */
+            .cancelbtn, .deletebtn {
+                padding: 10px 20px;
+                margin: 10px;
+                border: none;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+
+            .cancelbtn {
+                background-color: #ccc;
+                color: black;
+            }
+
+            .deletebtn {
+                background-color: #f44336;
+                color: white;
+            }
+
 
         </style>
     </head>
@@ -135,19 +202,11 @@
                         </div>
                         <!--        Buyer FullName Begin    -->
                         <div class="header__top__hover">
-                            <span th:text="${fullNameLogin}" th:if="${fullNameLogin != null}"><i class="arrow_carrot-down"></i></span>
-                            <ul th:if="${fullNameLogin != null}">
+                            <span th:text="${fullNameLogin}"><i class="arrow_carrot-down"></i></span>
+                            <ul>
                                 <li><a th:href="@{'/buyer/setting'}">Cài đặt</a></li>
                                 <li><a th:href="@{'/buyer/logout'}">Đăng xuất</a></li>
-                                <li><a th:href="@{'/buyer/change-password'}">Đổi mật khẩu</a></li>
                             </ul>
-                            <a th:if="${messageLoginOrSignin}" th:href="@{'/buyer/login'}"
-                               style="color: #ffffff;font-size: 13px;text-transform: uppercase;letter-spacing: 2px;display: inline-block;cursor: pointer;">Đăng
-                                nhập</a>
-                            <a><span> | | </span></a>
-                            <a th:if="${messageLoginOrSignin}" th:href="@{'/buyer/register'}"
-                               style="color: #ffffff;font-size: 13px;text-transform: uppercase;letter-spacing: 2px;display: inline-block;cursor: pointer;">Đăng
-                                ký </a>
                         </div>
                         <!--            Buyer FullName End -->
                         <div class="header__top__hover">
@@ -217,8 +276,52 @@
             </div>
             <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option" style="display: flex;justify-content: end;">
+                    <div class="nav user-menu" style="height: 30px;">
+                        <li class="nav-item dropdown" style="height: 30px;">
+                            <a data-bs-toggle="dropdown" href="#">
+                                <img style="margin-bottom: 42px; width: 18px; height: 18px;"
+                                     src="/images/img/icon/notification.png">
+                            </a>
+                            <span style="position: absolute; height:20px; width: 25px; top: -13px; left: 7px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;"
+                                  th:text="${soThongBao}"></span>
+                            <div class="dropdown-menu notifications"
+                                 style="width:300px; top: -80px; position: absolute;">
+                                <div class="topnav-dropdown-header">
+                                    <span class="notification-title">Thông báo</span>
+                                    <a class="clear-noti"> Xóa sạch </a>
+                                </div>
+                                <div class="vertical-scroll scroll-demo">
+                                    <th:block th:if="${x.trangThai != 3}" th:each="x : ${listThongBao}">
+                                        <a href="#" class="items-noticafitions">
+                                            <div class="items-notica">
+                                        <span class="avatar">
+                                            <img alt="" src="/images/img/blog/blog-1.jpg">
+                                        </span>
+                                                <div class="text-notica">
+                                                    <span class="notica-title" th:text="${fullNameLogin}"></span>
+                                                    <p class="notica-times">1 phút trước</p>
+                                                    <input th:if="x.trangThai == 1" checked class="notica-read"
+                                                           type="radio" name="" id="">
+                                                    <input th:if="x.trangThai == 0">
+                                                </div>
+                                                <p class="notica-status">---------</p>
+                                                <div class="text-contents">
+                                                    <p class="notica-contents" th:text="${x.noiDungTB}"></p>
+                                                </div>
 
 
+                                            </div>
+                                        </a>
+                                    </th:block>
+                                </div>
+                                <div class="topnav-dropdown-footer">
+                                    <a href="activities.html">Xem tất cả thông báo</a>
+                                </div>
+                            </div>
+
+                        </li>
+                    </div>
+                    <a th:href="@{'/buyer/fa&recently'}"><img src="/images/img/icon/heart2.png" alt=""></a>
 
                     <a th:href="@{'/buyer/cart'}" style="position: relative; display: inline-block; ">
                         <img src="/images/img/icon/cart.png" alt="">
@@ -250,7 +353,7 @@
                             <input onclick="selectAllItems(this)" style="height: 20px; width: 20px; margin-right: 10px;"
                                    type="checkbox" name="" id="checkAll"
                                    th:text="'Chọn tất cả ( ' +${sumProductInCart} +' sản phẩm )'"></p>
-
+                        <a style="margin: 10px 0 0 50px; color: red;" href="">Xóa</a>
 
                     </div>
                     <div class="col-lg-2">
@@ -263,7 +366,7 @@
 
                 <div class="row" style="background-color: #f3f2ee; height: 50px;width: 1170px; ">
                     <div class="col-lg-8">
-
+                        <a style="margin:10px 0 0 50px;" href="">Xóa khỏi giỏ hàng</a>
                     </div>
                     <div class="col-lg-4">
                         <button style="width: 300px; height: 35px; border: 0.5px solid rgb(61, 61, 61);" type="submit"
@@ -321,7 +424,7 @@
                                                     th:text="${x.chiTietGiay.giay.tenGiay}"></h6>
                                             </a>
                                             <h5 class="cart__price"
-                                                th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 0, 'POINT')}"></h5>
+                                                th:text="'₫' +  ${#numbers.formatDecimal(x.chiTietGiay.giaBan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h5>
                                         </div>
 
                                     </td>
@@ -352,35 +455,16 @@
 
 
                                     <td style="width: 140px;" class="cart__price totalAmount"
-                                        th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 0, 'POINT')}"></td>
+                                        th:text="'₫' + ${#numbers.formatDecimal(x.chiTietGiay.giaBan * x.soLuong, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
                                     <!--                                    <td class="cart__close"><a th:href="@{'/buyer/cart/delete/' + ${x.chiTietGiay.idCTG}}" id="deleteToCartButton" style="border-radius: 20% ; " ><i class="fa fa-close"></i></a></td>-->
                                     <!--                                    <td class="cart__close"> <a th:href="@{/buyer/cart/delete/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}" id="deleteToCartButton" style="border-radius: 20%;" onclick="return confirm('Bạn có chắc chắn muốn xoá sản phẩm này khỏi giỏ hàng không?')" class="confirmation-box"> <i class="fa fa-close"></i> </a> </td>-->
+                                    <!-- Nút xóa -->
                                     <td class="cart__close">
-                                        <a th:href="@{/buyer/cart/delete/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}"
-                                           id="deleteToCartButton" style="border-radius: 20%;" data-toggle="modal"
-                                           data-target="#confirmationModal">
+                                        <a th:href="@{'/buyer/cart/delete/' + ${x.chiTietGiay.idCTG}}" id="deleteToCartButton" style="border-radius: 20%;" onclick="return confirmDelete();">
                                             <i class="fa fa-close"></i>
                                         </a>
                                     </td>
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog"
-                                         aria-labelledby="confirmationModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-body">
-                                                    Bạn có chắc chắn muốn xoá sản phẩm này khỏi giỏ hàng không?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Hủy
-                                                    </button>
-                                                    <a th:href="@{/buyer/cart/delete/{idCTG}(idCTG=${x.chiTietGiay.idCTG})}"
-                                                       class="btn btn-primary">Xoá</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                 </tr>
 
@@ -437,7 +521,7 @@
                             <div class="alert alert-warning container mt-3 text-center"
                                  th:if="*{listCartDetail.isEmpty()}"
                                  style="background-color: transparent; border: none;">
-                                <img src="/images/img/icon/gioHangTrong1.jpg" alt="Giỏ hàng trống"
+                                <img src="/images/img/icon/gioHangTrong1.png" alt="Giỏ hàng trống"
                                      style="width: 350px; height: 200px;">
                                 <br>
                                 <p class="empty-message" style="margin-top: 20px; font-size: 1.8em;">Bạn chưa có sản
@@ -870,9 +954,9 @@
 
     <!-- Button trigger modal -->
     <!-- Button trigger modal -->
-<!--    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#messAddThanhCong">-->
-<!--        Mở thông báo-->
-<!--    </button>-->
+    <!--    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#messAddThanhCong">-->
+    <!--        Mở thông báo-->
+    <!--    </button>-->
 
     <!-- Modal -->
     <div class="modal fade" id="messAddThanhCong" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle"
@@ -1131,27 +1215,9 @@
 </script>
 
 
-<script>
-    var deleteUrl = /*[[@{/buyer/cart/delete/}]]*/;
 
-    function deleteFromCart(idCTG) {
-        Swal.fire({
-            title: 'Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?',
-            text: "Bạn không thể hoàn tác hành động này!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Đồng ý',
-            cancelButtonText: 'Hủy'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = deleteUrl + idCTG;
-            }
-        });
-    }
 
-</script>
+
 <script>
     // Hàm sẽ được gọi ngay khi trang được tải xong
     window.onload = function() {
@@ -1165,6 +1231,41 @@
         }
     };
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('#deleteToCartButton');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default link behavior
+
+                Swal.fire({
+                    title: 'Bạn có chắc chắn muốn xóa?',
+                    text: "Sản phẩm sẽ bị xóa khỏi giỏ hàng của bạn!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Xóa',
+                    cancelButtonText: 'Hủy bỏ'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = button.href; // Manually redirect if confirmed
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+<!--<script type="text/javascript">-->
+<!--    function confirmDelete() {-->
+<!--        return confirm("Bạn có chắc chắn muốn xoá sản phẩm này khỏi giỏ hàng?");-->
+<!--    }-->
+<!--</script>-->
+
+
 
 <!--Receive mail end-->
 <!--aaaa-->

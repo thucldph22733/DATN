@@ -163,12 +163,13 @@ public class CheckOutController {
 //                return "redirect:/buyer/cart" ;
 //            }
 
+
             if (entry.getValue() > chiTietGiay.getSoLuong()) {
                 redirectAttribute.addFlashAttribute("successMessage", "Số lượng sản phẩm hiện còn: " + chiTietGiay.getSoLuong() + " đôi. Vui lòng giảm số lượng");
                 String idGiay = String.valueOf(chiTietGiay.getGiay().getIdGiay());
                 String idMau = String.valueOf(chiTietGiay.getMauSac().getIdMau());
                 String linkBack = idGiay + "/" + idMau;
-                return "redirect:/buyer/shop-details/" + linkBack;
+                return "redirect:/buyer/cart" ;
             } else {
                 // Xử lý trường hợp số lượng trong giỏ hàng lớn hơn số lượng tồn
                 // Có thể bắn lỗi, thông báo cho người dùng hoặc xử lý theo cách khác
@@ -777,7 +778,13 @@ public class CheckOutController {
 
         int paymentStatus = vnPayService.orderReturn(request);
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi");
-
+        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
+        model.addAttribute("khachHang1", khachHang1);
+        if (session.getAttribute("KhachHangLogin") == null) {
+            // Nếu managerLogged bằng null, quay về trang login
+            return "redirect:/buyer/login";
+        }
         if (hoaDon == null) {
             hoaDon = (HoaDon) session.getAttribute("HoaDonThanhToan");
         }
@@ -788,13 +795,7 @@ public class CheckOutController {
         String transactionId = request.getParameter("vnp_TransactionNo");
         String totalPrice = request.getParameter("vnp_Amount");
 
-        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-        KhachHang khachHang1 = khachHangService.getByIdKhachHang(khachHang.getIdKH());
-        model.addAttribute("khachHang1", khachHang1);
-        if (session.getAttribute("KhachHangLogin") == null) {
-            // Nếu managerLogged bằng null, quay về trang login
-            return "redirect:/buyer/login";
-        }
+
         if (paymentStatus == 1) {
 
             LichSuThanhToan lichSuThanhToan = new LichSuThanhToan();

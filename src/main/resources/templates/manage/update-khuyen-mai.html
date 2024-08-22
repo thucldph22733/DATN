@@ -69,7 +69,7 @@
 <body class="mini-sidebar">
 <div th:replace="~{manage/activities :: main}"></div>
 
-<form th:object="${updateKhuyenMai}" method="post" name="sizeForm">
+<form th:object="${updateKhuyenMai}" onsubmit="return validateKhuyenMaiForm()" name="khuyenMaiForm" method="post">
     <div class="page-wrapper">
         <div class="content">
             <div class="page-header">
@@ -118,7 +118,7 @@
                         <div class="col-lg-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label>Giảm</label>
-                                <input type="text" th:field="*{giaTienGiam}" class="form-control">
+                                <input type="number" th:field="*{giaTienGiam}" class="form-control">
                             </div>
                         </div>
 
@@ -126,7 +126,7 @@
                         <div class="col-lg-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label>Điều kiện</label>
-                                <input type="text" th:field="*{dieuKienKMBill}" class="form-control">
+                                <input type="number" th:field="*{dieuKienKMBill}" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                         <div class="col-lg-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label>Thời gian bắt đầu</label>
-                                <input type="date" th:field="*{tgBatDau}" class="form-control">
+                                <input type="date" id="ngayBatDau" th:field="*{tgBatDau}" class="form-control">
                             </div>
                         </div>
 
@@ -143,7 +143,7 @@
                         <div class="col-lg-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label>Thời gian kết thúc</label>
-                                <input type="date" th:field="*{tgKetThuc}" class="form-control">
+                                <input type="date" id="ngayKetThuc" th:field="*{tgKetThuc}" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -152,7 +152,7 @@
                         <div class="col-lg-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label>Số lượng đã dùng</label>
-                                <input type="text" th:field="*{soLuongDaDung}" class="form-control">
+                                <input type="text" th:field="*{soLuongDaDung}" class="form-control" readonly>
                             </div>
                         </div>
 
@@ -195,5 +195,90 @@
 <script src="/js/script.js"></script>
 <script src="/plugins/alertify/custom-alertify.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
+<script>
+    // Validate
+    function validateKhuyenMaiForm() {
+        var maKM = document.forms["khuyenMaiForm"]["maKM"].value;
+        var tenKM = document.forms["khuyenMaiForm"]["tenKM"].value;
+        var giaTienGiam = document.forms["khuyenMaiForm"]["giaTienGiam"].value;
+        var thoiGianBatDau = document.forms["khuyenMaiForm"]["tgBatDau"].value;
+        var thoiGianKetThuc = document.forms["khuyenMaiForm"]["tgKetThuc"].value;
+        var dieuKienKM = document.forms["khuyenMaiForm"]["dieuKienKMBill"].value;
+        var soLuong = document.forms["khuyenMaiForm"]["soLuong"].value;
+
+        if (maKM === "") {
+            Swal.fire("Không để trống Mã Khuyến Mãi");
+            return false;
+        }
+
+        if (!maKM.match(/^[a-zA-Z0-9]+$/)) {
+            Swal.fire("Mã Khuyến Mãi chỉ chứa chữ cái và số")
+            return false;
+        }
+
+        if (tenKM === "") {
+            Swal.fire("Không để trống Tên Khuyến Mãi");
+            return false;
+        }
+
+        if (giaTienGiam === "") {
+            Swal.fire("Không để trống Giá Tiền Giảm");
+            return false;
+        }
+
+        if (giaTienGiam <= 1000) {
+            Swal.fire("Giá Tiền Giảm phải > 1.000 VND");
+            return false;
+        }
+
+        if (!giaTienGiam.match(/^[0-9]+$/)) {
+            Swal.fire("Giá Tiền Giảm chỉ chứa số")
+            return false;
+        }
+
+        const ngayBD = document.getElementById('ngayBatDau').value;
+        const ngayKT = document.getElementById('ngayKetThuc').value;
+
+        if (ngayBD > ngayKT){
+            Swal.fire("Thời Gian Bắt Đầu phải nhỏ hơn Thời Gian Kết Thúc")
+            return false;
+        }
+
+        if (thoiGianBatDau === "") {
+            Swal.fire("Không để trống Thời Gian Bắt Đầu");
+            return false;
+        }
+
+        if (thoiGianKetThuc === "") {
+            Swal.fire("Không để trống Thời Gian Kết Thúc");
+            return false;
+        }
+
+        if (thoiGianBatDau > thoiGianKetThuc){
+            Swal.fire("Thời Gian Bắt Đầu phải nhỏ hơn Thời Gian Kết Thúc")
+        }
+
+        if (dieuKienKM === "") {
+            Swal.fire("Không để trống Điều Kiện Khuyến Mãi");
+            return false;
+        }
+
+        if (!dieuKienKM.match(/^[0-9]+$/)) {
+            Swal.fire("Điều Kiện Khuyến Mãi chỉ chứa số")
+            return false;
+        }
+        if (soLuong === "") {
+            Swal.fire("Không để trống Số lượng");
+            return false;
+        }
+
+        if (!soLuong.match(/^[0-9]+$/)) {
+            Swal.fire("Số lượng chỉ chứa số")
+            return false;
+        }
+
+        return true
+    }
+</script>
 </body>
 </html>

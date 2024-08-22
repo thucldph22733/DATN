@@ -18,6 +18,8 @@ public interface GHCTService {
 
     GioHangChiTiet findByCTSPActiveAndTrangThai(ChiTietGiay chiTietGiay, int trangThai);
 
+    GioHangChiTiet findByCTSPActive(ChiTietGiay chiTietGiay);
+
     GioHangChiTiet findByCTSP(ChiTietGiay chiTietGiay);
 
     GioHangChiTiet findByCTGActiveAndKhachHangAndTrangThai(ChiTietGiay chiTietGiay, GioHang gioHang);

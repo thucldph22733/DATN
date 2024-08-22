@@ -707,7 +707,7 @@
                                             <form th:action="@{'/manage/changehd/add-to-hd/' + ${idHoaDon}}" method="get">
                                                 <input type="hidden" th:value="${idHoaDon}" name="idHoaDon"/>
                                                 <div class="">
-                                                    <input type="number" name="soLuong" value="1" min="1" max="10" class="form-control"/>
+                                                    <input onkeypress="restrictToNumbers(event)" type="number" name="soLuong" value="1" min="1" max="10" class="form-control"/>
                                                 </div>
                                                 <div class="row">
                                                     <div th:each="chiTiet : ${listChiTietGiay}" class="col-md-3">
@@ -928,6 +928,14 @@
                 });
             }, 5000);
         });
+    </script>
+    <script>
+        function restrictToNumbers(event) {
+            var keyCode = event.keyCode ? event.keyCode : event.which;
+            if (keyCode < 48 || keyCode > 57) {
+                event.preventDefault();
+            }
+        }
     </script>
 
 

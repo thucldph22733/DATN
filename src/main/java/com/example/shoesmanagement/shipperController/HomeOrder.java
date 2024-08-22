@@ -236,7 +236,7 @@ public class HomeOrder {
             showDataTab2(model);
             return "transportation/index";
         } else {
-            String viTri = "Đơn hàng đã đến" + ", " + ward + ", " + district + " , " + thanhPho;
+            String viTri = "Đơn hàng đang giao" ;
             ViTriDonHang viTriDonHang = new ViTriDonHang();
 
             viTriDonHang.setViTri(viTri);
@@ -281,7 +281,7 @@ public class HomeOrder {
 
     private void showData(Model model) {
         NhanVien nhanVien = (NhanVien) session.getAttribute("shipperLogged");
-        List<HoaDon> test = hoaDonService.listHoaDonOnline();
+        List<HoaDon> test = hoaDonService.listAllHoaDonByNhanVien(nhanVien);
 //        List<HoaDon> allHoaDonList = hoaDonService.listAllHoaDonByNhanVien(nhanVien);
 //        List<HoaDon> hoaDonDGList = hoaDonService.listHoaDonByNhanVienAndTrangThai(nhanVien, 2);
 //        List<HoaDon> hoaDonDoneList = hoaDonService.listHoaDonHuyAndThanhCongByNhanVien(nhanVien);
