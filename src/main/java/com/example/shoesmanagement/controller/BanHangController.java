@@ -314,6 +314,8 @@ public class BanHangController {
             response.put("error", "Sản phẩm không tồn tại");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
+
+
         int soGiay = hoaDonChiTiet.getChiTietGiay().getSoLuong();
 
         if (soGiay <= 0) {
