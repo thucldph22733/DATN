@@ -90,13 +90,13 @@
                         <form method="post" th:object="${addKhuyenMai}" th:action="@{/manage/khuyen-mai/add}"
                               onsubmit="return validateKhuyenMaiForm()" name="khuyenMaiForm">
                             <div class="row">
-                                <div class="col-lg-4 col-12">
-                                    <div class="form-group">
-                                        <label>Mã khuyễn mãi</label>
-                                        <input type="text" id="maKM" name="maKM" th:field="*{maKM}"
-                                               class="form-control">
-                                    </div>
-                                </div>
+<!--                                <div class="col-lg-4 col-12">-->
+<!--                                    <div class="form-group">-->
+<!--                                        <label>Mã khuyễn mãi</label>-->
+<!--                                        <input type="text" id="maKM" name="maKM" th:field="*{maKM}"-->
+<!--                                               class="form-control">-->
+<!--                                    </div>-->
+<!--                                </div>-->
 
                                 <div class="col-lg-4 col-12">
                                     <div class="form-group">
@@ -205,7 +205,7 @@
                         <table class="table datanew" id="data-table">
                             <thead>
                             <tr>
-                                <td style="background-color: #f2a51d; color: whitesmoke">Mã KM</td>
+                                <td style="background-color: #f2a51d; color: whitesmoke">STT</td>
                                 <td style="background-color: #f2a51d; color: whitesmoke">Tên KM</td>
                                 <td style="background-color: #f2a51d; color: whitesmoke">Số tiền giảm</td>
                                 <td style="background-color: #f2a51d; color: whitesmoke">Điều kiện giảm</td>
@@ -219,8 +219,9 @@
                             </thead>
 
                             <tbody>
-                            <tr th:each="items : ${khuyenMai}">
-                                <td th:text="${items.maKM}"></td>
+                            <tr th:each="items,i : ${khuyenMai}">
+                                <td th:text="${i.index +1}"></td>
+
                                 <td th:text="${items.tenKM}"></td>
                                 <td th:text="${#numbers.formatDecimal(items.giaTienGiam, 0, 'COMMA', 0, 'POINT')}"></td>
 
