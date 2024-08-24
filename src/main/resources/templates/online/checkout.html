@@ -563,7 +563,7 @@
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px">
             <div class="modal-content">
-                <form action="/buyer/checkout/add/address" method="post">
+                <form action="/buyer/checkout/add/address" method="post"  onsubmit="return validatePhoneNumber();">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">Thêm địa chỉ mới</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -583,8 +583,10 @@
                             </div>
                             <div class="row" style="margin-bottom: 20px;">
                                 <input style="height: 40px; margin-left: 38px; margin-right: 30px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;" type="text"
-                                       placeholder="SDT người nhận" name="phoneAddress">
+font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;"
+                                       type="text" placeholder="SDT người nhận" name="phoneAddress"
+                                       pattern="^(0|\+84)[3|5|7|8|9][0-9]{8}$"
+                                       title="Số điện thoại phải bắt đầu bằng 0 hoặc +84 và có 10 chữ số.">
 
                                 <select class="select" id="city" name="city"
                                         style="width: 190px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
@@ -766,6 +768,18 @@
 <script src="/js/jquery.slimscroll.min.js"></script>
 <script src="/js/scrollbar.min.js"></script>
 <script src="/js/custom-scroll.js"></script>
+<script>
+    function validatePhoneNumber() {
+        const phoneInput = document.querySelector('input[name="phoneAddress"]');
+        const phonePattern = /^(0|\+84)[3|5|7|8|9][0-9]{8}$/;
+
+        if (!phonePattern.test(phoneInput.value)) {
+            alert("Số điện thoại phải bắt đầu bằng 0 hoặc +84 và có 10 chữ số.");
+            return false; // Prevent form submission
+        }
+        return true; // Allow form submission
+    }
+</script>
 <script>
     $(document).ready(function () {
         $('#addNewAddressNull').modal({
