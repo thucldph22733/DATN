@@ -19,11 +19,6 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTIetService {
     @Autowired
     private HoaDonChiTietRepository hoaDonChiTietRepository;
 
-    // Phương thức để lấy danh sách HoaDonChiTiet theo idHoaDon
-    public List<HoaDonChiTiet> getListByHoaDon(UUID idHD) {
-        return hoaDonChiTietRepository.findByHoaDon_IdHD(idHD);
-    }
-
     @Autowired
     private HoaDonRepository hoaDonRepository;
 
@@ -72,7 +67,9 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTIetService {
         }
         return tongTien;
     }
-
+    public List<HoaDonChiTiet> getListByHoaDon(UUID idHD) {
+        return hoaDonChiTietRepository.findByHoaDon_IdHD(idHD);
+    }
     @Override
     public Double tongTienSanPham(List<HoaDonChiTiet> list) {
         double tongTienSanPham = 0;
@@ -97,7 +94,6 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTIetService {
             // Cập nhật lại tổng tiền sản phẩm và tổng số lượng sản phẩm trong hóa đơn
             HoaDon hoaDon = hoaDonChiTiet.getHoaDon();
 //            updateHoaDonTotals(hoaDon);
-
             hoaDonChiTietRepository.save(hoaDonChiTiet);
         } else {
             throw new RuntimeException("Không tìm thấy HoaDonChiTiet với id: " + idHDCT);
@@ -125,8 +121,8 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTIetService {
     }
 
     @Override
-    public void deleteCTG(UUID idCTG) {
-        hoaDonChiTietRepository.deleteHoaDonChiTietByChiTietGiay(idCTG);
+    public void deleteCTG(UUID idCTG, UUID idHD) {
+        hoaDonChiTietRepository.deleteHoaDonChiTietByChiTietGiay(idCTG,idHD);
     }
 
     @Override
