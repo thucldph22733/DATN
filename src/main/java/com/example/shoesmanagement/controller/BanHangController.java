@@ -312,8 +312,10 @@ public class BanHangController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
 
+
         int previousQuantity = hoaDonChiTiet.getSoLuong();
         int availableStockAfterRestoration = chiTietGiay.getSoLuong() + previousQuantity;
+
 
         if (quantity > availableStockAfterRestoration) {
             response.put("error", "Số lượng trong kho không đủ");
@@ -340,8 +342,6 @@ public class BanHangController {
             return ResponseEntity.ok(response);
         }
     }
-
-
 
 
     @GetMapping("/add-to-cart")
