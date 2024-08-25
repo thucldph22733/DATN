@@ -101,7 +101,7 @@
                                 <div class="form-group">
                                     <label>Giày</label>
                                     <select class="select" th:field="*{giay}" name="giay"
-                                            onchange="updatePreviewTable()">
+                                            onchange="updatePreviewTable()" disabled>
                                         <option th:each="loc : ${giay}" th:value="${loc.idGiay}"
                                                 th:text="${loc.tenGiay}"></option>
                                     </select>
