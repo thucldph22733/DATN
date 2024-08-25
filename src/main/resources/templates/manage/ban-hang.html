@@ -810,13 +810,13 @@
                                                                         </div>
                                                                     </div>
                                                                 </form>
-                                                                </li>
 
                                                                 <li style="margin-bottom: 20px;">
-                                                                    <h5>Tổng tiền sau khuyến mãi : </h5>
+                                                                    <h5>Tổng tiền cần thanh toán : </h5>
                                                                     <h5 class="grandTotal" style="font-size: 13pt;"
-                                                                        th:text="${tongTien} + ' '"
+                                                                        th:text=" ${#numbers.formatDecimal(tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' '">
                                                                         id="tongTienSauKhuyenMai"></h5>
+
 
                                                                     <input id="tongtienKM" th:value="${tongTien}"
                                                                            style="display: none">
@@ -859,6 +859,7 @@
                                                                      tabindex="-1"
                                                                      aria-labelledby="exampleModalLabel6"
                                                                      aria-hidden="true">
+
                                                                     <div class="modal-dialog modal-md text-center"
                                                                          style="width: 550px;">
                                                                         <div class="modal-content">
@@ -892,6 +893,44 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+
+                                                                <div class="modal fade" id="successModal" tabindex="-1"
+                                                                     aria-labelledby="successModalLabel"
+                                                                     aria-hidden="true">
+                                                                    <div class="modal-dialog modal-md text-center"
+                                                                         style="width: 550px;">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h1 class="modal-title fs-5"
+                                                                                    id="successModalLabel">Thông
+                                                                                    báo</h1>
+                                                                                <button type="button" class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="text-center">Thanh toán
+                                                                                    thành công! Xin cảm ơn quý khách!
+                                                                                </div>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a type="button" class="btn btn-warning"
+                                                                                   th:href="@{'http://localhost:8080/manage/bill/offline/print/' + ${session.idHoaDonVuaThanhToan}}"
+                                                                                   onclick="window.open(this.href, '_blank'); return false;">
+                                                                                    In hóa đơn
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="modal-footer text-center">
+                                                                                <button type="button"
+                                                                                        class="btn btn-primary"
+                                                                                        style="background-color: #37517E; color: white;"
+                                                                                        data-bs-dismiss="modal">OK
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
 
                                                             </div>
                                                         </div>
@@ -1226,6 +1265,14 @@
 <script src="/plugins/sweetalert/sweetalert2.all.min.js"></script>
 <script src="/plugins/sweetalert/sweetalerts.min.js"></script>
 <script src="/js/script.js"></script>
+<script>
+    $(document).ready(function () {
+        var showSuccessModal = [[${showSuccessModal}]];
+        if (showSuccessModal) {
+            $('#successModal').modal('show');
+        }
+    });
+</script>
 
 <script>
     function validateNumberInput(input) {
@@ -1482,8 +1529,6 @@
 
     });
 </script>
-
-
 <script th:inline="javascript">
     var quantityChanged = false;
 
@@ -1571,6 +1616,7 @@
     }
 
     function formatCurrency(amount) {
+        amount = parseFloat(amount).toFixed(0); // Loại bỏ phần thập phân
         return amount.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'}).replace('₫', 'đ');
     }
 
@@ -1591,7 +1637,6 @@
             markQuantityChanged(quantityInput);
         }
     }
-
 </script>
 
 </body>
