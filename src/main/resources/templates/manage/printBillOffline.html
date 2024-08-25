@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>Tezzy Shop - Transport</title>
+    <title>Tezzy Shop - PrintBill</title>
     <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -59,13 +59,13 @@
                         <div class="col-sm-6">
                             <div class="text-muted">
                                 <h5 class="font-size-16 mb-3">Khách hàng</h5>
-                                <p th:if="${billPrint.tenNguoiNhan != null}"
-                                   th:text="'Tên Khách Hàng : ' + ${billPrint.tenNguoiNhan}"></p>
-                                <p th:if="${billPrint.tenNguoiNhan == null}">Khách lẻ</p>
+                                <p th:if="${billPrint.getKhachHang().getHoTenKH() != null}"
+                                   th:text="'Tên Khách Hàng : ' + ${billPrint.getKhachHang().getHoTenKH()}"></p>
+                                <p th:if="${billPrint.getKhachHang().getHoTenKH() == null}">Khách lẻ</p>
 
-                                <p th:if="${billPrint.sdtNguoiNhan != null}"
-                                   th:text="'Số điện thoại : ' + ${billPrint.sdtNguoiNhan}"></p>
-                                <p th:if="${billPrint.sdtNguoiNhan == null}">Không có SĐT</p>
+                                <p th:if="${billPrint.getKhachHang().getSdtKH() != null}"
+                                   th:text="'Số điện thoại : ' + ${billPrint.getKhachHang().getSdtKH()}"></p>
+                                <p th:if="${billPrint.getKhachHang().getSdtKH() == null}">Không có SĐT</p>
                             </div>
                         </div>
 
