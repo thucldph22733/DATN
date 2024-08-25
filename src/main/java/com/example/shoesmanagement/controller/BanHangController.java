@@ -1,5 +1,4 @@
 package com.example.shoesmanagement.controller;
-
 import com.example.shoesmanagement.model.*;
 import com.example.shoesmanagement.repository.*;
 import com.example.shoesmanagement.service.*;
@@ -86,15 +85,10 @@ public class BanHangController {
     private double dieuKienKhuyenMai = 0;
 
     @GetMapping("/hien-thi")
-    public String hienThi(Model model,
-                          @ModelAttribute("messageSuccess") String messageSuccess,
-                          @ModelAttribute("messageError") String messageError,
-                          RedirectAttributes redirectAttributes) {
-
-        // Kiểm tra người dùng đã đăng nhập chưa
-        if (session.getAttribute("staffLogged") == null && session.getAttribute("managerLogged") == null) {
-            return "redirect:/login";
-        }
+    public String hienThi(Model model
+            , @ModelAttribute("messageSuccess") String messageSuccess
+            , @ModelAttribute("messageError") String messageError, RedirectAttributes redirectAttributes) {
+        List<GiayViewModel> list = giayViewModelService.getAllVm();
 
         NhanVien nhanVien = (NhanVien) httpSession.getAttribute("staffLogged");
         List<HoaDon> listHoaDonHomNay = hoaDonService.listAllHoaDonByNhanVienHienTai(nhanVien);
@@ -102,35 +96,29 @@ public class BanHangController {
 
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
-
         List<KhuyenMai> khuyenMai = khuyenMaiService.getAllKhuyenMai();
         model.addAttribute("khuyenMai", khuyenMai);
-
         model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
         model.addAttribute("tongTienSanPham", 0);
         model.addAttribute("tongTien", 0);
         model.addAttribute("tongSanPham", 0);
         model.addAttribute("khachHang", null);
         model.addAttribute("listKhachHang", khachHangService.findKhachHangByTrangThai());
-
-        // Xử lý thông báo thành công
         if (!"true".equals(messageSuccess)) {
             model.addAttribute("messageSuccess", false);
-            session.removeAttribute("idHoaDon");
         }
-
-        // Xử lý thông báo lỗi
         if (!"true".equals(messageError)) {
             model.addAttribute("messageError", false);
+        }
+        if (session.getAttribute("staffLogged") == null && session.getAttribute("managerLogged") == null) {
+            return "redirect:/login";
         }
 
         return "/manage/ban-hang";
     }
 
-
     @GetMapping("/add-cart")
     public String taoHoaDon(Model model, RedirectAttributes redirectAttributes) {
-        session.removeAttribute("idHoaDon");
         NhanVien nhanVien = (NhanVien) httpSession.getAttribute("staffLogged");
         List<GiayViewModel> listG = giayViewModelService.getAllVm();
         model.addAttribute("listSanPham", listG);
@@ -236,7 +224,6 @@ public class BanHangController {
         HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
         hoaDon.setTongTienSanPham(tongTienSanPham);
         hoaDon.setTongTien(tongTien - giaTienGiam);
-        hoaDon.setTongSP(tongSanPham);
         hoaDonService.add(hoaDon);
 
         // Thông tin khách hàng
@@ -263,7 +250,8 @@ public class BanHangController {
             redirectAttributes.addFlashAttribute("messageError", true);
             redirectAttributes.addFlashAttribute("tbaoError", "Bạn chưa chọn hóa đơn");
             return "redirect:/ban-hang/hien-thi";
-        } else {
+        }
+        else {
 
             if (chiTietGiay == null) {
                 redirectAttributes.addFlashAttribute("messageError", true);
@@ -308,6 +296,7 @@ public class BanHangController {
 
         return "/manage/ban-hang";
     }
+
     @PostMapping("/updateQuantity")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> updateQuantity(@RequestParam UUID idCTG, @RequestParam int quantity) {
@@ -323,12 +312,7 @@ public class BanHangController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
 
-        int previousQuantity = hoaDonChiTiet.getSoLuong();
-        int availableStockAfterRestoration = chiTietGiay.getSoLuong() + previousQuantity;
 
-
-
-          int soGiay = hoaDonChiTiet.getChiTietGiay().getSoLuong();
         int previousQuantity = hoaDonChiTiet.getSoLuong();
         int availableStockAfterRestoration = chiTietGiay.getSoLuong() + previousQuantity;
 
@@ -358,6 +342,7 @@ public class BanHangController {
             return ResponseEntity.ok(response);
         }
     }
+
 
     @GetMapping("/add-to-cart")
     public String addToCart(@RequestParam("idChiTietGiay") UUID idChiTietGiay,
@@ -532,37 +517,37 @@ public class BanHangController {
 
     @GetMapping("/xoa-gio-hang/{idChiTietGiay}")
     public String xoaSanPham(@PathVariable("idChiTietGiay") UUID idChiTietGiay, RedirectAttributes redirectAttributes, Model model) {
-
+        model.addAttribute("listHoaDon", hoaDonService.getListHoaDonChuaThanhToan());
+        List<GiayViewModel> listG = giayViewModelService.getAllVm();
+        model.addAttribute("listSanPham", listG);
         ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idChiTietGiay);
         UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
-        HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHoaDon, idChiTietGiay);
 
+        // Cập nhật tổng tiền hóa đơn
+        HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
+        hoaDon.setTongTien(hoaDon.getTongTien() - hoaDonChiTiet.getDonGia());
+        hoaDon.setTongTienSanPham(hoaDon.getTongTienSanPham() - hoaDonChiTiet.getDonGia());
+        hoaDonService.add(hoaDon);
+
+        // Cập nhật số lượng sản phẩm và trạng thái của ChiTietGiay
         chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + hoaDonChiTiet.getSoLuong());
         chiTietGiay.setTrangThai(1);
         giayChiTietService.save(chiTietGiay);
 
-        hoaDonChiTiet.setTrangThai(0);
-        hoaDonChiTiet.setSoLuong(0);
-        hoaDonChiTiet.setDonGia(0.0);
-        hoaDonChiTietService.add(hoaDonChiTiet);
+        // Xóa chi tiết hóa đơn
+        hoaDonChiTietService.delete(hoaDonChiTiet);
 
         // Cập nhật số lượng sản phẩm trong giỏ hàng
-        Integer tongSanPham = (Integer) httpSession.getAttribute("tongSP");
-        if (tongSanPham != null) {
-            tongSanPham--;
-            httpSession.setAttribute("tongSP", tongSanPham);
-        }
-        hoaDonService.add(hoaDon);
+        tongSanPham--;
+        httpSession.setAttribute("tongSP", tongSanPham);
 
-        // Cập nhật lại danh sách giỏ hàng sau khi xóa sản phẩm
-        List<HoaDonChiTiet> gioHangMoi = hoaDonChiTietService.getListByHoaDon(idHoaDon);
-        model.addAttribute("gioHang", gioHangMoi);
-
+        httpSession.removeAttribute("idChiTietGiay");
         redirectAttributes.addFlashAttribute("messageSuccess", true);
         redirectAttributes.addFlashAttribute("tb", "Xóa thành công");
         return "redirect:/ban-hang/cart/hoadon/" + idHoaDon;
     }
+
 
 
     @GetMapping("/list-khach-hang")
