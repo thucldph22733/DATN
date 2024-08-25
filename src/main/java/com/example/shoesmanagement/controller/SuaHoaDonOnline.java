@@ -94,11 +94,9 @@ public class SuaHoaDonOnline {
     private double dieuKienKhuyenMai = 0;
     @GetMapping("/online/{idHD}")
     private String manageBillOnline(@PathVariable UUID idHD, Model model, HttpSession session) {
-        // Kiểm tra quyền đăng nhập
-        if (session.getAttribute("managerLogged") == null) {
+        if (session.getAttribute("staffLogged") == null && session.getAttribute("managerLogged") == null) {
             return "redirect:/login";
         }
-
         // Đưa id của hóa đơn vào session
         session.setAttribute("idHoaDon", idHD);
 

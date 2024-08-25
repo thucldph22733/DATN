@@ -32,14 +32,14 @@
 
 <body>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
-      integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+      integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous"/>
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body" th:object="${billPrint}">
                     <div class="invoice-title">
-                        <h4 class="float-end font-size-15">HD_KH001_107005874</h4>
+                        <h4 class="font-size-16 mb-3" th:text="'Mã hóa đơn : ' + ${billPrint.maHD}"></h4>
                         <div class="mb-4">
                             <h2 class="mb-1 text-muted">Tezzy Shop</h2>
                         </div>
@@ -58,11 +58,14 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="text-muted">
-                                <h5 class="font-size-16 mb-3">Khách mua :</h5>
-                                <h5 class="font-size-15 mb-2" th:text="${billPrint.tenNguoiNhan}"></h5>
-                                <p class="mb-1">no email</p>
-                                <p th:if="${billPrint.sdtNguoiNhan != null}" th:text="'Số điện thoại : ' + ${billPrint.sdtNguoiNhan}"></p>
-                                <p th:if="${billPrint.sdtNguoiNhan == null}">Không có SDT</p>
+                                <h5 class="font-size-16 mb-3">Khách hàng</h5>
+                                <p th:if="${billPrint.tenNguoiNhan != null}"
+                                   th:text="'Tên Khách Hàng : ' + ${billPrint.tenNguoiNhan}"></p>
+                                <p th:if="${billPrint.tenNguoiNhan == null}">Khách lẻ</p>
+
+                                <p th:if="${billPrint.sdtNguoiNhan != null}"
+                                   th:text="'Số điện thoại : ' + ${billPrint.sdtNguoiNhan}"></p>
+                                <p th:if="${billPrint.sdtNguoiNhan == null}">Không có SĐT</p>
                             </div>
                         </div>
 
@@ -96,33 +99,39 @@
                                     <th scope="row" th:text="${index.count}"></th>
                                     <td>
                                         <div>
-                                            <h5 class="text-truncate font-size-14 mb-1" th:text="${x.chiTietGiay.Giay.tenGiay}"></h5>
+                                            <h5 class="text-truncate font-size-14 mb-1"
+                                                th:text="${x.chiTietGiay.Giay.tenGiay}"></h5>
                                         </div>
                                     </td>
                                     <td>
                                         <div>
-                                            <p class="text-muted mb-0" th:text="'Size :' + ${x.chiTietGiay.size.soSize} + ' ---' + 'Màu :' + ${x.chiTietGiay.mauSac.tenMau}"></p>
+                                            <p class="text-muted mb-0"
+                                               th:text="'Size :' + ${x.chiTietGiay.size.soSize} + ' ---' + 'Màu :' + ${x.chiTietGiay.mauSac.tenMau}"></p>
                                         </div>
                                     </td>
                                     <td th:text="${x.soLuong}"></td>
-                                    <td class="text-end" th:text="'₫' + ${#numbers.formatDecimal(x.donGia, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+                                    <td class="text-end"
+                                        th:text="'₫' + ${#numbers.formatDecimal(x.donGia, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
                                 </tr>
 
                                 <tr>
                                     <th scope="row" colspan="4" class="text-end">Tổng tiền</th>
-                                    <td class="text-end" th:text="'₫'+${#numbers.formatDecimal(billPrint.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+                                    <td class="text-end"
+                                        th:text="'₫'+${#numbers.formatDecimal(billPrint.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
                                 </tr>
 
                                 <tr>
                                     <th scope="row" colspan="4" class="border-0 text-end">Giảm giá :</th>
-                                    <td class="border-0 text-end" th:text="'₫' + ${#numbers.formatDecimal(soTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+                                    <td class="border-0 text-end"
+                                        th:text="'₫' + ${#numbers.formatDecimal(soTienGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
                                 </tr>
 
 
                                 <tr>
-                                    <th scope="row" colspan="4" class="border-0 text-end">Tổng</th>
+                                    <th scope="row" colspan="4" class="border-0 text-end">Thanh toán</th>
                                     <td class="border-0 text-end">
-                                        <h4 class="m-0 fw-semibold" th:text="'₫'+${#numbers.formatDecimal(billPrint.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h4>
+                                        <h4 class="m-0 fw-semibold"
+                                            th:text="'₫'+${#numbers.formatDecimal(billPrint.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h4>
                                     </td>
                                 </tr>
 
