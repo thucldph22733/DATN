@@ -370,6 +370,51 @@ public class SuaHoaDonOnline {
         return "redirect:/manage/changehd/online/" + idHoaDon;
     }
 
+    @GetMapping("/xoa-gio-hang2/{idChiTietGiay}")
+    public String xoaSanPham2(@PathVariable("idChiTietGiay") UUID idChiTietGiay, RedirectAttributes redirectAttributes, Model model) {
+
+        UUID idHoaDon = (UUID) httpSession.getAttribute("idHoaDon");
+        ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(idChiTietGiay);
+        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOne(idHoaDon, idChiTietGiay);
+
+        // Lấy danh sách các sản phẩm trong hóa đơn
+        List<HoaDonChiTiet> listHDCT = hoaDonChiTietService.findByIdHoaDon(idHoaDon);
+
+        // Nếu hóa đơn chỉ có 1 sản phẩm, hiển thị thông báo và không xóa
+        if (listHDCT.size() <= 1) {
+            redirectAttributes.addFlashAttribute("messageError", true);
+            redirectAttributes.addFlashAttribute("tbaoError", "Hóa đơn phải có ít nhất 1 sản phẩm");
+            return "redirect:/manage/changehd/online/" + idHoaDon;
+        }
+
+        // Cập nhật tổng tiền hóa đơn
+        HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
+        hoaDon.setTongTien(hoaDon.getTongTien() - hoaDonChiTiet.getDonGia());
+        hoaDon.setTongTienSanPham(hoaDon.getTongTienSanPham() - hoaDonChiTiet.getDonGia());
+        hoaDonService.add(hoaDon);
+
+        // Cập nhật số lượng sản phẩm và trạng thái của ChiTietGiay
+        chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() + hoaDonChiTiet.getSoLuong());
+        chiTietGiay.setTrangThai(1);
+        giayChiTietService.save(chiTietGiay);
+
+        // Xóa chi tiết hóa đơn
+        hoaDonChiTietService.deleteCTG(idChiTietGiay, idHoaDon);
+
+        // Cập nhật số lượng sản phẩm trong giỏ hàng
+        tongSanPham--;
+        httpSession.setAttribute("tongSP", tongSanPham);
+        hoaDonService.updateHoaDon(hoaDon);
+        model.addAttribute("idCTG", idChiTietGiay);
+
+        httpSession.removeAttribute("idChiTietGiay");
+        redirectAttributes.addFlashAttribute("messageSuccess", true);
+        redirectAttributes.addFlashAttribute("tb", "Xóa thành công");
+
+        return "redirect:/manage/changehd/online/" + idHoaDon;
+    }
+
+
 
     @PostMapping("/deleteChiTietGiay/{idCTG}/{idHD}")
     @ResponseBody
@@ -396,7 +441,7 @@ public class SuaHoaDonOnline {
                     giayChiTietService.save(chiTietGiay);
 
                     // Xóa sản phẩm khỏi hóa đơn
-                    hoaDonChiTietRepository.deleteHoaDonChiTietByChiTietGiay(chiTietGiay.getIdCTG());
+                    hoaDonChiTietRepository.deleteHoaDonChiTietByChiTietGiay(chiTietGiay.getIdCTG(),hoaDon.getIdHD());
 
                     hoaDonService.updateHoaDon(hoaDon);
                     model.addAttribute("idCTG", idCTG);
@@ -428,53 +473,50 @@ public class SuaHoaDonOnline {
             response.put("error", "Sản phẩm không tồn tại");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
-        int soluong = hoaDonChiTiet.getChiTietGiay().getSoLuong();
 
-        if (soluong <= 0) {
+        int previousQuantity = hoaDonChiTiet.getSoLuong();
+        int quantityDifference = quantity - previousQuantity;
+
+        // Kiểm tra xem số lượng mới có vượt quá số lượng tồn kho không
+        if (chiTietGiay.getSoLuong() < quantityDifference) {
             response.put("error", "Số lượng trong kho không đủ");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        } else {
-            HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).get();
-            hoaDon.setKhuyenMai(null);
-            hoaDonRepository.saveAndFlush(hoaDon);
-
-            int previousQuantity = hoaDonChiTiet.getSoLuong();
-            hoaDonChiTiet.setSoLuong(quantity);
-
-            // Đặt đơn giá mà không nhân với số lượng
-            double donGia = chiTietGiay.getGiaBan();
-            hoaDonChiTiet.setDonGia(donGia);
-            hoaDonChiTietService.add(hoaDonChiTiet);
-
-            int quantityDifference = quantity - previousQuantity;
-            chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - quantityDifference);
-            giayChiTietService.update(chiTietGiay);
-
-            // Tính toán lại tổng tiền của hóa đơn
-            double totalProductAmount = hoaDon.getHoaDonChiTiets().stream()
-                    .mapToDouble(hdct -> hdct.getDonGia() * hdct.getSoLuong())
-                    .sum();
-            double newTotalAmount = totalProductAmount + hoaDon.getTienShip();
-            hoaDon.setTongTien(newTotalAmount);
-
-            // Tính toán lại tổng số lượng sản phẩm trong hóa đơn
-            int newTotalQuantity = hoaDon.getHoaDonChiTiets().stream().mapToInt(HoaDonChiTiet::getSoLuong).sum();
-            hoaDon.setTongSP(newTotalQuantity);
-            hoaDonService.add(hoaDon);
-            hoaDonService.updateHoaDon(hoaDon);
-
-
-            response.put("tongTienSanPham", newTotalAmount);
-            response.put("tongSoLuongSanPham", newTotalQuantity);
-
-//            System.out.println("Updated HoaDonChiTiet: " + hoaDonChiTiet);
-//            System.out.println("Updated ChiTietGiay: " + chiTietGiay);
-//            System.out.println(sl);
-
-
-            return ResponseEntity.ok(response);
         }
+
+        // Nếu số lượng đủ, tiến hành cập nhật hóa đơn và tồn kho
+        HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).get();
+        hoaDon.setKhuyenMai(null);
+        hoaDonRepository.saveAndFlush(hoaDon);
+
+        // Cập nhật số lượng trong hóa đơn
+        hoaDonChiTiet.setSoLuong(quantity);
+        double donGia = chiTietGiay.getGiaBan();
+        hoaDonChiTiet.setDonGia(donGia);
+        hoaDonChiTietService.add(hoaDonChiTiet);
+
+        // Cập nhật số lượng trong kho
+        chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - quantityDifference);
+        giayChiTietService.update(chiTietGiay);
+
+        // Tính toán lại tổng tiền của hóa đơn
+        double totalProductAmount = hoaDon.getHoaDonChiTiets().stream()
+                .mapToDouble(hdct -> hdct.getDonGia() * hdct.getSoLuong())
+                .sum();
+        double newTotalAmount = totalProductAmount + hoaDon.getTienShip();
+        hoaDon.setTongTien(newTotalAmount);
+
+        // Tính toán lại tổng số lượng sản phẩm trong hóa đơn
+        int newTotalQuantity = hoaDon.getHoaDonChiTiets().stream().mapToInt(HoaDonChiTiet::getSoLuong).sum();
+        hoaDon.setTongSP(newTotalQuantity);
+        hoaDonService.add(hoaDon);
+        hoaDonService.updateHoaDon(hoaDon);
+
+        response.put("tongTienSanPham", newTotalAmount);
+        response.put("tongSoLuongSanPham", newTotalQuantity);
+
+        return ResponseEntity.ok(response);
     }
+
 
 
 

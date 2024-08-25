@@ -323,6 +323,9 @@ public class BanHangController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
 
+
+
+          int soGiay = hoaDonChiTiet.getChiTietGiay().getSoLuong();
         int previousQuantity = hoaDonChiTiet.getSoLuong();
         int availableStockAfterRestoration = chiTietGiay.getSoLuong() + previousQuantity;
 
