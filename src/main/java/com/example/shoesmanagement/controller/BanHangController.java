@@ -721,4 +721,3 @@ public class BanHangController {
         return "redirect:/ban-hang/hien-thi";
     }
 }
-
