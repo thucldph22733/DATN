@@ -33,9 +33,10 @@ public interface HoaDonChiTIetService {
 
     HoaDonChiTiet findByCTGActiveAndKhachHagAndTrangThai(ChiTietGiay chiTietGiay , HoaDon hoaDon);
 
-    public void deleteCTG(UUID idCTG);
+    public void deleteCTG(UUID idCTG,UUID idHd);
 
-   List<HoaDonChiTiet> getListByHoaDon(UUID idHD) ;
 
     void deleteChiTietGiay(UUID idHDCT);
+
+    List<HoaDonChiTiet> getListByHoaDon(UUID idHD) ;
 }

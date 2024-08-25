@@ -25,14 +25,12 @@ public interface HoaDonChiTietRepository  extends JpaRepository<HoaDonChiTiet, U
 
     List<HoaDonChiTiet> findByChiTietGiay(ChiTietGiay chiTietGiay);
 
-    List<HoaDonChiTiet> findByHoaDon_IdHD(UUID idHD);
-
     void deleteById(UUID id);
 
     @Modifying
     @Transactional
-    @Query("delete from HoaDonChiTiet hdct where hdct.chiTietGiay.idCTG = ?1")
-    void deleteHoaDonChiTietByChiTietGiay(UUID idCtg);
+    @Query("delete from HoaDonChiTiet hdct where hdct.chiTietGiay.idCTG = ?1 and hdct.hoaDon.id = ?2")
+    void deleteHoaDonChiTietByChiTietGiay(UUID idCtg, UUID idHd);
 
     @Query(value = "select hdct from HoaDonChiTiet hdct where hdct.hoaDon.idHD = ?1 and hdct.chiTietGiay.idCTG =?2")
     HoaDonChiTiet findByIdHoaDonAndIdChiTietGiay(UUID idHoaDon, UUID idChiTietGiay);
@@ -48,7 +46,12 @@ public interface HoaDonChiTietRepository  extends JpaRepository<HoaDonChiTiet, U
 
     @Query("SELECT h FROM HoaDonChiTiet h WHERE h.chiTietGiay = :chiTietGiay")
     HoaDonChiTiet getHoaDonChiTietsByChiTietGiay(@Param("chiTietGiay") UUID hoaDonChiTiet);
-    
+
+
+
+
+
+
     HoaDonChiTiet findByChiTietGiayAndTrangThaiAndHoaDon(ChiTietGiay chiTietGiay, int trangThai, HoaDon hoaDon);
 
     @Query(value = "SELECT SUM(tong_tien_san_pham) \n" +
@@ -249,5 +252,5 @@ public interface HoaDonChiTietRepository  extends JpaRepository<HoaDonChiTiet, U
 
     @Query("select g from HoaDonChiTiet g where g.hoaDon.nhanVien.maNV =:maNV")
     List<HoaDonChiTiet> getChiTietSPNhanVienBan( String maNV);
-
+    List<HoaDonChiTiet> findByHoaDon_IdHD(UUID idHD);
 }

@@ -173,11 +173,11 @@
 
 
 
-     .info-row {
-         display: flex;
-         align-items: center;
-         margin-bottom: 10px;
-     }
+    .info-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
 
     .info-label {
         font-weight: bold;
@@ -389,12 +389,20 @@
                                 <span>Trang chủ nè</span>
                             </a>
                         </li>
+
                         <li>
-                            <a href="/manage/thongke">
+                            <a href="/ban-hang/hien-thi">
+                                <img src="/images/img/icons/quotation1.svg" alt="img">
+                                <span> Bán hàng</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/thong-ke/thong-ke">
                                 <img src="/images/img/icons/dashboard.svg" alt="img">
                                 <span> Thống Kê</span>
                             </a>
                         </li>
+
                         <li class="submenu">
                             <a href="javascript:void(0);"><img src="/images/img/icons/product.svg" alt="img">
                                 <span> Quản lý Giày</span>
@@ -405,11 +413,10 @@
                                 <li><a href="/manage/hang">Hãng</a></li>
                                 <li><a href="/manage/hinh-anh">Hình Ảnh</a></li>
                                 <li><a href="/manage/mau-sac">Màu Sắc</a></li>
-                                <input id="mauSac" th:value="${active}">
                                 <li><a href="/manage/size">Size</a></li>
-                                <li><a href="/manage/test">Test</a></li>
                             </ul>
                         </li>
+
                         <li class="submenu">
                             <a href="javascript:void(0);"><img src="/images/img/icons/expense1.svg" alt="img"><span> Quản Lý Hóa Đơn</span>
                                 <span class="menu-arrow"></span></a>
@@ -418,12 +425,20 @@
                                 <li><a href="/manage/bill/online">Quản lý hóa đơn online</a></li>
                             </ul>
                         </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><img src="/images/img/icons/users1.svg" alt="img"><span> Quản Lý Khách Hàng</span>
-                                <span class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a href="/manage/khach-hang">Khách Hàng</a></li>
-                            </ul>
+
+                        <!--                        <li class="submenu">-->
+                        <!--                            <a href="javascript:void(0);"><img src="/images/img/icons/users1.svg" alt="img"><span> Quản Lý Khách Hàng</span>-->
+                        <!--                                <span class="menu-arrow"></span></a>-->
+                        <!--                            <ul>-->
+                        <!--                                <li><a href="/manage/khach-hang">Khách Hàng</a></li>-->
+                        <!--                            </ul>-->
+                        <!--                        </li>-->
+
+                        <li>
+                            <a href="/manage/khach-hang">
+                                <img src="/images/img/icons/users1.svg" alt="img"/>
+                                <span>Quản Lý Khách Hàng</span>
+                            </a>
                         </li>
 
                         <li class="submenu">
@@ -434,17 +449,13 @@
                                 <li><a href="/manage/nhan-vien">Nhân Viên</a></li>
                             </ul>
                         </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);">
-                                <img src="/images/img/icons/transfer1.svg" alt="img"/>
-                                <span>Quản lý Khuyến Mãi</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul>
-                                <li><a href="/manage/khuyen-mai">Khuyến Mãi Hóa Đơn</a></li>
-                            </ul>
-                        </li>
 
+                        <li>
+                            <a href="/manage/khuyen-mai" data-link="link1" onclick="setActiveLink()">
+                                <img src="/images/iconKhuyenMai.png" alt="img"/>
+                                <span>Khuyến Mãi</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -608,16 +619,16 @@
                                             </td>
 
 
-<!--                                            <td style="width: 175px;" class="quantity__item">-->
-<!--                                                <div class="quantity">-->
-<!--                                                    <input class="quantityInput" oninput="updateQuantity(this, '${C.idCTG}')" th:value="${x.soLuong}" style="width: 50px; text-align: center; border: 1px solid black;" type="number" name="quantities">-->
-<!--                                                </div>-->
-<!--                                            </td>-->
+                                            <!--                                            <td style="width: 175px;" class="quantity__item">-->
+                                            <!--                                                <div class="quantity">-->
+                                            <!--                                                    <input class="quantityInput" oninput="updateQuantity(this, '${C.idCTG}')" th:value="${x.soLuong}" style="width: 50px; text-align: center; border: 1px solid black;" type="number" name="quantities">-->
+                                            <!--                                                </div>-->
+                                            <!--                                            </td>-->
                                             <td>
                                                 <input
-                                                       type="button" value="-"
-                                                       class="button-minus dec button"
-                                                       onclick="decrementQuantity1(this)">
+                                                        type="button" value="-"
+                                                        class="button-minus dec button"
+                                                        onclick="decrementQuantity1(this)">
                                                 <input class="quantityInput"
                                                        onfocus="clearQuantity1(this)"
                                                        onblur="restoreQuantity1(this)"
@@ -628,9 +639,9 @@
                                                        th:data-id="${x.chiTietGiay.idCTG}"
                                                        min="1">
                                                 <input
-                                                       type="button" value="+"
-                                                       class="button-plus inc button"
-                                                       onclick="incrementQuantity1(this)">
+                                                        type="button" value="+"
+                                                        class="button-plus inc button"
+                                                        onclick="incrementQuantity1(this)">
                                             </td>
 
 
@@ -643,16 +654,19 @@
                                                 <!-- Container for buttons with Flexbox -->
                                                 <div class="button-container">
                                                     <!-- Delete form -->
-                                                    <form th:action="@{/manage/changehd/deleteChiTietGiay/{idCTG}/{idHD}(idCTG=${x.chiTietGiay.idCTG}, idHD=${hoaDon.idHD})}"
-                                                          th:attr="id='deleteForm-${x.chiTietGiay.idCTG}'"
-                                                          method="post" class="button-form">
-                                                        <button type="button" class="btn btn-danger" onclick="confirmDelete('${x.chiTietGiay.idCTG}')">Xóa</button>
-                                                    </form>
+                                                    <!--                                                    <form th:action="@{/manage/changehd/deleteChiTietGiay/{idCTG}/{idHD}(idCTG=${x.chiTietGiay.idCTG}, idHD=${hoaDon.idHD})}"-->
+                                                    <!--                                                          th:attr="id='deleteForm-${x.chiTietGiay.idCTG}'"-->
+                                                    <!--                                                          method="post" class="button-form">-->
+                                                    <!--                                                        <button type="button" class="btn btn-danger" onclick="confirmDelete('${x.chiTietGiay.idCTG}')">Xóa</button>-->
+                                                    <!--                                                    </form>-->
 
-                                                    <!-- Update form -->
-                                                    <form th:action="@{'/manage/changehd/online/' + ${hoaDon.idHD}}" method="get" class="button-form">
-                                                        <button type="submit" class="btn btn-primary">Cập nhật</button>
-                                                    </form>
+                                                    <a class="btn"
+                                                       th:href="@{'/manage/changehd/xoa-gio-hang2/' + ${x.chiTietGiay.idCTG}}"
+                                                       onclick="return confirm('Bạn có muốn xóa sản phẩm không')">
+                                                        <img src="/images/img/icons/delete-2.svg" alt="img">
+                                                    </a>
+
+
                                                 </div>
                                             </td>
 
@@ -707,7 +721,7 @@
                                             <form th:action="@{'/manage/changehd/add-to-hd/' + ${idHoaDon}}" method="get">
                                                 <input type="hidden" th:value="${idHoaDon}" name="idHoaDon"/>
                                                 <div class="">
-                                                    <input onkeypress="restrictToNumbers(event)" type="number" name="soLuong" value="1" min="1" max="10" class="form-control"/>
+                                                    <input type="number" name="soLuong" value="1" min="1" max="10" class="form-control"/>
                                                 </div>
                                                 <div class="row">
                                                     <div th:each="chiTiet : ${listChiTietGiay}" class="col-md-3">
@@ -738,7 +752,7 @@
 
 
 
-<!--        <div th:replace="manage/main :: main"></div>-->
+    <!--        <div th:replace="manage/main :: main"></div>-->
 
 
     <script src="/js/jquery-3.6.0.min.js"></script>
@@ -928,14 +942,6 @@
                 });
             }, 5000);
         });
-    </script>
-    <script>
-        function restrictToNumbers(event) {
-            var keyCode = event.keyCode ? event.keyCode : event.which;
-            if (keyCode < 48 || keyCode > 57) {
-                event.preventDefault();
-            }
-        }
     </script>
 
 
