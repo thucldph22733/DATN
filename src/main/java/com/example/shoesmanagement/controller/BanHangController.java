@@ -315,10 +315,10 @@ public class BanHangController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
 
+        int previousQuantity = hoaDonChiTiet.getSoLuong();
+        int availableStockAfterRestoration = chiTietGiay.getSoLuong() + previousQuantity;
 
-        int soGiay = hoaDonChiTiet.getChiTietGiay().getSoLuong();
-
-        if (soGiay <= 0) {
+        if (quantity > availableStockAfterRestoration) {
             response.put("error", "Số lượng trong kho không đủ");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } else {
@@ -326,13 +326,11 @@ public class BanHangController {
             hoaDon.setKhuyenMai(null);
             hoaDonRepository.saveAndFlush(hoaDon);
 
-            int previousQuantity = hoaDonChiTiet.getSoLuong();
             hoaDonChiTiet.setSoLuong(quantity);
             hoaDonChiTiet.setDonGia(chiTietGiay.getGiaBan() * quantity);
             hoaDonChiTietService.add(hoaDonChiTiet);
 
-            int quantityDifference = quantity - previousQuantity;
-            chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - quantityDifference);
+            chiTietGiay.setSoLuong(availableStockAfterRestoration - quantity);
             giayChiTietService.update(chiTietGiay);
 
             double tongTienSanPham = hoaDonService.getTongTienSanPham(idHoaDon);
@@ -345,8 +343,6 @@ public class BanHangController {
             return ResponseEntity.ok(response);
         }
     }
-
-
     @GetMapping("/add-to-cart")
     public String addToCart(@RequestParam("idChiTietGiay") UUID idChiTietGiay,
                             @RequestParam("soLuong") int soLuong, Model model,

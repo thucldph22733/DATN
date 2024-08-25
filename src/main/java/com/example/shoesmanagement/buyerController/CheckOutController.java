@@ -153,17 +153,6 @@ public class CheckOutController {
             HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
             GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(giayChiTietService.getByIdChiTietGiay(entry.getKey()), gioHang);
             ChiTietGiay chiTietGiay = giayChiTietService.getByIdChiTietGiay(entry.getKey());
-
-//            if (gioHangChiTiet.getSoLuong() > chiTietGiay.getSoLuong()) {
-//                redirectAttribute.addFlashAttribute("successMessage",
-//                        "Số lượng sản phẩm hiện còn: " + chiTietGiay.getSoLuong() + " đôi. Vui lòng giảm số lượng");
-//                String idGiay = String.valueOf(chiTietGiay.getGiay().getIdGiay());
-//                String idMau = String.valueOf(chiTietGiay.getMauSac().getIdMau());
-//                String linkBack = idGiay + "/" +idMau;
-//                return "redirect:/buyer/cart" ;
-//            }
-
-
             if (entry.getValue() > chiTietGiay.getSoLuong()) {
                 redirectAttribute.addFlashAttribute("successMessage", "Số lượng sản phẩm hiện còn: " + chiTietGiay.getSoLuong() + " đôi. Vui lòng giảm số lượng");
                 String idGiay = String.valueOf(chiTietGiay.getGiay().getIdGiay());
@@ -238,21 +227,16 @@ public class CheckOutController {
             model.addAttribute("diaChiKHDefault", diaChiKHDefault);
             model.addAttribute("addNewAddressNotNull", true);
             model.addAttribute("listAddressKH", diaChiKHList);
-            // Tính toán ngày giao hàng dự kiến
-//            LocalDate estimatedDeliveryDate = deliveryTimeService.calculateDeliveryDate(diaChiKHDefault.getDiaChiChiTiet());
-//            model.addAttribute("estimatedDeliveryDate", estimatedDeliveryDate);
+
 
         } else {
-//            model.addAttribute("tongTienDaGiamVoucherShip", total);
             model.addAttribute("addNewAddressNulll", true);
             model.addAttribute("addNewAddressNull", true);
         }
 
         hoaDonService.add(hoaDon);
-
         session.removeAttribute("hoaDonTaoMoi");
         session.setAttribute("hoaDonTaoMoi", hoaDon);
-
         showData(model);
         return "online/checkout";
     }
@@ -447,19 +431,18 @@ public class CheckOutController {
         GioHang gioHang1 = gioHangService.findByKhachHang(khachHang);
 
         if (session.getAttribute("KhachHangLogin") == null) {
-            // Nếu managerLogged bằng null, quay về trang login
             return "redirect:/buyer/login";
         }
 
-        if (hoaDon.getKhuyenMai() != null) {   // nếu hoá đơn có dùng khuyến mãi
+        if (hoaDon.getKhuyenMai() != null) {
             KhuyenMai kmcsdl = khuyenMaiRepository.findById(hoaDon.getKhuyenMai().getIdKM()).get();
 
             int slmax = kmcsdl.getSoLuong();
             int sl = kmcsdl.getSoLuongDaDung();
-            if (sl == slmax) {    // nếu số lượng khuyến mãi đã hết thì xoá mã khuyến mãi ra khỏi hoá đơn và trả về trang thanh toán
+            if (sl == slmax) {
                 redirectAttribute.addFlashAttribute("successMessage", "Rất tiếc, số lượng khuyến mãi đã hết. Vui lòng chọn khuyến mãi khác!");
                 hoaDon.setKhuyenMai(null);
-                String checkoutParams = (String) session.getAttribute("checkoutParams" + khachHang.getIdKH()); // luc null la k a
+                String checkoutParams = (String) session.getAttribute("checkoutParams" + khachHang.getIdKH());
                 String updatedParams = Arrays.stream(checkoutParams.split("&"))
                         .filter(param -> !param.startsWith("idKM="))
                         .collect(Collectors.joining("&"));
@@ -470,7 +453,6 @@ public class CheckOutController {
 
                 hoaDonRepository.saveAndFlush(hoaDon);
 
-//                return "redirect:/buyer/checkout?" + session.getAttribute("checkoutParams" + khachHang.getIdKH()).toString();
                 return "redirect:/buyer/checkout?" + updatedParams;
             } else if (sl < slmax) {    // nếu số lượng khuyến mãi nhỏ hơn sl đã set thì tăng sl lên 1
                 kmcsdl.setSoLuongDaDung(sl + 1);
@@ -735,6 +717,7 @@ public class CheckOutController {
         model.addAttribute("sumQuantity", sumQuantity);
         model.addAttribute("total", total);
         model.addAttribute("listProductCheckOut", listHDCTCheckOut);
+        session.setAttribute("listProductCheckOut" , listHDCTCheckOut);
         model.addAttribute("toTalOder", total + shippingFee - giaTienGiam);
 
         if (diaChiKHDefault != null) {
