@@ -308,6 +308,7 @@ public class BanHangController {
 
         return "/manage/ban-hang";
     }
+
     @PostMapping("/updateQuantity")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> updateQuantity(@RequestParam UUID idCTG, @RequestParam int quantity) {
@@ -318,7 +319,6 @@ public class BanHangController {
         Map<String, Object> response = new HashMap<>();
 
         if (chiTietGiay == null || hoaDonChiTiet == null) {
-            System.err.println("ChiTietGiay hoặc HoaDonChiTiet không tồn tại");
             response.put("error", "Sản phẩm không tồn tại");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
@@ -330,27 +330,22 @@ public class BanHangController {
             response.put("error", "Số lượng trong kho không đủ");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } else {
-            HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).get();
-            hoaDon.setKhuyenMai(null);
-            hoaDonRepository.saveAndFlush(hoaDon);
-
+            // Cập nhật số lượng trong hóa đơn
             hoaDonChiTiet.setSoLuong(quantity);
             hoaDonChiTiet.setDonGia(chiTietGiay.getGiaBan() * quantity);
             hoaDonChiTietService.add(hoaDonChiTiet);
 
+            // Cập nhật số lượng trong kho
             chiTietGiay.setSoLuong(availableStockAfterRestoration - quantity);
             giayChiTietService.update(chiTietGiay);
 
             double tongTienSanPham = hoaDonService.getTongTienSanPham(idHoaDon);
-
             response.put("tongTienSanPham", tongTienSanPham);
-
-            System.out.println("Updated HoaDonChiTiet: " + hoaDonChiTiet);
-            System.out.println("Updated ChiTietGiay: " + chiTietGiay);
 
             return ResponseEntity.ok(response);
         }
     }
+
 
 
 

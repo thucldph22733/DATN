@@ -1529,6 +1529,7 @@
 
     });
 </script>
+
 <script th:inline="javascript">
     var quantityChanged = false;
 
@@ -1559,7 +1560,6 @@
             markQuantityChanged(inputElement);
         }
     }
-
     function markQuantityChanged(inputElement) {
         quantityChanged = true;
         updateTotalAmountAndGrandTotal(inputElement);
@@ -1588,6 +1588,8 @@
                     var totalAmountElement = productElement.querySelector('.totalAmount');
                     var totalAmount = giaBan * quantity;
                     totalAmountElement.innerText = formatCurrency(totalAmount) + ' đ';
+
+                    // Cập nhật tổng tiền
                     var totalElements = document.querySelectorAll('.totalAmount');
                     var grandTotalElement = document.querySelector('#tongTienSanPham');
                     var grandTotalElement2 = document.querySelector('#tienTamTinh');
@@ -1604,6 +1606,8 @@
 
                     document.getElementById('apDungMaGiamGia').innerHTML = '0 đ';
 
+                    // Cập nhật giá trị gốc nếu thành công
+                    inputElement.setAttribute('data-original-value', quantity);
                 } else {
                     alert(data.body.error);
                     inputElement.value = inputElement.getAttribute('data-original-value');
@@ -1615,28 +1619,32 @@
             });
     }
 
+
+
+
     function formatCurrency(amount) {
         amount = parseFloat(amount).toFixed(0); // Loại bỏ phần thập phân
         return amount.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'}).replace('₫', 'đ');
     }
-
     function incrementQuantity(input) {
         var quantityInput = input.parentNode.querySelector('.quantityInput');
         var currentQuantity = parseInt(quantityInput.value);
-        quantityInput.setAttribute('data-original-value', currentQuantity);
+        quantityInput.setAttribute('data-original-value', currentQuantity); // Lưu giá trị gốc
         quantityInput.value = currentQuantity + 1;
-        markQuantityChanged(quantityInput);
+        markQuantityChanged(quantityInput); // Đánh dấu số lượng đã thay đổi
     }
 
     function decrementQuantity(input) {
         var quantityInput = input.parentNode.querySelector('.quantityInput');
         var currentQuantity = parseInt(quantityInput.value);
         if (currentQuantity > 1) {
-            quantityInput.setAttribute('data-original-value', currentQuantity);
+            quantityInput.setAttribute('data-original-value', currentQuantity); // Lưu giá trị gốc
             quantityInput.value = currentQuantity - 1;
-            markQuantityChanged(quantityInput);
+            markQuantityChanged(quantityInput); // Đánh dấu số lượng đã thay đổi
         }
     }
+
+
 </script>
 
 </body>
